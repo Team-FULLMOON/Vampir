@@ -7,18 +7,18 @@ public class CameraClick : MonoBehaviour
 {
     [Header("UnitList")]
     [SerializeField] UnitSpawner                unitSpawner;
-    [SerializeField] List<UnitController>       selectedUnitList;               // Å¬¸¯ or µå·¡±×·Î ¼±ÅÃµÈ À¯´Ö
-    public List<UnitController>                 unitList { private set; get; }  // ¸ğµç À¯´Ö
+    [SerializeField] List<UnitController>       selectedUnitList;               // í”Œë ˆì´ì–´ê°€ í´ë¦­ or ë“œë˜ê·¸ë¡œ ì„ íƒí•œ ìœ ë‹›
+    public List<UnitController>                 unitList { private set; get; }  // ë§µì— ì¡´ì¬í•˜ëŠ” ëª¨ë“  ìœ ë‹›
 
     [Header("Layer")]
     [SerializeField] LayerMask layerUnit;
     [SerializeField] LayerMask layerGround;
 
     [Header("DragInfo")]
-    [SerializeField] RectTransform dragRectangle;                    // ¸¶¿ì½º·Î µå·¡±×ÇÑ ¹üÀ§¸¦ °¡½ÃÈ­ÇÏ´Â Image UIÀÇ RectTransform
-    private Rect dragRect;                                  // ¸¶¿ì½º·Î µå·¡±× ÇÑ ¹üÀ§ (xMin~xMax, yMin~yMax)
-    private Vector2 start = Vector2.zero;                   // µå·¡±× ½ÃÀÛ À§Ä¡
-    private Vector2 end = Vector2.zero;                     // µå·¡±× Á¾·á À§Ä¡
+    [SerializeField] RectTransform dragRectangle;                    // ë§ˆìš°ìŠ¤ë¡œ ë“œë˜ê·¸í•œ ë²”ìœ„ë¥¼ ê°€ì‹œí™”í•˜ëŠ” Image UIì˜ RectTransform
+    private Rect dragRect;                                           // ë§ˆìš°ìŠ¤ë¡œ ë“œë˜ê·¸ í•œ ë²”ìœ„ (xMin~xMax, yMin~yMax)
+    private Vector2 start = Vector2.zero;                            // ë“œë˜ê·¸ ì‹œì‘ ìœ„ì¹˜
+    private Vector2 end = Vector2.zero;                              // ë“œë˜ê·¸ ì¢…ë£Œ ìœ„ì¹˜
 
     [Header("Button")]
     private bool isShift = false;
@@ -33,7 +33,7 @@ public class CameraClick : MonoBehaviour
         selectedUnitList = new List<UnitController>();
         unitList = unitSpawner.SpawnUnits();
 
-        // start, end°¡ (0, 0)ÀÎ »óÅÂ·Î ÀÌ¹ÌÁöÀÇ Å©±â¸¦ (0, 0)À¸·Î ¼³Á¤ÇØ È­¸é¿¡ º¸ÀÌÁö ¾Êµµ·Ï ÇÔ
+        // ë“œë˜ê·¸ ëª¨í˜• ì´ˆê¸°í™”
         DrawDragRectangle();
     }
 
@@ -46,9 +46,9 @@ public class CameraClick : MonoBehaviour
     #region Drag
     private void DrawDragRectangle()
     {
-        // µå·¡±× ¹üÀ§¸¦ ³ªÅ¸³»´Â Image UIÀÇ À§Ä¡
+        // ë“œë˜ê·¸ ë²”ìœ„ë¥¼ ë‚˜íƒ€ë‚´ëŠ” Image UIì˜ ìœ„ì¹˜
         dragRectangle.position = (start + end) * 0.5f;
-        // µå·¡±× ¹üÀ§¸¦ ³ªÅ¸³»´Â Image UIÀÇ Å©±â
+        // ë“œë˜ê·¸ ë²”ìœ„ë¥¼ ë‚˜íƒ€ë‚´ëŠ” Image UIì˜ í¬ê¸°
         dragRectangle.sizeDelta = new Vector2(Mathf.Abs(start.x - end.x), Mathf.Abs(start.y - end.y));
     }
 
@@ -79,10 +79,10 @@ public class CameraClick : MonoBehaviour
 
     private void SelectUnits()
     {
-        // ¸ğµç À¯´ÖÀ» °Ë»ç
+        // ëª¨ë“  ìœ ë‹›ì„ ê²€ì‚¬
         foreach (UnitController unit in unitList)
         {
-            // À¯´ÖÀÇ ¿ùµå ÁÂÇ¥¸¦ È­¸é ÁÂÇ¥·Î º¯È¯ÇØ µå·¡±× ¹üÀ§ ³»¿¡ ÀÖ´ÂÁö °Ë»ç
+            // ìœ ë‹›ì˜ ì›”ë“œ ì¢Œí‘œë¥¼ í™”ë©´ ì¢Œí‘œë¡œ ë³€í™˜í•´ ë“œë˜ê·¸ ë²”ìœ„ ë‚´ì— ìˆëŠ”ì§€ ê²€ì‚¬
             if (dragRect.Contains(mainCamera.WorldToScreenPoint(unit.transform.position)))
             {
                 DragSelectUnit(unit);
@@ -94,7 +94,7 @@ public class CameraClick : MonoBehaviour
     #region Mouse
 
     /// <summary>
-    /// ¸¶¿ì½º »óÈ£ÀÛ¿ë ÇÔ¼ö
+    /// ë§ˆìš°ìŠ¤ í´ë¦­ ì•¡ì…˜
     /// </summary>
     public void MouseAction()
     {
@@ -106,7 +106,7 @@ public class CameraClick : MonoBehaviour
             start = Mouse.current.position.value;
             dragRect = new Rect();
 
-            // ±¤¼±¿¡ ºÎµúÈ÷´Â ¿ÀºêÁ§Æ®°¡ ÀÖÀ» ¶§ (=À¯´ÖÀ» Å¬¸¯ÇßÀ» ¶§)
+            // ë§ˆìš°ìŠ¤ ì™¼ìª½ í´ë¦­ìœ¼ë¡œ ìœ ë‹› ì„ íƒ or í•´ì œ
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerUnit))
             {
                 if (hit.transform.GetComponent<UnitController>() == null) return;
@@ -120,7 +120,7 @@ public class CameraClick : MonoBehaviour
                     ClickSelectUnit(hit.transform.GetComponent<UnitController>());
                 }
             }
-            // ±¤¼±¿¡ ºÎµúÈ÷´Â ¿ÀºêÁ§Æ®°¡ ¾øÀ» ¶§
+            // ê´‘ì„ ì— ë¶€ë”ªíˆëŠ” ì˜¤ë¸Œì íŠ¸ê°€ ì—†ì„ ë•Œ
             else
             {
                 if (!isShift)
@@ -135,31 +135,31 @@ public class CameraClick : MonoBehaviour
         {
             end = Mouse.current.position.value;
 
-            // ¸¶¿ì½º¸¦ Å¬¸¯ÇÑ »óÅÂ·Î µå·¡±× ÇÏ´Â µ¿¾È µå·¡±× ¹üÀ§¸¦ ÀÌ¹ÌÁö·Î Ç¥Çö
+            // start, endê°€ (0, 0)ì¸ ìƒíƒœë¡œ ì´ë¯¸ì§€ì˜ í¬ê¸°ë¥¼ (0, 0)ìœ¼ë¡œ ì„¤ì •í•´ í™”ë©´ì— ë³´ì´ì§€ ì•Šë„ë¡ í•¨
             DrawDragRectangle();
         }
 
         // GetMouseButtonUp(0)
         if (Mouse.current.leftButton.wasReleasedThisFrame)
         {
-            // ¸¶¿ì½º Å¬¸¯À» Á¾·áÇÒ ¶§ µå·¡±× ¹üÀ§ ³»¿¡ ÀÖ´Â À¯´Ö ¼±ÅÃ
+            // ë§ˆìš°ìŠ¤ í´ë¦­ì„ ì¢…ë£Œí•  ë•Œ ë“œë˜ê·¸ ë²”ìœ„ ë‚´ì— ìˆëŠ” ìœ ë‹› ì„ íƒ
             CalculateDragRect();
             SelectUnits();
 
-            // ¸¶¿ì½º Å¬¸¯À» Á¾·áÇÒ ¶§ µå·¡±× ¹üÀ§°¡ º¸ÀÌÁö ¾Êµµ·Ï
-            // start, end À§Ä¡¸¦ (0, 0)À¸·Î ¼³Á¤ÇÏ°í µå·¡±× ¹üÀ§¸¦ ±×¸°´Ù
+            // ë§ˆìš°ìŠ¤ í´ë¦­ì„ ì¢…ë£Œí•  ë•Œ ë“œë˜ê·¸ ë²”ìœ„ê°€ ë³´ì´ì§€ ì•Šë„ë¡
+            // start, end ìœ„ì¹˜ë¥¼ (0, 0)ìœ¼ë¡œ ì„¤ì •í•˜ê³  ë“œë˜ê·¸ ë²”ìœ„ë¥¼ ê·¸ë¦°ë‹¤
             start = end = Vector2.zero;
             DrawDragRectangle();
         }
 
         // GetMouseButtonDown(1)
-        // ¸¶¿ì½º ¿À¸¥ÂÊ Å¬¸¯À¸·Î À¯´Ö ÀÌµ¿
+        // ë§ˆìš°ìŠ¤ ì˜¤ë¥¸ìª½ í´ë¦­ìœ¼ë¡œ ìœ ë‹› ì´ë™
         if (Mouse.current.rightButton.wasPressedThisFrame)
         {
             RaycastHit hit;
             Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.value);
 
-            // À¯´Ö ¿ÀºêÁ§Æ®(layerUnit)¸¦ Å¬¸¯ÇßÀ» ¶§
+            // ìœ ë‹› ì˜¤ë¸Œì íŠ¸(layerUnit)ë¥¼ í´ë¦­í–ˆì„ ë•Œ
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerGround))
             {
                 MoveSelectedUnits(hit.point);
@@ -168,27 +168,27 @@ public class CameraClick : MonoBehaviour
     }
 
     /// <summary>
-    /// ¸¶¿ì½º Å¬¸¯À¸·Î À¯´ÖÀ» ¼±ÅÃÇÒ ¶§ È£Ãâ
+    /// ë§ˆìš°ìŠ¤ í´ë¦­ìœ¼ë¡œ ìœ ë‹›ì„ ì„ íƒí•  ë•Œ í˜¸ì¶œ
     /// </summary>
     public void ClickSelectUnit(UnitController newUnit)
     {
-        // ±âÁ¸¿¡ ¼±ÅÃµÇ¾î ÀÖ´Â ¸ğµç À¯´Ö ÇØÁ¦
+        // ê¸°ì¡´ì— ì„ íƒë˜ì–´ ìˆëŠ” ëª¨ë“  ìœ ë‹› í•´ì œ
         DeselectAll();
 
         SelectUnit(newUnit);
     }
 
     /// <summary>
-    /// Shift+¸¶¿ì½º Å¬¸¯À¸·Î À¯´ÖÀ» ¼±ÅÃÇÒ ¶§ È£Ãâ
+    /// Shift+ë§ˆìš°ìŠ¤ í´ë¦­ìœ¼ë¡œ ìœ ë‹›ì„ ì„ íƒí•  ë•Œ í˜¸ì¶œ
     /// </summary>
     public void ShiftClickSelectUnit(UnitController newUnit)
     {
-        // ±âÁ¸¿¡ ¼±ÅÃµÇ¾î ÀÖ´Â À¯´ÖÀ» ¼±ÅÃÇßÀ¸¸é
+        // ìœ ë‹›ì´ ë¦¬ìŠ¤íŠ¸ì— ìˆë‹¤ë©´
         if (selectedUnitList.Contains(newUnit))
         {
             DeselectUnit(newUnit);
         }
-        // »õ·Î¿î À¯´ÖÀ» ¼±ÅÃÇßÀ¸¸é
+        // ìœ ë‹›ì´ ë¦¬ìŠ¤íŠ¸ì— ì—†ë‹¤ë©´
         else
         {
             SelectUnit(newUnit);
@@ -196,11 +196,11 @@ public class CameraClick : MonoBehaviour
     }
 
     /// <summary>
-    /// ¸¶¿ì½º µå·¡±×·Î À¯´ÖÀ» ¼±ÅÃÇÒ ¶§ È£Ãâ
+    /// ë§ˆìš°ìŠ¤ ë“œë˜ê·¸ë¡œ ìœ ë‹›ì„ ì„ íƒí•  ë•Œ í˜¸ì¶œ
     /// </summary>
     public void DragSelectUnit(UnitController newUnit)
     {
-        // »õ·Î¿î À¯´ÖÀ» ¼±ÅÃÇßÀ¸¸é
+        // ìƒˆë¡œìš´ ìœ ë‹›ì„ ì„ íƒí–ˆìœ¼ë©´
         if (!selectedUnitList.Contains(newUnit))
         {
             SelectUnit(newUnit);
@@ -208,7 +208,7 @@ public class CameraClick : MonoBehaviour
     }
 
     /// <summary>
-    /// ¼±ÅÃµÈ ¸ğµç À¯´ÖÀ» ÀÌµ¿ÇÒ ¶§ È£Ãâ
+    /// ì„ íƒëœ ëª¨ë“  ìœ ë‹›ì„ ì´ë™í•  ë•Œ í˜¸ì¶œ
     /// </summary>
     public void MoveSelectedUnits(Vector3 end)
     {
@@ -219,7 +219,7 @@ public class CameraClick : MonoBehaviour
     }
 
     /// <summary>
-    /// ¸ğµç À¯´ÖÀÇ ¼±ÅÃÀ» ÇØÁ¦ÇÒ ¶§ È£Ãâ
+    /// ëª¨ë“  ìœ ë‹›ì˜ ì„ íƒì„ í•´ì œí•  ë•Œ í˜¸ì¶œ
     /// </summary>
     public void DeselectAll()
     {
@@ -232,24 +232,24 @@ public class CameraClick : MonoBehaviour
     }
 
     /// <summary>
-    /// ¸Å°³º¯¼ö·Î ¹Ş¾Æ¿Â newUnit ¼±ÅÃ ¼³Á¤
+    /// ë§¤ê°œë³€ìˆ˜ë¡œ ë°›ì•„ì˜¨ newUnit ì„ íƒ ì„¤ì •
     /// </summary>
     private void SelectUnit(UnitController newUnit)
     {
-        // À¯´ÖÀÌ ¼±ÅÃµÇ¾úÀ» ¶§ È£ÃâÇÏ´Â ¸Ş¼Òµå
+        // ìœ ë‹›ì´ ì„ íƒë˜ì—ˆì„ ë•Œ í˜¸ì¶œí•˜ëŠ” ë©”ì†Œë“œ
         newUnit.SelectUnit();
-        // ¼±ÅÃÇÑ À¯´Ö Á¤º¸¸¦ ¸®½ºÆ®¿¡ ÀúÀå
+        // ì„ íƒí•œ ìœ ë‹› ì •ë³´ë¥¼ ë¦¬ìŠ¤íŠ¸ì— ì €ì¥
         selectedUnitList.Add(newUnit);
     }
 
     /// <summary>
-    /// ¸Å°³º¯¼ö·Î ¹Ş¾Æ¿Â newUnit ¼±ÅÃ ÇØÁ¦ ¼³Á¤
+    /// ë§¤ê°œë³€ìˆ˜ë¡œ ë°›ì•„ì˜¨ newUnit ì„ íƒ í•´ì œ ì„¤ì •
     /// </summary>
     private void DeselectUnit(UnitController newUnit)
     {
-        // À¯´ÖÀÌ ÇØÁ¦µÇ¾úÀ» ¶§ È£ÃâÇÏ´Â ¸Ş¼Òµå
+        // ìœ ë‹›ì´ í•´ì œë˜ì—ˆì„ ë•Œ í˜¸ì¶œí•˜ëŠ” ë©”ì†Œë“œ
         newUnit.DeSelectUnit();
-        // ¼±ÅÃÇÑ À¯´Ö Á¤º¸¸¦ ¸®½ºÆ®¿¡¼­ »èÁ¦
+        // ì„ íƒí•œ ìœ ë‹› ì •ë³´ë¥¼ ë¦¬ìŠ¤íŠ¸ì—ì„œ ì‚­ì œ
         selectedUnitList.Remove(newUnit);
     }
     #endregion Mouse
