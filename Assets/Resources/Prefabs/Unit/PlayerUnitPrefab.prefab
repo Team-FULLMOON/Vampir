@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6102024267819438113}
   - component: {fileID: -6551739423607355598}
   - component: {fileID: 2636158474964890731}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: PlayerUnitPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,7 +162,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8361019776825736810}
   - component: {fileID: 7444093831433660554}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: UnitMarker
   m_TagString: Untagged
   m_Icon: {fileID: 0}

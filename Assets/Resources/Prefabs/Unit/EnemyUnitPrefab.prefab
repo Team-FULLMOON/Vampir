@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5978156876157436046}
   - component: {fileID: 1629491640761071058}
   - component: {fileID: 8701232307049362744}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: EnemyUnitPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,6 +122,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitMarker: {fileID: 6185433192835540689}
+  speed: 0
+  isMove: 0
 --- !u!1 &6185433192835540689
 GameObject:
   m_ObjectHideFlags: 0
@@ -132,7 +134,7 @@ GameObject:
   m_Component:
   - component: {fileID: 894130343526110206}
   - component: {fileID: 678486067844243817}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: UnitMarker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
