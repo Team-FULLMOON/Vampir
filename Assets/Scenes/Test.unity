@@ -181,7 +181,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 1d4383b530b2e9148a213d8a81291792, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -257,7 +257,7 @@ GameObject:
   - component: {fileID: 728165887}
   - component: {fileID: 728165886}
   - component: {fileID: 728165885}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -824,10 +824,10 @@ MonoBehaviour:
   selectedUnitList: []
   layerUnit:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 256
   layerGround:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 2048
   dragRectangle: {fileID: 147009521}
   mousePos: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
