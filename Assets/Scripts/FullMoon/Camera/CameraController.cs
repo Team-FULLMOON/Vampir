@@ -1,6 +1,6 @@
 using Cinemachine;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using FullMoon.Input;
 
 public class CameraController : MonoBehaviour
 {
@@ -13,22 +13,22 @@ public class CameraController : MonoBehaviour
     [Header("Zoom")]
     [SerializeField] private float zoomSensitivity = 5f; // 마우스 스크롤 감도
     [SerializeField] private float zoomSpeed = 10f; // 줌 속도
-    [SerializeField] private float minFov = 15f;
-    [SerializeField] private float maxFov = 90f;
+    [SerializeField] private float minFov = 20f;
+    [SerializeField] private float maxFov = 55f;
+    
     private float targetFov;
-
-    private Vector2 _movementInput;
-    private bool _shiftInput;
 
     private void Start()
     {
         targetFov = freeLookCamera.m_Lens.FieldOfView;
+        
+        PlayerInputManager.Instance.ZoomEvent.AddEvent(ZoomEvent);
     }
 
     private void FixedUpdate()
     {
-        Vector3 moveDirection = AdjustMovementToCamera(_movementInput);
-        float movementSpeed = _shiftInput ? shiftMoveSpeed : moveSpeed;
+        Vector3 moveDirection = AdjustMovementToCamera(PlayerInputManager.Instance.move);
+        float movementSpeed = PlayerInputManager.Instance.shift ? shiftMoveSpeed : moveSpeed;
         transform.position += moveDirection * (movementSpeed * Time.fixedDeltaTime);
     }
 
@@ -52,19 +52,8 @@ public class CameraController : MonoBehaviour
         return (forward * input.y + right * input.x);
     }
 
-    public void OnMove(InputValue value)
+    private void ZoomEvent(Vector2 scrollValue)
     {
-        _movementInput = value.Get<Vector2>();
-    }
-    
-    private void OnShift(InputValue value)
-    {
-        _shiftInput = value.isPressed;
-    }
-
-    public void OnZoom(InputValue value)
-    {
-        Vector2 scrollValue = value.Get<Vector2>();
         if (scrollValue.y != 0f)
         {
             targetFov -= (scrollValue.y > 0f ? 1f : -1f) * zoomSensitivity;
