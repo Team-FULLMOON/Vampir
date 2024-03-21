@@ -5,19 +5,19 @@ namespace FullMoon.Util
     [ExecuteInEditMode]
     public abstract class ComponentSingleton<T> : MonoBehaviour where T : ComponentSingleton<T>
     {
-        private static T s_Instance;
+        private static T _instance;
 
-        public static bool Exists => s_Instance != null;
+        public static bool Exists => _instance != null;
 
         public static T Instance
         {
             get
             {
-                if (s_Instance == null)
+                if (_instance == null)
                 {
-                    s_Instance = FindOrCreateInstance();
+                    _instance = FindOrCreateInstance();
                 }
-                return s_Instance;
+                return _instance;
             }
         }
 
@@ -47,13 +47,13 @@ namespace FullMoon.Util
 
         protected virtual void Awake()
         {
-            if (s_Instance != null && s_Instance != this)
+            if (_instance != null && _instance != this)
             {
                 DestroyImmediate(gameObject);
             }
             else
             {
-                s_Instance = this as T;
+                _instance = this as T;
             }
         }
 
@@ -61,8 +61,8 @@ namespace FullMoon.Util
         {
             if (Exists)
             {
-                DestroyImmediate(s_Instance.gameObject);
-                s_Instance = null;
+                DestroyImmediate(_instance.gameObject);
+                _instance = null;
             }
         }
     }
