@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using FullMoon.Unit;
+using FullMoon.Util;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -107,7 +108,7 @@ namespace FullMoon.Camera
                 Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.value);
                 start = Mouse.current.position.value;
                 dragRect = new Rect();
-
+                GameManage.PrintLog("작동");
                 // 마우스 왼쪽 클릭으로 유닛 선택 or 해제
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerUnit))
                 {
