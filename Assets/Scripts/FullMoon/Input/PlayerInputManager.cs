@@ -21,6 +21,8 @@ namespace FullMoon.Input
         [Header("Camera Input Values")]
         public Vector2 move;
         public bool analogMovement;
+        public bool shift;
+        public Vector2 zoom;
 
         [Header("Mouse Cursor Settings")] 
         public CursorType cursorType;
@@ -30,12 +32,38 @@ namespace FullMoon.Input
         {
             MoveInput(value.Get<Vector2>());
         }
+        
+        private void OnShift(InputValue value)
+        {
+            ShiftInput(value.isPressed);
+        }
+
+        public void OnZoom(InputValue value)
+        {
+            ZoomInput(value.Get<Vector2>());
+        }
 #endif
 		
-        public void MoveInput(Vector2 newMoveDirection)
+        public readonly GenericEventSystem<Vector2> moveEvent = new();
+        public void MoveInput(Vector2 input)
         {
-            move = newMoveDirection;
+            move = input;
+            moveEvent.TriggerEvent(input);
         } 
+        
+        public readonly GenericEventSystem<bool> shiftEvent = new();
+        public void ShiftInput(bool input)
+        {
+            shift = input;
+            shiftEvent.TriggerEvent(input);
+        }
+        
+        public readonly GenericEventSystem<Vector2> ZoomEvent = new();
+        public void ZoomInput(Vector2 input)
+        {
+            zoom = input;
+            ZoomEvent.TriggerEvent(input);
+        }
         
         private void OnApplicationFocus(bool hasFocus)
         {
