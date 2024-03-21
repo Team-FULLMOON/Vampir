@@ -28,6 +28,12 @@ public class CameraController : MonoBehaviour
     private void FixedUpdate()
     {
         Vector3 moveDirection = AdjustMovementToCamera(PlayerInputManager.Instance.move);
+
+        if (moveDirection == Vector3.zero)
+        {
+            moveDirection = AdjustMovementToCamera(GetScreenMovementInput());
+        }
+        
         float movementSpeed = PlayerInputManager.Instance.shift ? shiftMoveSpeed : moveSpeed;
         transform.position += moveDirection * (movementSpeed * Time.fixedDeltaTime);
     }
@@ -37,6 +43,29 @@ public class CameraController : MonoBehaviour
         // FOV를 목표값으로 부드럽게 조정
         freeLookCamera.m_Lens.FieldOfView = Mathf.Lerp(freeLookCamera.m_Lens.FieldOfView, targetFov, Time.deltaTime * zoomSpeed);
     }
+    
+    private Vector2 GetScreenMovementInput()
+    {
+        if (Cursor.lockState != CursorLockMode.Confined)
+        {
+            return Vector2.zero;
+        }
+
+        Vector2 mousePosition = Input.mousePosition;
+        float normalizedX = (mousePosition.x / Screen.width) * 2 - 1;
+        float normalizedY = (mousePosition.y / Screen.height) * 2 - 1;
+
+        Vector2 normalizedPosition = new Vector2(normalizedX, normalizedY);
+
+        // 화면 가장자리에 있는지 확인
+        if (Mathf.Abs(normalizedX) > 0.95f || Mathf.Abs(normalizedY) > 0.95f)
+        {
+            return normalizedPosition;
+        }
+
+        return Vector2.zero;
+    }
+
 
     private Vector3 AdjustMovementToCamera(Vector2 input)
     {
