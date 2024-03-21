@@ -1,6 +1,6 @@
+using UnityEngine;
 using Cinemachine;
 using FullMoon.Input;
-using UnityEngine;
 
 namespace FullMoon.Camera
 {
@@ -18,11 +18,11 @@ namespace FullMoon.Camera
         [SerializeField] private float minFov = 20f;
         [SerializeField] private float maxFov = 55f;
     
-        private float targetFov;
+        private float _targetFov;
 
         private void Start()
         {
-            targetFov = freeLookCamera.m_Lens.FieldOfView;
+            _targetFov = freeLookCamera.m_Lens.FieldOfView;
         
             PlayerInputManager.Instance.ZoomEvent.AddEvent(ZoomEvent);
         }
@@ -43,7 +43,7 @@ namespace FullMoon.Camera
         private void Update()
         {
             // FOV를 목표값으로 부드럽게 조정
-            freeLookCamera.m_Lens.FieldOfView = Mathf.Lerp(freeLookCamera.m_Lens.FieldOfView, targetFov, Time.deltaTime * zoomSpeed);
+            freeLookCamera.m_Lens.FieldOfView = Mathf.Lerp(freeLookCamera.m_Lens.FieldOfView, _targetFov, Time.deltaTime * zoomSpeed);
         }
     
         private Vector2 GetScreenMovementInput()
@@ -87,8 +87,8 @@ namespace FullMoon.Camera
         {
             if (scrollValue.y != 0f)
             {
-                targetFov -= (scrollValue.y > 0f ? 1f : -1f) * zoomSensitivity;
-                targetFov = Mathf.Clamp(targetFov, minFov, maxFov);
+                _targetFov -= (scrollValue.y > 0f ? 1f : -1f) * zoomSensitivity;
+                _targetFov = Mathf.Clamp(_targetFov, minFov, maxFov);
             }
         }
     }
