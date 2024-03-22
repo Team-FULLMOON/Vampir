@@ -58,6 +58,7 @@ namespace FullMoon.Camera
             float normalizedY = (mousePosition.y / Screen.height) * 2 - 1;
 
             Vector2 normalizedPosition = new Vector2(normalizedX, normalizedY);
+            normalizedPosition.Normalize();
 
             // 화면 가장자리에 있는지 확인
             if (Mathf.Abs(normalizedX) > 0.95f || Mathf.Abs(normalizedY) > 0.95f)
