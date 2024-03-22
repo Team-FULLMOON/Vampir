@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace FullMoon.Unit
 {
@@ -7,16 +9,12 @@ namespace FullMoon.Unit
         [SerializeField] GameObject unitMarker;
         [SerializeField] float speed;
         private Vector3 movePos;
-        public bool isMove = false;
 
-        private void Update()
+        private NavMeshAgent agent;
+
+        private void Start()
         {
-            if (isMove)
-            {
-                transform.position = Vector3.MoveTowards(transform.position, movePos, speed * Time.deltaTime);
-                if (transform.position.x == movePos.x && transform.position.z == movePos.z)
-                    isMove = false;
-            }
+            agent = GetComponent<NavMeshAgent>();
         }
 
         public void SelectUnit()
@@ -31,9 +29,7 @@ namespace FullMoon.Unit
 
         public void MoveTo(Vector3 pos)
         {
-            isMove = true;
-            movePos = pos;
-            movePos.y = 1;
+            agent.SetDestination(pos);
         }
     }
 }
