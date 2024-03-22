@@ -135,7 +135,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 116
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &2636158474964890731
 MonoBehaviour:
@@ -152,6 +152,11 @@ MonoBehaviour:
   unitMarker: {fileID: 7576867232460400837}
   speed: 3
   isMove: 0
+  alignmentStrength: 1
+  cohesionStrength: 1
+  separationStrength: 1
+  neighborRadius: 15
+  separationRadius: 5
 --- !u!1 &7576867232460400837
 GameObject:
   m_ObjectHideFlags: 0
