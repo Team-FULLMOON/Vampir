@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using FullMoon.Unit;
 using FullMoon.Util;
@@ -11,10 +12,12 @@ namespace FullMoon.Camera
         [Header("UnitList")]
         [SerializeField] UnitSpawner unitSpawner;
         [SerializeField] List<UnitController> selectedUnitList; // 플레이어가 클릭 or 드래그로 선택한 유닛
-        public List<UnitController> UnitList { get; private set; } // 맵에 존재하는 모든 유닛
+        private List<UnitController> UnitList; // 맵에 존재하는 모든 유닛
 
         [Header("Layer")]
-        [SerializeField] LayerMask layerUnit;
+        [SerializeField] LayerMask layerPlayerUnit;
+
+        [SerializeField] LayerMask layerEnemyUnit;
         [SerializeField] LayerMask layerGround;
 
         [Header("DragInfo")]
@@ -31,10 +34,14 @@ namespace FullMoon.Camera
         {
             mainCamera = UnityEngine.Camera.main;
             selectedUnitList = new List<UnitController>();
-            UnitList = unitSpawner.SpawnUnits();
 
             // 드래그 모형 초기화
             DrawDragRectangle();
+        }
+
+        private void Start()
+        {
+            UnitList = unitSpawner.GetUnitList();
         }
 
         private void Update()
@@ -105,9 +112,9 @@ namespace FullMoon.Camera
                 Ray ray = mainCamera.ScreenPointToRay(UnityEngine.InputSystem.Mouse.current.position.value);
                 start = UnityEngine.InputSystem.Mouse.current.position.value;
                 dragRect = new Rect();
-                GameLogger.PrintLog("작동");
+
                 // 마우스 왼쪽 클릭으로 유닛 선택 or 해제
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerUnit))
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerPlayerUnit))
                 {
                     if (hit.transform.GetComponent<UnitController>() == null) return;
 
@@ -160,7 +167,11 @@ namespace FullMoon.Camera
                 Ray ray = mainCamera.ScreenPointToRay(UnityEngine.InputSystem.Mouse.current.position.value);
 
                 // 유닛 오브젝트(layerUnit)를 클릭했을 때
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerGround))
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerEnemyUnit))
+                {
+                    AttackSelectedUnits(hit.transform.GetComponent<UnitController>());
+                }
+                else if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerGround))
                 {
                     MoveSelectedUnits(hit.point);
                 }
@@ -185,14 +196,10 @@ namespace FullMoon.Camera
         {
             // 유닛이 리스트에 있다면
             if (selectedUnitList.Contains(newUnit))
-            {
                 DeselectUnit(newUnit);
-            }
             // 유닛이 리스트에 없다면
             else
-            {
                 SelectUnit(newUnit);
-            }
         }
 
         /// <summary>
@@ -201,7 +208,7 @@ namespace FullMoon.Camera
         public void DragSelectUnit(UnitController newUnit)
         {
             // 새로운 유닛을 선택했으면
-            if (!selectedUnitList.Contains(newUnit))
+            if (!selectedUnitList.Contains(newUnit) || newUnit.GetUnithandType() == BaseUnit.UnithandType.Player)
             {
                 SelectUnit(newUnit);
             }
@@ -214,7 +221,10 @@ namespace FullMoon.Camera
         {
             for (int i = 0; i < selectedUnitList.Count; ++i)
             {
-                selectedUnitList[i].MoveTo(end);
+                if (selectedUnitList[i].GetUnithandType() == BaseUnit.UnithandType.Enemy)
+                    continue;
+                
+                selectedUnitList[i].MoveTo(end, true);
             }
         }
 
@@ -252,6 +262,16 @@ namespace FullMoon.Camera
             // 선택한 유닛 정보를 리스트에서 삭제
             selectedUnitList.Remove(newUnit);
         }
+        
+        /// <summary>
+        /// 선택된 유닛들에게 강제공격 명령
+        /// </summary>
+        public void AttackSelectedUnits(UnitController unit)
+        {
+            for (int index = 0; index < selectedUnitList.Count; ++index)
+                selectedUnitList[index].SetTarget(unit);
+        }
+        
         #endregion Mouse
     }
 }
