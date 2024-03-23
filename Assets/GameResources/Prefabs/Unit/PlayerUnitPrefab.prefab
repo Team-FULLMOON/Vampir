@@ -150,9 +150,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf7a4ea91d0e69342a5d4fa71a3eb9be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  u_maxHp: 5
+  u_curHp: 0
+  u_ap: 1
+  u_dp: 0
+  u_as: 2
+  u_ms: 3.5
+  u_ar: 200
+  u_fr: 200
+  _unitType: 0
+  _unithandType: 0
+  _unitState: 0
   unitMarker: {fileID: 7576867232460400837}
-  speed: 3
-  isMove: 0
+  arrowPrefab: {fileID: 339854047274265902, guid: d244e079f98e5af4887badd37fa7e41e,
+    type: 3}
 --- !u!195 &4249598075055521464
 NavMeshAgent:
   m_ObjectHideFlags: 0
