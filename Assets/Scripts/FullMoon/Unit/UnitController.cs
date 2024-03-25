@@ -12,6 +12,7 @@ namespace FullMoon.Unit
     {
         [SerializeField] GameObject unitMarker;
         [SerializeField] private GameObject arrowPrefab;
+        [SerializeField] private Transform spawnPoint;
 
         private NavMeshAgent agent;
         
@@ -201,8 +202,10 @@ namespace FullMoon.Unit
             switch (_unitType)
             {
                 case UnitType.Archer:
-                    ObjectPoolManager.SpawnObject(arrowPrefab, transform.position + Vector3.right, Quaternion.identity).
-                        GetComponent<ArrowMove>().SetTargetPos(_unitTarget.transform, u_ap, transform);
+                    GameObject arrow = Instantiate(arrowPrefab, spawnPoint.position, Quaternion.identity);
+                    arrow.GetComponent<ArrowMove>().SetTargetPos(_unitTarget.transform, u_ap, transform);
+                    // ObjectPoolManager.SpawnObject(arrowPrefab, spawnPoint.position, Quaternion.identity).
+                    //     GetComponent<ArrowMove>().SetTargetPos(_unitTarget.transform, u_ap, transform);
                     break;
             }
         }

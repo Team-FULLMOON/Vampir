@@ -28,7 +28,7 @@ namespace FullMoon.Unit
             _allUnitList = FindObjectsByType<UnitController>(FindObjectsSortMode.None).ToList();
             for (int i = 0; i < _allUnitList.Count; ++i)
             {
-                if (_allUnitList[i].GetUnithandType() == BaseUnit.UnithandType.Player)
+                if (_allUnitList[i].GetUnitHandType() == BaseUnit.UnithandType.Player)
                     _playerUnitList.Add(_allUnitList[i]);
                 else
                     _enemyUnitList.Add(_allUnitList[i]);
@@ -38,7 +38,7 @@ namespace FullMoon.Unit
         // 죽은 유닛 리스트에서 제거
         public List<UnitController> EraseDeathUnit(UnitController unit)
         {
-            switch (unit.GetUnithandType())
+            switch (unit.GetUnitHandType())
             {
                 case BaseUnit.UnithandType.Player:
                   if (_playerUnitList.Contains(unit))
