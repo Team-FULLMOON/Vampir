@@ -27,7 +27,7 @@ public class BaseUnit : MonoBehaviour
     [Header("유닛 상태")]
     [SerializeField] protected BaseUnit.UnitState _unitState;
     
-    public BaseUnit.UnithandType GetUnithandType() => _unithandType;
+    public BaseUnit.UnithandType GetUnitHandType() => _unithandType;
     
     public enum UnitType
     {

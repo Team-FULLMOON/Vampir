@@ -208,7 +208,7 @@ namespace FullMoon.Camera
         public void DragSelectUnit(UnitController newUnit)
         {
             // 새로운 유닛을 선택했으면
-            if (!selectedUnitList.Contains(newUnit) || newUnit.GetUnithandType() == BaseUnit.UnithandType.Player)
+            if (!selectedUnitList.Contains(newUnit) || newUnit.GetUnitHandType() == BaseUnit.UnithandType.Player)
             {
                 SelectUnit(newUnit);
             }
@@ -221,7 +221,7 @@ namespace FullMoon.Camera
         {
             for (int i = 0; i < selectedUnitList.Count; ++i)
             {
-                if (selectedUnitList[i].GetUnithandType() == BaseUnit.UnithandType.Enemy)
+                if (selectedUnitList[i].GetUnitHandType() == BaseUnit.UnithandType.Enemy)
                     continue;
                 
                 selectedUnitList[i].MoveTo(end, true);
