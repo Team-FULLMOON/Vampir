@@ -2,7 +2,6 @@ using MyBox;
 using UnityEngine;
 using FullMoon.Interfaces;
 using FullMoon.Unit.Data;
-using UnityEngine.Serialization;
 
 namespace FullMoon.FSM
 {
