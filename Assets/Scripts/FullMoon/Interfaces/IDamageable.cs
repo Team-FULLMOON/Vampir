@@ -1,3 +1,4 @@
+using FullMoon.Entities.Unit;
 using FullMoon.FSM;
 
 namespace FullMoon.Interfaces
@@ -5,6 +6,6 @@ namespace FullMoon.Interfaces
     public interface IDamageable
     {
         int Hp { get; set; }
-        void ReceiveDamage(int amount, BaseUnitState attacker);
+        void ReceiveDamage(int amount, BaseUnitController attacker);
     }
 }

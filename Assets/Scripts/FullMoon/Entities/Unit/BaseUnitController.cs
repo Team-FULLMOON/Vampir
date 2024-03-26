@@ -1,11 +1,12 @@
 using MyBox;
 using UnityEngine;
-using FullMoon.Interfaces;
+using FullMoon.FSM;
 using FullMoon.Unit.Data;
+using FullMoon.Interfaces;
 
-namespace FullMoon.FSM
+namespace FullMoon.Entities.Unit
 {
-    public abstract class BaseUnitState 
+    public abstract class BaseUnitController
         : MonoBehaviour, IDamageable
     {
         [Foldout("Base Unit Settings"), DefinedValues("Player", "Enemy")]
@@ -23,9 +24,10 @@ namespace FullMoon.FSM
         protected virtual void Start()
         {
             Rb = GetComponent<Rigidbody>();
+            Hp = unitData.MaxHp;
         }
 
-        public virtual void ReceiveDamage(int amount, BaseUnitState attacker)
+        public virtual void ReceiveDamage(int amount, BaseUnitController attacker)
         {
             if (unitType.Equals(attacker.unitType))
             {

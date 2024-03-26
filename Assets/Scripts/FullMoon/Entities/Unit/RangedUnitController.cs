@@ -1,24 +1,27 @@
 using MyBox;
 using UnityEngine;
 using UnityEngine.AI;
-using FullMoon.FSM;
 using FullMoon.Interfaces;
+using FullMoon.Unit.Data;
 
 namespace FullMoon.Entities.Unit
 {
     [RequireComponent(typeof(NavMeshAgent))]
     public class RangedUnitController 
-        : BaseUnitState, IAttackable, ISelectable, INavigation
+        : BaseUnitController, IAttackable, ISelectable, INavigation
     {
         [Foldout("Ranged Unit Settings")]
         [SerializeField] private GameObject attackEffect;
         
         public NavMeshAgent Agent { get; set; }
 
+        public RangedUnitData OverridenUnitData  { get; set; }
+
         protected override void Start()
         {
             base.Start();
             Agent = GetComponent<NavMeshAgent>();
+            OverridenUnitData = (RangedUnitData)unitData;
         }
         
         public void MoveToPosition(Transform location)
