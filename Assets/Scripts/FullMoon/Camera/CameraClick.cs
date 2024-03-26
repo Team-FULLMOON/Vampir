@@ -1,5 +1,4 @@
 using UnityEngine;
-using FullMoon.Unit;
 using FullMoon.Input;
 using System.Collections.Generic;
 using FullMoon.Entities.Unit;
@@ -9,14 +8,9 @@ namespace FullMoon.Camera
     public class CameraClick : MonoBehaviour
     {
         [Header("UnitList")]
-        [SerializeField] UnitSpawner unitSpawner;
         [SerializeField] List<BaseUnitController> selectedUnitList; // 플레이어가 클릭 or 드래그로 선택한 유닛
-        private List<BaseUnitController> UnitList; // 맵에 존재하는 모든 유닛
 
         [Header("Layer")]
-        [SerializeField] LayerMask layerPlayerUnit;
-
-        [SerializeField] LayerMask layerEnemyUnit;
         [SerializeField] LayerMask layerGround;
 
         [Header("DragInfo")]
@@ -36,11 +30,6 @@ namespace FullMoon.Camera
 
             // 드래그 모형 초기화
             DrawDragRectangle();
-        }
-
-        private void Start()
-        {
-            // UnitList = unitSpawner.GetUnitList();
         }
 
         private void Update()
@@ -85,15 +74,16 @@ namespace FullMoon.Camera
 
         private void SelectUnits()
         {
-            // // 모든 유닛을 검사
-            // foreach (BaseUnitController unit in UnitList)
-            // {
-            //     // 유닛의 월드 좌표를 화면 좌표로 변환해 드래그 범위 내에 있는지 검사
-            //     if (dragRect.Contains(mainCamera.WorldToScreenPoint(unit.transform.position)))
-            //     {
-            //         DragSelectUnit(unit);
-            //     }
-            // }
+            foreach (var unit in FindObjectsByType<BaseUnitController>(FindObjectsSortMode.None))
+            {
+                Vector3 screenPosition = mainCamera.WorldToScreenPoint(unit.transform.position);
+                Vector2 position2D = new Vector2(screenPosition.x, screenPosition.y);
+
+                if (dragRect.Contains(position2D))
+                {
+                    DragSelectUnit(unit);
+                }
+            }
         }
         #endregion Drag
 
@@ -127,23 +117,23 @@ namespace FullMoon.Camera
 
         private void HandleLeftClick()
         {
-            RaycastHit hit;
             Ray ray = mainCamera.ScreenPointToRay(UnityEngine.InputSystem.Mouse.current.position.value);
+            
             start = UnityEngine.InputSystem.Mouse.current.position.value;
             dragRect = new Rect();
 
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            if (Physics.Raycast(ray, out var hit, Mathf.Infinity))
             {
-                var rangedUnitController = hit.transform.GetComponent<RangedUnitController>();
-                if (rangedUnitController != null)
+                var unitController = hit.transform.GetComponent<BaseUnitController>();
+                if (unitController != null)
                 {
                     if (PlayerInputManager.Instance.shift)
                     {
-                        ShiftClickSelectUnit(rangedUnitController);
+                        ShiftClickSelectUnit(unitController);
                     }
                     else
                     {
-                        ClickSelectUnit(rangedUnitController);
+                        ClickSelectUnit(unitController);
                     }
                 }
                 else if (!PlayerInputManager.Instance.shift)
@@ -163,17 +153,17 @@ namespace FullMoon.Camera
         {
             CalculateDragRect();
             SelectUnits();
-            start = end = Vector2.zero;
+            start = Vector2.zero;
+            end = Vector2.zero;
             DrawDragRectangle();
         }
 
         private void HandleRightClick()
         {
-            RaycastHit hit;
             Ray ray = mainCamera.ScreenPointToRay(UnityEngine.InputSystem.Mouse.current.position.value);
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerEnemyUnit | layerGround))
+            if (Physics.Raycast(ray, out var hit, Mathf.Infinity, layerGround))
             {
-                var rangedUnitController = hit.transform.GetComponent<RangedUnitController>();
+                var rangedUnitController = hit.transform.GetComponent<BaseUnitController>();
                 if (rangedUnitController != null)
                 {
                     AttackSelectedUnits(rangedUnitController);
@@ -188,64 +178,69 @@ namespace FullMoon.Camera
         /// <summary>
         /// 마우스 클릭으로 유닛을 선택할 때 호출
         /// </summary>
-        public void ClickSelectUnit(BaseUnitController newUnit)
+        private void ClickSelectUnit(BaseUnitController newUnit)
         {
-            // // 기존에 선택되어 있는 모든 유닛 해제
-            // DeselectAll();
-            //
-            // SelectUnit(newUnit);
+            // 기존에 선택되어 있는 모든 유닛 해제
+            DeselectAll();
+            
+            SelectUnit(newUnit);
         }
 
         /// <summary>
         /// Shift+마우스 클릭으로 유닛을 선택할 때 호출
         /// </summary>
-        public void ShiftClickSelectUnit(BaseUnitController newUnit)
+        private void ShiftClickSelectUnit(BaseUnitController newUnit)
         {
-            // // 유닛이 리스트에 있다면
-            // if (selectedUnitList.Contains(newUnit))
-            //     DeselectUnit(newUnit);
-            // // 유닛이 리스트에 없다면
-            // else
-            //     SelectUnit(newUnit);
+            // 유닛이 리스트에 있다면
+            if (selectedUnitList.Contains(newUnit))
+            {
+                DeselectUnit(newUnit);
+            }
+            // 유닛이 리스트에 없다면
+            else
+            {
+                SelectUnit(newUnit);
+            }
         }
 
         /// <summary>
         /// 마우스 드래그로 유닛을 선택할 때 호출
         /// </summary>
-        public void DragSelectUnit(BaseUnitController newUnit)
+        private void DragSelectUnit(BaseUnitController newUnit)
         {
-            // // 새로운 유닛을 선택했으면
-            // if (!selectedUnitList.Contains(newUnit) || newUnit.GetUnitHandType() == BaseUnit.UnithandType.Player)
-            // {
-            //     SelectUnit(newUnit);
-            // }
+            if (newUnit.unitType.Equals("Enemy") || selectedUnitList.Contains(newUnit))
+            {
+                return;
+            }
+
+            SelectUnit(newUnit);
         }
         
         /// <summary>
         /// 선택된 모든 유닛을 이동할 때 호출
         /// </summary>
-        public void MoveSelectedUnits(Vector3 end)
+        private void MoveSelectedUnits(Vector3 end)
         {
-            // for (int i = 0; i < selectedUnitList.Count; ++i)
-            // {
-            //     if (selectedUnitList[i].GetUnitHandType() == BaseUnit.UnithandType.Enemy)
-            //         continue;
-            //     
-            //     selectedUnitList[i].MoveTo(end, true);
-            // }
+            foreach (var unit in selectedUnitList)
+            {
+                if (unit.unitType.Equals("Enemy"))
+                    continue;
+                
+                unit.MoveToPosition(end);
+            }
         }
 
         /// <summary>
         /// 모든 유닛의 선택을 해제할 때 호출
         /// </summary>
-        public void DeselectAll()
+        private void DeselectAll()
         {
-            // for (int i = 0; i < selectedUnitList.Count; ++i)
-            // {
-            //     selectedUnitList[i].DeSelectUnit();
-            // }
-            //
-            // selectedUnitList.Clear();
+            foreach (var unit in selectedUnitList)
+            {
+                unit.Deselect();
+            }
+
+            selectedUnitList.Clear();
         }
 
         /// <summary>
@@ -253,10 +248,10 @@ namespace FullMoon.Camera
         /// </summary>
         private void SelectUnit(BaseUnitController newUnit)
         {
-            // // 유닛이 선택되었을 때 호출하는 메소드
-            // newUnit.SelectUnit();
-            // // 선택한 유닛 정보를 리스트에 저장
-            // selectedUnitList.Add(newUnit);
+            // 유닛이 선택되었을 때 호출하는 메소드
+            newUnit.Select();
+            // 선택한 유닛 정보를 리스트에 저장
+            selectedUnitList.Add(newUnit);
         }
 
         /// <summary>
@@ -264,10 +259,10 @@ namespace FullMoon.Camera
         /// </summary>
         private void DeselectUnit(BaseUnitController newUnit)
         {
-            // // 유닛이 해제되었을 때 호출하는 메소드
-            // newUnit.DeSelectUnit();
-            // // 선택한 유닛 정보를 리스트에서 삭제
-            // selectedUnitList.Remove(newUnit);
+            // 유닛이 해제되었을 때 호출하는 메소드
+            newUnit.Deselect();
+            // 선택한 유닛 정보를 리스트에서 삭제
+            selectedUnitList.Remove(newUnit);
         }
         
         /// <summary>

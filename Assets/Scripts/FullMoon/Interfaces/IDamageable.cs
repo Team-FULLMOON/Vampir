@@ -1,5 +1,4 @@
 using FullMoon.Entities.Unit;
-using FullMoon.FSM;
 
 namespace FullMoon.Interfaces
 {

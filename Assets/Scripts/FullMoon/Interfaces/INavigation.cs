@@ -6,7 +6,7 @@ namespace FullMoon.Interfaces
     public interface INavigation
     {
         NavMeshAgent Agent { get; set; }
-        void MoveToPosition(Transform location);
+        void MoveToPosition(Vector3 location);
     }
 }
 
