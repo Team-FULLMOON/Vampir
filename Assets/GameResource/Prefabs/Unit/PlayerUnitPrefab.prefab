@@ -163,7 +163,7 @@ MonoBehaviour:
   _unithandType: 0
   _unitState: 0
   unitMarker: {fileID: 7576867232460400837}
-  arrowPrefab: {fileID: 3553864802376532930, guid: 216bd94cabd23d348a0c97deb846465b,
+  arrowPrefab: {fileID: 1865141228694824871, guid: c6efc163af2966448acaa655aabaa296,
     type: 3}
   spawnPoint: {fileID: 4213249321151848737}
 --- !u!195 &4249598075055521464
