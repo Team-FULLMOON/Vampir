@@ -12,6 +12,9 @@ namespace FullMoon.Entities.Unit
     {
         [Foldout("Ranged Unit Settings")]
         [SerializeField] private GameObject attackEffect;
+        
+        // [Foldout("Ranged Unit Settings")]
+        // [SerializeField] private GameObject ;
 
         public RangedUnitData OverridenUnitData  { get; set; }
 
