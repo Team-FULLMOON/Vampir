@@ -7,7 +7,9 @@ namespace FullMoon.Camera
     public class CameraController : MonoBehaviour
     {
         [SerializeField] private CinemachineFreeLook freeLookCamera;
-    
+
+        [SerializeField] private bool enableCursorMovement;
+        
         [Header("Movement")]
         [SerializeField] private float moveSpeed = 12f;
         [SerializeField] private float shiftMoveSpeed = 25f;
@@ -31,7 +33,7 @@ namespace FullMoon.Camera
         {
             Vector3 moveDirection = AdjustMovementToCamera(PlayerInputManager.Instance.move);
 
-            if (moveDirection == Vector3.zero)
+            if (moveDirection == Vector3.zero && enableCursorMovement)
             {
                 moveDirection = AdjustMovementToCamera(GetScreenMovementInput());
             }

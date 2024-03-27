@@ -63,6 +63,10 @@ namespace FullMoon.Entities.Unit
 
         private void OnDrawGizmos()
         {
+            if (viewRange == null)
+            {
+                return;
+            }
             viewRange.radius = unitData.AttackRange * 2f;
         }
     }
