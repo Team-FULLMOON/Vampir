@@ -34,7 +34,7 @@ namespace FullMoon.Entities.Unit
                 return;
             }
             UnitInsideViewArea.Add(controller);
-            Debug.Log($"{gameObject.name}: {UnitInsideViewArea.Count}");
+            // Debug.Log($"{gameObject.name}: {UnitInsideViewArea.Count}");
         }
 
         public void ExitViewRange(Collider unit)
@@ -45,7 +45,7 @@ namespace FullMoon.Entities.Unit
                 return;
             }
             UnitInsideViewArea.Remove(controller);
-            Debug.Log($"{gameObject.name}: {UnitInsideViewArea.Count}");
+            // Debug.Log($"{gameObject.name}: {UnitInsideViewArea.Count}");
         }
 
         public void ExecuteAttack(Transform location)
