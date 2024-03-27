@@ -24,7 +24,7 @@ namespace FullMoon.Unit.Data
     
         [ConditionalField(nameof(attackEnabled)), SerializeField]
         private int attackDamage = 1;
-        public int AttackDamage => attackDamage; 
+        public int AttackDamage => attackDamage;
         
         [ConditionalField(nameof(attackEnabled)), SerializeField]
         private float attackDelay = 1f;
@@ -33,6 +33,10 @@ namespace FullMoon.Unit.Data
         [ConditionalField(nameof(attackEnabled)), SerializeField]
         private float attackSpeed = 1f;
         public float AttackSpeed => attackSpeed;
+        
+        [ConditionalField(nameof(attackEnabled)), SerializeField]
+        private float attackRange = 10f;
+        public float AttackRange => attackRange;
     
         [Separator]
     

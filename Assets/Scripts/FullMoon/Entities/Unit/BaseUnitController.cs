@@ -19,6 +19,9 @@ namespace FullMoon.Entities.Unit
         [Foldout("Base Unit Settings")] 
         public GameObject unitMarker;
         
+        [Foldout("Base Unit Settings")] 
+        public SphereCollider viewRange;
+        
         public readonly StateMachine StateMachine = new();
         
         public Rigidbody Rb { get; private set; }
@@ -56,6 +59,11 @@ namespace FullMoon.Entities.Unit
         public void MoveToPosition(Vector3 location)
         {
             Agent.SetDestination(location);
+        }
+
+        private void OnDrawGizmos()
+        {
+            viewRange.radius = unitData.AttackRange * 2f;
         }
     }
 }

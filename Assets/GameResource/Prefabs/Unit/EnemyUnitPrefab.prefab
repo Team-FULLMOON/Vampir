@@ -69,6 +69,7 @@ Transform:
   m_Children:
   - {fileID: 8361019776825736810}
   - {fileID: 8159237029551545728}
+  - {fileID: 423688007147124878}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7113569909016340713
@@ -195,7 +196,7 @@ MonoBehaviour:
   _unithandType: 1
   _unitState: 0
   unitMarker: {fileID: 7576867232460400837}
-  arrowPrefab: {fileID: 1865141228694824871, guid: c6efc163af2966448acaa655aabaa296,
+  arrowPrefab: {fileID: 4378962998115660204, guid: 17ceef04daf8c19429fbb0b1774084b9,
     type: 3}
   spawnPoint: {fileID: 8159237029551545728}
 --- !u!195 &4249598075055521464
@@ -235,7 +236,88 @@ MonoBehaviour:
   unitType: Enemy
   unitData: {fileID: 11400000, guid: 94ec904549f7da546a295aafe6d56964, type: 2}
   unitMarker: {fileID: 7576867232460400837}
-  attackEffect: {fileID: 0}
+  viewRange: {fileID: 3441837935141814331}
+  attackEffect: {fileID: 4378962998115660204, guid: 17ceef04daf8c19429fbb0b1774084b9,
+    type: 3}
+--- !u!1 &6553755421834367351
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 423688007147124878}
+  - component: {fileID: 3441837935141814331}
+  - component: {fileID: 5086061872372227719}
+  m_Layer: 8
+  m_Name: View Range
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &423688007147124878
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6553755421834367351}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2506871265802442931}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &3441837935141814331
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6553755421834367351}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 10
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5086061872372227719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6553755421834367351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1cd926bb9d510543847bc79ae7379f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Preset: 1
+  CustomWireColor: {r: 0, g: 0, b: 0, a: 0}
+  CustomFillColor: {r: 0, g: 0, b: 0, a: 0}
+  CustomCenterColor: {r: 0, g: 0, b: 0, a: 0}
+  Alpha: 1
+  WireColor: {r: 0.56078434, g: 0, b: 0.08235294, a: 0.7921569}
+  FillColor: {r: 0.85490197, g: 0, b: 0, a: 0.14509805}
+  CenterColor: {r: 0.5294118, g: 0.14117648, b: 0.14117648, a: 0.6745098}
+  DrawFill: 1
+  DrawWire: 1
+  DrawCenter: 0
+  CenterMarkerRadius: 1
+  IncludeChildColliders: 0
 --- !u!1 &7576867232460400837
 GameObject:
   m_ObjectHideFlags: 0

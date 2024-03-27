@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0da91f06fca8f9a46a3fe3533154bd91, type: 3}
   m_Name: RangedUnit
   m_EditorClassIdentifier: 
+  maxHp: 5
+  defenseStrength: 5
   movementSpeed: 5
-  changeFacingDuration: 1
-  movementSpeedasdf: 5
+  attackEnabled: 1
+  attackDamage: 1
+  attackDelay: 1
+  attackSpeed: 1
+  attackRange: 5
+  fogOfWarRadius: 20
+  test: 5
