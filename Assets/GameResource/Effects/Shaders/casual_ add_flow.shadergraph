@@ -1105,10 +1105,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1221.0001220703125,
-            "y": 752.0000610351563,
+            "x": -1233.0,
+            "y": 852.0,
             "width": 145.0,
-            "height": 129.00006103515626
+            "height": 129.0
         }
     },
     "m_Slots": [
@@ -1473,10 +1473,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -782.0000610351563,
-            "y": 567.0,
-            "width": 126.0,
-            "height": 118.0
+            "x": -793.9999389648438,
+            "y": 662.0,
+            "width": 125.99993896484375,
+            "height": 117.99993896484375
         }
     },
     "m_Slots": [
@@ -1700,10 +1700,10 @@
         "m_Expanded": false,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1224.0001220703125,
-            "y": 670.0000610351563,
-            "width": 119.0,
-            "height": 77.0
+            "x": -1235.9998779296875,
+            "y": 765.0,
+            "width": 118.9998779296875,
+            "height": 76.99993896484375
         }
     },
     "m_Slots": [
@@ -2293,10 +2293,10 @@
         "m_Expanded": false,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1253.0001220703125,
-            "y": 555.0,
-            "width": 145.0,
-            "height": 112.0
+            "x": -1264.9998779296875,
+            "y": 650.0,
+            "width": 144.9998779296875,
+            "height": 110.99993896484375
         }
     },
     "m_Slots": [
@@ -2333,9 +2333,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1374.0001220703125,
-            "y": 670.0000610351563,
-            "width": 145.0,
+            "x": -1385.9998779296875,
+            "y": 765.0,
+            "width": 144.9998779296875,
             "height": 129.0
         }
     },
@@ -2483,10 +2483,10 @@
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.GroupData",
     "m_ObjectId": "4ca89e332cd34b16a96bfe9b0b6f77f4",
-    "m_Title": "Sofr_partcle_factor",
+    "m_Title": "Sofr_partcle_factor_B",
     "m_Position": {
-        "x": -1399.000244140625,
-        "y": 495.9999694824219
+        "x": -1410.9998779296875,
+        "y": 590.9999389648438
     }
 }
 
@@ -2874,8 +2874,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1068.0001220703125,
-            "y": 594.0000610351563,
+            "x": -1080.0,
+            "y": 689.0,
             "width": 126.0,
             "height": 117.99993896484375
         }
@@ -3946,9 +3946,9 @@
         "m_Expanded": false,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1065.0,
-            "y": 757.0000610351563,
-            "width": 118.9998779296875,
+            "x": -1077.0,
+            "y": 851.9999389648438,
+            "width": 119.0,
             "height": 77.0
         }
     },
@@ -5125,9 +5125,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -917.0001220703125,
-            "y": 592.0000610351563,
-            "width": 125.99993896484375,
+            "x": -929.0,
+            "y": 687.0,
+            "width": 126.00006103515625,
             "height": 117.99993896484375
         }
     },
@@ -5307,7 +5307,7 @@
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.GroupData",
     "m_ObjectId": "c3300a0d20ce4558be15828327655cad",
-    "m_Title": "Emissive_Power",
+    "m_Title": "Emissive_Power_G",
     "m_Position": {
         "x": -540.0000610351563,
         "y": -333.00006103515627
@@ -6029,7 +6029,7 @@
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.GroupData",
     "m_ObjectId": "de5a52d2122c4d20b4cef77b868831aa",
-    "m_Title": "Dissolve",
+    "m_Title": "Dissolve_A",
     "m_Position": {
         "x": -1821.0001220703125,
         "y": 122.99999237060547
