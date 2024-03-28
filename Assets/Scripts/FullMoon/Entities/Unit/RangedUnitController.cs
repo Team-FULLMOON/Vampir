@@ -57,16 +57,9 @@ namespace FullMoon.Entities.Unit
             // effect.GetComponent<ArrowMove>().SetTargetPos(_unitTarget.transform, u_ap, transform);
         }
 
-        public override void MoveToPosition(Vector3 location, int unitCount)
+        public override void MoveToPosition(Vector3 location)
         {
-            float variation = 2.5f;
-            Vector3 destinationVariation = Vector3.zero;
-            if (unitCount > 1)
-            {
-                destinationVariation = new Vector3(Random.Range(-variation, variation), 0, Random.Range(-variation, variation));
-            }
-            
-            base.MoveToPosition(location + destinationVariation, unitCount);
+            base.MoveToPosition(location);
             StateMachine.ChangeState(new RangeUnitMove(this));
         }
 

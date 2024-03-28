@@ -15,7 +15,7 @@ namespace FullMoon.Entities.Unit.States
         
         public void Enter()
         {
-            Debug.Log($"{controller.name} Idle Enter");
+            // Debug.Log($"{controller.name} Idle Enter");
         }
 
         public void Execute()
@@ -40,7 +40,7 @@ namespace FullMoon.Entities.Unit.States
 
         public void Exit()
         {
-            Debug.Log($"{controller.name} Idle Exit");
+            // Debug.Log($"{controller.name} Idle Exit");
         }
     }
 }

@@ -223,7 +223,7 @@ namespace FullMoon.Camera
                 if (unit.unitType.Equals("Enemy"))
                     continue;
                 
-                unit.MoveToPosition(end, selectedUnitList.Count);
+                unit.MoveToPosition(end);
             }
         }
 

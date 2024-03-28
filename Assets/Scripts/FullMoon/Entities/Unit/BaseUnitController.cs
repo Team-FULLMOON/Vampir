@@ -27,12 +27,14 @@ namespace FullMoon.Entities.Unit
         
         public Rigidbody Rb { get; private set; }
         public NavMeshAgent Agent { get; set; }
+        public Vector3 LatestDestination { get; set; }
         public int Hp { get; set; }
 
         protected virtual void Start()
         {
             Rb = GetComponent<Rigidbody>();
             Agent = GetComponent<NavMeshAgent>();
+            LatestDestination = transform.position;
             Hp = unitData.MaxHp;
             unitMarker.SetActive(false);
         }
@@ -67,9 +69,10 @@ namespace FullMoon.Entities.Unit
             unitMarker.SetActive(false);
         }
         
-        public virtual void MoveToPosition(Vector3 location, int unitCount)
+        public virtual void MoveToPosition(Vector3 location)
         {
             Agent.SetDestination(location);
+            LatestDestination = location;
         }
 
         private void OnDrawGizmos()
