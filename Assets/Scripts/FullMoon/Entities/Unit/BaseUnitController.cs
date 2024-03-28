@@ -1,5 +1,3 @@
-using System;
-using FullMoon.Entities.Unit.States;
 using MyBox;
 using UnityEngine;
 using UnityEngine.AI;
@@ -69,11 +67,9 @@ namespace FullMoon.Entities.Unit
             unitMarker.SetActive(false);
         }
         
-        public virtual void MoveToPosition(Vector3 location)
+        public virtual void MoveToPosition(Vector3 location, int unitCount)
         {
-            float variation = 2.5f;
-            Vector3 destinationVariation = new Vector3(Random.Range(-variation, variation), 0, Random.Range(-variation, variation));
-            Agent.SetDestination(location + destinationVariation);
+            Agent.SetDestination(location);
         }
 
         private void OnDrawGizmos()

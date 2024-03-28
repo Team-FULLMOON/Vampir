@@ -2845,9 +2845,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedUnitList: []
-  layerGround:
-    serializedVersion: 2
-    m_Bits: 2048
   dragRectangle: {fileID: 1322504881}
   mousePos: {x: 0, y: 0, z: 0}
 --- !u!114 &386952314
@@ -8642,7 +8639,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -1000, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1322504882
 MonoBehaviour:
@@ -11265,8 +11262,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1754245897}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.036325008, y: -0.000000014901161, z: 0.000000037252903,
-    w: 0.99934006}
+  m_LocalRotation: {x: -0.036324974, y: -0, z: -0.000000007450581, w: 0.99934006}
   m_LocalPosition: {x: -0.0000003874302, y: 0.00000023841858, z: 0.00000011920929}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
