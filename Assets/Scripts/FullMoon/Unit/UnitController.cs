@@ -199,6 +199,8 @@ namespace FullMoon.Unit
         // 유닛 공격 함수
         private void DoAttack()
         {
+            transform.LookAt(_unitTarget.transform.position);
+            
             switch (_unitType)
             {
                 case UnitType.Archer:

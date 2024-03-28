@@ -163,7 +163,7 @@ MonoBehaviour:
   _unithandType: 0
   _unitState: 0
   unitMarker: {fileID: 7576867232460400837}
-  arrowPrefab: {fileID: 3553864802376532930, guid: 216bd94cabd23d348a0c97deb846465b,
+  arrowPrefab: {fileID: 1869586243950602327, guid: 389e4162ccc66614383fd660dc457e32,
     type: 3}
   spawnPoint: {fileID: 4213249321151848737}
 --- !u!195 &4249598075055521464
@@ -297,7 +297,7 @@ Transform:
   m_GameObject: {fileID: 8599468318233565377}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
