@@ -10,18 +10,24 @@ namespace FullMoon.Unit
         [SerializeField] private GameObject _gunHitVariant;
 
         [SerializeField] private float bulletSpeed;
-        
+
+        private ParticleSystem _ps;
         private float arrowDamage;
         private Transform targetPos;
         private Transform fromPos;
         private Vector3 pos;
+
+        private void Awake()
+        {
+            _ps = GetComponent<ParticleSystem>();
+        }
 
         private void Update()
         {
             transform.Translate(Vector3.right * bulletSpeed * Time.deltaTime);
         }
 
-        // 화살 초기 값 설정
+        // 불릿 초기 값 설정
         public void SetTargetPos(Transform pos, float damage, Transform fromUnit)
         {
             arrowDamage = damage;
