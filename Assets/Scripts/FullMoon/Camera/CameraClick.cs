@@ -10,9 +10,6 @@ namespace FullMoon.Camera
         [Header("UnitList")]
         [SerializeField] List<BaseUnitController> selectedUnitList; // 플레이어가 클릭 or 드래그로 선택한 유닛
 
-        [Header("Layer")]
-        [SerializeField] LayerMask layerGround;
-
         [Header("DragInfo")]
         [SerializeField] RectTransform dragRectangle; // 마우스로 드래그한 범위를 가시화하는 Image UI의 RectTransform
         private Rect dragRect; // 마우스로 드래그 한 범위 (xMin~xMax, yMin~yMax)
@@ -122,7 +119,7 @@ namespace FullMoon.Camera
             start = UnityEngine.InputSystem.Mouse.current.position.value;
             dragRect = new Rect();
 
-            if (Physics.Raycast(ray, out var hit, Mathf.Infinity))
+            if (Physics.Raycast(ray, out var hit, Mathf.Infinity, (1 << LayerMask.NameToLayer("Unit")) | (1 << LayerMask.NameToLayer("Ground"))))
             {
                 var unitController = hit.transform.GetComponent<BaseUnitController>();
                 if (unitController != null)
@@ -161,7 +158,7 @@ namespace FullMoon.Camera
         private void HandleRightClick()
         {
             Ray ray = mainCamera.ScreenPointToRay(UnityEngine.InputSystem.Mouse.current.position.value);
-            if (Physics.Raycast(ray, out var hit, Mathf.Infinity, layerGround))
+            if (Physics.Raycast(ray, out var hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Ground")))
             {
                 var rangedUnitController = hit.transform.GetComponent<BaseUnitController>();
                 if (rangedUnitController != null)

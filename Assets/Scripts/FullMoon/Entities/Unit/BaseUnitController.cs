@@ -4,6 +4,7 @@ using UnityEngine.AI;
 using FullMoon.FSM;
 using FullMoon.Unit.Data;
 using FullMoon.Interfaces;
+using Random = UnityEngine.Random;
 
 namespace FullMoon.Entities.Unit
 {
@@ -26,14 +27,26 @@ namespace FullMoon.Entities.Unit
         
         public Rigidbody Rb { get; private set; }
         public NavMeshAgent Agent { get; set; }
+        public Vector3 LatestDestination { get; set; }
         public int Hp { get; set; }
 
         protected virtual void Start()
         {
             Rb = GetComponent<Rigidbody>();
             Agent = GetComponent<NavMeshAgent>();
+            LatestDestination = transform.position;
             Hp = unitData.MaxHp;
             unitMarker.SetActive(false);
+        }
+
+        protected virtual void Update()
+        {
+            StateMachine.ExecuteCurrentState();
+        }
+
+        protected virtual void FixedUpdate()
+        {
+            StateMachine.FixedExecuteCurrentState();
         }
 
         public virtual void ReceiveDamage(int amount, BaseUnitController attacker)
@@ -56,13 +69,18 @@ namespace FullMoon.Entities.Unit
             unitMarker.SetActive(false);
         }
         
-        public void MoveToPosition(Vector3 location)
+        public virtual void MoveToPosition(Vector3 location)
         {
             Agent.SetDestination(location);
+            LatestDestination = location;
         }
 
         private void OnDrawGizmos()
         {
+            if (viewRange == null)
+            {
+                return;
+            }
             viewRange.radius = unitData.AttackRange * 2f;
         }
     }
