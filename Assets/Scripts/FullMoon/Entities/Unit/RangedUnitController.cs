@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using FullMoon.Entities.Unit.States;
 using MyBox;
 using UnityEngine;
 using UnityEngine.AI;
@@ -24,6 +25,7 @@ namespace FullMoon.Entities.Unit
             base.Start();
             OverridenUnitData = (RangedUnitData)unitData;
             UnitInsideViewArea = new List<BaseUnitController>();
+            StateMachine.ChangeState(new RangeUnitIdle(this));
         }
 
         public void EnterViewRange(Collider unit)
@@ -53,6 +55,12 @@ namespace FullMoon.Entities.Unit
             // Todo: Object Pooling으로 변경 필요 
             GameObject effect = Instantiate(attackEffect, location.position, Quaternion.identity);
             // effect.GetComponent<ArrowMove>().SetTargetPos(_unitTarget.transform, u_ap, transform);
+        }
+
+        public override void MoveToPosition(Vector3 location)
+        {
+            base.MoveToPosition(location);
+            StateMachine.ChangeState(new RangeUnitMove(this));
         }
 
         private void OnDrawGizmos()

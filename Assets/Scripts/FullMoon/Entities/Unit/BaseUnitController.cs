@@ -1,9 +1,12 @@
+using System;
+using FullMoon.Entities.Unit.States;
 using MyBox;
 using UnityEngine;
 using UnityEngine.AI;
 using FullMoon.FSM;
 using FullMoon.Unit.Data;
 using FullMoon.Interfaces;
+using Random = UnityEngine.Random;
 
 namespace FullMoon.Entities.Unit
 {
@@ -36,6 +39,16 @@ namespace FullMoon.Entities.Unit
             unitMarker.SetActive(false);
         }
 
+        protected virtual void Update()
+        {
+            StateMachine.ExecuteCurrentState();
+        }
+
+        protected virtual void FixedUpdate()
+        {
+            StateMachine.FixedExecuteCurrentState();
+        }
+
         public virtual void ReceiveDamage(int amount, BaseUnitController attacker)
         {
             if (unitType.Equals(attacker.unitType))
@@ -56,9 +69,11 @@ namespace FullMoon.Entities.Unit
             unitMarker.SetActive(false);
         }
         
-        public void MoveToPosition(Vector3 location)
+        public virtual void MoveToPosition(Vector3 location)
         {
-            Agent.SetDestination(location);
+            float variation = 2.5f;
+            Vector3 destinationVariation = new Vector3(Random.Range(-variation, variation), 0, Random.Range(-variation, variation));
+            Agent.SetDestination(location + destinationVariation);
         }
 
         private void OnDrawGizmos()

@@ -121,7 +121,6 @@ namespace FullMoon.Camera
 
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity, (1 << LayerMask.NameToLayer("Unit")) | (1 << LayerMask.NameToLayer("Ground"))))
             {
-                Debug.Log(hit.transform.gameObject.layer.ToString());
                 var unitController = hit.transform.GetComponent<BaseUnitController>();
                 if (unitController != null)
                 {
