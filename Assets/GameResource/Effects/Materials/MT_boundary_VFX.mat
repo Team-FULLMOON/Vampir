@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: test_lee
+  m_Name: MT_boundary_VFX
   m_Shader: {fileID: -6465566751694194690, guid: 06fc55d902ea74140b403ba811c31cf4,
     type: 3}
   m_Parent: {fileID: 0}
@@ -113,6 +113,8 @@ Material:
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
+    - _boundary_int: 27.49
+    - _depth_intensity: 3.51
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 0.2028302, b: 0.2028302, a: 1}
