@@ -61,18 +61,32 @@ namespace FullMoon.Unit
 
         private void OnTriggerEnter(Collider other)
         {
-            ObjectPoolManager.SpawnObject(_gunHitVariant, transform.position, Quaternion.Euler(0, 0, 0));
-            gameObject.SetActive(false);
+            int groundLayer = LayerMask.NameToLayer("Ground");
+            int unitLayer = LayerMask.NameToLayer("Unit");
+            
+            int otherLayer = other.gameObject.layer;
 
-            if (fromPos.CompareTag(other.tag) || other.gameObject.layer == LayerMask.NameToLayer("Ground"))
-            {
-                Destroy(gameObject);
-                return;
+            // 레이어 비교
+            if (otherLayer == groundLayer) {
+                // Debug.Log("Collider is on Ground layer.");
+                ObjectPoolManager.SpawnObject(_gunHitVariant, transform.position, Quaternion.Euler(0, 0, 0));
+            } else if (otherLayer == unitLayer) {
+                // Debug.Log("Collider is on Unit layer.");
+                ObjectPoolManager.SpawnObject(_gunHitVariant, transform.position, Quaternion.Euler(0, 0, 0));
             }
-            
-            other.GetComponent<UnitController>().TakeDamage(arrowDamage, fromPos.GetComponent<UnitController>());
-            
-            Destroy(gameObject);
+                
+            // ObjectPoolManager.SpawnObject(_gunHitVariant, transform.position, Quaternion.Euler(0, 0, 0));
+            // gameObject.SetActive(false);
+            //
+            // if (fromPos.CompareTag(other.tag) || other.gameObject.layer == LayerMask.NameToLayer("Ground"))
+            // {
+            //     Destroy(gameObject);
+            //     return;
+            // }
+            //
+            // other.GetComponent<UnitController>().TakeDamage(arrowDamage, fromPos.GetComponent<UnitController>());
+            //
+            // Destroy(gameObject);
         }
     }
 }

@@ -305,7 +305,7 @@ MonoBehaviour:
   unitData: {fileID: 11400000, guid: 94ec904549f7da546a295aafe6d56964, type: 2}
   unitMarker: {fileID: 7576867232460400837}
   viewRange: {fileID: 7512172322329104421}
-  attackEffect: {fileID: 4378962998115660204, guid: 17ceef04daf8c19429fbb0b1774084b9,
+  attackEffect: {fileID: 7121363375999854799, guid: e0536bfec450158458c0aac3c61d8e84,
     type: 3}
 --- !u!1 &7576867232460400837
 GameObject:
