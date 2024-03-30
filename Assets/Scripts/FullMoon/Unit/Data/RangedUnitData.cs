@@ -10,7 +10,7 @@ namespace FullMoon.Unit.Data
     {
         [Separator("Ranged Unit Settings")]
     
-        [SerializeField, ReadOnly] private float test = 5f;
-        public float Test => test;
+        [SerializeField] private float bulletSpeed = 70f;
+        public float BulletSpeed => bulletSpeed;
     }
 }

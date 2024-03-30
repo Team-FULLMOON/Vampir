@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
+using FullMoon.Effect;
 using FullMoon.Entities.Unit.States;
 using MyBox;
 using UnityEngine;
 using UnityEngine.AI;
 using FullMoon.Interfaces;
 using FullMoon.Unit.Data;
+using FullMoon.Util;
 
 namespace FullMoon.Entities.Unit
 {
@@ -14,7 +16,7 @@ namespace FullMoon.Entities.Unit
         : BaseUnitController, IAttackable
     {
         [Foldout("Ranged Unit Settings")]
-        [SerializeField] private GameObject attackEffect;
+        public GameObject attackEffect;
 
         public RangedUnitData OverridenUnitData  { get; set; }
         
@@ -50,11 +52,11 @@ namespace FullMoon.Entities.Unit
             // Debug.Log($"{gameObject.name}: {UnitInsideViewArea.Count}");
         }
 
-        public void ExecuteAttack(Transform location)
+        public void ExecuteAttack(Transform target)
         {
             // Todo: Object Pooling으로 변경 필요 
-            GameObject effect = Instantiate(attackEffect, location.position, Quaternion.identity);
-            // effect.GetComponent<ArrowMove>().SetTargetPos(_unitTarget.transform, u_ap, transform);
+            GameObject bullet = ObjectPoolManager.SpawnObject(attackEffect, transform.position, Quaternion.identity);
+            bullet.GetComponent<BulletEffectController>().Fire(target, transform, OverridenUnitData.BulletSpeed, OverridenUnitData.AttackDamage);
         }
 
         public override void MoveToPosition(Vector3 location)
