@@ -17,6 +17,7 @@ namespace FullMoon.Entities.Unit.States
         {
             Debug.Log($"{controller.name} Move Enter");
             controller.Agent.isStopped = false;
+            controller.Agent.speed = controller.OverridenUnitData.MovementSpeed;
         }
 
         public void Execute()
