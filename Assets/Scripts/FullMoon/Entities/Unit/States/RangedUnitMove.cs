@@ -4,11 +4,11 @@ using FullMoon.FSM;
 
 namespace FullMoon.Entities.Unit.States
 {
-    public class RangeUnitMove : IState
+    public class RangedUnitMove : IState
     {
         private readonly RangedUnitController controller;
 
-        public RangeUnitMove(RangedUnitController controller)
+        public RangedUnitMove(RangedUnitController controller)
         {
             this.controller = controller;
         }
@@ -25,7 +25,7 @@ namespace FullMoon.Entities.Unit.States
             {
                 Debug.Log($"{controller.name} Destination reached.");
                 controller.Agent.isStopped = true; 
-                controller.StateMachine.ChangeState(new RangeUnitIdle(controller));
+                controller.StateMachine.ChangeState(new RangedUnitIdle(controller));
                 return;
             }
             
@@ -41,7 +41,7 @@ namespace FullMoon.Entities.Unit.States
             {
                 Debug.Log($"{controller.name} Destination Near By reached.");
                 controller.Agent.isStopped = true; 
-                controller.StateMachine.ChangeState(new RangeUnitIdle(controller));
+                controller.StateMachine.ChangeState(new RangedUnitIdle(controller));
             }
         }
 

@@ -15,18 +15,41 @@ namespace FullMoon.Effect
         private float speed;
         private int damage;
 
+        private Vector3 lastPosition;
         private int groundLayer;
         private int unitLayer;
+        private bool isFired;
 
-        private void Start()
+        private void OnEnable()
         {
             groundLayer = LayerMask.NameToLayer("Ground");
             unitLayer = LayerMask.NameToLayer("Unit");
+            lastPosition = transform.position;
+            isFired = false;
         }
 
         private void Update()
         {
-            transform.Translate(Vector3.forward * (speed * Time.deltaTime));
+            if (isFired == false)
+            {
+                return;
+            }
+
+            float step = speed * Time.deltaTime;
+            Vector3 currentPosition = transform.position;
+            Vector3 direction = currentPosition - lastPosition;
+            float distance = direction.magnitude;
+
+            if (distance > 0)
+            {
+                if (Physics.Raycast(lastPosition, direction.normalized, out var hit, distance + step))
+                {
+                    HandleCollision(hit);
+                }
+            }
+
+            lastPosition = currentPosition;
+            transform.Translate(Vector3.forward * step);
         }
         
         public void Fire(Transform targetTransform, Transform fireTransform, float speedValue, int damageValue)
@@ -39,28 +62,26 @@ namespace FullMoon.Effect
             
             transform.LookAt(targetTransform);
             ObjectPoolManager.SpawnObject(firingEffect, transform.position, Quaternion.identity).transform.LookAt(targetTransform);
+            isFired = true;
         }
-        
-        private void OnTriggerEnter(Collider other)
+
+        private void HandleCollision(RaycastHit hit)
         {
-            int otherLayer = other.gameObject.layer;
+            int otherLayer = hit.collider.gameObject.layer;
+
+            if (otherLayer == groundLayer || otherLayer == unitLayer)
+            {
+                ObjectPoolManager.ReturnObjectToPool(gameObject);
+                ObjectPoolManager.SpawnObject(hitEffect, hit.point, Quaternion.identity);
+            }
             
-            if (otherLayer == groundLayer) 
+            if (otherLayer == unitLayer)
             {
-                // Destroy(gameObject);
-                ObjectPoolManager.ReturnObjectToPool(gameObject);
-                ObjectPoolManager.SpawnObject(hitEffect, transform.position, Quaternion.Euler(0, 0, 0));
-            } 
-            else if (otherLayer == unitLayer)
-            {
-                if (other.GetComponent<BaseUnitController>().unitType.Equals(fromType))
+                var unitController = hit.collider.GetComponent<BaseUnitController>();
+                if (unitController != null && !unitController.unitType.Equals(fromType))
                 {
-                    return;
+                    Debug.Log($"{from.name}: Hit {hit.collider.name}");
                 }
-                Debug.Log(other.name);
-                // Destroy(gameObject);
-                ObjectPoolManager.ReturnObjectToPool(gameObject);
-                ObjectPoolManager.SpawnObject(hitEffect, transform.position, Quaternion.Euler(0, 0, 0));
             }
         }
     }

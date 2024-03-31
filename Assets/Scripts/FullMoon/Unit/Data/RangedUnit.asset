@@ -21,4 +21,4 @@ MonoBehaviour:
   attackSpeed: 1
   attackRange: 5
   fogOfWarRadius: 20
-  bulletSpeed: 55
+  bulletSpeed: 60
