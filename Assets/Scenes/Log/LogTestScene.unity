@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17443559, g: 0.21816261, b: 0.30039972, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1072,8 +1072,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 451002efe51e9884a9c1cca4fe5dff7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitPrefab: {fileID: 4080469667919466714, guid: ebfe1c8235e29114fb8f6e6a6a170942,
-    type: 3}
+  playerUnitPrefab: []
+  enemyUnitPrefab: []
+  playerUnitIcon: []
+  enemyUnitIcon: []
   maxUnitCount: 10
 --- !u!4 &176846131
 Transform:
@@ -2554,6 +2556,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   freeLookCamera: {fileID: 100951028}
+  enableCursorMovement: 0
   moveSpeed: 12
   shiftMoveSpeed: 25
   zoomSensitivity: 5
@@ -2572,14 +2575,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8e851c5a79a8746aa62566b550241e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitSpawner: {fileID: 176846130}
   selectedUnitList: []
-  layerUnit:
-    serializedVersion: 2
-    m_Bits: 256
-  layerGround:
-    serializedVersion: 2
-    m_Bits: 2048
   dragRectangle: {fileID: 1322504881}
   mousePos: {x: 0, y: 0, z: 0}
 --- !u!114 &386952314
