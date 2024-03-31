@@ -1,14 +1,13 @@
 using System.Linq;
-using UnityEngine;
 using FullMoon.FSM;
 
 namespace FullMoon.Entities.Unit.States
 {
-    public class RangeUnitIdle : IState
+    public class RangedUnitIdle : IState
     {
         private readonly RangedUnitController controller;
 
-        public RangeUnitIdle(RangedUnitController controller)
+        public RangedUnitIdle(RangedUnitController controller)
         {
             this.controller = controller;
         }
@@ -30,7 +29,7 @@ namespace FullMoon.Entities.Unit.States
                 return;
             }
             
-            controller.StateMachine.ChangeState(new RangeUnitAttack(controller));
+            controller.StateMachine.ChangeState(new RangedUnitAttack(controller));
         }
 
         public void FixedExecute()

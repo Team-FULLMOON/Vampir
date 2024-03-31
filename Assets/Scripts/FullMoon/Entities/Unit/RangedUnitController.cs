@@ -1,13 +1,13 @@
-using System.Collections.Generic;
-using System.Linq;
-using FullMoon.Effect;
-using FullMoon.Entities.Unit.States;
 using MyBox;
+using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using FullMoon.Util;
+using FullMoon.Effect;
 using FullMoon.Interfaces;
 using FullMoon.Unit.Data;
-using FullMoon.Util;
+using FullMoon.Entities.Unit.States;
 
 namespace FullMoon.Entities.Unit
 {
@@ -27,7 +27,7 @@ namespace FullMoon.Entities.Unit
             base.Start();
             OverridenUnitData = (RangedUnitData)unitData;
             UnitInsideViewArea = new List<BaseUnitController>();
-            StateMachine.ChangeState(new RangeUnitIdle(this));
+            StateMachine.ChangeState(new RangedUnitIdle(this));
         }
 
         public void EnterViewRange(Collider unit)
@@ -62,11 +62,16 @@ namespace FullMoon.Entities.Unit
         public override void MoveToPosition(Vector3 location)
         {
             base.MoveToPosition(location);
-            StateMachine.ChangeState(new RangeUnitMove(this));
+            StateMachine.ChangeState(new RangedUnitMove(this));
         }
 
         private void OnDrawGizmos()
         {
+            if (unitData != null)
+            {
+                viewRange.radius = unitData.AttackRange * 2f;
+            }
+            
             if (Application.isPlaying == false)
             {
                 return;

@@ -1,16 +1,15 @@
 using System.Linq;
-using FullMoon.Effect;
-using FullMoon.FSM;
 using UnityEngine;
+using FullMoon.FSM;
 
 namespace FullMoon.Entities.Unit.States
 {
-    public class RangeUnitAttack : IState
+    public class RangedUnitAttack : IState
     {
         private readonly RangedUnitController controller;
         private float timer;
 
-        public RangeUnitAttack(RangedUnitController controller)
+        public RangedUnitAttack(RangedUnitController controller)
         {
             this.controller = controller;
         }
@@ -29,7 +28,7 @@ namespace FullMoon.Entities.Unit.States
 
             if (closestUnit == null)
             {
-                controller.StateMachine.ChangeState(new RangeUnitIdle(controller));
+                controller.StateMachine.ChangeState(new RangedUnitIdle(controller));
                 return;
             }
             
