@@ -18,7 +18,7 @@ MonoBehaviour:
   attackEnabled: 1
   attackDamage: 1
   attackDelay: 2
-  attackSpeed: 1.3
+  attackSpeed: 0.9
   attackRange: 5
   fogOfWarRadius: 20
   bulletSpeed: 55

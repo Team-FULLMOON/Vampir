@@ -38,7 +38,6 @@ namespace FullMoon.Entities.Unit
                 return;
             }
             UnitInsideViewArea.Add(controller);
-            // Debug.Log($"{gameObject.name}: {UnitInsideViewArea.Count}");
         }
 
         public void ExitViewRange(Collider unit)
@@ -49,12 +48,10 @@ namespace FullMoon.Entities.Unit
                 return;
             }
             UnitInsideViewArea.Remove(controller);
-            // Debug.Log($"{gameObject.name}: {UnitInsideViewArea.Count}");
         }
 
         public void ExecuteAttack(Transform target)
         {
-            // Todo: Object Pooling으로 변경 필요 
             GameObject bullet = ObjectPoolManager.SpawnObject(attackEffect, transform.position, Quaternion.identity);
             bullet.GetComponent<BulletEffectController>().Fire(target, transform, OverridenUnitData.BulletSpeed, OverridenUnitData.AttackDamage);
         }
