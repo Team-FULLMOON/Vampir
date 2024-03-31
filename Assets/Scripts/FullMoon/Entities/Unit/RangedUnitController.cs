@@ -6,8 +6,8 @@ using UnityEngine.AI;
 using FullMoon.Util;
 using FullMoon.Effect;
 using FullMoon.Interfaces;
-using FullMoon.Unit.Data;
 using FullMoon.Entities.Unit.States;
+using FullMoon.ScriptableObject;
 
 namespace FullMoon.Entities.Unit
 {

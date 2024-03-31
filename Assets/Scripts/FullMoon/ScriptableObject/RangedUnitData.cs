@@ -1,8 +1,7 @@
 using MyBox;
-using UnityEditor;
 using UnityEngine;
 
-namespace FullMoon.Unit.Data
+namespace FullMoon.ScriptableObject
 {
     [System.Serializable]
     [CreateAssetMenu(fileName = "RangedUnit", menuName = "Unit Data/Ranged Unit Data")]

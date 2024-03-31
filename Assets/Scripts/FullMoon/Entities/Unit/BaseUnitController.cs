@@ -2,8 +2,8 @@ using MyBox;
 using UnityEngine;
 using UnityEngine.AI;
 using FullMoon.FSM;
-using FullMoon.Unit.Data;
 using FullMoon.Interfaces;
+using FullMoon.ScriptableObject;
 using Random = UnityEngine.Random;
 
 namespace FullMoon.Entities.Unit

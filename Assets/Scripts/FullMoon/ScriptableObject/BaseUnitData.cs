@@ -1,10 +1,10 @@
 using MyBox;
 using UnityEngine;
 
-namespace FullMoon.Unit.Data
+namespace FullMoon.ScriptableObject
 {
     [System.Serializable]
-    public class BaseUnitData : ScriptableObject
+    public class BaseUnitData : UnityEngine.ScriptableObject
     {
         [Separator("Base Unit Settings")]
     
