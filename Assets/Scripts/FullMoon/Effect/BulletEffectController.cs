@@ -69,7 +69,7 @@ namespace FullMoon.Effect
         {
             int otherLayer = hit.collider.gameObject.layer;
 
-            if (otherLayer == groundLayer || otherLayer == unitLayer)
+            if (otherLayer == groundLayer)
             {
                 ObjectPoolManager.ReturnObjectToPool(gameObject);
                 ObjectPoolManager.SpawnObject(hitEffect, hit.point, Quaternion.identity);
@@ -80,7 +80,8 @@ namespace FullMoon.Effect
                 var unitController = hit.collider.GetComponent<BaseUnitController>();
                 if (unitController != null && !unitController.unitType.Equals(fromType))
                 {
-                    Debug.Log($"{from.name}: Hit {hit.collider.name}");
+                    ObjectPoolManager.ReturnObjectToPool(gameObject);
+                    ObjectPoolManager.SpawnObject(hitEffect, hit.point, Quaternion.identity);
                 }
             }
         }
