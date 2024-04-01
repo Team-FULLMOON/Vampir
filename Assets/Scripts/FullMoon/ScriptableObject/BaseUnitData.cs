@@ -34,11 +34,13 @@ namespace FullMoon.ScriptableObject
         private float attackSpeed = 1f;
         public float AttackSpeed => attackSpeed;
         
-        [ConditionalField(nameof(attackEnabled)), SerializeField]
-        private float attackRange = 10f;
+        [SerializeField] private float attackRange = 10f;
         public float AttackRange => attackRange;
     
         [Separator]
+        
+        [SerializeField] private float viewRadius = 10f;
+        public float ViewRadius => viewRadius;
     
         [SerializeField] private float fogOfWarRadius = 20f;
         public float FogOfWarRadius => fogOfWarRadius;

@@ -21,7 +21,7 @@ namespace FullMoon.Entities.Unit.States
 
         public void Execute()
         {
-            BaseUnitController closestUnit = controller.UnitInsideViewArea
+            BaseUnitController closestUnit  = controller.UnitInsideViewArea
                 .Where(t => !controller.unitType.Equals(t.unitType))
                 .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
                 .FirstOrDefault();
@@ -32,14 +32,22 @@ namespace FullMoon.Entities.Unit.States
                 return;
             }
             
+            bool checkDistance = (closestUnit.transform.position - controller.transform.position).sqrMagnitude <=
+                                 controller.OverridenUnitData.AttackRange * controller.OverridenUnitData.AttackRange;
+            
+            if (checkDistance == false)
+            {
+                controller.StateMachine.ChangeState(new RangedUnitChase(controller));
+                return;
+            }
+            
             if (timer > 0)
             {
                 timer -= Time.deltaTime;
                 return;
             }
-
+            
             controller.ExecuteAttack(closestUnit.transform);
-
             timer = controller.OverridenUnitData.AttackSpeed;
         }
 

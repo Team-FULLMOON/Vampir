@@ -1,36 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3391989062232558047
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8159237029551545728}
-  m_Layer: 8
-  m_Name: Spawn Point
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8159237029551545728
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3391989062232558047}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2506871265802442931}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4080469667919466714
 GameObject:
   m_ObjectHideFlags: 0
@@ -40,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2506871265802442931}
+  - component: {fileID: 4741472913089467137}
   - component: {fileID: 7113569909016340713}
   - component: {fileID: 7240595314269651823}
   - component: {fileID: 6102024267819438113}
   - component: {fileID: -6551739423607355598}
   - component: {fileID: 4249598075055521464}
-  - component: {fileID: 4741472913089467137}
   m_Layer: 8
   m_Name: EnemyRangedUnitPrefab
   m_TagString: Enemy
@@ -67,10 +36,29 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8361019776825736810}
-  - {fileID: 8159237029551545728}
+  - {fileID: 3090601280600017785}
   - {fileID: 423688007147124878}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4741472913089467137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4080469667919466714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91c5e465bcb34fb44b885f4c8192ff0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitType: Enemy
+  unitData: {fileID: 11400000, guid: b421f8da00fba1d4b9331a1ad49fa123, type: 2}
+  unitMarker: {fileID: 7576867232460400837}
+  viewRange: {fileID: 3441837935141814331}
+  decalProjector: {fileID: 1486825902135914203}
+  attackEffect: {fileID: 7121363375999854799, guid: e0536bfec450158458c0aac3c61d8e84,
+    type: 3}
 --- !u!33 &7113569909016340713
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -193,24 +181,6 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &4741472913089467137
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4080469667919466714}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91c5e465bcb34fb44b885f4c8192ff0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitType: Enemy
-  unitData: {fileID: 11400000, guid: b421f8da00fba1d4b9331a1ad49fa123, type: 2}
-  unitMarker: {fileID: 7576867232460400837}
-  viewRange: {fileID: 3441837935141814331}
-  attackEffect: {fileID: 7121363375999854799, guid: e0536bfec450158458c0aac3c61d8e84,
-    type: 3}
 --- !u!1 &6553755421834367351
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,6 +308,62 @@ MonoBehaviour:
   DrawCenter: 0
   CenterMarkerRadius: 1
   IncludeChildColliders: 0
+--- !u!1 &6644796406784662708
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3090601280600017785}
+  - component: {fileID: 1486825902135914203}
+  m_Layer: 0
+  m_Name: Decal Projector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3090601280600017785
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6644796406784662708}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2506871265802442931}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!114 &1486825902135914203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6644796406784662708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0777d029ed3dffa4692f417d4aba19ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 2100000, guid: f0d9d5e8b84dbf84685cd4aa9fa9c4b7, type: 2}
+  m_DrawDistance: 1000
+  m_FadeScale: 1
+  m_StartAngleFade: 180
+  m_EndAngleFade: 180
+  m_UVScale: {x: 1, y: 1}
+  m_UVBias: {x: 0, y: 0}
+  m_DecalLayerMask: 4294967295
+  m_ScaleMode: 0
+  m_Offset: {x: 0, y: 0, z: 2}
+  m_Size: {x: 10, y: 10, z: 5}
+  m_FadeFactor: 0.214
 --- !u!1 &7576867232460400837
 GameObject:
   m_ObjectHideFlags: 0

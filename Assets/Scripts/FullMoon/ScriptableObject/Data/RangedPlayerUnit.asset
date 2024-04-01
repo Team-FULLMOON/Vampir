@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 5
   defenseStrength: 5
-  movementSpeed: 5
+  movementSpeed: 3.5
   attackEnabled: 1
   attackDamage: 1
-  attackDelay: 2
+  attackDelay: 1.7
   attackSpeed: 1
-  attackRange: 5
+  attackRange: 8
+  viewRadius: 5
   fogOfWarRadius: 20
-  bulletSpeed: 60
+  bulletSpeed: 55

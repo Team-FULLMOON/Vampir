@@ -1,4 +1,3 @@
-using System.Linq;
 using FullMoon.FSM;
 
 namespace FullMoon.Entities.Unit.States
@@ -19,17 +18,12 @@ namespace FullMoon.Entities.Unit.States
 
         public void Execute()
         {
-            BaseUnitController closestUnit  = controller.UnitInsideViewArea
-                .Where(t => !controller.unitType.Equals(t.unitType))
-                .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
-                .FirstOrDefault();
-            
-            if (closestUnit == null)
+            if (controller.UnitInsideViewArea.Count == 0)
             {
                 return;
             }
             
-            controller.StateMachine.ChangeState(new RangedUnitAttack(controller));
+            controller.StateMachine.ChangeState(new RangedUnitChase(controller));
         }
 
         public void FixedExecute()
