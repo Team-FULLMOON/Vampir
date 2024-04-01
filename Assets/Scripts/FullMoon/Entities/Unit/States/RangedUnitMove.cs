@@ -15,7 +15,6 @@ namespace FullMoon.Entities.Unit.States
         
         public void Enter()
         {
-            Debug.Log($"{controller.name} Move Enter");
             controller.Agent.isStopped = false;
             controller.Agent.speed = controller.OverridenUnitData.MovementSpeed;
         }
@@ -24,7 +23,6 @@ namespace FullMoon.Entities.Unit.States
         {
             if (!controller.Agent.pathPending && controller.Agent.remainingDistance <= controller.Agent.stoppingDistance)
             {
-                Debug.Log($"{controller.name} Destination reached.");
                 controller.Agent.isStopped = true; 
                 controller.StateMachine.ChangeState(new RangedUnitIdle(controller));
                 return;
@@ -40,7 +38,6 @@ namespace FullMoon.Entities.Unit.States
             
             if (closestUnit != null)
             {
-                Debug.Log($"{controller.name} Destination Near By reached.");
                 controller.Agent.isStopped = true; 
                 controller.StateMachine.ChangeState(new RangedUnitIdle(controller));
             }
@@ -53,7 +50,7 @@ namespace FullMoon.Entities.Unit.States
 
         public void Exit()
         {
-            Debug.Log($"{controller.name} Move Exit");
+            controller.Agent.isStopped = true; 
         }
     }
 }

@@ -136,12 +136,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2506871265802442931}
+  - component: {fileID: 1413867717904740175}
   - component: {fileID: 7113569909016340713}
   - component: {fileID: 7240595314269651823}
   - component: {fileID: 6102024267819438113}
   - component: {fileID: -6551739423607355598}
   - component: {fileID: 4249598075055521464}
-  - component: {fileID: 1413867717904740175}
   m_Layer: 8
   m_Name: PlayerRangedUnitPrefab
   m_TagString: Player
@@ -167,6 +167,25 @@ Transform:
   - {fileID: 7730876355218233561}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1413867717904740175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4080469667919466714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91c5e465bcb34fb44b885f4c8192ff0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitType: 
+  unitData: {fileID: 11400000, guid: 94ec904549f7da546a295aafe6d56964, type: 2}
+  unitMarker: {fileID: 7576867232460400837}
+  viewRange: {fileID: 7512172322329104421}
+  decalProjector: {fileID: 7154825539201839683}
+  attackEffect: {fileID: 7121363375999854799, guid: e0536bfec450158458c0aac3c61d8e84,
+    type: 3}
 --- !u!33 &7113569909016340713
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -289,24 +308,6 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &1413867717904740175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4080469667919466714}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91c5e465bcb34fb44b885f4c8192ff0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitType: 
-  unitData: {fileID: 11400000, guid: 94ec904549f7da546a295aafe6d56964, type: 2}
-  unitMarker: {fileID: 7576867232460400837}
-  viewRange: {fileID: 7512172322329104421}
-  attackEffect: {fileID: 7121363375999854799, guid: e0536bfec450158458c0aac3c61d8e84,
-    type: 3}
 --- !u!1 &7576867232460400837
 GameObject:
   m_ObjectHideFlags: 0
@@ -445,5 +446,5 @@ MonoBehaviour:
   m_DecalLayerMask: 4294967295
   m_ScaleMode: 0
   m_Offset: {x: 0, y: 0, z: 2}
-  m_Size: {x: 10, y: 10, z: 5}
+  m_Size: {x: 16, y: 16, z: 5}
   m_FadeFactor: 0.214

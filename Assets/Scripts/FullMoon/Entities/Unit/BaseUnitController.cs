@@ -4,7 +4,6 @@ using UnityEngine.AI;
 using FullMoon.FSM;
 using FullMoon.Interfaces;
 using FullMoon.ScriptableObject;
-using Random = UnityEngine.Random;
 
 namespace FullMoon.Entities.Unit
 {
@@ -77,11 +76,10 @@ namespace FullMoon.Entities.Unit
 
         protected virtual void OnDrawGizmos()
         {
-            if (viewRange == null)
+            if (viewRange != null && unitData != null)
             {
-                return;
+                viewRange.radius = unitData.ViewRadius * 2f;
             }
-            viewRange.radius = unitData.ViewRadius * 2f;
         }
     }
 }

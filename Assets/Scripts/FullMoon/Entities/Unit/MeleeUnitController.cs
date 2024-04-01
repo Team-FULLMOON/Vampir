@@ -3,8 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using FullMoon.Util;
-using FullMoon.Effect;
+using UnityEngine.Rendering.Universal;
 using FullMoon.Interfaces;
 using FullMoon.Entities.Unit.States;
 using FullMoon.ScriptableObject;
@@ -15,8 +14,8 @@ namespace FullMoon.Entities.Unit
     public class MeleeUnitController 
         : BaseUnitController, IAttackable
     {
-        [Foldout("Ranged Unit Settings")]
-        public GameObject attackEffect;
+        [Foldout("Melee Unit Settings")]
+        public DecalProjector decalProjector;
 
         public MeleeUnitData OverridenUnitData  { get; set; }
         
@@ -52,19 +51,23 @@ namespace FullMoon.Entities.Unit
 
         public void ExecuteAttack(Transform target)
         {
-            // GameObject bullet = ObjectPoolManager.SpawnObject(attackEffect, transform.position, Quaternion.identity);
-            // bullet.GetComponent<BulletEffectController>().Fire(target, transform, OverridenUnitData.BulletSpeed, OverridenUnitData.AttackDamage);
+            // Todo
         }
 
         public override void MoveToPosition(Vector3 location)
         {
             base.MoveToPosition(location);
-            // StateMachine.ChangeState(new RangedUnitMove(this));
+            StateMachine.ChangeState(new MeleeUnitMove(this));
         }
 
-        protected virtual void OnDrawGizmos()
+        protected override void OnDrawGizmos()
         {
             base.OnDrawGizmos();
+
+            if (decalProjector != null)
+            {
+                decalProjector.size = new Vector3(unitData.AttackRange * 2f, unitData.AttackRange * 2f, decalProjector.size.z);
+            }
             
             if (Application.isPlaying == false)
             {

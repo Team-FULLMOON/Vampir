@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering.Universal;
 using FullMoon.Util;
 using FullMoon.Effect;
 using FullMoon.Interfaces;
@@ -15,6 +16,9 @@ namespace FullMoon.Entities.Unit
     public class RangedUnitController 
         : BaseUnitController, IAttackable
     {
+        [Foldout("Ranged Unit Settings")]
+        public DecalProjector decalProjector;
+        
         [Foldout("Ranged Unit Settings")]
         public GameObject attackEffect;
 
@@ -65,6 +69,11 @@ namespace FullMoon.Entities.Unit
         protected override void OnDrawGizmos()
         {
             base.OnDrawGizmos();
+
+            if (decalProjector != null)
+            {
+                decalProjector.size = new Vector3(unitData.AttackRange * 2f, unitData.AttackRange * 2f, decalProjector.size.z);
+            }
             
             if (Application.isPlaying == false)
             {
