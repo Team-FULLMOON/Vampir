@@ -62,12 +62,9 @@ namespace FullMoon.Entities.Unit
             StateMachine.ChangeState(new RangedUnitMove(this));
         }
 
-        private void OnDrawGizmos()
+        protected override void OnDrawGizmos()
         {
-            if (unitData != null)
-            {
-                viewRange.radius = unitData.AttackRange * 2f;
-            }
+            base.OnDrawGizmos();
             
             if (Application.isPlaying == false)
             {
@@ -76,6 +73,7 @@ namespace FullMoon.Entities.Unit
             
             BaseUnitController closestUnit  = UnitInsideViewArea
                 .Where(t => !unitType.Equals(t.unitType))
+                .Where(t => (t.transform.position - transform.position).sqrMagnitude <= OverridenUnitData.AttackRange * OverridenUnitData.AttackRange)
                 .OrderBy(t => (t.transform.position - transform.position).sqrMagnitude)
                 .FirstOrDefault();
             

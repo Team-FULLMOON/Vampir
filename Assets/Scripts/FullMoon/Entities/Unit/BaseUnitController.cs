@@ -75,13 +75,13 @@ namespace FullMoon.Entities.Unit
             LatestDestination = location;
         }
 
-        private void OnDrawGizmos()
+        protected virtual void OnDrawGizmos()
         {
             if (viewRange == null)
             {
                 return;
             }
-            viewRange.radius = unitData.AttackRange * 2f;
+            viewRange.radius = unitData.ViewRadius * 2f;
         }
     }
 }

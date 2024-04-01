@@ -21,8 +21,9 @@ namespace FullMoon.Entities.Unit.States
 
         public void Execute()
         {
-            BaseUnitController closestUnit = controller.UnitInsideViewArea
+            BaseUnitController closestUnit  = controller.UnitInsideViewArea
                 .Where(t => !controller.unitType.Equals(t.unitType))
+                .Where(t => (t.transform.position - controller.transform.position).sqrMagnitude <= controller.OverridenUnitData.AttackRange * controller.OverridenUnitData.AttackRange)
                 .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
                 .FirstOrDefault();
 
