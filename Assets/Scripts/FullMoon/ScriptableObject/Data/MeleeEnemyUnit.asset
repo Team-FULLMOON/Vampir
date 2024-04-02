@@ -20,5 +20,5 @@ MonoBehaviour:
   attackDelay: 1
   attackSpeed: 1
   attackRange: 2
-  viewRadius: 3
+  viewRadius: 6
   fogOfWarRadius: 20

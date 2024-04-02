@@ -78,7 +78,7 @@ namespace FullMoon.Entities.Unit
         {
             if (viewRange != null && unitData != null)
             {
-                viewRange.radius = unitData.ViewRadius * 2f;
+                viewRange.radius = unitData.ViewRadius;
             }
         }
     }
