@@ -20,6 +20,6 @@ MonoBehaviour:
   attackDelay: 1.7
   attackSpeed: 1
   attackRange: 8
-  viewRadius: 5
+  viewRadius: 10
   fogOfWarRadius: 20
   bulletSpeed: 55

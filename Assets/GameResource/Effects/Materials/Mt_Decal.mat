@@ -131,9 +131,9 @@ Material:
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
-    - _emission: 2
+    - _emission: 40
     - _shape_sharpness: 1
-    - _width_control: 3
+    - _width_control: 40
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 0, b: 0, a: 1}

@@ -447,4 +447,4 @@ MonoBehaviour:
   m_ScaleMode: 0
   m_Offset: {x: 0, y: 0, z: 2}
   m_Size: {x: 16, y: 16, z: 5}
-  m_FadeFactor: 0.214
+  m_FadeFactor: 1
