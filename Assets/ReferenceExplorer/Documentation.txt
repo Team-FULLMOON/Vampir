@@ -1,0 +1,31 @@
+Hi!
+Thanks for downloading Reference Explorer package. I'm really happy to show you the features of this awesome editor tool!
+
+First things first!
+Reference Explorer is an editor tool that helps you find references and dependencies between objects. 
+
+Why this is useful? 
+This way you will know even better your project. When a project grows hundreds of objects are created and perhaps nobody is using them, or 
+there are so many that you don't know which object is using them. Well this tool will help you.
+
+How to use it?
+You have two ways:
+
+Go to Window->Reference Explorer and you will find several options or you can right click in your project and select Reference Explorer and
+you will see the same options.
+
+The features are:
+
+References Explorer:
+This option will allow you to drag and drop an object from your project and find every object that is using it.
+Also will search possible usability in scripts via Resources.Load or AssetDatabase but please be aware that it is not 100% sure.
+
+Dependencies Explorer:
+This options will allow you to drag and drop an object from your project and find every object that the selected object is using.
+
+Ophan References Explorer:
+This option will find every object that is not referenced to any other object.
+Objects that part of their path is being used in a script will be a warning icon indicating that that object was found in a script.
+
+Atlas Prefab Reference Explorer:
+This option will allow you to drag and drop a .spriteatlas file and search every prefab that is using some sprite of that atlas.
