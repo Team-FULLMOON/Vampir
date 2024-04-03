@@ -10,7 +10,7 @@ namespace FullMoon.Effect
         [SerializeField] private GameObject hitEffect;
         
         private Transform target;
-        private Transform from;
+        public Transform shooter;
         private string fromType;
         private float speed;
         private int damage;
@@ -26,6 +26,8 @@ namespace FullMoon.Effect
             unitLayer = LayerMask.NameToLayer("Unit");
             lastPosition = transform.position;
             isFired = false;
+            CancelInvoke(nameof(DestroyEffect));
+            Invoke(nameof(DestroyEffect), 7f);
         }
 
         private void Update()
@@ -52,21 +54,49 @@ namespace FullMoon.Effect
             transform.Translate(Vector3.forward * step);
         }
         
-        public void Fire(Transform targetTransform, Transform fireTransform, float speedValue, int damageValue)
+        public void Fire(Transform targetTransform, Transform shooterTransform, float speedValue, int damageValue)
         {
             target = targetTransform;
-            from = fireTransform;
-            fromType = fireTransform.GetComponent<BaseUnitController>().unitType;
+            shooter = shooterTransform;
+            fromType = shooterTransform.GetComponent<BaseUnitController>().unitType;
             speed = speedValue;
             damage = damageValue;
+
+            float missRate = targetTransform.GetComponent<BaseUnitController>().unitData.MissRate;
             
-            transform.LookAt(targetTransform);
-            ObjectPoolManager.SpawnObject(firingEffect, transform.position, Quaternion.identity).transform.LookAt(targetTransform);
+            Vector3 toTarget = (target.position - transform.position).normalized;
+            
+            if (Random.Range(0f, 100f) < missRate)
+            {
+                target = null;
+                
+                Vector3 randomDirection = Random.insideUnitSphere * 0.1f;   
+                randomDirection -= Vector3.Project(randomDirection, toTarget);
+                toTarget += randomDirection;
+            }
+            else
+            {
+                Vector3 randomDirection = Random.insideUnitSphere * 0.02f;   
+                randomDirection -= Vector3.Project(randomDirection, toTarget);
+                toTarget += randomDirection;
+            }
+
+            transform.forward = toTarget.normalized;
+
+            GameObject fireFX = ObjectPoolManager.SpawnObject(firingEffect, transform.position, Quaternion.identity);
+            fireFX.transform.forward = toTarget.normalized;
+            fireFX.transform.eulerAngles = new Vector3(0f, fireFX.transform.eulerAngles.y - 90f, 0f);
+            
             isFired = true;
         }
 
         private void HandleCollision(RaycastHit hit)
         {
+            if (target == null)
+            {
+                return;
+            }
+            
             int otherLayer = hit.collider.gameObject.layer;
 
             if (otherLayer == groundLayer)
@@ -77,6 +107,11 @@ namespace FullMoon.Effect
             
             if (otherLayer == unitLayer)
             {
+                if (target != hit.transform)
+                {
+                    return;
+                }
+                
                 var unitController = hit.collider.GetComponent<BaseUnitController>();
                 if (unitController != null && !unitController.unitType.Equals(fromType))
                 {
@@ -84,6 +119,15 @@ namespace FullMoon.Effect
                     ObjectPoolManager.SpawnObject(hitEffect, hit.point, Quaternion.identity);
                 }
             }
+        }
+        
+        private void DestroyEffect()
+        {
+            if (!gameObject.activeSelf)
+            {
+                return;
+            }
+            ObjectPoolManager.ReturnObjectToPool(gameObject);
         }
     }
 }
