@@ -49,7 +49,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MAin_text:
-        m_Texture: {fileID: 2800000, guid: 9ffeeae8212ca1146810e0e563a1cbf6, type: 3}
+        m_Texture: {fileID: 2800000, guid: 46d40bf5db990204c942da0021dad747, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -138,6 +138,7 @@ Material:
     - _blood_Tex: 0.06
     - _blood_tex_int: 0
     - _emission: 1
+    - _main_Tex_int: 1
     - _noise_Add: 0.308
     - _noise_int: 0.03
     - _noise_int_1: 0.1
@@ -147,6 +148,7 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _Vector2: {r: 0.5, g: 0.5, b: 0, a: 0}
+    - _blood_flow: {r: 0, g: -1, b: 0, a: 0}
     - _flow: {r: 0, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &8572078793071021976
