@@ -16,6 +16,11 @@ namespace FullMoon.ScriptableObject
     
         [SerializeField] private float movementSpeed = 5f;
         public float MovementSpeed => movementSpeed;
+        
+        [Separator]
+    
+        [SerializeField, OverrideLabel("Miss Rate (%)")] private float missRate = 50f;
+        public float MissRate => missRate;
     
         [Separator]
     

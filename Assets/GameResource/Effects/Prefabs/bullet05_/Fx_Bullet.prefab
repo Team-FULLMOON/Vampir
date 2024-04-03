@@ -4893,7 +4893,7 @@ Transform:
   m_GameObject: {fileID: 7121363375999854799}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.334, y: 0.841, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -4916,6 +4916,7 @@ MonoBehaviour:
     type: 3}
   hitEffect: {fileID: 5058517046348200998, guid: e9725a28450ecdf458518bd2830cdc49,
     type: 3}
+  shooter: {fileID: 0}
 --- !u!198 &648869078112820162
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -5926,7 +5927,7 @@ ParticleSystem:
       repeatInterval: 0.01
       probability: 1
   SizeModule:
-    enabled: 1
+    enabled: 0
     curve:
       serializedVersion: 2
       minMaxState: 1
@@ -8195,13 +8196,13 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0.08829573
-          inSlope: 2.534621
-          outSlope: 2.534621
+          value: 0.23661116
+          inSlope: 1.8899322
+          outSlope: 1.8899322
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
-          outWeight: 0.03861003
+          outWeight: 0.050781243
         - serializedVersion: 3
           time: 1
           value: 1

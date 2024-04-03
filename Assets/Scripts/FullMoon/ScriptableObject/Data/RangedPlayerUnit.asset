@@ -15,10 +15,11 @@ MonoBehaviour:
   maxHp: 5
   defenseStrength: 5
   movementSpeed: 3.5
+  missRate: 30
   attackEnabled: 1
   attackDamage: 1
-  attackDelay: 1.7
-  attackSpeed: 1
+  attackDelay: 1
+  attackSpeed: 0.5
   attackRange: 8
   viewRadius: 10
   fogOfWarRadius: 20
