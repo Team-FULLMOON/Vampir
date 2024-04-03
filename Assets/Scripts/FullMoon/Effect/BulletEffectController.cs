@@ -82,7 +82,11 @@ namespace FullMoon.Effect
             }
 
             transform.forward = toTarget.normalized;
-            ObjectPoolManager.SpawnObject(firingEffect, transform.position, Quaternion.identity);
+
+            GameObject fireFX = ObjectPoolManager.SpawnObject(firingEffect, transform.position, Quaternion.identity);
+            fireFX.transform.forward = toTarget.normalized;
+            fireFX.transform.eulerAngles = new Vector3(0f, fireFX.transform.eulerAngles.y - 90f, 0f);
+            
             isFired = true;
         }
 
