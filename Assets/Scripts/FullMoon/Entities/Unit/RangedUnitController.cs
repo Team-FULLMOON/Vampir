@@ -1,11 +1,14 @@
-using System.Collections.Generic;
-using System.Linq;
-using FullMoon.Entities.Unit.States;
 using MyBox;
+using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering.Universal;
+using FullMoon.Util;
+using FullMoon.Effect;
 using FullMoon.Interfaces;
-using FullMoon.Unit.Data;
+using FullMoon.Entities.Unit.States;
+using FullMoon.ScriptableObject;
 
 namespace FullMoon.Entities.Unit
 {
@@ -14,7 +17,10 @@ namespace FullMoon.Entities.Unit
         : BaseUnitController, IAttackable
     {
         [Foldout("Ranged Unit Settings")]
-        [SerializeField] private GameObject attackEffect;
+        public DecalProjector decalProjector;
+        
+        [Foldout("Ranged Unit Settings")]
+        public GameObject attackEffect;
 
         public RangedUnitData OverridenUnitData  { get; set; }
         
@@ -25,7 +31,7 @@ namespace FullMoon.Entities.Unit
             base.Start();
             OverridenUnitData = (RangedUnitData)unitData;
             UnitInsideViewArea = new List<BaseUnitController>();
-            StateMachine.ChangeState(new RangeUnitIdle(this));
+            StateMachine.ChangeState(new RangedUnitIdle(this));
         }
 
         public void EnterViewRange(Collider unit)
@@ -36,7 +42,6 @@ namespace FullMoon.Entities.Unit
                 return;
             }
             UnitInsideViewArea.Add(controller);
-            // Debug.Log($"{gameObject.name}: {UnitInsideViewArea.Count}");
         }
 
         public void ExitViewRange(Collider unit)
@@ -47,24 +52,29 @@ namespace FullMoon.Entities.Unit
                 return;
             }
             UnitInsideViewArea.Remove(controller);
-            // Debug.Log($"{gameObject.name}: {UnitInsideViewArea.Count}");
         }
 
-        public void ExecuteAttack(Transform location)
+        public void ExecuteAttack(Transform target)
         {
-            // Todo: Object Pooling으로 변경 필요 
-            GameObject effect = Instantiate(attackEffect, location.position, Quaternion.identity);
-            // effect.GetComponent<ArrowMove>().SetTargetPos(_unitTarget.transform, u_ap, transform);
+            GameObject bullet = ObjectPoolManager.SpawnObject(attackEffect, transform.position, Quaternion.identity);
+            bullet.GetComponent<BulletEffectController>().Fire(target, transform, OverridenUnitData.BulletSpeed, OverridenUnitData.AttackDamage);
         }
 
         public override void MoveToPosition(Vector3 location)
         {
             base.MoveToPosition(location);
-            StateMachine.ChangeState(new RangeUnitMove(this));
+            StateMachine.ChangeState(new RangedUnitMove(this));
         }
 
-        private void OnDrawGizmos()
+        protected override void OnDrawGizmos()
         {
+            base.OnDrawGizmos();
+
+            if (decalProjector != null)
+            {
+                decalProjector.size = new Vector3(unitData.AttackRange * 2f, unitData.AttackRange * 2f, decalProjector.size.z);
+            }
+            
             if (Application.isPlaying == false)
             {
                 return;
@@ -72,6 +82,7 @@ namespace FullMoon.Entities.Unit
             
             BaseUnitController closestUnit  = UnitInsideViewArea
                 .Where(t => !unitType.Equals(t.unitType))
+                .Where(t => (t.transform.position - transform.position).sqrMagnitude <= OverridenUnitData.AttackRange * OverridenUnitData.AttackRange)
                 .OrderBy(t => (t.transform.position - transform.position).sqrMagnitude)
                 .FirstOrDefault();
             

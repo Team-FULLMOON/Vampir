@@ -2,9 +2,8 @@ using MyBox;
 using UnityEngine;
 using UnityEngine.AI;
 using FullMoon.FSM;
-using FullMoon.Unit.Data;
 using FullMoon.Interfaces;
-using Random = UnityEngine.Random;
+using FullMoon.ScriptableObject;
 
 namespace FullMoon.Entities.Unit
 {
@@ -75,13 +74,12 @@ namespace FullMoon.Entities.Unit
             LatestDestination = location;
         }
 
-        private void OnDrawGizmos()
+        protected virtual void OnDrawGizmos()
         {
-            if (viewRange == null)
+            if (viewRange != null && unitData != null)
             {
-                return;
+                viewRange.radius = unitData.ViewRadius;
             }
-            viewRange.radius = unitData.AttackRange * 2f;
         }
     }
 }
