@@ -4,6 +4,7 @@ using UnityEngine.AI;
 using FullMoon.FSM;
 using FullMoon.Interfaces;
 using FullMoon.ScriptableObject;
+using System.Collections;
 
 namespace FullMoon.Entities.Unit
 {
