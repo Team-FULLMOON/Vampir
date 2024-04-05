@@ -365,27 +365,16 @@ namespace FullMoon.Camera
                 // 가장 가까운 유닛이 누구인지 검사
                 foreach (var collider in colliders)
                 {
-                    BaseUnitController curUnit = null;
-                    Vector3 pos = Vector3.zero;
-                    float shortDis = 99999;
+                    BaseUnitController curUnit = unitList
+                        .Select(unit => new { Unit = unit, dis = Vector3.Distance(unit.transform.position, collider.transform.position)})
+                        .OrderBy(unitDis => unitDis.dis)
+                        .FirstOrDefault()?.Unit;
 
-                    foreach (var unit in unitList)
-                    {
-                        if (unit.unitType.Equals("Enemy"))
-                            continue;
-                
-                        float dis = Vector3.Distance(unit.transform.position, collider.transform.position);
-                        if (dis < shortDis)
-                        {
-                            curUnit = unit;
-                            shortDis = dis;
-                        }
-                    }
-
-                    if (selectedUnitList.Contains(curUnit))
+                    if (curUnit != null && selectedUnitList.Contains(curUnit))
                     {
                         curUnit.MoveToPosition(collider.transform.position);
                         unitList.Remove(curUnit);
+
                         colliders = colliders.Where(coll => coll != collider).ToArray();
                     }
                 }
