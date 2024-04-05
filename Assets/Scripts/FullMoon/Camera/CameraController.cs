@@ -1,9 +1,13 @@
 using System;
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using FullMoon.Input;
 using FullMoon.Entities.Unit;
+using UnityEngine.Rendering.Universal;
+using System.Linq;
+using Unity.VisualScripting;
 
 namespace FullMoon.Camera
 {
@@ -27,19 +31,27 @@ namespace FullMoon.Camera
         List<BaseUnitController> selectedUnitList; // 플레이어가 클릭 or 드래그로 선택한 유닛
         private UnityEngine.Camera mainCamera;
         private Vector3 mousePos;
+        private Ray mouseRay;
 
         [Header("DragInfo")]
         [SerializeField] RectTransform dragRectangle; // 마우스로 드래그한 범위를 가시화하는 Image UI의 RectTransform
         private Rect dragRect; // 마우스로 드래그 한 범위 (xMin~xMax, yMin~yMax)
         private Vector2 start = Vector2.zero; // 드래그 시작 위치
         private Vector2 end = Vector2.zero; // 드래그 종료 위치
-    
+
+        [Header("UI")]
+        [SerializeField] private DecalProjector decal;
+        [SerializeField] private float onCoverUIRange;
+        private List<GameObject> covers;
+
+
         private float _targetFov;
 
         private void Awake()
         {
             mainCamera = UnityEngine.Camera.main;
             selectedUnitList = new List<BaseUnitController>();
+            covers = GameObject.FindGameObjectsWithTag("UIObject").ToList();
 
             // 드래그 모형 초기화
             DrawDragRectangle();
@@ -50,6 +62,7 @@ namespace FullMoon.Camera
             _targetFov = freeLookCamera.m_Lens.FieldOfView;
         
             PlayerInputManager.Instance.ZoomEvent.AddEvent(ZoomEvent);
+            StartCoroutine(CoverAction());
         }
 
         private void FixedUpdate()
@@ -63,6 +76,8 @@ namespace FullMoon.Camera
         
             float movementSpeed = PlayerInputManager.Instance.shift ? shiftMoveSpeed : moveSpeed;
             transform.position += moveDirection * (movementSpeed * Time.fixedDeltaTime);
+
+            mouseRay = mainCamera.ScreenPointToRay(mousePos);
         }
 
         private void Update()
@@ -196,16 +211,28 @@ namespace FullMoon.Camera
             {
                 HandleRightClick();
             }
+
+            if (selectedUnitList.Count != 0 && Physics.Raycast(mouseRay, out var hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Ground")))
+            {
+                Collider[] coverColliders = Physics.OverlapSphere(hit.point, onCoverUIRange, LayerMask.GetMask("UIObject"));
+
+                // 밖에 있는 엄폐물 위치들은 색을 연하게
+                foreach (GameObject obj in covers)
+                {
+                    obj.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 0.2f);
+                    if (coverColliders.Contains(obj.GetComponent<Collider>()))
+                        // 마우스 주변 엄폐물 위치들은 색을 진하게
+                        obj.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 1);
+                }
+            }
         }
 
         private void HandleLeftClick()
         {
-            Ray ray = mainCamera.ScreenPointToRay(mousePos);
-            
             start = mousePos;
             dragRect = new Rect();
 
-            if (Physics.Raycast(ray, out var hit, Mathf.Infinity, (1 << LayerMask.NameToLayer("Unit")) | (1 << LayerMask.NameToLayer("Ground"))))
+            if (Physics.Raycast(mouseRay, out var hit, Mathf.Infinity, (1 << LayerMask.NameToLayer("Unit")) | (1 << LayerMask.NameToLayer("Ground"))))
             {
                 var unitController = hit.transform.GetComponent<BaseUnitController>();
                 if (unitController != null)
@@ -243,8 +270,7 @@ namespace FullMoon.Camera
 
         private void HandleRightClick()
         {
-            Ray ray = mainCamera.ScreenPointToRay(mousePos);
-            if (Physics.Raycast(ray, out var hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Ground")))
+            if (Physics.Raycast(mouseRay, out var hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Ground")))
             {
                 var rangedUnitController = hit.transform.GetComponent<BaseUnitController>();
                 if (rangedUnitController != null)
@@ -253,8 +279,35 @@ namespace FullMoon.Camera
                 }
                 else if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
                 {
-                    MoveSelectedUnits(hit.point);
+                    Collider[] coverColliders = Physics.OverlapSphere(hit.point, onCoverUIRange, LayerMask.GetMask("UIObject"));
+
+                    MoveSelectedUnits(hit.point, coverColliders);
                 }
+            }
+        }
+
+        IEnumerator CoverAction()
+        {
+            bool curBool = false;
+
+            while (true)
+            {
+                if (curBool.Equals(selectedUnitList.Count.Equals(0)))
+                    yield return new WaitForSeconds(0.01f);
+                curBool = selectedUnitList.Count.Equals(0);
+
+                if (curBool)
+                {
+                    foreach (var obj in covers)
+                        obj.SetActive(false);
+                }
+                else
+                {
+                    foreach (var obj in covers)
+                        obj.SetActive(true);
+                }
+
+                yield return new WaitForSeconds(0.01f);
             }
         }
 
@@ -302,14 +355,55 @@ namespace FullMoon.Camera
         /// <summary>
         /// 선택된 모든 유닛을 이동할 때 호출
         /// </summary>
-        private void MoveSelectedUnits(Vector3 end)
+        private void MoveSelectedUnits(Vector3 end, Collider[] colliders)
         {
-            foreach (var unit in selectedUnitList)
+            // 마우스 범위 안에 엄폐물 타겟이 있다면
+            if (!colliders.Length.Equals(0))
             {
-                if (unit.unitType.Equals("Enemy"))
-                    continue;
+                List<BaseUnitController> unitList = selectedUnitList.ToList();
+
+                // 가장 가까운 유닛이 누구인지 검사
+                foreach (var collider in colliders)
+                {
+                    BaseUnitController curUnit = null;
+                    Vector3 pos = Vector3.zero;
+                    float shortDis = 99999;
+
+                    foreach (var unit in unitList)
+                    {
+                        if (unit.unitType.Equals("Enemy"))
+                            continue;
                 
-                unit.MoveToPosition(end);
+                        float dis = Vector3.Distance(unit.transform.position, collider.transform.position);
+                        if (dis < shortDis)
+                        {
+                            curUnit = unit;
+                            shortDis = dis;
+                        }
+                    }
+
+                    if (selectedUnitList.Contains(curUnit))
+                    {
+                        curUnit.MoveToPosition(collider.transform.position);
+                        unitList.Remove(curUnit);
+                        colliders = colliders.Where(coll => coll != collider).ToArray();
+                    }
+                }
+                // 남은 유닛은 마우스 지점으로 이동
+                foreach (var unit in unitList)
+                {
+                    unit.MoveToPosition(end);
+                }
+            }
+            else
+            {
+                foreach (var unit in selectedUnitList)
+                {
+                    if (unit.unitType.Equals("Enemy"))
+                        continue;
+
+                    unit.MoveToPosition(end);
+                }
             }
         }
 
@@ -358,5 +452,24 @@ namespace FullMoon.Camera
         }
         
         #endregion Mouse
+
+        void OnDrawGizmos()
+        {
+            if (!Application.isPlaying)
+                return;
+
+            if (selectedUnitList.Count != 0 && Physics.Raycast(mouseRay, out var hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Ground")))
+            {
+                if (decal != null)
+                {
+                    decal.transform.position = new Vector3(hit.point.x, decal.transform.position.y, hit.point.z);
+                    decal.enabled = true;
+                }
+            }
+            else
+            {
+                decal.enabled = false;
+            }
+        }
     }
 }
