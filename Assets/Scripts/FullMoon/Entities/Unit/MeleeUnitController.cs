@@ -18,7 +18,7 @@ namespace FullMoon.Entities.Unit
         [Foldout("Melee Unit Settings")]
         public DecalProjector decalProjector;
 
-        public MeleeUnitData OverridenUnitData  { get; set; }
+        public MeleeUnitData OverridenUnitData { get; private set; }
         
         public List<BaseUnitController> UnitInsideViewArea { get; set; }
 
@@ -63,7 +63,7 @@ namespace FullMoon.Entities.Unit
 
         public override void OnUnitStop()
         {
-            if (PlayerInputManager.Instance.stop == 0)
+            if (PlayerInputManager.Instance.stop == false)
                 return;
             base.OnUnitStop();
             StateMachine.ChangeState(new MeleeUnitIdle(this));
