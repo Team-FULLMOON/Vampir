@@ -4,14 +4,13 @@ using UnityEngine.AI;
 using FullMoon.FSM;
 using FullMoon.Interfaces;
 using FullMoon.ScriptableObject;
-using System.Collections;
 
 namespace FullMoon.Entities.Unit
 {
     public abstract class BaseUnitController
         : MonoBehaviour, IDamageable, ISelectable, INavigation
     {
-        [Foldout("Base Unit Settings"), DefinedValues("Player", "Enemy")]
+        [Foldout("Base Unit Settings"), DefinedValues("None", "Player", "Enemy")]
         public string unitType;
         
         [Foldout("Base Unit Settings"), DisplayInspector] 
