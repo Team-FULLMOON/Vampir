@@ -15,7 +15,7 @@ MonoBehaviour:
   maxHp: 5
   defenseStrength: 5
   movementSpeed: 3
-  missRate: 50
+  missRate: 0
   attackEnabled: 1
   attackDamage: 1
   attackDelay: 1
