@@ -23,7 +23,7 @@ namespace FullMoon.Input
         public bool analogMovement;
         public bool shift;
         public Vector2 zoom;
-        public float stop;
+        public bool stop;
 
         [Header("Mouse Cursor Settings")] 
         public CursorType cursorType;
@@ -46,23 +46,22 @@ namespace FullMoon.Input
 
         public void OnStop(InputValue value)
         {
-            Debug.Log(value.Get<float>());
-            StopInput(value.Get<float>());
+            StopInput(value.isPressed);
         }
 #endif
 		
-        public readonly GenericEventSystem<Vector2> moveEvent = new();
+        public readonly GenericEventSystem<Vector2> MoveEvent = new();
         public void MoveInput(Vector2 input)
         {
             move = input;
-            moveEvent.TriggerEvent(input);
+            MoveEvent.TriggerEvent(input);
         } 
         
-        public readonly GenericEventSystem<bool> shiftEvent = new();
+        public readonly GenericEventSystem<bool> ShiftEvent = new();
         public void ShiftInput(bool input)
         {
             shift = input;
-            shiftEvent.TriggerEvent(input);
+            ShiftEvent.TriggerEvent(input);
         }
         
         public readonly GenericEventSystem<Vector2> ZoomEvent = new();
@@ -72,11 +71,11 @@ namespace FullMoon.Input
             ZoomEvent.TriggerEvent(input);
         }
 
-        public readonly GenericEventSystem<float> stopEvent = new();
-        public void StopInput(float input)
+        public readonly GenericEventSystem<bool> StopEvent = new();
+        public void StopInput(bool input)
         {
             stop = input;
-            stopEvent.TriggerEvent(stop);
+            StopEvent.TriggerEvent(stop);
         }
         
         private void OnApplicationFocus(bool hasFocus)
