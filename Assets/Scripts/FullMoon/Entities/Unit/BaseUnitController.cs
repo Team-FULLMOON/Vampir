@@ -4,7 +4,6 @@ using UnityEngine.AI;
 using FullMoon.FSM;
 using FullMoon.Interfaces;
 using FullMoon.ScriptableObject;
-using System.Collections;
 
 namespace FullMoon.Entities.Unit
 {
@@ -73,6 +72,11 @@ namespace FullMoon.Entities.Unit
         {
             Agent.SetDestination(location);
             LatestDestination = location;
+        }
+
+        public virtual void OnUnitStop()
+        {
+            MoveToPosition(transform.position);
         }
 
         protected virtual void OnDrawGizmos()
