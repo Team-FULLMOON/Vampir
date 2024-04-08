@@ -1,13 +1,11 @@
-using System;
-using UnityEngine;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 using Cinemachine;
 using FullMoon.Input;
 using FullMoon.Entities.Unit;
 using UnityEngine.Rendering.Universal;
-using System.Linq;
-using Unity.VisualScripting;
 
 namespace FullMoon.Camera
 {
@@ -45,7 +43,7 @@ namespace FullMoon.Camera
         private List<GameObject> covers;
 
 
-        private float _targetFov;
+        private float targetFov;
 
         private void Awake()
         {
@@ -59,7 +57,7 @@ namespace FullMoon.Camera
 
         private void Start()
         {
-            _targetFov = freeLookCamera.m_Lens.FieldOfView;
+            targetFov = freeLookCamera.m_Lens.FieldOfView;
         
             PlayerInputManager.Instance.ZoomEvent.AddEvent(ZoomEvent);
             StartCoroutine(CoverAction());
@@ -83,9 +81,10 @@ namespace FullMoon.Camera
         private void Update()
         {
             // FOV를 목표값으로 부드럽게 조정
-            freeLookCamera.m_Lens.FieldOfView = Mathf.Lerp(freeLookCamera.m_Lens.FieldOfView, _targetFov, Time.deltaTime * zoomSpeed);
+            freeLookCamera.m_Lens.FieldOfView = Mathf.Lerp(freeLookCamera.m_Lens.FieldOfView, targetFov, Time.deltaTime * zoomSpeed);
             
             MouseAction();
+            ButtonAction();
             mousePos = UnityEngine.InputSystem.Mouse.current.position.value;
         }
     
@@ -131,8 +130,8 @@ namespace FullMoon.Camera
         {
             if (scrollValue.y != 0f)
             {
-                _targetFov -= (scrollValue.y > 0f ? 1f : -1f) * zoomSensitivity;
-                _targetFov = Mathf.Clamp(_targetFov, minFov, maxFov);
+                targetFov -= (scrollValue.y > 0f ? 1f : -1f) * zoomSensitivity;
+                targetFov = Mathf.Clamp(targetFov, minFov, maxFov);
             }
         }
         
@@ -221,8 +220,10 @@ namespace FullMoon.Camera
                 {
                     obj.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 0.2f);
                     if (coverColliders.Contains(obj.GetComponent<Collider>()))
+                    {
                         // 마우스 주변 엄폐물 위치들은 색을 진하게
                         obj.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 1);
+                    }
                 }
             }
         }
@@ -442,6 +443,25 @@ namespace FullMoon.Camera
         
         #endregion Mouse
 
+        #region Button
+
+        public void ButtonAction()
+        {
+            if (PlayerInputManager.Instance.stop)
+            {
+                StopSelectUnits();
+            }
+        }
+
+        private void StopSelectUnits()
+        {
+            foreach(var unit in selectedUnitList)
+            {
+                unit.OnUnitStop();
+            }
+        }
+
+        #endregion Button
         void OnDrawGizmos()
         {
             if (!Application.isPlaying)

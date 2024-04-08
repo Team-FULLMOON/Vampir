@@ -74,6 +74,11 @@ namespace FullMoon.Entities.Unit
             LatestDestination = location;
         }
 
+        public virtual void OnUnitStop()
+        {
+            MoveToPosition(transform.position);
+        }
+
         protected virtual void OnDrawGizmos()
         {
             if (viewRange != null && unitData != null)

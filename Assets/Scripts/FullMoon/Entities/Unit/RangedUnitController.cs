@@ -22,7 +22,7 @@ namespace FullMoon.Entities.Unit
         [Foldout("Ranged Unit Settings")]
         public GameObject attackEffect;
 
-        public RangedUnitData OverridenUnitData  { get; set; }
+        public RangedUnitData OverridenUnitData { get; private set; }
         
         public List<BaseUnitController> UnitInsideViewArea { get; set; }
 
@@ -64,6 +64,12 @@ namespace FullMoon.Entities.Unit
         {
             base.MoveToPosition(location);
             StateMachine.ChangeState(new RangedUnitMove(this));
+        }
+
+        public override void OnUnitStop()
+        {
+            base.OnUnitStop();
+            StateMachine.ChangeState(new RangedUnitIdle(this));
         }
 
         protected override void OnDrawGizmos()

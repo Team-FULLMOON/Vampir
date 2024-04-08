@@ -7,6 +7,7 @@ using UnityEngine.Rendering.Universal;
 using FullMoon.Interfaces;
 using FullMoon.Entities.Unit.States;
 using FullMoon.ScriptableObject;
+using FullMoon.Input;
 
 namespace FullMoon.Entities.Unit
 {
@@ -17,7 +18,7 @@ namespace FullMoon.Entities.Unit
         [Foldout("Melee Unit Settings")]
         public DecalProjector decalProjector;
 
-        public MeleeUnitData OverridenUnitData  { get; set; }
+        public MeleeUnitData OverridenUnitData { get; private set; }
         
         public List<BaseUnitController> UnitInsideViewArea { get; set; }
 
@@ -58,6 +59,14 @@ namespace FullMoon.Entities.Unit
         {
             base.MoveToPosition(location);
             StateMachine.ChangeState(new MeleeUnitMove(this));
+        }
+
+        public override void OnUnitStop()
+        {
+            if (PlayerInputManager.Instance.stop == false)
+                return;
+            base.OnUnitStop();
+            StateMachine.ChangeState(new MeleeUnitIdle(this));
         }
 
         protected override void OnDrawGizmos()
