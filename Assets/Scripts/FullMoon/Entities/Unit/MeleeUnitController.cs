@@ -1,3 +1,4 @@
+using System;
 using MyBox;
 using System.Linq;
 using System.Collections.Generic;
@@ -30,6 +31,11 @@ namespace FullMoon.Entities.Unit
             StateMachine.ChangeState(new MeleeUnitIdle(this));
         }
 
+        protected void LateUpdate()
+        {
+            UnitInsideViewArea.RemoveAll(unit => unit == null || !unit.gameObject.activeInHierarchy);
+        }
+
         public void EnterViewRange(Collider unit)
         {
             BaseUnitController controller = unit.GetComponent<BaseUnitController>();
@@ -52,7 +58,14 @@ namespace FullMoon.Entities.Unit
 
         public void ExecuteAttack(Transform target)
         {
-            // Todo
+            BaseUnitController targetController = target.GetComponent<BaseUnitController>();
+
+            if (targetController == null || targetController.gameObject.activeInHierarchy == false)
+            {
+                return;
+            }
+
+            targetController.ReceiveDamage(OverridenUnitData.AttackDamage, this);
         }
 
         public override void MoveToPosition(Vector3 location)

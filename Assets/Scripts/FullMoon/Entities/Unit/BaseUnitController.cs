@@ -56,6 +56,13 @@ namespace FullMoon.Entities.Unit
             }
 
             Hp = Mathf.Clamp(Hp - amount, 0, System.Int32.MaxValue);
+            
+            Debug.Log($"{gameObject.name} [{Hp}]: Damage -{amount}, From {attacker.name}");
+            
+            if (Hp == 0)
+            {
+                gameObject.SetActive(false);   
+            }
         }
         
         public void Select()
