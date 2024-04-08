@@ -54,7 +54,7 @@
                     "name": "Stop",
                     "type": "Value",
                     "id": "73207fea-7d35-4f6c-894a-3ef7a5ea3dff",
-                    "expectedControlType": "",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true

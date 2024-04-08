@@ -9,7 +9,6 @@ using FullMoon.Effect;
 using FullMoon.Interfaces;
 using FullMoon.Entities.Unit.States;
 using FullMoon.ScriptableObject;
-using FullMoon.Input;
 
 namespace FullMoon.Entities.Unit
 {
@@ -69,8 +68,6 @@ namespace FullMoon.Entities.Unit
 
         public override void OnUnitStop()
         {
-            if (PlayerInputManager.Instance.stop == false)
-                return;
             base.OnUnitStop();
             StateMachine.ChangeState(new RangedUnitIdle(this));
         }

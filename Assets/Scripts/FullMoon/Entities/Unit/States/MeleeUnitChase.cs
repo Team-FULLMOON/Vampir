@@ -42,8 +42,6 @@ namespace FullMoon.Entities.Unit.States
             {
                 controller.Agent.SetDestination(closestUnit.transform.position);
             }
-
-            controller.OnUnitStop();
         }
 
         public void FixedExecute()
