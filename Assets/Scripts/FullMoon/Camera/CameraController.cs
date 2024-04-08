@@ -85,6 +85,7 @@ namespace FullMoon.Camera
             
             MouseAction();
             ButtonAction();
+            DrawDecalPointer();
             mousePos = UnityEngine.InputSystem.Mouse.current.position.value;
         }
     
@@ -114,8 +115,8 @@ namespace FullMoon.Camera
 
         private Vector3 AdjustMovementToCamera(Vector2 input)
         {
-            Vector3 forward = freeLookCamera.transform.forward;
-            Vector3 right = freeLookCamera.transform.right;
+            Vector3 forward = Vector3.Scale(mainCamera.transform.forward, new Vector3(1, 0, 1)).normalized;
+            Vector3 right = mainCamera.transform.right;
 
             forward.y = 0;
             right.y = 0;
@@ -142,6 +143,22 @@ namespace FullMoon.Camera
             dragRectangle.position = (start + end) * 0.5f;
             // 드래그 범위를 나타내는 Image UI의 크기
             dragRectangle.sizeDelta = new Vector2(Mathf.Abs(start.x - end.x), Mathf.Abs(start.y - end.y));
+        }
+        
+        private void DrawDecalPointer()
+        {
+            if (selectedUnitList.Count != 0 && Physics.Raycast(mouseRay, out var hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Ground")))
+            {
+                if (decal != null)
+                {
+                    decal.transform.position = new Vector3(hit.point.x, decal.transform.position.y, hit.point.z);
+                    decal.enabled = true;
+                }
+            }
+            else
+            {
+                decal.enabled = false;
+            }
         }
 
         private void CalculateDragRect()
@@ -462,23 +479,5 @@ namespace FullMoon.Camera
         }
 
         #endregion Button
-        void OnDrawGizmos()
-        {
-            if (!Application.isPlaying)
-                return;
-
-            if (selectedUnitList.Count != 0 && Physics.Raycast(mouseRay, out var hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Ground")))
-            {
-                if (decal != null)
-                {
-                    decal.transform.position = new Vector3(hit.point.x, decal.transform.position.y, hit.point.z);
-                    decal.enabled = true;
-                }
-            }
-            else
-            {
-                decal.enabled = false;
-            }
-        }
     }
 }
