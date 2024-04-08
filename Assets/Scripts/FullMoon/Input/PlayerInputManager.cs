@@ -50,18 +50,18 @@ namespace FullMoon.Input
         }
 #endif
 		
-        public readonly GenericEventSystem<Vector2> moveEvent = new();
+        public readonly GenericEventSystem<Vector2> MoveEvent = new();
         public void MoveInput(Vector2 input)
         {
             move = input;
-            moveEvent.TriggerEvent(input);
+            MoveEvent.TriggerEvent(input);
         } 
         
-        public readonly GenericEventSystem<bool> shiftEvent = new();
+        public readonly GenericEventSystem<bool> ShiftEvent = new();
         public void ShiftInput(bool input)
         {
             shift = input;
-            shiftEvent.TriggerEvent(input);
+            ShiftEvent.TriggerEvent(input);
         }
         
         public readonly GenericEventSystem<Vector2> ZoomEvent = new();
@@ -71,11 +71,11 @@ namespace FullMoon.Input
             ZoomEvent.TriggerEvent(input);
         }
 
-        public readonly GenericEventSystem<bool> stopEvent = new();
+        public readonly GenericEventSystem<bool> StopEvent = new();
         public void StopInput(bool input)
         {
             stop = input;
-            stopEvent.TriggerEvent(stop);
+            StopEvent.TriggerEvent(stop);
         }
         
         private void OnApplicationFocus(bool hasFocus)
