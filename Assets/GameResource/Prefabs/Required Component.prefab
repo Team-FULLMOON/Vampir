@@ -160,6 +160,7 @@ MonoBehaviour:
   shift: 0
   zoom: {x: 0, y: 0}
   stop: 0
+  rotation: {x: 0, y: 0}
   cursorType: 0
 --- !u!1 &1889243612475854807
 GameObject:
@@ -388,6 +389,8 @@ MonoBehaviour:
   zoomSpeed: 10
   minFov: 20
   maxFov: 55
+  rotationSensitivity: 1.2
+  rotationSpeed: 1
   dragRectangle: {fileID: 6410134052024422841}
   decal: {fileID: 6232139520614333276}
   onCoverUIRange: 5
@@ -715,7 +718,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3817388134677654357}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.36036515, y: 0.6343364, z: -0.42946663, w: 0.5322713}
+  m_LocalRotation: {x: 0.36036515, y: 0.6343364, z: -0.42946658, w: 0.53227127}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
@@ -25,6 +26,9 @@ namespace FullMoon.Camera
         [SerializeField] private float minFov = 20f;
         [SerializeField] private float maxFov = 55f;
         
+        [Header("Rotation")]
+        [SerializeField] private float rotationSensitivity = 3f; // 회전 감도
+        
         [Header("ClickSetting")]
         List<BaseUnitController> selectedUnitList; // 플레이어가 클릭 or 드래그로 선택한 유닛
         private UnityEngine.Camera mainCamera;
@@ -42,8 +46,8 @@ namespace FullMoon.Camera
         [SerializeField] private float onCoverUIRange;
         private List<GameObject> covers;
 
-
         private float targetFov;
+        private float targetXAxis;
 
         private void Awake()
         {
@@ -58,11 +62,26 @@ namespace FullMoon.Camera
         private void Start()
         {
             targetFov = freeLookCamera.m_Lens.FieldOfView;
+            targetXAxis = freeLookCamera.m_XAxis.Value;
         
             PlayerInputManager.Instance.ZoomEvent.AddEvent(ZoomEvent);
+            
             StartCoroutine(CoverAction());
         }
 
+        private void Update()
+        {
+            freeLookCamera.m_Lens.FieldOfView = Mathf.Lerp(freeLookCamera.m_Lens.FieldOfView, targetFov, Time.deltaTime * zoomSpeed);
+            freeLookCamera.m_XAxis.Value = targetXAxis;
+            
+            mousePos = UnityEngine.InputSystem.Mouse.current.position.value;
+            mouseRay = mainCamera.ScreenPointToRay(mousePos);
+            
+            MouseAction();
+            ButtonAction();
+            RotationEvent(PlayerInputManager.Instance.rotation);
+        }
+        
         private void FixedUpdate()
         {
             Vector3 moveDirection = AdjustMovementToCamera(PlayerInputManager.Instance.move);
@@ -74,21 +93,13 @@ namespace FullMoon.Camera
         
             float movementSpeed = PlayerInputManager.Instance.shift ? shiftMoveSpeed : moveSpeed;
             transform.position += moveDirection * (movementSpeed * Time.fixedDeltaTime);
-
-            mouseRay = mainCamera.ScreenPointToRay(mousePos);
         }
 
-        private void Update()
+        private void LateUpdate()
         {
-            // FOV를 목표값으로 부드럽게 조정
-            freeLookCamera.m_Lens.FieldOfView = Mathf.Lerp(freeLookCamera.m_Lens.FieldOfView, targetFov, Time.deltaTime * zoomSpeed);
-            
-            MouseAction();
-            ButtonAction();
             DrawDecalPointer();
-            mousePos = UnityEngine.InputSystem.Mouse.current.position.value;
         }
-    
+
         private Vector2 GetScreenMovementInput()
         {
             if (Cursor.lockState != CursorLockMode.Confined)
@@ -133,6 +144,16 @@ namespace FullMoon.Camera
             {
                 targetFov -= (scrollValue.y > 0f ? 1f : -1f) * zoomSensitivity;
                 targetFov = Mathf.Clamp(targetFov, minFov, maxFov);
+            }
+        }
+        
+        private void RotationEvent(Vector2 rotationValue)
+        {
+            if (rotationValue.x != 0f)
+            {
+                targetXAxis -= (rotationValue.x > 0f ? 1f : -1f) * rotationSensitivity;
+                if (targetXAxis < -180f) targetXAxis += 360f;
+                else if (targetXAxis > 180f) targetXAxis -= 360f;
             }
         }
         
