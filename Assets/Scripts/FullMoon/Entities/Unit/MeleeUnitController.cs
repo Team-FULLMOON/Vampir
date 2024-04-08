@@ -60,6 +60,11 @@ namespace FullMoon.Entities.Unit
             StateMachine.ChangeState(new MeleeUnitMove(this));
         }
 
+        public override void OnUnitStop()
+        {
+            base.OnUnitStop();
+        }
+
         protected override void OnDrawGizmos()
         {
             base.OnDrawGizmos();

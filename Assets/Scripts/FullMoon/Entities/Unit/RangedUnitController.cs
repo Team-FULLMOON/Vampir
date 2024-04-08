@@ -66,6 +66,11 @@ namespace FullMoon.Entities.Unit
             StateMachine.ChangeState(new RangedUnitMove(this));
         }
 
+        public override void OnUnitStop()
+        {
+            base.OnUnitStop();
+        }
+
         protected override void OnDrawGizmos()
         {
             base.OnDrawGizmos();
