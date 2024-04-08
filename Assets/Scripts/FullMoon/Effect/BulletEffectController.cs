@@ -11,7 +11,7 @@ namespace FullMoon.Effect
         
         private Transform target;
         public Transform shooter;
-        private string fromType;
+        private string shooterType;
         private float speed;
         private int damage;
 
@@ -37,6 +37,12 @@ namespace FullMoon.Effect
                 return;
             }
 
+            if (target != null && target.gameObject.activeInHierarchy)
+            {
+                Vector3 targetDirection = (target.position - transform.position).normalized;
+                transform.forward = targetDirection;
+            }
+
             float step = speed * Time.deltaTime;
             Vector3 currentPosition = transform.position;
             Vector3 direction = currentPosition - lastPosition;
@@ -58,33 +64,27 @@ namespace FullMoon.Effect
         {
             target = targetTransform;
             shooter = shooterTransform;
-            fromType = shooterTransform.GetComponent<BaseUnitController>().unitType;
+            shooterType = shooterTransform.GetComponent<BaseUnitController>().unitType;
             speed = speedValue;
             damage = damageValue;
 
             float missRate = targetTransform.GetComponent<BaseUnitController>().unitData.MissRate;
             
-            Vector3 toTarget = (target.position - transform.position).normalized;
+            Vector3 targetDirection = (target.position - transform.position).normalized;
             
             if (Random.Range(0f, 100f) < missRate)
             {
                 target = null;
                 
                 Vector3 randomDirection = Random.insideUnitSphere * 0.1f;   
-                randomDirection -= Vector3.Project(randomDirection, toTarget);
-                toTarget += randomDirection;
-            }
-            else
-            {
-                Vector3 randomDirection = Random.insideUnitSphere * 0.02f;   
-                randomDirection -= Vector3.Project(randomDirection, toTarget);
-                toTarget += randomDirection;
+                randomDirection -= Vector3.Project(randomDirection, targetDirection);
+                targetDirection += randomDirection;
             }
 
-            transform.forward = toTarget.normalized;
+            transform.forward = targetDirection.normalized;
 
             GameObject fireFX = ObjectPoolManager.SpawnObject(firingEffect, transform.position, Quaternion.identity);
-            fireFX.transform.forward = toTarget.normalized;
+            fireFX.transform.forward = targetDirection.normalized;
             fireFX.transform.eulerAngles = new Vector3(0f, fireFX.transform.eulerAngles.y - 90f, 0f);
             
             isFired = true;
@@ -113,7 +113,7 @@ namespace FullMoon.Effect
                 }
                 
                 var unitController = hit.collider.GetComponent<BaseUnitController>();
-                if (unitController != null && !unitController.unitType.Equals(fromType))
+                if (unitController != null && !unitController.unitType.Equals(shooterType))
                 {
                     ObjectPoolManager.ReturnObjectToPool(gameObject);
                     ObjectPoolManager.SpawnObject(hitEffect, hit.point, Quaternion.identity);
