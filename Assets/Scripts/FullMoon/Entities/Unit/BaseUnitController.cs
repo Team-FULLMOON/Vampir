@@ -5,6 +5,7 @@ using FullMoon.FSM;
 using FullMoon.Interfaces;
 using FullMoon.ScriptableObject;
 using System.Collections;
+using FullMoon.Input;
 
 namespace FullMoon.Entities.Unit
 {

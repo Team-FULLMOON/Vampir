@@ -41,8 +41,6 @@ namespace FullMoon.Entities.Unit.States
                 controller.Agent.isStopped = true; 
                 controller.StateMachine.ChangeState(new MeleeUnitIdle(controller));
             }
-
-            controller.OnUnitStop();
         }
 
         public void FixedExecute()
