@@ -179,7 +179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91c5e465bcb34fb44b885f4c8192ff0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitType: 
+  unitType: Player
   unitData: {fileID: 11400000, guid: 94ec904549f7da546a295aafe6d56964, type: 2}
   unitMarker: {fileID: 7576867232460400837}
   viewRange: {fileID: 7512172322329104421}
