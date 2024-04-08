@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 5
   defenseStrength: 5
-  movementSpeed: 2.5
+  movementSpeed: 3
+  missRate: 50
   attackEnabled: 1
   attackDamage: 1
   attackDelay: 1
