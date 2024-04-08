@@ -86,7 +86,6 @@ namespace FullMoon.Camera
             freeLookCamera.m_Lens.FieldOfView = Mathf.Lerp(freeLookCamera.m_Lens.FieldOfView, _targetFov, Time.deltaTime * zoomSpeed);
             
             MouseAction();
-            ButtonAction();
             mousePos = UnityEngine.InputSystem.Mouse.current.position.value;
         }
     
@@ -442,26 +441,6 @@ namespace FullMoon.Camera
         }
         
         #endregion Mouse
-
-        #region Button
-
-        public void ButtonAction()
-        {
-            if (PlayerInputManager.Instance.stop != 0)
-            {
-                StopSelectUnits();
-            }
-        }
-
-        private void StopSelectUnits()
-        {
-            foreach (var unit in selectedUnitList)
-            {
-                unit.OnUnitStop();
-            }
-        }
-
-        #endregion Button
 
         void OnDrawGizmos()
         {
