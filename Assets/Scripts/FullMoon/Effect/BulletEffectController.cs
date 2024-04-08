@@ -9,9 +9,8 @@ namespace FullMoon.Effect
         [SerializeField] private GameObject firingEffect;
         [SerializeField] private GameObject hitEffect;
         
-        private Transform target;
-        public Transform shooter;
-        private string shooterType;
+        private BaseUnitController target;
+        public BaseUnitController shooter;
         private float speed;
         private int damage;
 
@@ -39,7 +38,7 @@ namespace FullMoon.Effect
 
             if (target != null && target.gameObject.activeInHierarchy)
             {
-                Vector3 targetDirection = (target.position - transform.position).normalized;
+                Vector3 targetDirection = (target.transform.position - transform.position).normalized;
                 transform.forward = targetDirection;
             }
 
@@ -62,15 +61,14 @@ namespace FullMoon.Effect
         
         public void Fire(Transform targetTransform, Transform shooterTransform, float speedValue, int damageValue)
         {
-            target = targetTransform;
-            shooter = shooterTransform;
-            shooterType = shooterTransform.GetComponent<BaseUnitController>().unitType;
+            target = targetTransform.GetComponent<BaseUnitController>();
+            shooter = shooterTransform.GetComponent<BaseUnitController>();
             speed = speedValue;
             damage = damageValue;
 
             float missRate = targetTransform.GetComponent<BaseUnitController>().unitData.MissRate;
             
-            Vector3 targetDirection = (target.position - transform.position).normalized;
+            Vector3 targetDirection = (target.transform.position - transform.position).normalized;
             
             if (Random.Range(0f, 100f) < missRate)
             {
@@ -107,14 +105,15 @@ namespace FullMoon.Effect
             
             if (otherLayer == unitLayer)
             {
-                if (target != hit.transform)
+                if (target.gameObject != hit.transform.gameObject)
                 {
                     return;
                 }
                 
                 var unitController = hit.collider.GetComponent<BaseUnitController>();
-                if (unitController != null && !unitController.unitType.Equals(shooterType))
+                if (unitController != null && !unitController.unitType.Equals(shooter.unitType))
                 {
+                    unitController.ReceiveDamage(damage, shooter);
                     ObjectPoolManager.ReturnObjectToPool(gameObject);
                     ObjectPoolManager.SpawnObject(hitEffect, hit.point, Quaternion.identity);
                 }
