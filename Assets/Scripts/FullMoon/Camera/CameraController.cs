@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
@@ -25,6 +26,9 @@ namespace FullMoon.Camera
         [SerializeField] private float minFov = 20f;
         [SerializeField] private float maxFov = 55f;
         
+        [Header("Rotation")]
+        [SerializeField] private float rotationSensitivity = 3f; // 회전 감도
+        
         [Header("ClickSetting")]
         List<BaseUnitController> selectedUnitList; // 플레이어가 클릭 or 드래그로 선택한 유닛
         private UnityEngine.Camera mainCamera;
@@ -42,8 +46,9 @@ namespace FullMoon.Camera
         [SerializeField] private float onCoverUIRange;
         private List<GameObject> covers;
 
-
         private float targetFov;
+        private float targetXAxis;
+        private bool altRotation;
 
         private void Awake()
         {
@@ -58,11 +63,24 @@ namespace FullMoon.Camera
         private void Start()
         {
             targetFov = freeLookCamera.m_Lens.FieldOfView;
+            targetXAxis = freeLookCamera.m_XAxis.Value;
         
             PlayerInputManager.Instance.ZoomEvent.AddEvent(ZoomEvent);
+            
             StartCoroutine(CoverAction());
         }
 
+        private void Update()
+        {
+            freeLookCamera.m_Lens.FieldOfView = Mathf.Lerp(freeLookCamera.m_Lens.FieldOfView, targetFov, Time.deltaTime * zoomSpeed);
+            
+            mousePos = UnityEngine.InputSystem.Mouse.current.position.value;
+            mouseRay = mainCamera.ScreenPointToRay(mousePos);
+            
+            MouseAction();
+            ButtonAction();
+        }
+        
         private void FixedUpdate()
         {
             Vector3 moveDirection = AdjustMovementToCamera(PlayerInputManager.Instance.move);
@@ -74,20 +92,13 @@ namespace FullMoon.Camera
         
             float movementSpeed = PlayerInputManager.Instance.shift ? shiftMoveSpeed : moveSpeed;
             transform.position += moveDirection * (movementSpeed * Time.fixedDeltaTime);
-
-            mouseRay = mainCamera.ScreenPointToRay(mousePos);
         }
 
-        private void Update()
+        private void LateUpdate()
         {
-            // FOV를 목표값으로 부드럽게 조정
-            freeLookCamera.m_Lens.FieldOfView = Mathf.Lerp(freeLookCamera.m_Lens.FieldOfView, targetFov, Time.deltaTime * zoomSpeed);
-            
-            MouseAction();
-            ButtonAction();
-            mousePos = UnityEngine.InputSystem.Mouse.current.position.value;
+            DrawDecalPointer();
         }
-    
+
         private Vector2 GetScreenMovementInput()
         {
             if (Cursor.lockState != CursorLockMode.Confined)
@@ -114,8 +125,8 @@ namespace FullMoon.Camera
 
         private Vector3 AdjustMovementToCamera(Vector2 input)
         {
-            Vector3 forward = freeLookCamera.transform.forward;
-            Vector3 right = freeLookCamera.transform.right;
+            Vector3 forward = Vector3.Scale(mainCamera.transform.forward, new Vector3(1, 0, 1)).normalized;
+            Vector3 right = mainCamera.transform.right;
 
             forward.y = 0;
             right.y = 0;
@@ -142,6 +153,22 @@ namespace FullMoon.Camera
             dragRectangle.position = (start + end) * 0.5f;
             // 드래그 범위를 나타내는 Image UI의 크기
             dragRectangle.sizeDelta = new Vector2(Mathf.Abs(start.x - end.x), Mathf.Abs(start.y - end.y));
+        }
+        
+        private void DrawDecalPointer()
+        {
+            if (selectedUnitList.Count != 0 && Physics.Raycast(mouseRay, out var hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Ground")))
+            {
+                if (decal != null)
+                {
+                    decal.transform.position = new Vector3(hit.point.x, decal.transform.position.y, hit.point.z);
+                    decal.enabled = true;
+                }
+            }
+            else
+            {
+                decal.enabled = false;
+            }
         }
 
         private void CalculateDragRect()
@@ -233,6 +260,12 @@ namespace FullMoon.Camera
             start = mousePos;
             dragRect = new Rect();
 
+            if (PlayerInputManager.Instance.rotation)
+            {
+                altRotation = true;
+                return;
+            }
+
             if (Physics.Raycast(mouseRay, out var hit, Mathf.Infinity, (1 << LayerMask.NameToLayer("Unit")) | (1 << LayerMask.NameToLayer("Ground"))))
             {
                 var unitController = hit.transform.GetComponent<BaseUnitController>();
@@ -256,8 +289,19 @@ namespace FullMoon.Camera
 
         private void HandleLeftDrag()
         {
-            end = mousePos;
-            DrawDragRectangle();
+            if (altRotation == false)
+            {
+                end = mousePos;
+                DrawDragRectangle();
+                return;
+            }
+            
+            if (PlayerInputManager.Instance.rotation == false)
+            {
+                return;
+            }
+
+            freeLookCamera.m_XAxis.Value += freeLookCamera.m_XAxis.m_InputAxisValue * rotationSensitivity;
         }
 
         private void HandleLeftRelease()
@@ -266,6 +310,7 @@ namespace FullMoon.Camera
             SelectUnits();
             start = Vector2.zero;
             end = Vector2.zero;
+            altRotation = false;
             DrawDragRectangle();
         }
 
@@ -462,23 +507,5 @@ namespace FullMoon.Camera
         }
 
         #endregion Button
-        void OnDrawGizmos()
-        {
-            if (!Application.isPlaying)
-                return;
-
-            if (selectedUnitList.Count != 0 && Physics.Raycast(mouseRay, out var hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Ground")))
-            {
-                if (decal != null)
-                {
-                    decal.transform.position = new Vector3(hit.point.x, decal.transform.position.y, hit.point.z);
-                    decal.enabled = true;
-                }
-            }
-            else
-            {
-                decal.enabled = false;
-            }
-        }
     }
 }
