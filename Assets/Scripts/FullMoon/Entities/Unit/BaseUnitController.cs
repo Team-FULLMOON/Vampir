@@ -5,7 +5,6 @@ using FullMoon.FSM;
 using FullMoon.Interfaces;
 using FullMoon.ScriptableObject;
 using System.Collections;
-using FullMoon.Input;
 
 namespace FullMoon.Entities.Unit
 {
@@ -78,10 +77,7 @@ namespace FullMoon.Entities.Unit
 
         public virtual void OnUnitStop()
         {
-            if (PlayerInputManager.Instance.stop != 0)
-            {
-                Agent.SetDestination(transform.position);
-            }
+            MoveToPosition(transform.position);
         }
 
         protected virtual void OnDrawGizmos()

@@ -7,6 +7,7 @@ using UnityEngine.Rendering.Universal;
 using FullMoon.Interfaces;
 using FullMoon.Entities.Unit.States;
 using FullMoon.ScriptableObject;
+using FullMoon.Input;
 
 namespace FullMoon.Entities.Unit
 {
@@ -62,7 +63,10 @@ namespace FullMoon.Entities.Unit
 
         public override void OnUnitStop()
         {
+            if (PlayerInputManager.Instance.stop == 0)
+                return;
             base.OnUnitStop();
+            StateMachine.ChangeState(new MeleeUnitIdle(this));
         }
 
         protected override void OnDrawGizmos()
