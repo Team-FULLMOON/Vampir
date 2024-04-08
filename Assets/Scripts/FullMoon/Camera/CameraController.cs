@@ -48,6 +48,7 @@ namespace FullMoon.Camera
 
         private float targetFov;
         private float targetXAxis;
+        private bool altRotation;
 
         private void Awake()
         {
@@ -72,14 +73,12 @@ namespace FullMoon.Camera
         private void Update()
         {
             freeLookCamera.m_Lens.FieldOfView = Mathf.Lerp(freeLookCamera.m_Lens.FieldOfView, targetFov, Time.deltaTime * zoomSpeed);
-            freeLookCamera.m_XAxis.Value = targetXAxis;
             
             mousePos = UnityEngine.InputSystem.Mouse.current.position.value;
             mouseRay = mainCamera.ScreenPointToRay(mousePos);
             
             MouseAction();
             ButtonAction();
-            RotationEvent(PlayerInputManager.Instance.rotation);
         }
         
         private void FixedUpdate()
@@ -144,16 +143,6 @@ namespace FullMoon.Camera
             {
                 targetFov -= (scrollValue.y > 0f ? 1f : -1f) * zoomSensitivity;
                 targetFov = Mathf.Clamp(targetFov, minFov, maxFov);
-            }
-        }
-        
-        private void RotationEvent(Vector2 rotationValue)
-        {
-            if (rotationValue.x != 0f)
-            {
-                targetXAxis -= (rotationValue.x > 0f ? 1f : -1f) * rotationSensitivity;
-                if (targetXAxis < -180f) targetXAxis += 360f;
-                else if (targetXAxis > 180f) targetXAxis -= 360f;
             }
         }
         
@@ -271,6 +260,12 @@ namespace FullMoon.Camera
             start = mousePos;
             dragRect = new Rect();
 
+            if (PlayerInputManager.Instance.rotation)
+            {
+                altRotation = true;
+                return;
+            }
+
             if (Physics.Raycast(mouseRay, out var hit, Mathf.Infinity, (1 << LayerMask.NameToLayer("Unit")) | (1 << LayerMask.NameToLayer("Ground"))))
             {
                 var unitController = hit.transform.GetComponent<BaseUnitController>();
@@ -294,8 +289,19 @@ namespace FullMoon.Camera
 
         private void HandleLeftDrag()
         {
-            end = mousePos;
-            DrawDragRectangle();
+            if (altRotation == false)
+            {
+                end = mousePos;
+                DrawDragRectangle();
+                return;
+            }
+            
+            if (PlayerInputManager.Instance.rotation == false)
+            {
+                return;
+            }
+
+            freeLookCamera.m_XAxis.Value += freeLookCamera.m_XAxis.m_InputAxisValue * rotationSensitivity;
         }
 
         private void HandleLeftRelease()
@@ -304,6 +310,7 @@ namespace FullMoon.Camera
             SelectUnits();
             start = Vector2.zero;
             end = Vector2.zero;
+            altRotation = false;
             DrawDragRectangle();
         }
 

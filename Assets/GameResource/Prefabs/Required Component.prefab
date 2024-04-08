@@ -160,8 +160,8 @@ MonoBehaviour:
   shift: 0
   zoom: {x: 0, y: 0}
   stop: 0
-  rotation: {x: 0, y: 0}
-  cursorType: 0
+  rotation: 0
+  cursorType: 2
 --- !u!1 &1889243612475854807
 GameObject:
   m_ObjectHideFlags: 0
@@ -382,15 +382,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   freeLookCamera: {fileID: 7414321399674627490}
-  enableCursorMovement: 0
+  enableCursorMovement: 1
   moveSpeed: 12
   shiftMoveSpeed: 25
   zoomSensitivity: 5
   zoomSpeed: 10
   minFov: 20
   maxFov: 55
-  rotationSensitivity: 1.2
-  rotationSpeed: 1
+  rotationSensitivity: 5
   dragRectangle: {fileID: 6410134052024422841}
   decal: {fileID: 6232139520614333276}
   onCoverUIRange: 5
