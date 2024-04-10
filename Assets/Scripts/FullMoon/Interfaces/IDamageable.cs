@@ -1,5 +1,4 @@
 using FullMoon.Entities.Unit;
-using Unity.VisualScripting;
 
 namespace FullMoon.Interfaces
 {
@@ -7,5 +6,6 @@ namespace FullMoon.Interfaces
     {
         int Hp { get; set; }
         void ReceiveDamage(int amount, BaseUnitController attacker);
+        void Die();
     }
 }

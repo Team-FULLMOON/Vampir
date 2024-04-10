@@ -18,7 +18,7 @@ namespace FullMoon.Entities.Unit
         [Foldout("Melee Unit Settings")]
         public DecalProjector decalProjector;
 
-        public MeleeUnitData OverridenUnitData  { get; set; }
+        public MeleeUnitData OverridenUnitData { get; private set; }
         
         public List<BaseUnitController> UnitInsideViewArea { get; set; }
 

@@ -160,6 +160,7 @@ MonoBehaviour:
   shift: 0
   zoom: {x: 0, y: 0}
   stop: 0
+  hold: 0
   rotation: 0
   cursorType: 2
 --- !u!1 &1889243612475854807
@@ -382,7 +383,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   freeLookCamera: {fileID: 7414321399674627490}
-  enableCursorMovement: 1
+  enableCursorMovement: 0
   moveSpeed: 12
   shiftMoveSpeed: 25
   zoomSensitivity: 5
@@ -1441,8 +1442,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8871585326584059263}
   - component: {fileID: 1881276205180439692}
+  - component: {fileID: 7715306906980963973}
   m_Layer: 0
-  m_Name: UI Tool Kit
+  m_Name: Main UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1480,6 +1482,18 @@ MonoBehaviour:
   sourceAsset: {fileID: 9197481963319205126, guid: b9f531dd929df0243b70db379a99cdd4,
     type: 3}
   m_SortingOrder: 0
+--- !u!114 &7715306906980963973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8810766351034982028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fa493a95f3c46046937762d8f33a3d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7992151587767551069
 PrefabInstance:
   m_ObjectHideFlags: 0

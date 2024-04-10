@@ -180,6 +180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitType: Player
+  unitClass: Ranged
   unitData: {fileID: 11400000, guid: 94ec904549f7da546a295aafe6d56964, type: 2}
   unitMarker: {fileID: 7576867232460400837}
   viewRange: {fileID: 7512172322329104421}
