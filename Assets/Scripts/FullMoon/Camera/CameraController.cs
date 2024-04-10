@@ -4,10 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using FullMoon.Input;
-using FullMoon.Util;
 using FullMoon.Entities.Unit;
 using UnityEngine.Rendering.Universal;
-using FullMoon.Entities.Unit.States;
 using Unity.VisualScripting;
 
 namespace FullMoon.Camera

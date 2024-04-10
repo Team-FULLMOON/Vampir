@@ -7,8 +7,6 @@ using UnityEngine.Rendering.Universal;
 using FullMoon.Interfaces;
 using FullMoon.Entities.Unit.States;
 using FullMoon.ScriptableObject;
-using FullMoon.Camera;
-using FullMoon.Util;
 
 namespace FullMoon.Entities.Unit
 {
