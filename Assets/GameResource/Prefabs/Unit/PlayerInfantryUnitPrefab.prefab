@@ -242,7 +242,7 @@ MonoBehaviour:
   unitMarker: {fileID: 6798072512803417028}
   viewRange: {fileID: 2268042740748443340}
   decalProjector: {fileID: 6081375030924233605}
-  hidePrefab: {fileID: 2708679722998908366}
+  hidePrefab: {fileID: 441367664865155359}
   isGuard: 0
 --- !u!33 &7507534465915748410
 MeshFilter:
@@ -523,12 +523,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ecfd090060dcd8743aebae58dd354dca, type: 3}
---- !u!1 &2708679722998908366 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6008847171784213453, guid: ecfd090060dcd8743aebae58dd354dca,
+--- !u!114 &441367664865155359 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8130284841490571036, guid: ecfd090060dcd8743aebae58dd354dca,
     type: 3}
   m_PrefabInstance: {fileID: 8571651301768185347}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92cd9caa982bb7d4cb7fed7c50ab4d5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &6243079638973086760 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2330402437470272043, guid: ecfd090060dcd8743aebae58dd354dca,

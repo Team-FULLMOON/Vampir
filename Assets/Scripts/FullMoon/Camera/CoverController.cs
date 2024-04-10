@@ -15,9 +15,16 @@ namespace FullMoon.Camera
             mainCamera = UnityEngine.Camera.main.GetComponentInParent<CameraController>();
         }
 
-        void OnEnable()
+        public void SetList(bool active)
         {
-            mainCamera.SetCoverList(gameObject);
+            if (active)
+            {
+                if (mainCamera == null)
+                    mainCamera = UnityEngine.Camera.main.GetComponentInParent<CameraController>();
+                mainCamera.SetCoverList(gameObject);
+            }
+            else
+                mainCamera.RemoveCover(gameObject);
         }
 
         void OnTriggerEnter(Collider collider)
