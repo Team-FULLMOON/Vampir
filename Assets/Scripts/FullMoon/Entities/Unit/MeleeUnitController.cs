@@ -1,4 +1,3 @@
-using System;
 using MyBox;
 using System.Linq;
 using System.Collections.Generic;
@@ -8,7 +7,6 @@ using UnityEngine.Rendering.Universal;
 using FullMoon.Interfaces;
 using FullMoon.Entities.Unit.States;
 using FullMoon.ScriptableObject;
-using FullMoon.Input;
 
 namespace FullMoon.Entities.Unit
 {
@@ -19,9 +17,15 @@ namespace FullMoon.Entities.Unit
         [Foldout("Melee Unit Settings")]
         public DecalProjector decalProjector;
 
-        public MeleeUnitData OverridenUnitData { get; private set; }
+        public MeleeUnitData OverridenUnitData  { get; set; }
         
         public List<BaseUnitController> UnitInsideViewArea { get; set; }
+
+        [Foldout("Melee Unit Settings"), ConditionalField(nameof(unitClass), false, "Infantry")]
+        public GameObject hidePrefab;
+        
+        [Foldout("Melee Unit Settings"), ConditionalField(nameof(unitClass), false, "Infantry")]
+        public bool isGuard;
 
         protected override void Start()
         {
@@ -29,11 +33,6 @@ namespace FullMoon.Entities.Unit
             OverridenUnitData = (MeleeUnitData)unitData;
             UnitInsideViewArea = new List<BaseUnitController>();
             StateMachine.ChangeState(new MeleeUnitIdle(this));
-        }
-
-        protected void LateUpdate()
-        {
-            UnitInsideViewArea.RemoveAll(unit => unit == null || !unit.gameObject.activeInHierarchy);
         }
 
         public void EnterViewRange(Collider unit)
@@ -58,14 +57,7 @@ namespace FullMoon.Entities.Unit
 
         public void ExecuteAttack(Transform target)
         {
-            BaseUnitController targetController = target.GetComponent<BaseUnitController>();
-
-            if (targetController == null || targetController.gameObject.activeInHierarchy == false)
-            {
-                return;
-            }
-
-            targetController.ReceiveDamage(OverridenUnitData.AttackDamage, this);
+            // Todo
         }
 
         public override void MoveToPosition(Vector3 location)
@@ -76,10 +68,17 @@ namespace FullMoon.Entities.Unit
 
         public override void OnUnitStop()
         {
-            if (PlayerInputManager.Instance.stop == false)
-                return;
             base.OnUnitStop();
             StateMachine.ChangeState(new MeleeUnitIdle(this));
+        }
+
+        public override void OnUnitHold()
+        {
+            if (unitClass == "Infantry")
+            {
+                base.OnUnitHold();
+                StateMachine.ChangeState(new MeleeUnitGuard(this));
+            }
         }
 
         protected override void OnDrawGizmos()

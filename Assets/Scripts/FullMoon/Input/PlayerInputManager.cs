@@ -24,6 +24,7 @@ namespace FullMoon.Input
         public bool shift;
         public Vector2 zoom;
         public bool stop;
+        public bool hold;
         public bool rotation;
 
         [Header("Mouse Cursor Settings")] 
@@ -48,6 +49,11 @@ namespace FullMoon.Input
         public void OnStop(InputValue value)
         {
             StopInput(value.isPressed);
+        }
+
+        public void OnHold(InputValue value)
+        {
+            HoldInput(value.isPressed);
         }
         
         public void OnRotation(InputValue value)
@@ -82,6 +88,13 @@ namespace FullMoon.Input
         {
             stop = input;
             StopEvent.TriggerEvent(stop);
+        }
+
+        public readonly GenericEventSystem<bool> HoldEvent = new();
+        public void HoldInput(bool input)
+        {
+            hold = input;
+            HoldEvent.TriggerEvent(hold);
         }
         
         public readonly GenericEventSystem<bool> RotationEvent = new();
