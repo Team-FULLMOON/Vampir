@@ -23,7 +23,6 @@ namespace FullMoon.Entities.Unit.States
         {
             if (!controller.Agent.pathPending && controller.Agent.remainingDistance <= controller.Agent.stoppingDistance)
             {
-                controller.Agent.isStopped = true; 
                 controller.StateMachine.ChangeState(new RangedUnitIdle(controller));
                 return;
             }
@@ -38,7 +37,6 @@ namespace FullMoon.Entities.Unit.States
             
             if (closestUnit != null)
             {
-                controller.Agent.isStopped = true; 
                 controller.StateMachine.ChangeState(new RangedUnitIdle(controller));
             }
         }

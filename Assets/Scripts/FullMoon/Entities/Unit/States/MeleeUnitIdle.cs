@@ -1,3 +1,5 @@
+using System.Linq;
+using UnityEngine;
 using FullMoon.FSM;
 
 namespace FullMoon.Entities.Unit.States
@@ -13,12 +15,14 @@ namespace FullMoon.Entities.Unit.States
         
         public void Enter()
         {
-            // Debug.Log($"{controller.name} Idle Enter");
+            controller.Rb.velocity = Vector3.zero;
         }
 
         public void Execute()
         {
-            if (controller.UnitInsideViewArea.Count == 0)
+            int enemyCount = controller.UnitInsideViewArea.Count(t => !controller.unitType.Equals(t.unitType));
+            
+            if (enemyCount == 0)
             {
                 return;
             }

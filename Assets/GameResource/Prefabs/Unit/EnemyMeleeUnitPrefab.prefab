@@ -320,10 +320,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitType: Enemy
+  unitClass: Melee
   unitData: {fileID: 11400000, guid: 0c87e7cd77b6b5f4a84548cfe6e93b93, type: 2}
   unitMarker: {fileID: 2055024435388714017}
   viewRange: {fileID: 24826111065963529}
   decalProjector: {fileID: 1643748580956532414}
+  hidePrefab: {fileID: 0}
+  isGuard: 0
 --- !u!33 &4813495818894222326
 MeshFilter:
   m_ObjectHideFlags: 0
