@@ -32,14 +32,12 @@ namespace FullMoon.Entities.Unit
         public Rigidbody Rb { get; private set; }
         public NavMeshAgent Agent { get; set; }
         public Vector3 LatestDestination { get; set; }
-        public CameraController mainCamera { get; set; }
         public int Hp { get; set; }
 
         protected virtual void Start()
         {
             Rb = GetComponent<Rigidbody>();
             Agent = GetComponent<NavMeshAgent>();
-            mainCamera = UnityEngine.Camera.main.GetComponentInParent<CameraController>();
             LatestDestination = transform.position;
             Hp = unitData.MaxHp;
             unitMarker.SetActive(false);

@@ -21,7 +21,6 @@ namespace FullMoon.Entities.Unit.States
         {
             controller.isGuard = true;
             controller.hidePrefab.SetActive(true);
-            controller.mainCamera.SetCoverList(controller.hidePrefab);
         }
 
         public void Execute()
@@ -37,7 +36,6 @@ namespace FullMoon.Entities.Unit.States
         public void Exit()
         {
             controller.isGuard = false;
-            controller.mainCamera.RemoveCover(controller.hidePrefab);
             controller.hidePrefab.SetActive(false);
         }
     }

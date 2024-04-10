@@ -301,7 +301,8 @@ namespace FullMoon.Camera
 
         public void SetCoverList(GameObject cover)
         {
-            covers.Add(cover);
+            if (!covers.Contains(cover))
+                covers.Add(cover);
         }
 
         IEnumerator CoverAction()
@@ -316,13 +317,17 @@ namespace FullMoon.Camera
 
                 if (curBool)
                 {
-                    foreach (var obj in covers)
-                        obj.SetActive(false);
+                    for (int i = 0; i < covers.Count; ++i)
+                    {
+                        covers[i].SetActive(false);
+                    }
                 }
                 else
                 {
-                    foreach (var obj in covers)
-                        obj.SetActive(true);
+                    for (int i = 0; i < covers.Count; ++i)
+                    {
+                        covers[i].SetActive(true);
+                    }
                 }
 
                 yield return new WaitForSeconds(0.01f);
@@ -391,7 +396,8 @@ namespace FullMoon.Camera
 
                     if (curUnit != null && selectedUnitList.Contains(curUnit))
                     {
-                        if (curUnit.unitClass == "Infantry" && curUnit.GetComponent<MeleeUnitController>().isGuard)
+                        if (curUnit.unitClass == "Infantry" && 
+                            curUnit.GetComponent<MeleeUnitController>().isGuard)
                             continue;
                         curUnit.MoveToPosition(collider.transform.position);
                         unitList.Remove(curUnit);
