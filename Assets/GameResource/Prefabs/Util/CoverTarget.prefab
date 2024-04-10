@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2330402437470272043}
   - component: {fileID: 3676773224067115266}
   - component: {fileID: 2391973367282388517}
+  - component: {fileID: 8130284841490571036}
   m_Layer: 14
   m_Name: CoverTarget
   m_TagString: UIObject
@@ -107,3 +108,15 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5000001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8130284841490571036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6008847171784213453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92cd9caa982bb7d4cb7fed7c50ab4d5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

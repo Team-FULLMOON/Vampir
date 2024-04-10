@@ -4,8 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using FullMoon.Input;
+using FullMoon.Util;
 using FullMoon.Entities.Unit;
 using UnityEngine.Rendering.Universal;
+using FullMoon.Entities.Unit.States;
+using Unity.VisualScripting;
 
 namespace FullMoon.Camera
 {
@@ -51,7 +54,6 @@ namespace FullMoon.Camera
             selectedUnitList = new List<BaseUnitController>();
             covers = GameObject.FindGameObjectsWithTag("UIObject").ToList();
 
-            // 드래그 모형 초기화
             DrawDragRectangle();
         }
 
@@ -60,6 +62,7 @@ namespace FullMoon.Camera
             targetFov = freeLookCamera.m_Lens.FieldOfView;
         
             PlayerInputManager.Instance.ZoomEvent.AddEvent(ZoomEvent);
+
             StartCoroutine(CoverAction());
         }
 
@@ -189,8 +192,11 @@ namespace FullMoon.Camera
         /// <summary>
         /// 마우스 클릭 액션
         /// </summary>
-        public void MouseAction()
+        private void MouseAction()
         {
+            if (!Application.isPlaying)
+                return;
+
             // 마우스 왼쪽 버튼 처리
             if (UnityEngine.InputSystem.Mouse.current.leftButton.wasPressedThisFrame)
             {
@@ -287,6 +293,17 @@ namespace FullMoon.Camera
             }
         }
 
+        public void RemoveCover(GameObject cover)
+        {
+            if (covers.Contains(cover))
+                covers.Remove(cover);
+        }
+
+        public void SetCoverList(GameObject cover)
+        {
+            covers.Add(cover);
+        }
+
         IEnumerator CoverAction()
         {
             bool curBool = false;
@@ -368,11 +385,14 @@ namespace FullMoon.Camera
                 {
                     BaseUnitController curUnit = unitList
                         .Select(unit => new { Unit = unit, dis = Vector3.Distance(unit.transform.position, collider.transform.position)})
+                        .Where(coll => covers.Contains(collider.gameObject))
                         .OrderBy(unitDis => unitDis.dis)
                         .FirstOrDefault()?.Unit;
 
                     if (curUnit != null && selectedUnitList.Contains(curUnit))
                     {
+                        if (curUnit.unitClass == "Infantry" && curUnit.GetComponent<MeleeUnitController>().isGuard)
+                            continue;
                         curUnit.MoveToPosition(collider.transform.position);
                         unitList.Remove(curUnit);
 
@@ -435,7 +455,7 @@ namespace FullMoon.Camera
         /// <summary>
         /// 선택된 유닛들에게 강제공격 명령
         /// </summary>
-        public void AttackSelectedUnits(BaseUnitController unit)
+        private void AttackSelectedUnits(BaseUnitController unit)
         {
             // for (int index = 0; index < selectedUnitList.Count; ++index)
             //     selectedUnitList[index].SetTarget(unit);
@@ -445,12 +465,12 @@ namespace FullMoon.Camera
 
         #region Button
 
-        public void ButtonAction()
+        private void ButtonAction()
         {
             if (PlayerInputManager.Instance.stop)
-            {
                 StopSelectUnits();
-            }
+            if (PlayerInputManager.Instance.hold)
+                HoldSelectUnits();
         }
 
         private void StopSelectUnits()
@@ -461,7 +481,16 @@ namespace FullMoon.Camera
             }
         }
 
+        private void HoldSelectUnits()
+        {
+            foreach(var unit in selectedUnitList)
+            {
+                unit.OnUnitHold();
+            }
+        }
+
         #endregion Button
+
         void OnDrawGizmos()
         {
             if (!Application.isPlaying)

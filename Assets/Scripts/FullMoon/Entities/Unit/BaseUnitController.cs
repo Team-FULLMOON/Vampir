@@ -4,6 +4,7 @@ using UnityEngine.AI;
 using FullMoon.FSM;
 using FullMoon.Interfaces;
 using FullMoon.ScriptableObject;
+using FullMoon.Camera;
 
 namespace FullMoon.Entities.Unit
 {
@@ -12,6 +13,9 @@ namespace FullMoon.Entities.Unit
     {
         [Foldout("Base Unit Settings"), DefinedValues("None", "Player", "Enemy")]
         public string unitType;
+
+        [Foldout("Base Unit Settings"), DefinedValues("None", "Infantry")]
+        public string unitClass;
         
         [Foldout("Base Unit Settings"), DisplayInspector] 
         public BaseUnitData unitData;
@@ -21,18 +25,21 @@ namespace FullMoon.Entities.Unit
         
         [Foldout("Base Unit Settings")] 
         public SphereCollider viewRange;
+
         
         public readonly StateMachine StateMachine = new();
         
         public Rigidbody Rb { get; private set; }
         public NavMeshAgent Agent { get; set; }
         public Vector3 LatestDestination { get; set; }
+        public CameraController mainCamera { get; set; }
         public int Hp { get; set; }
 
         protected virtual void Start()
         {
             Rb = GetComponent<Rigidbody>();
             Agent = GetComponent<NavMeshAgent>();
+            mainCamera = UnityEngine.Camera.main.GetComponentInParent<CameraController>();
             LatestDestination = transform.position;
             Hp = unitData.MaxHp;
             unitMarker.SetActive(false);
@@ -82,6 +89,11 @@ namespace FullMoon.Entities.Unit
         }
 
         public virtual void OnUnitStop()
+        {
+            MoveToPosition(transform.position);
+        }
+
+        public virtual void OnUnitHold()
         {
             MoveToPosition(transform.position);
         }
