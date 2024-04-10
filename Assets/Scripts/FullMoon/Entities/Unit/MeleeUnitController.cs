@@ -7,6 +7,7 @@ using UnityEngine.Rendering.Universal;
 using FullMoon.Interfaces;
 using FullMoon.Entities.Unit.States;
 using FullMoon.ScriptableObject;
+using FullMoon.Camera;
 
 namespace FullMoon.Entities.Unit
 {
@@ -22,7 +23,7 @@ namespace FullMoon.Entities.Unit
         public List<BaseUnitController> UnitInsideViewArea { get; set; }
 
         [Foldout("Melee Unit Settings"), ConditionalField(nameof(unitClass), false, "Infantry")]
-        public GameObject hidePrefab;
+        public CoverController hidePrefab;
         
         [Foldout("Melee Unit Settings"), ConditionalField(nameof(unitClass), false, "Infantry")]
         public bool isGuard;

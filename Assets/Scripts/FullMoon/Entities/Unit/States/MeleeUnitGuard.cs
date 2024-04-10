@@ -18,7 +18,8 @@ namespace FullMoon.Entities.Unit.States
         public void Enter()
         {
             controller.isGuard = true;
-            controller.hidePrefab.SetActive(true);
+            controller.hidePrefab.gameObject.SetActive(true);
+            controller.hidePrefab.SetList(true);
         }
 
         public void Execute()
@@ -34,7 +35,8 @@ namespace FullMoon.Entities.Unit.States
         public void Exit()
         {
             controller.isGuard = false;
-            controller.hidePrefab.SetActive(false);
+            controller.hidePrefab.gameObject.SetActive(false);
+            controller.hidePrefab.SetList(false);
         }
     }
 }
