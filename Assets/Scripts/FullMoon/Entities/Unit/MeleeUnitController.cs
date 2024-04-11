@@ -35,6 +35,11 @@ namespace FullMoon.Entities.Unit
             UnitInsideViewArea = new List<BaseUnitController>();
             StateMachine.ChangeState(new MeleeUnitIdle(this));
         }
+        
+        protected void LateUpdate()
+        {
+            UnitInsideViewArea.RemoveAll(unit => unit == null || !unit.gameObject.activeInHierarchy);
+        }
 
         public void EnterViewRange(Collider unit)
         {
@@ -58,7 +63,14 @@ namespace FullMoon.Entities.Unit
 
         public void ExecuteAttack(Transform target)
         {
-            // Todo
+            BaseUnitController targetController = target.GetComponent<BaseUnitController>();
+
+            if (targetController == null || targetController.gameObject.activeInHierarchy == false)
+            {
+                return;
+            }
+
+            targetController.ReceiveDamage(OverridenUnitData.AttackDamage, this);
         }
 
         public override void MoveToPosition(Vector3 location)
