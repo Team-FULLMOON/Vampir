@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0da91f06fca8f9a46a3fe3533154bd91, type: 3}
   m_Name: RangedPlayerUnit
   m_EditorClassIdentifier: 
-  maxHp: 5
+  maxHp: 15
   defenseStrength: 5
   movementSpeed: 2
   missRate: 0
@@ -20,7 +20,7 @@ MonoBehaviour:
   attackDamage: 1
   attackDelay: 1
   attackSpeed: 0.8
-  attackRange: 8
-  viewRadius: 10
+  attackRange: 11
+  viewRadius: 18
   fogOfWarRadius: 20
   bulletSpeed: 55

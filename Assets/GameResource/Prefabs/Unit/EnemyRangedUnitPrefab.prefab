@@ -54,7 +54,7 @@ MonoBehaviour:
   m_DecalLayerMask: 4294967295
   m_ScaleMode: 0
   m_Offset: {x: 0, y: 0, z: 2}
-  m_Size: {x: 16, y: 16, z: 5}
+  m_Size: {x: 22, y: 22, z: 5}
   m_FadeFactor: 1
 --- !u!1 &4080469667919466714
 GameObject:
@@ -291,7 +291,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 10
+  m_Radius: 18
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2540097386026926566
 MonoBehaviour:
