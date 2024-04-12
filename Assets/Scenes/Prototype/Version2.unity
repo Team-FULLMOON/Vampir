@@ -7787,6 +7787,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 21
       objectReference: {fileID: 0}
+    - target: {fileID: 5026078120387931432, guid: 45c0e8983dfd155438c71a93215887d2,
+        type: 3}
+      propertyPath: m_Antialiasing
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6617300095296393722, guid: 45c0e8983dfd155438c71a93215887d2,
         type: 3}
       propertyPath: m_BackGroundColor.a
