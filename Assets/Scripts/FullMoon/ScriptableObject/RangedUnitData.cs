@@ -9,7 +9,7 @@ namespace FullMoon.ScriptableObject
     {
         [Separator("Ranged Unit Settings")]
     
-        [SerializeField] private float bulletSpeed = 70f;
+        [SerializeField, OverrideLabel("총알 속도")] private float bulletSpeed = 70f;
         public float BulletSpeed => bulletSpeed;
     }
 }

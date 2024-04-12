@@ -100,7 +100,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 6
+  m_Radius: 24
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5534565524025709570
 MonoBehaviour:
@@ -319,9 +319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 615a400538be73d41b9336cd281305f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitType: Enemy
-  unitClass: Melee
-  unitData: {fileID: 11400000, guid: 0c87e7cd77b6b5f4a84548cfe6e93b93, type: 2}
+  unitData: {fileID: 11400000, guid: 310efc89852330b489613346e3717a76, type: 2}
   unitMarker: {fileID: 2055024435388714017}
   viewRange: {fileID: 24826111065963529}
   decalProjector: {fileID: 1643748580956532414}

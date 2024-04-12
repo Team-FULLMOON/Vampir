@@ -83,7 +83,7 @@ namespace FullMoon.Entities.Unit
 
             if (decalProjector != null)
             {
-                decalProjector.size = new Vector3(unitData.AttackRange * 2f, unitData.AttackRange * 2f, decalProjector.size.z);
+                decalProjector.size = new Vector3(unitData.AttackRadius * 2f, unitData.AttackRadius * 2f, decalProjector.size.z);
             }
             
             if (Application.isPlaying == false)
@@ -92,8 +92,8 @@ namespace FullMoon.Entities.Unit
             }
             
             BaseUnitController closestUnit  = UnitInsideViewArea
-                .Where(t => !unitType.Equals(t.unitType))
-                .Where(t => (t.transform.position - transform.position).sqrMagnitude <= OverridenUnitData.AttackRange * OverridenUnitData.AttackRange)
+                .Where(t => !UnitType.Equals(t.UnitType))
+                .Where(t => (t.transform.position - transform.position).sqrMagnitude <= OverridenUnitData.AttackRadius * OverridenUnitData.AttackRadius)
                 .OrderBy(t => (t.transform.position - transform.position).sqrMagnitude)
                 .FirstOrDefault();
             
@@ -102,7 +102,7 @@ namespace FullMoon.Entities.Unit
                 return;
             }
 
-            switch (unitType)
+            switch (UnitType)
             {
                 case "Player":
                     Gizmos.color = new Color(0f, 1f, 0f, 1f);

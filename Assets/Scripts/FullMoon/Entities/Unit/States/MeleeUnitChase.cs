@@ -21,7 +21,7 @@ namespace FullMoon.Entities.Unit.States
         public void Execute()
         {
             BaseUnitController closestUnit = controller.UnitInsideViewArea
-                .Where(t => !controller.unitType.Equals(t.unitType))
+                .Where(t => !controller.UnitType.Equals(t.UnitType))
                 .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
                 .FirstOrDefault();
 
@@ -32,7 +32,7 @@ namespace FullMoon.Entities.Unit.States
             }
 
             bool checkDistance = (closestUnit.transform.position - controller.transform.position).sqrMagnitude <=
-                           controller.OverridenUnitData.AttackRange * controller.OverridenUnitData.AttackRange;
+                           controller.OverridenUnitData.AttackRadius * controller.OverridenUnitData.AttackRadius;
             
             if (checkDistance)
             {

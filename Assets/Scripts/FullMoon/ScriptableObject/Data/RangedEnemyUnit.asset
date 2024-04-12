@@ -12,15 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0da91f06fca8f9a46a3fe3533154bd91, type: 3}
   m_Name: RangedEnemyUnit
   m_EditorClassIdentifier: 
-  maxHp: 5
-  defenseStrength: 5
-  movementSpeed: 3.5
+  unitCode: 102
+  unitName: "\uBA38\uC2A4\uD0B7 \uC778\uD615"
+  unitType: Enemy
+  unitClass: Ranged
+  maxHp: 160
+  movementSpeed: 2
   missRate: 0
   attackEnabled: 1
-  attackDamage: 1
-  attackDelay: 1
-  attackSpeed: 0.8
-  attackRange: 8
-  viewRadius: 10
+  attackDamage: 40
+  attackDelay: 0.5
+  attackSpeed: 1.5
+  attackRadius: 16
+  viewRadius: 24
   fogOfWarRadius: 20
   bulletSpeed: 55

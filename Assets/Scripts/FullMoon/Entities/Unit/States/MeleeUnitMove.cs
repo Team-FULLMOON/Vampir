@@ -28,7 +28,7 @@ namespace FullMoon.Entities.Unit.States
             }
             
             BaseUnitController closestUnit  = controller.UnitInsideViewArea
-                .Where(t => controller.unitType.Equals(t.unitType))
+                .Where(t => controller.UnitType.Equals(t.UnitType))
                 .Where(t => t.Agent.isStopped)
                 .Where(t => Mathf.Approximately(controller.LatestDestination.x, t.LatestDestination.x)
                             && Mathf.Approximately(controller.LatestDestination.y, t.LatestDestination.y)
