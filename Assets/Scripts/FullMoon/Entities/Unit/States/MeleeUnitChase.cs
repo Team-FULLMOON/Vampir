@@ -32,7 +32,7 @@ namespace FullMoon.Entities.Unit.States
             }
 
             bool checkDistance = (closestUnit.transform.position - controller.transform.position).sqrMagnitude <=
-                           controller.OverridenUnitData.AttackRange * controller.OverridenUnitData.AttackRange;
+                           controller.OverridenUnitData.AttackRadius * controller.OverridenUnitData.AttackRadius;
             
             if (checkDistance)
             {
