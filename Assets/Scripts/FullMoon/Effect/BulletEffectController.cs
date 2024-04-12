@@ -111,7 +111,7 @@ namespace FullMoon.Effect
                 }
                 
                 var unitController = hit.collider.GetComponent<BaseUnitController>();
-                if (unitController != null && !unitController.unitType.Equals(shooter.unitType))
+                if (unitController != null && !unitController.UnitType.Equals(shooter.UnitType))
                 {
                     unitController.ReceiveDamage(damage, shooter);
                     ObjectPoolManager.ReturnObjectToPool(gameObject);

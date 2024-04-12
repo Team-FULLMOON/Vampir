@@ -22,10 +22,10 @@ namespace FullMoon.Entities.Unit
         
         public List<BaseUnitController> UnitInsideViewArea { get; set; }
 
-        [Foldout("Melee Unit Settings"), ConditionalField(nameof(unitClass), false, "Infantry")]
+        [Foldout("Melee Unit Settings"), ConditionalField(nameof(UnitClass), false, "Infantry")]
         public CoverController hidePrefab;
         
-        [Foldout("Melee Unit Settings"), ConditionalField(nameof(unitClass), false, "Infantry")]
+        [Foldout("Melee Unit Settings"), ConditionalField(nameof(UnitClass), false, "Infantry")]
         public bool isGuard;
 
         protected override void Start()
@@ -87,7 +87,7 @@ namespace FullMoon.Entities.Unit
 
         public override void OnUnitHold()
         {
-            if (unitClass == "Infantry")
+            if (unitData.UnitType == "Infantry")
             {
                 base.OnUnitHold();
                 StateMachine.ChangeState(new MeleeUnitGuard(this));
@@ -109,7 +109,7 @@ namespace FullMoon.Entities.Unit
             }
             
             BaseUnitController closestUnit  = UnitInsideViewArea
-                .Where(t => !unitType.Equals(t.unitType))
+                .Where(t => !UnitType.Equals(t.UnitType))
                 .Where(t => (t.transform.position - transform.position).sqrMagnitude <= OverridenUnitData.AttackRadius * OverridenUnitData.AttackRadius)
                 .OrderBy(t => (t.transform.position - transform.position).sqrMagnitude)
                 .FirstOrDefault();
@@ -119,7 +119,7 @@ namespace FullMoon.Entities.Unit
                 return;
             }
 
-            switch (unitType)
+            switch (UnitType)
             {
                 case "Player":
                     Gizmos.color = new Color(0f, 1f, 0f, 1f);

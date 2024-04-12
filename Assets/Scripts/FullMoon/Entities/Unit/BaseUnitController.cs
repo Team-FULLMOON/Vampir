@@ -11,12 +11,6 @@ namespace FullMoon.Entities.Unit
     public abstract class BaseUnitController
         : MonoBehaviour, IDamageable, ISelectable, INavigation
     {
-        [Foldout("Base Unit Settings"), DefinedValues("None", "Player", "Enemy")]
-        public string unitType;
-
-        [Foldout("Base Unit Settings"), DefinedValues("None", "Ranged", "Melee", "Infantry")]
-        public string unitClass;
-        
         [Foldout("Base Unit Settings"), DisplayInspector] 
         public BaseUnitData unitData;
         
@@ -33,12 +27,17 @@ namespace FullMoon.Entities.Unit
         public Vector3 LatestDestination { get; set; }
         public int Hp { get; set; }
 
+        public string UnitType { get; set; }
+        public string UnitClass { get; set; }
+
         protected virtual void Start()
         {
             Rb = GetComponent<Rigidbody>();
             Agent = GetComponent<NavMeshAgent>();
             LatestDestination = transform.position;
             Hp = unitData.MaxHp;
+            UnitType = unitData.UnitType;
+            UnitClass = unitData.UnitClass;
             unitMarker.SetActive(false);
         }
 
@@ -54,7 +53,7 @@ namespace FullMoon.Entities.Unit
 
         public virtual void ReceiveDamage(int amount, BaseUnitController attacker)
         {
-            if (unitType.Equals(attacker.unitType))
+            if (UnitType.Equals(attacker.UnitType))
             {
                 return;
             }
@@ -72,7 +71,7 @@ namespace FullMoon.Entities.Unit
         public virtual void Die()
         {
             gameObject.SetActive(false);
-            if (unitType == "Enemy")
+            if (UnitType == "Enemy")
             {
                 MainUIController.Instance.AddMana(10);
             }

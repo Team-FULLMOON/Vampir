@@ -409,7 +409,7 @@ namespace FullMoon.Camera
         /// </summary>
         private void DragSelectUnit(BaseUnitController newUnit)
         {
-            if (newUnit.unitType.Equals("Enemy") || selectedUnitList.Contains(newUnit))
+            if (newUnit.UnitType.Equals("Enemy") || selectedUnitList.Contains(newUnit))
             {
                 return;
             }
@@ -438,7 +438,7 @@ namespace FullMoon.Camera
 
                     if (curUnit != null && selectedUnitList.Contains(curUnit))
                     {
-                        if (curUnit.unitClass == "Infantry" && 
+                        if (curUnit.UnitClass == "Infantry" && 
                             curUnit.GetComponent<MeleeUnitController>().isGuard)
                             continue;
                         curUnit.MoveToPosition(collider.transform.position);
@@ -457,7 +457,7 @@ namespace FullMoon.Camera
             {
                 foreach (var unit in selectedUnitList)
                 {
-                    if (unit.unitType.Equals("Enemy"))
+                    if (unit.UnitType.Equals("Enemy"))
                         continue;
 
                     unit.MoveToPosition(end);

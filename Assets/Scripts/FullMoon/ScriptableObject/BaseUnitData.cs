@@ -7,6 +7,24 @@ namespace FullMoon.ScriptableObject
     public class BaseUnitData : UnityEngine.ScriptableObject
     {
         [Separator("Base Unit Settings")]
+        
+        [SerializeField, OverrideLabel("유닛 코드")] private string unitCode = "000";
+        public string UnitCode => unitCode;
+        
+        [SerializeField, OverrideLabel("유닛 이름")] private string unitName = "";
+        public string UnitName => unitName;
+        
+        [Separator]
+        
+        [SerializeField, OverrideLabel("유닛 타입"), DefinedValues("Player", "Enemy")]
+        private string unitType = "Player";
+        public string UnitType => unitType;
+        
+        [SerializeField, OverrideLabel("유닛 클래스"), DefinedValues("Ranged", "Melee", "Infantry")]
+        private string unitClass = "Ranged";
+        public string UnitClass => unitClass;
+        
+        [Separator]
     
         [SerializeField, OverrideLabel("최대 체력")] private int maxHp = 5;
         public int MaxHp => maxHp;

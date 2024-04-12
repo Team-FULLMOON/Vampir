@@ -10,8 +10,9 @@
                     <ui:VisualElement name="Div" style="flex-grow: 1; position: absolute; bottom: 0; background-color: rgba(255, 255, 255, 0); width: 100%; height: 30px; flex-direction: row;">
                         <ui:VisualElement name="Div" style="flex-grow: 1; background-color: rgba(255, 255, 255, 0);">
                             <ui:ProgressBar value="0" name="ManaProgressBar" low-value="0" focusable="false" class="ManaProgress" style="margin-right: 0; margin-bottom: 0; margin-left: 0; margin-top: 0; position: relative; opacity: 1; background-color: rgba(0, 0, 0, 0); transform-origin: center; translate: 0 0;" />
+                            <ui:Label tabindex="-1" text="? / ?" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ManaProgressText" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; position: absolute; width: 100%; height: 30px; align-self: auto; right: auto; -unity-text-align: middle-center; -unity-font-style: bold; font-size: 20px;" />
                         </ui:VisualElement>
-                        <ui:Button text="Ctrl + R" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ManaExpand" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; background-color: rgb(68, 114, 196); width: 70px; color: rgb(255, 255, 255); -unity-font-style: bold;" />
+                        <ui:Button text="Retry" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ManaExpandButton" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; background-color: rgb(68, 114, 196); width: 70px; color: rgb(255, 255, 255); -unity-font-style: bold;" />
                     </ui:VisualElement>
                 </ui:VisualElement>
                 <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row;">

@@ -20,7 +20,7 @@ namespace FullMoon.Entities.Unit.States
 
         public void Execute()
         {
-            int enemyCount = controller.UnitInsideViewArea.Count(t => !controller.unitType.Equals(t.unitType));
+            int enemyCount = controller.UnitInsideViewArea.Count(t => !controller.UnitType.Equals(t.UnitType));
             
             if (enemyCount == 0)
             {

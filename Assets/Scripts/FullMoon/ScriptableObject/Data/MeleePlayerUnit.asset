@@ -12,14 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b088d7d4193e3a469989c0d90dd5873, type: 3}
   m_Name: MeleePlayerUnit
   m_EditorClassIdentifier: 
-  maxHp: 20
-  defenseStrength: 5
+  unitCode: 101
+  unitName: "\uBA54\uC774\uC2A4 \uC778\uD615"
+  unitType: Player
+  unitClass: Melee
+  maxHp: 250
   movementSpeed: 3
   missRate: 0
   attackEnabled: 1
-  attackDamage: 1
-  attackDelay: 1
+  attackDamage: 30
+  attackDelay: 0
   attackSpeed: 1
-  attackRange: 2
-  viewRadius: 18
+  attackRadius: 2
+  viewRadius: 24
   fogOfWarRadius: 20

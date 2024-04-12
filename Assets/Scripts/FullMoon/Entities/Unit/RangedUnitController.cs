@@ -92,7 +92,7 @@ namespace FullMoon.Entities.Unit
             }
             
             BaseUnitController closestUnit  = UnitInsideViewArea
-                .Where(t => !unitType.Equals(t.unitType))
+                .Where(t => !UnitType.Equals(t.UnitType))
                 .Where(t => (t.transform.position - transform.position).sqrMagnitude <= OverridenUnitData.AttackRadius * OverridenUnitData.AttackRadius)
                 .OrderBy(t => (t.transform.position - transform.position).sqrMagnitude)
                 .FirstOrDefault();
@@ -102,7 +102,7 @@ namespace FullMoon.Entities.Unit
                 return;
             }
 
-            switch (unitType)
+            switch (UnitType)
             {
                 case "Player":
                     Gizmos.color = new Color(0f, 1f, 0f, 1f);
