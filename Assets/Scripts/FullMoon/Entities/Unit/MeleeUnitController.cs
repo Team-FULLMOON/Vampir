@@ -87,7 +87,7 @@ namespace FullMoon.Entities.Unit
 
         public override void OnUnitHold()
         {
-            if (unitData.UnitType == "Infantry")
+            if (UnitClass == "Infantry")
             {
                 base.OnUnitHold();
                 StateMachine.ChangeState(new MeleeUnitGuard(this));

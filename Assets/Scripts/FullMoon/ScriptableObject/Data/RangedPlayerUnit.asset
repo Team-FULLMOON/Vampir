@@ -20,7 +20,7 @@ MonoBehaviour:
   movementSpeed: 2
   missRate: 0
   attackEnabled: 1
-  attackDamage: 1
+  attackDamage: 40
   attackDelay: 0.5
   attackSpeed: 1.5
   attackRadius: 16
