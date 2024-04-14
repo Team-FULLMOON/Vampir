@@ -73,7 +73,7 @@ namespace FullMoon.Entities.Unit
             gameObject.SetActive(false);
             if (UnitType == "Enemy")
             {
-                MainUIController.Instance.AddMana(10);
+                MainUIController.Instance.AddMana(7);
             }
         }
 

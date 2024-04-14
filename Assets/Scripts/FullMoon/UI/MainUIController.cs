@@ -10,6 +10,7 @@ namespace FullMoon.UI
         private ProgressBar _manaProgressBar;
         private TextElement _manaProgressText;
         private Button _manaExpandButton;
+        private Button _retryButton;
 
         private void Start()
         {
@@ -17,9 +18,13 @@ namespace FullMoon.UI
             _manaProgressBar = root.Q<ProgressBar>("ManaProgressBar");
             _manaProgressText = root.Q<TextElement>("ManaProgressText");
             _manaExpandButton = root.Q<Button>("ManaExpandButton");
+            _retryButton = root.Q<Button>("RetryButton");
 
             _manaProgressText.text = $"{_manaProgressBar.value} / {_manaProgressBar.highValue}";
             _manaExpandButton.RegisterCallback<ClickEvent>(ExpandMana);
+            _retryButton.RegisterCallback<ClickEvent>(Retry);
+            
+            AddMana(30);
         }
         
         public void AddMana(int value)
@@ -29,6 +34,16 @@ namespace FullMoon.UI
         }
         
         private void ExpandMana(ClickEvent evt)
+        {
+            if (_manaProgressBar.value < 20)
+            {
+                return;
+            }
+            _manaProgressBar.highValue += 10;
+            AddMana(-20);
+        }
+        
+        private void Retry(ClickEvent evt)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
