@@ -32,14 +32,32 @@ namespace FullMoon.ScriptableObject
         [SerializeField, OverrideLabel("이동 속도")] private float movementSpeed = 5f;
         public float MovementSpeed => movementSpeed;
         
-        [SerializeField, ConditionalField(nameof(unitType), false, "Enemy"), OverrideLabel("처치 시 마나 획득량")] 
-        private int manaDrop = 7;
-        public int ManaDrop => manaDrop;
-        
         [Separator]
     
         [SerializeField, OverrideLabel("회피율 (%)")] private float missRate = 50f;
         public float MissRate => missRate;
+        
+        [Space(5)]
+        
+        [SerializeField, ConditionalField(nameof(unitType), false, "Enemy"), OverrideLabel("처치 시 마나 획득량")] 
+        private int manaDrop = 7;
+        public int ManaDrop => manaDrop;
+        
+        [SerializeField, ConditionalField(nameof(unitType), false, "Enemy"), OverrideLabel("생성 시 마나 필요량")] 
+        private int manaCost = 10;
+        public int ManaCost => manaCost;
+        
+        [SerializeField, ConditionalField(nameof(unitType), false, "Enemy"), OverrideLabel("생성 준비 시간")] 
+        private float createPrepareTime = 2.5f;
+        public float CreatePrepareTime => createPrepareTime;
+        
+        [SerializeField, ConditionalField(nameof(unitType), false, "Enemy"), OverrideLabel("인형 소환 시간")] 
+        private float summonTime = 3f;
+        public float SummonTime => summonTime;
+        
+        [SerializeField, ConditionalField(nameof(unitType), false, "Enemy"), OverrideLabel("유닛 변환 오브젝트")] 
+        private GameObject unitTransformObject;
+        public GameObject UnitTransformObject => unitTransformObject;
     
         [Separator]
     
