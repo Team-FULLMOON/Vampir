@@ -32,6 +32,10 @@ namespace FullMoon.ScriptableObject
         [SerializeField, OverrideLabel("이동 속도")] private float movementSpeed = 5f;
         public float MovementSpeed => movementSpeed;
         
+        [SerializeField, ConditionalField(nameof(unitType), false, "Enemy"), OverrideLabel("처치 시 마나 획득량")] 
+        private int manaDrop = 7;
+        public int ManaDrop => manaDrop;
+        
         [Separator]
     
         [SerializeField, OverrideLabel("회피율 (%)")] private float missRate = 50f;
