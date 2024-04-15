@@ -1,3 +1,4 @@
+using FullMoon.Entities.Unit;
 using MyBox;
 using UnityEngine;
 
@@ -58,6 +59,10 @@ namespace FullMoon.ScriptableObject
         [SerializeField, ConditionalField(nameof(unitType), false, "Enemy"), OverrideLabel("유닛 변환 오브젝트")] 
         private GameObject unitTransformObject;
         public GameObject UnitTransformObject => unitTransformObject;
+        
+        [SerializeField, ConditionalField(nameof(unitType), false, "Enemy"), OverrideLabel("유닛 리스폰 컨트롤러")] 
+        private RespawnController unitRespawnController;
+        public RespawnController UnitRespawnController => unitRespawnController;
     
         [Separator]
     
