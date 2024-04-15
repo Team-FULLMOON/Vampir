@@ -31,12 +31,26 @@ namespace FullMoon.Entities.Unit
             base.Start();
             OverridenUnitData = (RangedUnitData)unitData;
             UnitInsideViewArea = new List<BaseUnitController>();
+
+            if (decalProjector != null)
+            {
+                decalProjector.size = new Vector3(unitData.AttackRadius * 2f, unitData.AttackRadius * 2f, decalProjector.size.z);
+            }
+
             StateMachine.ChangeState(new RangedUnitIdle(this));
         }
         
         protected void LateUpdate()
         {
             UnitInsideViewArea.RemoveAll(unit => unit == null || !unit.gameObject.activeInHierarchy);
+        }
+        public override void ReceiveDamage(int amount, BaseUnitController attacker)
+        {
+            base.ReceiveDamage(amount, attacker);
+            if (StateMachine.CurrentState.ToString().Equals(typeof(RangedUnitIdle).ToString()))
+            {
+                Agent.SetDestination(attacker.transform.position);
+            }
         }
 
         public void EnterViewRange(Collider unit)

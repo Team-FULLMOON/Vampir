@@ -40,6 +40,11 @@ namespace FullMoon.Entities.Unit
             UnitType = unitData.UnitType;
             UnitClass = unitData.UnitClass;
             unitMarker.SetActive(false);
+
+	    if (viewRange != null && unitData != null)
+            {
+                viewRange.radius = unitData.ViewRadius;
+            }
         }
 
         protected virtual void Update()
@@ -65,7 +70,8 @@ namespace FullMoon.Entities.Unit
             
             if (Hp == 0)
             {
-                Die(); 
+                Die();
+                return;
             }
         }
 
