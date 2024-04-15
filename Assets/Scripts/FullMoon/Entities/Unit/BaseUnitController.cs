@@ -74,7 +74,8 @@ namespace FullMoon.Entities.Unit
             gameObject.SetActive(false);
             if (UnitType == "Enemy")
             {
-                ObjectPoolManager.SpawnObject(unitData.UnitRespawnController.gameObject, transform.position, transform.rotation);
+                RespawnController respawnController = ObjectPoolManager.SpawnObject(unitData.UnitRespawnController.gameObject, transform.position, transform.rotation).GetComponent<RespawnController>();
+                respawnController.Setup(unitData.ManaCost, unitData.CreatePrepareTime, unitData.SummonTime, unitData.UnitTransformObject);
                 MainUIController.Instance.AddMana(unitData.ManaDrop);
             }
         }

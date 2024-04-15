@@ -14,7 +14,6 @@
                         </ui:VisualElement>
                         <ui:Button text="다시하기" parse-escape-sequences="true" display-tooltip-when-elided="true" name="RetryButton" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; background-color: rgb(58, 156, 65); width: 70px; color: rgb(255, 255, 255); -unity-font-style: bold;" />
                         <ui:Button text="확장" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ManaExpandButton" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; background-color: rgb(68, 114, 196); width: 70px; color: rgb(255, 255, 255); -unity-font-style: bold;" />
-                        <ui:Button text="생성" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CreateUnitButton" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; background-color: rgb(156, 58, 147); width: 70px; color: rgb(255, 255, 255); -unity-font-style: bold;" />
                     </ui:VisualElement>
                 </ui:VisualElement>
                 <ui:VisualElement name="Div" style="flex-grow: 1; flex-direction: row;">

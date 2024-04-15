@@ -21,7 +21,7 @@ namespace FullMoon.ScriptableObject
         private string unitType = "Player";
         public string UnitType => unitType;
         
-        [SerializeField, OverrideLabel("유닛 클래스"), DefinedValues("Ranged", "Melee", "Infantry")]
+        [SerializeField, OverrideLabel("유닛 클래스"), DefinedValues("Main", "Ranged", "Melee", "Infantry")]
         private string unitClass = "Ranged";
         public string UnitClass => unitClass;
         
@@ -69,19 +69,20 @@ namespace FullMoon.ScriptableObject
         [SerializeField, OverrideLabel("공격 가능 여부")] private bool attackEnabled = true;
         public bool AttackEnabled => attackEnabled;
     
-        [ConditionalField(nameof(attackEnabled)), SerializeField, OverrideLabel("공격 당 데미지")]
+        [SerializeField, ConditionalField(nameof(attackEnabled)), OverrideLabel("공격 당 데미지")]
         private int attackDamage = 1;
         public int AttackDamage => attackDamage;
         
-        [ConditionalField(nameof(attackEnabled)), SerializeField, OverrideLabel("첫 공격 딜레이")]
+        [SerializeField, ConditionalField(nameof(attackEnabled)), OverrideLabel("첫 공격 딜레이")]
         private float attackDelay = 1f;
         public float AttackDelay => attackDelay;
     
-        [ConditionalField(nameof(attackEnabled)), SerializeField, OverrideLabel("공격 속도")]
+        [SerializeField, ConditionalField(nameof(attackEnabled)), OverrideLabel("공격 속도")]
         private float attackSpeed = 1f;
         public float AttackSpeed => attackSpeed;
         
-        [SerializeField, OverrideLabel("공격 반경")] private float attackRadius = 10f;
+        [SerializeField, ConditionalField(nameof(attackEnabled)), OverrideLabel("공격 반경")] 
+        private float attackRadius = 10f;
         public float AttackRadius => attackRadius;
     
         [Separator]

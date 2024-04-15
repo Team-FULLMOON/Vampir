@@ -22,7 +22,7 @@ MonoBehaviour:
   manaDrop: 7
   manaCost: 10
   createPrepareTime: 2.5
-  summonTime: 3
+  summonTime: 0.1
   unitTransformObject: {fileID: 4080469667919466714, guid: ebfe1c8235e29114fb8f6e6a6a170942,
     type: 3}
   unitRespawnController: {fileID: 1871613606339803815, guid: 7f825f1c09ddf424297d60046f96f274,

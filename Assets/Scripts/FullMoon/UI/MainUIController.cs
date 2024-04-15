@@ -12,6 +12,8 @@ namespace FullMoon.UI
         private Button _manaExpandButton;
         private Button _retryButton;
 
+        public int ManaValue => (int)_manaProgressBar.value;
+
         private void Start()
         {
             VisualElement root = GetComponent<UIDocument>().rootVisualElement;

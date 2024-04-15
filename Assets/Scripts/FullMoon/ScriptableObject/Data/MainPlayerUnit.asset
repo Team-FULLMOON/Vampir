@@ -9,15 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b088d7d4193e3a469989c0d90dd5873, type: 3}
-  m_Name: InfantryPlayerUnit
+  m_Script: {fileID: 11500000, guid: ed22bf85805c32d4f949e15b8d1eaaeb, type: 3}
+  m_Name: MainPlayerUnit
   m_EditorClassIdentifier: 
-  unitCode: 103
-  unitName: "\uC2E4\uB4DC \uC778\uD615"
+  unitCode: 000
+  unitName: 
   unitType: Player
-  unitClass: Infantry
+  unitClass: Main
   maxHp: 300
-  movementSpeed: 2
+  movementSpeed: 4
   missRate: 0
   manaDrop: 7
   manaCost: 10
@@ -25,10 +25,11 @@ MonoBehaviour:
   summonTime: 3
   unitTransformObject: {fileID: 0}
   unitRespawnController: {fileID: 0}
-  attackEnabled: 1
-  attackDamage: 20
-  attackDelay: 0
+  attackEnabled: 0
+  attackDamage: 1
+  attackDelay: 1
   attackSpeed: 1
-  attackRadius: 2
+  attackRadius: 10
   viewRadius: 24
   fogOfWarRadius: 20
+  respawnRadius: 3
