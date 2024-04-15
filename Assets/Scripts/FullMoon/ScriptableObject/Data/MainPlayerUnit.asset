@@ -30,6 +30,6 @@ MonoBehaviour:
   attackDelay: 1
   attackSpeed: 1
   attackRadius: 10
-  viewRadius: 24
+  viewRadius: 20
   fogOfWarRadius: 20
   respawnRadius: 3

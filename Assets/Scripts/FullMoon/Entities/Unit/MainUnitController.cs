@@ -30,6 +30,12 @@ namespace FullMoon.Entities.Unit
             OverridenUnitData = (MainUnitData)unitData;
             UnitInsideViewArea = new List<BaseUnitController>();
             RespawnUnitInsideViewArea = new List<RespawnController>();
+
+	    if (decalProjector != null)
+            {
+                decalProjector.size = new Vector3(((MainUnitData)unitData).RespawnRadius * 2f, ((MainUnitData)unitData).RespawnRadius * 2f, decalProjector.size.z);
+            }
+
             StateMachine.ChangeState(new MainUnitIdle(this));
         }
         
