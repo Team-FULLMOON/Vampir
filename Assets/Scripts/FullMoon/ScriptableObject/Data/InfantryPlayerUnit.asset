@@ -19,6 +19,12 @@ MonoBehaviour:
   maxHp: 300
   movementSpeed: 2
   missRate: 0
+  manaDrop: 7
+  manaCost: 10
+  createPrepareTime: 2.5
+  summonTime: 3
+  unitTransformObject: {fileID: 0}
+  unitRespawnController: {fileID: 0}
   attackEnabled: 1
   attackDamage: 20
   attackDelay: 0

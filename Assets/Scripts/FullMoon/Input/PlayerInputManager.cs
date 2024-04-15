@@ -26,6 +26,7 @@ namespace FullMoon.Input
         public bool stop;
         public bool hold;
         public bool rotation;
+        public bool respawn;
 
         [Header("Mouse Cursor Settings")] 
         public CursorType cursorType;
@@ -59,6 +60,11 @@ namespace FullMoon.Input
         public void OnRotation(InputValue value)
         {
             RotationInput(value.isPressed);
+        }
+        
+        public void OnRespawn(InputValue value)
+        {
+            RespawnInput(value.isPressed);
         }
 #endif
 		
@@ -102,6 +108,13 @@ namespace FullMoon.Input
         {
             rotation = input;
             RotationEvent.TriggerEvent(input);
+        } 
+        
+        public readonly GenericEventSystem<bool> RespawnEvent = new();
+        public void RespawnInput(bool input)
+        {
+            respawn = input;
+            RespawnEvent.TriggerEvent(input);
         } 
         
         private void OnApplicationFocus(bool hasFocus)

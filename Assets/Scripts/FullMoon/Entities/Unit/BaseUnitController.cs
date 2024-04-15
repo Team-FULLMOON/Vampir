@@ -5,6 +5,7 @@ using FullMoon.FSM;
 using FullMoon.Interfaces;
 using FullMoon.ScriptableObject;
 using FullMoon.UI;
+using FullMoon.Util;
 
 namespace FullMoon.Entities.Unit
 {
@@ -73,6 +74,8 @@ namespace FullMoon.Entities.Unit
             gameObject.SetActive(false);
             if (UnitType == "Enemy")
             {
+                RespawnController respawnController = ObjectPoolManager.SpawnObject(unitData.UnitRespawnController.gameObject, transform.position, transform.rotation).GetComponent<RespawnController>();
+                respawnController.Setup(unitData.ManaCost, unitData.CreatePrepareTime, unitData.SummonTime, unitData.UnitTransformObject);
                 MainUIController.Instance.AddMana(unitData.ManaDrop);
             }
         }
