@@ -19,6 +19,12 @@ MonoBehaviour:
   maxHp: 160
   movementSpeed: 2
   missRate: 0
+  manaDrop: 7
+  manaCost: 10
+  createPrepareTime: 2.5
+  summonTime: 3
+  unitTransformObject: {fileID: 4080469667919466714, guid: ebfe1c8235e29114fb8f6e6a6a170942,
+    type: 3}
   attackEnabled: 1
   attackDamage: 40
   attackDelay: 0.5
