@@ -31,12 +31,26 @@ namespace FullMoon.Entities.Unit
             base.Start();
             OverridenUnitData = (RangedUnitData)unitData;
             UnitInsideViewArea = new List<BaseUnitController>();
+
+            if (decalProjector != null)
+            {
+                decalProjector.size = new Vector3(unitData.AttackRadius * 2f, unitData.AttackRadius * 2f, decalProjector.size.z);
+            }
+
             StateMachine.ChangeState(new RangedUnitIdle(this));
         }
         
         protected void LateUpdate()
         {
             UnitInsideViewArea.RemoveAll(unit => unit == null || !unit.gameObject.activeInHierarchy);
+        }
+        public override void ReceiveDamage(int amount, BaseUnitController attacker)
+        {
+            base.ReceiveDamage(amount, attacker);
+            if (StateMachine.CurrentState.ToString().Equals(typeof(RangedUnitIdle).ToString()))
+            {
+                Agent.SetDestination(attacker.transform.position);
+            }
         }
 
         public void EnterViewRange(Collider unit)
@@ -85,34 +99,6 @@ namespace FullMoon.Entities.Unit
             {
                 decalProjector.size = new Vector3(unitData.AttackRadius * 2f, unitData.AttackRadius * 2f, decalProjector.size.z);
             }
-            
-            if (Application.isPlaying == false)
-            {
-                return;
-            }
-            
-            BaseUnitController closestUnit  = UnitInsideViewArea
-                .Where(t => !UnitType.Equals(t.UnitType))
-                .Where(t => (t.transform.position - transform.position).sqrMagnitude <= OverridenUnitData.AttackRadius * OverridenUnitData.AttackRadius)
-                .OrderBy(t => (t.transform.position - transform.position).sqrMagnitude)
-                .FirstOrDefault();
-            
-            if (closestUnit == null)
-            {
-                return;
-            }
-
-            switch (UnitType)
-            {
-                case "Player":
-                    Gizmos.color = new Color(0f, 1f, 0f, 1f);
-                    break;
-                case "Enemy":
-                    Gizmos.color = new Color(0f, 0f, 1f, 0.4f);
-                    break;
-            }
-            
-            Gizmos.DrawLine(transform.position, closestUnit.transform.position);
         }
     }
 }

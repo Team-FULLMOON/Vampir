@@ -16,20 +16,22 @@ MonoBehaviour:
   unitName: "\uBA38\uC2A4\uD0B7 \uC778\uD615"
   unitType: Enemy
   unitClass: Ranged
-  maxHp: 160
+  maxHp: 80
   movementSpeed: 2
   missRate: 0
   manaDrop: 7
   manaCost: 10
   createPrepareTime: 2.5
-  summonTime: 3
+  summonTime: 0.1
   unitTransformObject: {fileID: 4080469667919466714, guid: ebfe1c8235e29114fb8f6e6a6a170942,
     type: 3}
+  unitRespawnController: {fileID: 1871613606339803815, guid: 7f825f1c09ddf424297d60046f96f274,
+    type: 3}
   attackEnabled: 1
-  attackDamage: 40
+  attackDamage: 20
   attackDelay: 0.5
-  attackSpeed: 1.5
-  attackRadius: 16
-  viewRadius: 24
+  attackSpeed: 2.5
+  attackRadius: 10
+  viewRadius: 11
   fogOfWarRadius: 20
   bulletSpeed: 55

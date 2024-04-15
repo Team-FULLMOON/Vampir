@@ -46,6 +46,11 @@ namespace FullMoon.Entities.Unit
             unitMarker.SetActive(false);
             unitHPUI = ObjectPoolManager.SpawnObject(hpUICanvas, Vector3.zero, Quaternion.identity).GetComponent<UnitHPUI>();
             unitHPUI.SetSlider(this);
+
+	          if (viewRange != null && unitData != null)
+            {
+                viewRange.radius = unitData.ViewRadius;
+            }
         }
 
         protected virtual void Update()
@@ -72,7 +77,8 @@ namespace FullMoon.Entities.Unit
             
             if (Hp == 0)
             {
-                Die(); 
+                Die();
+                return;
             }
         }
 
@@ -81,6 +87,8 @@ namespace FullMoon.Entities.Unit
             gameObject.SetActive(false);
             if (UnitType == "Enemy")
             {
+                RespawnController respawnController = ObjectPoolManager.SpawnObject(unitData.UnitRespawnController.gameObject, transform.position, transform.rotation).GetComponent<RespawnController>();
+                respawnController.Setup(unitData.ManaCost, unitData.CreatePrepareTime, unitData.SummonTime, unitData.UnitTransformObject);
                 MainUIController.Instance.AddMana(unitData.ManaDrop);
             }
         }
