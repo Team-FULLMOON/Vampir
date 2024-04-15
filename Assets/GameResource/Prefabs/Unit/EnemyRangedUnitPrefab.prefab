@@ -111,6 +111,8 @@ MonoBehaviour:
   unitData: {fileID: 11400000, guid: f6a4c5d7bebbce64581875738a0f61d6, type: 2}
   unitMarker: {fileID: 7576867232460400837}
   viewRange: {fileID: 3441837935141814331}
+  hpUICanvas: {fileID: 218434028341802776, guid: 0d665691312219243b2d9c769c8faf2b,
+    type: 3}
   decalProjector: {fileID: 2476089340758000015}
   attackEffect: {fileID: 7121363375999854799, guid: e0536bfec450158458c0aac3c61d8e84,
     type: 3}

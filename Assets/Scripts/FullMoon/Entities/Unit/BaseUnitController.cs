@@ -5,6 +5,7 @@ using FullMoon.FSM;
 using FullMoon.Interfaces;
 using FullMoon.ScriptableObject;
 using FullMoon.UI;
+using FullMoon.Util;
 
 namespace FullMoon.Entities.Unit
 {
@@ -19,6 +20,9 @@ namespace FullMoon.Entities.Unit
         
         [Foldout("Base Unit Settings")] 
         public SphereCollider viewRange;
+
+        [Foldout("Base Unit Settings")]
+        public GameObject hpUICanvas;
         
         public readonly StateMachine StateMachine = new();
         
@@ -26,6 +30,7 @@ namespace FullMoon.Entities.Unit
         public NavMeshAgent Agent { get; set; }
         public Vector3 LatestDestination { get; set; }
         public int Hp { get; set; }
+        public UnitHPUI unitHPUI { get; set; }
 
         public string UnitType { get; set; }
         public string UnitClass { get; set; }
@@ -39,6 +44,8 @@ namespace FullMoon.Entities.Unit
             UnitType = unitData.UnitType;
             UnitClass = unitData.UnitClass;
             unitMarker.SetActive(false);
+            unitHPUI = ObjectPoolManager.SpawnObject(hpUICanvas, Vector3.zero, Quaternion.identity).GetComponent<UnitHPUI>();
+            unitHPUI.SetSlider(this);
         }
 
         protected virtual void Update()
@@ -59,7 +66,8 @@ namespace FullMoon.Entities.Unit
             }
 
             Hp = Mathf.Clamp(Hp - amount, 0, System.Int32.MaxValue);
-            
+            unitHPUI.SetHP(amount);
+
             Debug.Log($"{gameObject.name} [{Hp}]: Damage -{amount}, From {attacker.name}");
             
             if (Hp == 0)
@@ -86,7 +94,7 @@ namespace FullMoon.Entities.Unit
         {
             unitMarker.SetActive(false);
         }
-        
+
         public virtual void MoveToPosition(Vector3 location)
         {
             Agent.SetDestination(location);
