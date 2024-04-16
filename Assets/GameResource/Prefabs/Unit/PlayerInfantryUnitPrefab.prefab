@@ -239,6 +239,8 @@ MonoBehaviour:
   unitData: {fileID: 11400000, guid: 521ceae23fd2f97439b82217337dff1e, type: 2}
   unitMarker: {fileID: 6798072512803417028}
   viewRange: {fileID: 2268042740748443340}
+  hpUICanvas: {fileID: 218434028341802776, guid: 0d665691312219243b2d9c769c8faf2b,
+    type: 3}
   decalProjector: {fileID: 6081375030924233605}
   hidePrefab: {fileID: 441367664865155359}
   isGuard: 0
