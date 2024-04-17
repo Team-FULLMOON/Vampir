@@ -8,34 +8,26 @@ using UnityEngine.UI;
 public class UnitHPUI : MonoBehaviour
 {
     BaseUnitController unit;
+    Camera mainCamera;
     [SerializeField] Slider hpui;
 
     void Start()
     {
-        GetComponent<Canvas>().worldCamera = Camera.main;
+        mainCamera = Camera.main;
+        GetComponent<Canvas>().worldCamera = mainCamera;
+        unit = GetComponentInParent<BaseUnitController>();
+
+        hpui.maxValue = unit.unitData.MaxHp;
+        hpui.value = hpui.maxValue;
+    }
+
+    void LateUpdate()
+    {
+        hpui.value = unit.Hp;
     }
 
     void Update()
     {
-        if (!unit.gameObject.activeSelf)
-        {
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            transform.position = unit.transform.position + new Vector3(0, 2.45f, 0);
-        }
-    }
-
-    public void SetHP(float hp)
-    {
-        hpui.value = Mathf.Clamp(hpui.value - hp, 0, System.Int32.MaxValue);
-    }
-
-    public void SetSlider(BaseUnitController unit)
-    {
-        this.unit = unit;
-        hpui.maxValue = unit.unitData.MaxHp;
-        hpui.value = hpui.maxValue;
+        transform.LookAt(mainCamera.transform.position);
     }
 }
