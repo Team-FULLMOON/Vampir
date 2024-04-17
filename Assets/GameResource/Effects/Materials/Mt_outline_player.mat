@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mt_outline_ally
+  m_Name: Mt_outline_player
   m_Shader: {fileID: -6465566751694194690, guid: 8b763e1f9f86f4d47aeca21fc298e22d,
     type: 3}
   m_Parent: {fileID: 0}
@@ -139,7 +139,7 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _Thickness: 0.0259
+    - _Thickness: 0.1
     - _WorkflowMode: 1
     - _ZWrite: 1
     - _outline_thickness: 0.584
@@ -153,5 +153,5 @@ Material:
     - _Player_color: {r: 0, g: 1, b: 0.9696943, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _Vector2: {r: 0, g: 0, b: 0, a: 0}
-    - _color: {r: 0, g: 1, b: 0.9696943, a: 0}
+    - _color: {r: 0, g: 2, b: 1.9393886, a: 0}
   m_BuildTextureStacks: []
