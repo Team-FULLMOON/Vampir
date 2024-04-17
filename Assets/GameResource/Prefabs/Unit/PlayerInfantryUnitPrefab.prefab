@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0777d029ed3dffa4692f417d4aba19ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: f0d9d5e8b84dbf84685cd4aa9fa9c4b7, type: 2}
+  m_Material: {fileID: 2100000, guid: 2834641011c3b0b49ad8952cec313f4c, type: 2}
   m_DrawDistance: 1000
   m_FadeScale: 1
   m_StartAngleFade: 180
@@ -240,8 +240,6 @@ MonoBehaviour:
   unitData: {fileID: 11400000, guid: 521ceae23fd2f97439b82217337dff1e, type: 2}
   unitMarker: {fileID: 6798072512803417028}
   viewRange: {fileID: 2268042740748443340}
-  hpUICanvas: {fileID: 218434028341802776, guid: 0d665691312219243b2d9c769c8faf2b,
-    type: 3}
   decalProjector: {fileID: 6081375030924233605}
   hidePrefab: {fileID: 441367664865155359}
   isGuard: 0
