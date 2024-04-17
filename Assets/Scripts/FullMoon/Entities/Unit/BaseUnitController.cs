@@ -30,7 +30,6 @@ namespace FullMoon.Entities.Unit
         public NavMeshAgent Agent { get; set; }
         public Vector3 LatestDestination { get; set; }
         public int Hp { get; set; }
-        public UnitHPUI unitHPUI { get; set; }
 
         public string UnitType { get; set; }
         public string UnitClass { get; set; }
@@ -44,8 +43,6 @@ namespace FullMoon.Entities.Unit
             UnitType = unitData.UnitType;
             UnitClass = unitData.UnitClass;
             unitMarker.SetActive(false);
-            unitHPUI = ObjectPoolManager.SpawnObject(hpUICanvas, Vector3.zero, Quaternion.identity).GetComponent<UnitHPUI>();
-            unitHPUI.SetSlider(this);
 
 	          if (viewRange != null && unitData != null)
             {
@@ -71,7 +68,6 @@ namespace FullMoon.Entities.Unit
             }
 
             Hp = Mathf.Clamp(Hp - amount, 0, System.Int32.MaxValue);
-            unitHPUI.SetHP(amount);
 
             Debug.Log($"{gameObject.name} [{Hp}]: Damage -{amount}, From {attacker.name}");
             

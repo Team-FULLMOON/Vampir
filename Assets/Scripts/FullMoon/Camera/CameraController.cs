@@ -145,7 +145,7 @@ namespace FullMoon.Camera
                 targetFov = Mathf.Clamp(targetFov, minFov, maxFov);
             }
         }
-        
+
         #region Drag
         private void DrawDragRectangle()
         {
