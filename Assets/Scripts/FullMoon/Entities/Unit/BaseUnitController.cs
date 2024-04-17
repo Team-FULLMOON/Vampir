@@ -16,6 +16,9 @@ namespace FullMoon.Entities.Unit
         public BaseUnitData unitData;
         
         [Foldout("Base Unit Settings")] 
+        public GameObject unitModel;
+        
+        [Foldout("Base Unit Settings")] 
         public GameObject unitMarker;
         
         [Foldout("Base Unit Settings")] 
@@ -87,11 +90,21 @@ namespace FullMoon.Entities.Unit
 
         public void Select()
         {
+            switch (UnitType)
+            {
+                case "Player":
+                    unitModel.layer = LayerMask.NameToLayer("SelectPlayer");
+                    break;
+                case "Enemy":
+                    unitModel.layer = LayerMask.NameToLayer("SelectEnemy");
+                    break;
+            }
             unitMarker.SetActive(true);
         }
         
         public void Deselect()
         {
+            unitModel.layer = LayerMask.NameToLayer("Default");
             unitMarker.SetActive(false);
         }
 
