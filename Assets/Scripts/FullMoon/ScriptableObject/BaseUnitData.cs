@@ -21,7 +21,7 @@ namespace FullMoon.ScriptableObject
         private string unitType = "Player";
         public string UnitType => unitType;
         
-        [SerializeField, OverrideLabel("유닛 클래스"), DefinedValues("Main", "Ranged", "Melee", "Infantry")]
+        [SerializeField, OverrideLabel("유닛 클래스"), DefinedValues("Main", "Ranged", "Melee", "Shield")]
         private string unitClass = "Ranged";
         public string UnitClass => unitClass;
         

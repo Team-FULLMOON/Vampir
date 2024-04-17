@@ -438,10 +438,10 @@ namespace FullMoon.Camera
 
                 foreach (var entry in unitDistances)
                 {
-                    if (entry.NearestCollider != null && entry.Unit.UnitClass == "Infantry" &&
+                    if (entry.NearestCollider != null && entry.Unit.UnitClass == "Shield" &&
                         entry.Unit.GetComponent<MeleeUnitController>().isGuard)
                     {
-                        if (entry.Unit.UnitClass == "Infantry")
+                        if (entry.Unit.UnitClass == "Shield")
                         {
                             entry.Unit.MoveToPosition(targetPoint);
                             colliders.Remove(entry.NearestCollider);

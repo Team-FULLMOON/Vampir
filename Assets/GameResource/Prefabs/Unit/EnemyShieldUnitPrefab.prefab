@@ -239,7 +239,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 12
+  m_Radius: 8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1930282699847763958
 MonoBehaviour:
@@ -280,7 +280,7 @@ GameObject:
   - component: {fileID: 8221377267059292143}
   - component: {fileID: 7538470333555455201}
   m_Layer: 8
-  m_Name: PlayerInfantryUnitPrefab
+  m_Name: EnemyShieldUnitPrefab
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -319,7 +319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 615a400538be73d41b9336cd281305f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitData: {fileID: 11400000, guid: 521ceae23fd2f97439b82217337dff1e, type: 2}
+  unitData: {fileID: 11400000, guid: 530ac18220ecd7041882410cc393e5aa, type: 2}
   unitModel: {fileID: 3319720673469424743}
   unitMarker: {fileID: 6798072512803417028}
   viewRange: {fileID: 2268042740748443340}
