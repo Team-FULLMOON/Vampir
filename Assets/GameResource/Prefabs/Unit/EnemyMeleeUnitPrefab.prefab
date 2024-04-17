@@ -323,8 +323,6 @@ MonoBehaviour:
   unitData: {fileID: 11400000, guid: 310efc89852330b489613346e3717a76, type: 2}
   unitMarker: {fileID: 2055024435388714017}
   viewRange: {fileID: 24826111065963529}
-  hpUICanvas: {fileID: 218434028341802776, guid: 0d665691312219243b2d9c769c8faf2b,
-    type: 3}
   decalProjector: {fileID: 1643748580956532414}
   hidePrefab: {fileID: 0}
   isGuard: 0
@@ -461,7 +459,7 @@ PrefabInstance:
     - target: {fileID: 218434028341802776, guid: 0d665691312219243b2d9c769c8faf2b,
         type: 3}
       propertyPath: m_Name
-      value: UnitHPCanvas
+      value: UnitCanvas
       objectReference: {fileID: 0}
     - target: {fileID: 2614293188193899902, guid: 0d665691312219243b2d9c769c8faf2b,
         type: 3}

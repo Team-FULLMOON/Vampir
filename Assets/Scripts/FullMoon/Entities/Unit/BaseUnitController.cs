@@ -20,9 +20,6 @@ namespace FullMoon.Entities.Unit
         
         [Foldout("Base Unit Settings")] 
         public SphereCollider viewRange;
-
-        [Foldout("Base Unit Settings")]
-        public GameObject hpUICanvas;
         
         public readonly StateMachine StateMachine = new();
         
@@ -74,7 +71,6 @@ namespace FullMoon.Entities.Unit
             if (Hp == 0)
             {
                 Die();
-                return;
             }
         }
 
