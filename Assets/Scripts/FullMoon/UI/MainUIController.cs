@@ -1,48 +1,80 @@
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 using FullMoon.Util;
+using FullMoon.ScriptableObject;
 
 namespace FullMoon.UI
 {
+    [DefaultExecutionOrder(-1)]
     public class MainUIController : ComponentSingleton<MainUIController>
     {
-        private ProgressBar _manaProgressBar;
-        private TextElement _manaProgressText;
-        private Button _manaExpandButton;
-        private Button _retryButton;
+        [SerializeField] private UnitControlData unitControlData;
 
-        public int ManaValue => (int)_manaProgressBar.value;
-
+        public ProgressBar ManaProgressBar { get; private set; }
+        public TextElement ManaProgressText { get; private set; }
+        
+        public Button UnitExpandButton { get; private set; }
+        public TextElement UnitLimitText { get; private set; }
+        
+        public Button RetryButton { get; private set; }
+        
+        public int ManaValue => (int)ManaProgressBar.value;
+        public int UnitLimitValue { get; private set; }
+        public int CurrentUnitValue { get; private set; }
+        
         private void Start()
         {
             VisualElement root = GetComponent<UIDocument>().rootVisualElement;
-            _manaProgressBar = root.Q<ProgressBar>("ManaProgressBar");
-            _manaProgressText = root.Q<TextElement>("ManaProgressText");
-            _manaExpandButton = root.Q<Button>("ManaExpandButton");
-            _retryButton = root.Q<Button>("RetryButton");
-
-            _manaProgressText.text = $"{_manaProgressBar.value} / {_manaProgressBar.highValue}";
-            _manaExpandButton.RegisterCallback<ClickEvent>(ExpandMana);
-            _retryButton.RegisterCallback<ClickEvent>(Retry);
             
+            ManaProgressBar = root.Q<ProgressBar>("ManaProgressBar");
+            ManaProgressText = root.Q<TextElement>("ManaProgressText");
+            SetMaxMana(unitControlData.InitMaxMana);
+            
+            UnitExpandButton = root.Q<Button>("UnitExpandButton");
+            UnitLimitText = root.Q<TextElement>("UnitLimitText");
+            UnitExpandButton.RegisterCallback<ClickEvent>(ExpandUnit);
+            SetUnitLimit(unitControlData.InitUnitLimit);
+            
+            RetryButton = root.Q<Button>("RetryButton");
+            RetryButton.RegisterCallback<ClickEvent>(Retry);
             AddMana(30);
         }
         
         public void AddMana(int value)
         {
-            _manaProgressBar.value = Mathf.Clamp(_manaProgressBar.value + value, 0f, _manaProgressBar.highValue);
-            _manaProgressText.text = $"{_manaProgressBar.value} / {_manaProgressBar.highValue}";
+            ManaProgressBar.value = Mathf.Clamp(ManaProgressBar.value + value, 0f, ManaProgressBar.highValue);
+            ManaProgressText.text = $"{ManaProgressBar.value} / {ManaProgressBar.highValue}";
         }
         
-        private void ExpandMana(ClickEvent evt)
+        public void AddUnit(int value)
         {
-            if (_manaProgressBar.value < 20)
+            CurrentUnitValue = Mathf.Clamp(CurrentUnitValue + value, 0, Int32.MaxValue);
+            UnitLimitText.text = $"{CurrentUnitValue} / {UnitLimitValue}";
+            UnitLimitText.style.color = new StyleColor(CurrentUnitValue >= UnitLimitValue ? Color.red : Color.white);
+        }
+        
+        private void SetMaxMana(int value)
+        {
+            ManaProgressBar.highValue = value;
+            ManaProgressText.text = $"{ManaProgressBar.value} / {ManaProgressBar.highValue}";
+        }
+
+        private void SetUnitLimit(int value)
+        {
+            UnitLimitValue = value;
+            UnitLimitText.text = $"{CurrentUnitValue} / {UnitLimitValue}";
+        }
+        
+        private void ExpandUnit(ClickEvent evt)
+        {
+            if (ManaProgressBar.value < unitControlData.UnitLimitExpandCost)
             {
                 return;
             }
-            _manaProgressBar.highValue += 10;
-            AddMana(-20);
+            AddMana(-unitControlData.UnitLimitExpandCost);
+            SetUnitLimit(UnitLimitValue + unitControlData.UnitLimitExpandValue);
         }
         
         private void Retry(ClickEvent evt)

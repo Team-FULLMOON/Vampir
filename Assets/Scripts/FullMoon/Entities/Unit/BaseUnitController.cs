@@ -44,7 +44,12 @@ namespace FullMoon.Entities.Unit
             UnitClass = unitData.UnitClass;
             unitMarker.SetActive(false);
 
-	          if (viewRange != null && unitData != null)
+            if (UnitType == "Player")
+            {
+                MainUIController.Instance.AddUnit(1);
+            }
+
+            if (viewRange != null && unitData != null)
             {
                 viewRange.radius = unitData.ViewRadius;
             }
@@ -85,7 +90,9 @@ namespace FullMoon.Entities.Unit
                 RespawnController respawnController = ObjectPoolManager.SpawnObject(unitData.UnitRespawnController.gameObject, transform.position, transform.rotation).GetComponent<RespawnController>();
                 respawnController.Setup(unitData.ManaCost, unitData.CreatePrepareTime, unitData.SummonTime, unitData.UnitTransformObject);
                 MainUIController.Instance.AddMana(unitData.ManaDrop);
+                return;
             }
+            MainUIController.Instance.AddUnit(-1);
         }
 
         public void Select()

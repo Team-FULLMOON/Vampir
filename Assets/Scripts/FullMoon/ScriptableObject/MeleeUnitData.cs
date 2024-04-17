@@ -1,5 +1,3 @@
-using MyBox;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace FullMoon.ScriptableObject
