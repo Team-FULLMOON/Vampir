@@ -31,7 +31,7 @@ namespace FullMoon.Entities.Unit
             UnitInsideViewArea = new List<BaseUnitController>();
             RespawnUnitInsideViewArea = new List<RespawnController>();
 
-	    if (decalProjector != null)
+	        if (decalProjector != null)
             {
                 decalProjector.size = new Vector3(((MainUnitData)unitData).RespawnRadius * 2f, ((MainUnitData)unitData).RespawnRadius * 2f, decalProjector.size.z);
             }

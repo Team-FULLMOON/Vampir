@@ -239,7 +239,6 @@ MonoBehaviour:
   unitData: {fileID: 11400000, guid: e5dadd47231e5ed499e7907f4070cbf9, type: 2}
   unitMarker: {fileID: 6798072512803417028}
   viewRange: {fileID: 2268042740748443340}
-  hpUICanvas: {fileID: 0}
   decalProjector: {fileID: 6081375030924233605}
 --- !u!33 &7507534465915748410
 MeshFilter:
@@ -458,7 +457,12 @@ PrefabInstance:
     - target: {fileID: 218434028341802776, guid: 0d665691312219243b2d9c769c8faf2b,
         type: 3}
       propertyPath: m_Name
-      value: UnitHPCanvas
+      value: UnitCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 239898268952278553, guid: 0d665691312219243b2d9c769c8faf2b,
+        type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2614293188193899902, guid: 0d665691312219243b2d9c769c8faf2b,
         type: 3}
