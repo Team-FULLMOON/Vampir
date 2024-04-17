@@ -22,10 +22,10 @@ namespace FullMoon.Entities.Unit
         
         public List<BaseUnitController> UnitInsideViewArea { get; set; }
 
-        [Foldout("Melee Unit Settings"), ConditionalField(nameof(UnitClass), false, "Infantry")]
+        [Foldout("Melee Unit Settings"), ConditionalField(nameof(UnitClass), false, "Shield")]
         public CoverController hidePrefab;
         
-        [Foldout("Melee Unit Settings"), ConditionalField(nameof(UnitClass), false, "Infantry")]
+        [Foldout("Melee Unit Settings"), ConditionalField(nameof(UnitClass), false, "Shield")]
         public bool isGuard;
 
         protected override void Start()
@@ -102,7 +102,7 @@ namespace FullMoon.Entities.Unit
 
         public override void OnUnitHold()
         {
-            if (UnitClass == "Infantry")
+            if (UnitClass == "Shield")
             {
                 base.OnUnitHold();
                 StateMachine.ChangeState(new MeleeUnitGuard(this));

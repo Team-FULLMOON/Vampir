@@ -8,7 +8,13 @@ namespace FullMoon.ScriptableObject
     [CreateAssetMenu(fileName = "MainUnit", menuName = "Unit Data/Main Unit Data")]
     public class MainUnitData : BaseUnitData
     {
-        [Separator("Main Unit Settings")]
+        [Separator("Main Unit Settings")] 
+        
+        [SerializeField, OverrideLabel("유닛 컨트롤 데이터")]
+        private UnitControlData unitControlData;
+        public UnitControlData UnitControlData => unitControlData;
+        
+        [Separator]
     
         [SerializeField, OverrideLabel("리스폰 범위")] private float respawnRadius = 3f;
         public float RespawnRadius => respawnRadius;

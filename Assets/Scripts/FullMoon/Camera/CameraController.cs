@@ -97,6 +97,7 @@ namespace FullMoon.Camera
         private void LateUpdate()
         {
             DrawDecalPointer();
+            selectedUnitList.RemoveAll(unit => unit == null || !unit.gameObject.activeInHierarchy);
         }
 
         private Vector2 GetScreenMovementInput()
@@ -321,14 +322,14 @@ namespace FullMoon.Camera
         {
             if (Physics.Raycast(mouseRay, out var hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Ground")))
             {
-                var rangedUnitController = hit.transform.GetComponent<BaseUnitController>();
-                if (rangedUnitController != null)
+                var unitController = hit.transform.GetComponent<BaseUnitController>();
+                if (unitController != null)
                 {
-                    AttackSelectedUnits(rangedUnitController);
+                    AttackSelectedUnits(unitController);
                 }
                 else if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
                 {
-                    Collider[] coverColliders = Physics.OverlapSphere(hit.point, onCoverUIRange, LayerMask.GetMask("UIObject"));
+                    List<Collider> coverColliders = Physics.OverlapSphere(hit.point, onCoverUIRange, LayerMask.GetMask("UIObject")).ToList();
 
                     MoveSelectedUnits(hit.point, coverColliders);
                 }
@@ -338,13 +339,17 @@ namespace FullMoon.Camera
         public void RemoveCover(GameObject cover)
         {
             if (covers.Contains(cover))
+            {
                 covers.Remove(cover);
+            }
         }
 
         public void SetCoverList(GameObject cover)
         {
             if (!covers.Contains(cover))
+            {
                 covers.Add(cover);
+            }
         }
 
         IEnumerator CoverAction()
@@ -420,37 +425,32 @@ namespace FullMoon.Camera
         /// <summary>
         /// 선택된 모든 유닛을 이동할 때 호출
         /// </summary>
-        private void MoveSelectedUnits(Vector3 end, Collider[] colliders)
+        private void MoveSelectedUnits(Vector3 targetPoint, List<Collider> colliders)
         {
-            // 마우스 범위 안에 엄폐물 타겟이 있다면
-            if (!colliders.Length.Equals(0))
+            if (colliders.Count > 0)
             {
-                List<BaseUnitController> unitList = selectedUnitList.ToList();
+                var unitDistances = selectedUnitList.Select(unit => new {
+                    Unit = unit,
+                    NearestCollider = colliders.Where(coll => covers.Contains(coll.gameObject))
+                        .OrderBy(coll => Vector3.Distance(unit.transform.position, coll.transform.position))
+                        .FirstOrDefault()
+                }).ToList();
 
-                // 가장 가까운 유닛이 누구인지 검사
-                foreach (var collider in colliders)
+                foreach (var entry in unitDistances)
                 {
-                    BaseUnitController curUnit = unitList
-                        .Select(unit => new { Unit = unit, dis = Vector3.Distance(unit.transform.position, collider.transform.position)})
-                        .Where(coll => covers.Contains(collider.gameObject))
-                        .OrderBy(unitDis => unitDis.dis)
-                        .FirstOrDefault()?.Unit;
-
-                    if (curUnit != null && selectedUnitList.Contains(curUnit))
+                    if (entry.NearestCollider != null && entry.Unit.UnitClass == "Shield" &&
+                        entry.Unit.GetComponent<MeleeUnitController>().isGuard)
                     {
-                        if (curUnit.UnitClass == "Infantry" && 
-                            curUnit.GetComponent<MeleeUnitController>().isGuard)
-                            continue;
-                        curUnit.MoveToPosition(collider.transform.position);
-                        unitList.Remove(curUnit);
-
-                        colliders = colliders.Where(coll => coll != collider).ToArray();
+                        if (entry.Unit.UnitClass == "Shield")
+                        {
+                            entry.Unit.MoveToPosition(targetPoint);
+                            colliders.Remove(entry.NearestCollider);
+                        }
+                        continue;
                     }
-                }
-                // 남은 유닛은 마우스 지점으로 이동
-                foreach (var unit in unitList)
-                {
-                    unit.MoveToPosition(end);
+
+                    entry.Unit.MoveToPosition(entry.NearestCollider?.transform.position ?? targetPoint);
+                    colliders.Remove(entry.NearestCollider);
                 }
             }
             else
@@ -458,9 +458,10 @@ namespace FullMoon.Camera
                 foreach (var unit in selectedUnitList)
                 {
                     if (unit.UnitType.Equals("Enemy"))
+                    {
                         continue;
-
-                    unit.MoveToPosition(end);
+                    }
+                    unit.MoveToPosition(targetPoint);
                 }
             }
         }

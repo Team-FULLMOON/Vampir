@@ -42,5 +42,5 @@ Material:
     - _player: 0
     - _selection: 1
     m_Colors:
-    - _color: {r: 1, g: 0, b: 0, a: 0}
+    - _color: {r: 4, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

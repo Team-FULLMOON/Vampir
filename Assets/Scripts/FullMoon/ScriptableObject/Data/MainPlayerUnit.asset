@@ -32,4 +32,5 @@ MonoBehaviour:
   attackRadius: 10
   viewRadius: 20
   fogOfWarRadius: 20
+  unitControlData: {fileID: 11400000, guid: bc7316a50f904ad489752886c4e22b3a, type: 2}
   respawnRadius: 3
