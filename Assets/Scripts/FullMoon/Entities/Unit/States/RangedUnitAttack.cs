@@ -29,7 +29,7 @@ namespace FullMoon.Entities.Unit.States
 
             if (closestUnit == null)
             {
-                controller.StateMachine.ChangeState(new RangedUnitIdle(controller));
+                controller.StateMachine.ChangeState(new RangedUnitMove(controller));
                 return;
             }
             
