@@ -1,5 +1,4 @@
 using MyBox;
-using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -7,7 +6,6 @@ using UnityEngine.Rendering.Universal;
 using FullMoon.Interfaces;
 using FullMoon.Entities.Unit.States;
 using FullMoon.ScriptableObject;
-using FullMoon.Camera;
 
 namespace FullMoon.Entities.Unit
 {
@@ -21,12 +19,6 @@ namespace FullMoon.Entities.Unit
         public MeleeUnitData OverridenUnitData { get; private set; }
         
         public List<BaseUnitController> UnitInsideViewArea { get; set; }
-
-        [Foldout("Melee Unit Settings"), ConditionalField(nameof(UnitClass), false, "Shield")]
-        public CoverController hidePrefab;
-        
-        [Foldout("Melee Unit Settings"), ConditionalField(nameof(UnitClass), false, "Shield")]
-        public bool isGuard;
 
         protected override void Start()
         {
@@ -115,11 +107,8 @@ namespace FullMoon.Entities.Unit
 
         public override void OnUnitHold()
         {
-            if (UnitClass == "Shield")
-            {
-                base.OnUnitHold();
-                StateMachine.ChangeState(new MeleeUnitGuard(this));
-            }
+            base.OnUnitHold();
+            StateMachine.ChangeState(new MeleeUnitIdle(this));
         }
 
         public override void OnUnitAttack(Vector3 targetPosition)

@@ -36,7 +36,6 @@ namespace FullMoon.Camera
 
         [Header("UI")]
         [SerializeField] private DecalProjector decal;
-        [SerializeField] private float onCoverUIRange;
         
         private UnityEngine.Camera mainCamera;
         private float targetFov;
@@ -44,21 +43,18 @@ namespace FullMoon.Camera
         private Vector3 mousePos;
         private Ray mouseRay;
         
-        private List<GameObject> covers;
-        
         private bool isMoveKey;
         private bool isAttackKey;
         private bool altRotation;
         
         private Rect dragRect; // 마우스로 드래그 한 범위 (xMin~xMax, yMin~yMax)
-        private Vector2 start = Vector2.zero; // 드래그 시작 위치
-        private Vector2 end = Vector2.zero; // 드래그 종료 위치
+        private Vector2 dragStart = Vector2.zero; // 드래그 시작 위치
+        private Vector2 dragEnd = Vector2.zero; // 드래그 종료 위치
 
         private void Awake()
         {
             mainCamera = UnityEngine.Camera.main;
             selectedUnitList = new List<BaseUnitController>();
-            covers = GameObject.FindGameObjectsWithTag("UIObject").ToList();
 
             DrawDragRectangle();
         }
@@ -68,8 +64,6 @@ namespace FullMoon.Camera
             targetFov = freeLookCamera.m_Lens.FieldOfView;
         
             PlayerInputManager.Instance.ZoomEvent.AddEvent(ZoomEvent);
-            
-            StartCoroutine(CoverAction());
         }
 
         private void Update()
@@ -153,9 +147,9 @@ namespace FullMoon.Camera
         private void DrawDragRectangle()
         {
             // 드래그 범위를 나타내는 Image UI의 위치
-            dragRectangle.position = (start + end) * 0.5f;
+            dragRectangle.position = (dragStart + dragEnd) * 0.5f;
             // 드래그 범위를 나타내는 Image UI의 크기
-            dragRectangle.sizeDelta = new Vector2(Mathf.Abs(start.x - end.x), Mathf.Abs(start.y - end.y));
+            dragRectangle.sizeDelta = new Vector2(Mathf.Abs(dragStart.x - dragEnd.x), Mathf.Abs(dragStart.y - dragEnd.y));
         }
         
         private void DrawDecalPointer()
@@ -176,25 +170,25 @@ namespace FullMoon.Camera
 
         private void CalculateDragRect()
         {
-            if (UnityEngine.Input.mousePosition.x < start.x)
+            if (UnityEngine.Input.mousePosition.x < dragStart.x)
             {
                 dragRect.xMin = UnityEngine.Input.mousePosition.x;
-                dragRect.xMax = start.x;
+                dragRect.xMax = dragStart.x;
             }
             else
             {
-                dragRect.xMin = start.x;
+                dragRect.xMin = dragStart.x;
                 dragRect.xMax = UnityEngine.Input.mousePosition.x;
             }
 
-            if (UnityEngine.Input.mousePosition.y < start.y)
+            if (UnityEngine.Input.mousePosition.y < dragStart.y)
             {
                 dragRect.yMin = UnityEngine.Input.mousePosition.y;
-                dragRect.yMax = start.y;
+                dragRect.yMax = dragStart.y;
             }
             else
             {
-                dragRect.yMin = start.y;
+                dragRect.yMin = dragStart.y;
                 dragRect.yMax = UnityEngine.Input.mousePosition.y;
             }
         }
@@ -243,27 +237,11 @@ namespace FullMoon.Camera
             {
                 HandleRightClick();
             }
-
-            if (selectedUnitList.Count != 0 && Physics.Raycast(mouseRay, out var hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Ground")))
-            {
-                Collider[] coverColliders = Physics.OverlapSphere(hit.point, onCoverUIRange, LayerMask.GetMask("UIObject"));
-
-                // 밖에 있는 엄폐물 위치들은 색을 연하게
-                foreach (GameObject obj in covers)
-                {
-                    obj.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 0.2f);
-                    if (coverColliders.Contains(obj.GetComponent<Collider>()))
-                    {
-                        // 마우스 주변 엄폐물 위치들은 색을 진하게
-                        obj.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 1);
-                    }
-                }
-            }
         }
 
         private void HandleLeftClick()
         {
-            start = mousePos;
+            dragStart = mousePos;
             dragRect = new Rect();
 
             if (PlayerInputManager.Instance.rotation)
@@ -312,7 +290,7 @@ namespace FullMoon.Camera
         {
             if (altRotation == false)
             {
-                end = mousePos;
+                dragEnd = mousePos;
                 DrawDragRectangle();
                 return;
             }
@@ -329,8 +307,8 @@ namespace FullMoon.Camera
         {
             CalculateDragRect();
             SelectUnits();
-            start = Vector2.zero;
-            end = Vector2.zero;
+            dragStart = Vector2.zero;
+            dragEnd = Vector2.zero;
             altRotation = false;
             DrawDragRectangle();
         }
@@ -356,51 +334,6 @@ namespace FullMoon.Camera
                 {
                     MoveSelectedUnits(hit.point);
                 }
-            }
-        }
-
-        public void RemoveCover(GameObject cover)
-        {
-            if (covers.Contains(cover))
-            {
-                covers.Remove(cover);
-            }
-        }
-
-        public void SetCoverList(GameObject cover)
-        {
-            if (!covers.Contains(cover))
-            {
-                covers.Add(cover);
-            }
-        }
-
-        IEnumerator CoverAction()
-        {
-            bool curBool = false;
-
-            while (true)
-            {
-                if (curBool.Equals(selectedUnitList.Count.Equals(0)))
-                    yield return new WaitForSeconds(0.01f);
-                curBool = selectedUnitList.Count.Equals(0);
-
-                if (curBool)
-                {
-                    for (int i = 0; i < covers.Count; ++i)
-                    {
-                        covers[i].SetActive(false);
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < covers.Count; ++i)
-                    {
-                        covers[i].SetActive(true);
-                    }
-                }
-
-                yield return new WaitForSeconds(0.01f);
             }
         }
 
