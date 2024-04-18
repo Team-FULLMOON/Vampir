@@ -1,13 +1,9 @@
-using System;
-using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using FullMoon.Input;
 using FullMoon.Entities.Unit;
 using UnityEngine.Rendering.Universal;
-using Unity.VisualScripting;
 
 namespace FullMoon.Camera
 {
@@ -32,32 +28,28 @@ namespace FullMoon.Camera
         
         [Header("ClickSetting")]
         List<BaseUnitController> selectedUnitList; // 플레이어가 클릭 or 드래그로 선택한 유닛
-        private UnityEngine.Camera mainCamera;
-        private Vector3 mousePos;
-        private Ray mouseRay;
-        private bool isMoveKey = false;
-        private bool isAttackKey = false;
 
         [Header("DragInfo")]
         [SerializeField] RectTransform dragRectangle; // 마우스로 드래그한 범위를 가시화하는 Image UI의 RectTransform
-        private Rect dragRect; // 마우스로 드래그 한 범위 (xMin~xMax, yMin~yMax)
-        private Vector2 start = Vector2.zero; // 드래그 시작 위치
-        private Vector2 end = Vector2.zero; // 드래그 종료 위치
-
-        [Header("UI")]
-        [SerializeField] private DecalProjector decal;
-        [SerializeField] private float onCoverUIRange;
-        private List<GameObject> covers;
-
+        
+        private UnityEngine.Camera mainCamera;
         private float targetFov;
-        private float targetXAxis;
+        
+        private Vector3 mousePos;
+        private Ray mouseRay;
+        
+        private bool normalMove;
+        private bool attackMove;
         private bool altRotation;
+        
+        private Rect dragRect; // 마우스로 드래그 한 범위 (xMin~xMax, yMin~yMax)
+        private Vector2 dragStart = Vector2.zero; // 드래그 시작 위치
+        private Vector2 dragEnd = Vector2.zero; // 드래그 종료 위치
 
         private void Awake()
         {
             mainCamera = UnityEngine.Camera.main;
             selectedUnitList = new List<BaseUnitController>();
-            covers = GameObject.FindGameObjectsWithTag("UIObject").ToList();
 
             DrawDragRectangle();
         }
@@ -65,11 +57,8 @@ namespace FullMoon.Camera
         private void Start()
         {
             targetFov = freeLookCamera.m_Lens.FieldOfView;
-            targetXAxis = freeLookCamera.m_XAxis.Value;
         
             PlayerInputManager.Instance.ZoomEvent.AddEvent(ZoomEvent);
-            
-            StartCoroutine(CoverAction());
         }
 
         private void Update()
@@ -98,7 +87,6 @@ namespace FullMoon.Camera
 
         private void LateUpdate()
         {
-            DrawDecalPointer();
             selectedUnitList.RemoveAll(unit => unit == null || !unit.gameObject.activeInHierarchy);
         }
 
@@ -153,48 +141,32 @@ namespace FullMoon.Camera
         private void DrawDragRectangle()
         {
             // 드래그 범위를 나타내는 Image UI의 위치
-            dragRectangle.position = (start + end) * 0.5f;
+            dragRectangle.position = (dragStart + dragEnd) * 0.5f;
             // 드래그 범위를 나타내는 Image UI의 크기
-            dragRectangle.sizeDelta = new Vector2(Mathf.Abs(start.x - end.x), Mathf.Abs(start.y - end.y));
-        }
-        
-        private void DrawDecalPointer()
-        {
-            if (selectedUnitList.Count != 0 && Physics.Raycast(mouseRay, out var hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Ground")))
-            {
-                if (decal != null)
-                {
-                    decal.transform.position = new Vector3(hit.point.x, decal.transform.position.y, hit.point.z);
-                    decal.enabled = true;
-                }
-            }
-            else
-            {
-                decal.enabled = false;
-            }
+            dragRectangle.sizeDelta = new Vector2(Mathf.Abs(dragStart.x - dragEnd.x), Mathf.Abs(dragStart.y - dragEnd.y));
         }
 
         private void CalculateDragRect()
         {
-            if (UnityEngine.Input.mousePosition.x < start.x)
+            if (UnityEngine.Input.mousePosition.x < dragStart.x)
             {
                 dragRect.xMin = UnityEngine.Input.mousePosition.x;
-                dragRect.xMax = start.x;
+                dragRect.xMax = dragStart.x;
             }
             else
             {
-                dragRect.xMin = start.x;
+                dragRect.xMin = dragStart.x;
                 dragRect.xMax = UnityEngine.Input.mousePosition.x;
             }
 
-            if (UnityEngine.Input.mousePosition.y < start.y)
+            if (UnityEngine.Input.mousePosition.y < dragStart.y)
             {
                 dragRect.yMin = UnityEngine.Input.mousePosition.y;
-                dragRect.yMax = start.y;
+                dragRect.yMax = dragStart.y;
             }
             else
             {
-                dragRect.yMin = start.y;
+                dragRect.yMin = dragStart.y;
                 dragRect.yMax = UnityEngine.Input.mousePosition.y;
             }
         }
@@ -221,9 +193,6 @@ namespace FullMoon.Camera
         /// </summary>
         private void MouseAction()
         {
-            if (!Application.isPlaying)
-                return;
-
             // 마우스 왼쪽 버튼 처리
             if (UnityEngine.InputSystem.Mouse.current.leftButton.wasPressedThisFrame)
             {
@@ -243,27 +212,11 @@ namespace FullMoon.Camera
             {
                 HandleRightClick();
             }
-
-            if (selectedUnitList.Count != 0 && Physics.Raycast(mouseRay, out var hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Ground")))
-            {
-                Collider[] coverColliders = Physics.OverlapSphere(hit.point, onCoverUIRange, LayerMask.GetMask("UIObject"));
-
-                // 밖에 있는 엄폐물 위치들은 색을 연하게
-                foreach (GameObject obj in covers)
-                {
-                    obj.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 0.2f);
-                    if (coverColliders.Contains(obj.GetComponent<Collider>()))
-                    {
-                        // 마우스 주변 엄폐물 위치들은 색을 진하게
-                        obj.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 1);
-                    }
-                }
-            }
         }
 
         private void HandleLeftClick()
         {
-            start = mousePos;
+            dragStart = mousePos;
             dragRect = new Rect();
 
             if (PlayerInputManager.Instance.rotation)
@@ -288,15 +241,15 @@ namespace FullMoon.Camera
                 }
                 else if (!PlayerInputManager.Instance.shift)
                 {
-                    if (isMoveKey)
+                    if (normalMove)
                     {
                         MoveSelectedUnits(hit.point);
-                        isMoveKey = false;
+                        normalMove = false;
                     }
-                    else if (isAttackKey)
+                    else if (attackMove)
                     {
                         AttackSelectedUnits(hit.point);
-                        isAttackKey = false;
+                        attackMove = false;
                     }
                     else
                     {
@@ -312,7 +265,7 @@ namespace FullMoon.Camera
         {
             if (altRotation == false)
             {
-                end = mousePos;
+                dragEnd = mousePos;
                 DrawDragRectangle();
                 return;
             }
@@ -329,18 +282,18 @@ namespace FullMoon.Camera
         {
             CalculateDragRect();
             SelectUnits();
-            start = Vector2.zero;
-            end = Vector2.zero;
+            dragStart = Vector2.zero;
+            dragEnd = Vector2.zero;
             altRotation = false;
             DrawDragRectangle();
         }
 
         private void HandleRightClick()
         {
-            if (isMoveKey || isAttackKey)
+            if (normalMove || attackMove)
             {
-                isAttackKey = false;
-                isMoveKey = false;
+                attackMove = false;
+                normalMove = false;
                 PlayerInputManager.Instance.SetCursorState(CursorType.Idle);
                 return;
             }
@@ -356,51 +309,6 @@ namespace FullMoon.Camera
                 {
                     MoveSelectedUnits(hit.point);
                 }
-            }
-        }
-
-        public void RemoveCover(GameObject cover)
-        {
-            if (covers.Contains(cover))
-            {
-                covers.Remove(cover);
-            }
-        }
-
-        public void SetCoverList(GameObject cover)
-        {
-            if (!covers.Contains(cover))
-            {
-                covers.Add(cover);
-            }
-        }
-
-        IEnumerator CoverAction()
-        {
-            bool curBool = false;
-
-            while (true)
-            {
-                if (curBool.Equals(selectedUnitList.Count.Equals(0)))
-                    yield return new WaitForSeconds(0.01f);
-                curBool = selectedUnitList.Count.Equals(0);
-
-                if (curBool)
-                {
-                    for (int i = 0; i < covers.Count; ++i)
-                    {
-                        covers[i].SetActive(false);
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < covers.Count; ++i)
-                    {
-                        covers[i].SetActive(true);
-                    }
-                }
-
-                yield return new WaitForSeconds(0.01f);
             }
         }
 
@@ -448,15 +356,16 @@ namespace FullMoon.Camera
         /// <summary>
         /// 선택된 모든 유닛을 이동할 때 호출
         /// </summary>
-        private void MoveSelectedUnits(Vector3 end)
+        private void MoveSelectedUnits(Vector3 targetPosition)
         {
-            // 마우스 범위 안에 엄폐물 타겟이 있다면
             foreach (var unit in selectedUnitList)
             {
                 if (unit.UnitType.Equals("Enemy"))
+                {
                     continue;
+                }
 
-                unit.MoveToPosition(end);
+                unit.MoveToPosition(targetPosition);
             }
         }
 
@@ -498,11 +407,16 @@ namespace FullMoon.Camera
         /// <summary>
         /// 선택된 유닛들에게 어택땅 명령
         /// </summary>
-        private void AttackSelectedUnits(Vector3 end)
+        private void AttackSelectedUnits(Vector3 targetPosition)
         {
             foreach (var unit in selectedUnitList)
             {
-                unit.OnUnitAttack(end);
+                if (unit.UnitType.Equals("Enemy"))
+                {
+                    continue;
+                }
+                
+                unit.OnUnitAttack(targetPosition);
             }
         }
         
@@ -513,13 +427,24 @@ namespace FullMoon.Camera
         private void ButtonAction()
         {
             if (PlayerInputManager.Instance.stop)
+            {
                 StopSelectUnits();
+            }
+            
             if (PlayerInputManager.Instance.hold)
+            {
                 HoldSelectUnits();
-            if (PlayerInputManager.Instance.attack)
-                OnAttackKeyAction();
-            if (PlayerInputManager.Instance.moveKey)
-                OnMoveKeyAction();
+            }
+            
+            if (PlayerInputManager.Instance.attackMove)
+            {
+                OnAttackMoveAction();
+            }
+            
+            if (PlayerInputManager.Instance.normalMove)
+            {
+                OnNormalMoveAction();
+            }
         }
 
         private void StopSelectUnits()
@@ -538,19 +463,23 @@ namespace FullMoon.Camera
             }
         }
 
-        private void OnMoveKeyAction()
+        private void OnNormalMoveAction()
         {
-            if (selectedUnitList.Equals(0))
+            if (selectedUnitList.Count == 0)
+            {
                 return;
-            isMoveKey = true;
+            }
+            normalMove = true;
             PlayerInputManager.Instance.SetCursorState(CursorType.Move);
         }
 
-        private void OnAttackKeyAction()
+        private void OnAttackMoveAction()
         {
-            if (selectedUnitList.Equals(0))
+            if (selectedUnitList.Count == 0)
+            {
                 return;
-            isAttackKey = true;
+            }
+            attackMove = true;
             PlayerInputManager.Instance.SetCursorState(CursorType.Attack);
         }
 

@@ -1,5 +1,4 @@
 using MyBox;
-using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -7,7 +6,6 @@ using UnityEngine.Rendering.Universal;
 using FullMoon.Interfaces;
 using FullMoon.Entities.Unit.States;
 using FullMoon.ScriptableObject;
-using FullMoon.Camera;
 
 namespace FullMoon.Entities.Unit
 {
@@ -22,12 +20,6 @@ namespace FullMoon.Entities.Unit
         
         public List<BaseUnitController> UnitInsideViewArea { get; set; }
 
-        [Foldout("Melee Unit Settings"), ConditionalField(nameof(UnitClass), false, "Shield")]
-        public CoverController hidePrefab;
-        
-        [Foldout("Melee Unit Settings"), ConditionalField(nameof(UnitClass), false, "Shield")]
-        public bool isGuard;
-
         protected override void Start()
         {
             base.Start();
@@ -36,6 +28,7 @@ namespace FullMoon.Entities.Unit
 
             if (decalProjector != null)
             {
+                decalProjector.gameObject.SetActive(false);
                 decalProjector.size = new Vector3(unitData.AttackRadius * 2f, unitData.AttackRadius * 2f, decalProjector.size.z);
             }
 
@@ -49,11 +42,11 @@ namespace FullMoon.Entities.Unit
 
         public override void ReceiveDamage(int amount, BaseUnitController attacker)
         {
-            base.ReceiveDamage(amount, attacker);
             if (StateMachine.CurrentState.ToString().Equals(typeof(MeleeUnitIdle).ToString()))
             {
-                Agent.SetDestination(attacker.transform.position);
+                MoveToPosition(attacker.transform.position);
             }
+            base.ReceiveDamage(amount, attacker);
         }
 
         public void EnterViewRange(Collider unit)
@@ -87,6 +80,18 @@ namespace FullMoon.Entities.Unit
 
             targetController.ReceiveDamage(OverridenUnitData.AttackDamage, this);
         }
+        
+        public override void Select()
+        {
+            base.Select();
+            decalProjector.gameObject.SetActive(true);
+        }
+
+        public override void Deselect()
+        {
+            base.Deselect();
+            decalProjector.gameObject.SetActive(false);
+        }
 
         public override void MoveToPosition(Vector3 location)
         {
@@ -102,16 +107,13 @@ namespace FullMoon.Entities.Unit
 
         public override void OnUnitHold()
         {
-            if (UnitClass == "Shield")
-            {
-                base.OnUnitHold();
-                StateMachine.ChangeState(new MeleeUnitGuard(this));
-            }
+            base.OnUnitHold();
+            StateMachine.ChangeState(new MeleeUnitIdle(this));
         }
 
-        public override void OnUnitAttack(Vector3 end)
+        public override void OnUnitAttack(Vector3 targetPosition)
         {
-            base.OnUnitAttack(end);
+            base.OnUnitAttack(targetPosition);
             StateMachine.ChangeState(new MeleeUnitMove(this));
         }
 
