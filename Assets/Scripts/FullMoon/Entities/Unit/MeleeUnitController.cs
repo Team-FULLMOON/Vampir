@@ -109,6 +109,12 @@ namespace FullMoon.Entities.Unit
             }
         }
 
+        public override void OnUnitAttack(Vector3 end)
+        {
+            base.OnUnitAttack(end);
+            StateMachine.ChangeState(new MeleeUnitMove(this));
+        }
+
         protected override void OnDrawGizmos()
         {
             base.OnDrawGizmos();
