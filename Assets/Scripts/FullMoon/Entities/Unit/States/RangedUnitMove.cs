@@ -59,9 +59,7 @@ namespace FullMoon.Entities.Unit.States
 
                 if (checkDistance)
                 {
-                    controller.LatestDestination = controller.transform.position;
                     controller.StateMachine.ChangeState(new RangedUnitAttack(controller));
-                    controller.isAttack = false;
                     return;
                 }
             }

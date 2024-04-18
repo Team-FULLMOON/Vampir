@@ -17,13 +17,6 @@ namespace FullMoon.Input
         Confined,
     }
 
-    public enum CursorType
-    {
-        Idle,
-        Attack,
-        Move,
-    }
-    
     [RequireComponent(typeof(PlayerInput))]
     public class PlayerInputManager : ComponentSingleton<PlayerInputManager>
     {
@@ -41,8 +34,6 @@ namespace FullMoon.Input
 
         [Header("Mouse Cursor Lock Settings")] 
         public CursorLockType cursorLockType;
-        public CursorType cursorType;
-        public Texture2D[] cursorImg;
 
 #if ENABLE_INPUT_SYSTEM
         public void OnMove(InputValue value)
@@ -154,20 +145,6 @@ namespace FullMoon.Input
             MoveKeyEvent.TriggerEvent(input);
         }
         
-        public void SetCursorState(CursorType type)
-        {
-            switch (type)
-            {
-                case CursorType.Idle:
-                    //Cursor.SetCursor()
-                    break;
-                case CursorType.Attack:
-                    break;
-                case CursorType.Move:
-                    break;
-            }
-        }
-
         private void OnApplicationFocus(bool hasFocus)
         {
             SetCursorLockState(cursorLockType);
