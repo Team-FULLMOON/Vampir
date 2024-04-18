@@ -1,6 +1,8 @@
 using MyBox;
 using System.Collections.Generic;
+using System.Linq;
 using FullMoon.Entities.Unit.States;
+using FullMoon.Input;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering.Universal;
@@ -51,12 +53,12 @@ namespace FullMoon.Entities.Unit
             switch (unit.tag)
             {
                 case "RespawnUnit":
-                    RespawnController respawnController = unit.GetComponent<RespawnController>();
-                    if (respawnController == null)
+                    RespawnController resController = unit.GetComponent<RespawnController>();
+                    if (resController == null)
                     {
                         return;
                     }
-                    RespawnUnitInsideViewArea.Add(respawnController);
+                    RespawnUnitInsideViewArea.Add(resController);
                     break;
                 default:
                     BaseUnitController controller = unit.GetComponent<BaseUnitController>();
@@ -74,12 +76,12 @@ namespace FullMoon.Entities.Unit
             switch (unit.tag)
             {
                 case "RespawnUnit":
-                    RespawnController respawnController = unit.GetComponent<RespawnController>();
-                    if (respawnController == null)
+                    RespawnController resController = unit.GetComponent<RespawnController>();
+                    if (resController == null)
                     {
                         return;
                     }
-                    RespawnUnitInsideViewArea.Remove(respawnController);
+                    RespawnUnitInsideViewArea.Remove(resController);
                     break;
                 default:
                     BaseUnitController controller = unit.GetComponent<BaseUnitController>();
@@ -120,6 +122,36 @@ namespace FullMoon.Entities.Unit
         {
             base.OnUnitHold();
             StateMachine.ChangeState(new MainUnitIdle(this));
+        }
+        
+        public void CheckAbleToRespawn()
+        {
+            PlayerInputManager.Instance.respawn = false;
+                
+            if (MainUIController.Instance.CurrentUnitValue >= MainUIController.Instance.UnitLimitValue)
+            {
+                return;
+            }
+                
+            RespawnController closestRespawnUnit =  RespawnUnitInsideViewArea
+                .Where(t => MainUIController.Instance.ManaValue >= t.ManaCost)
+                .OrderBy(t => (t.transform.position - transform.position).sqrMagnitude)
+                .FirstOrDefault();
+                
+            if (closestRespawnUnit == null)
+            {
+                return;
+            }
+                
+            bool checkDistance = (closestRespawnUnit.transform.position - transform.position).sqrMagnitude <=
+                                 OverridenUnitData.RespawnRadius * OverridenUnitData.RespawnRadius;
+                
+            if (checkDistance == false)
+            {
+                return;
+            }
+                
+            StateMachine.ChangeState(new MainUnitRespawn(this));
         }
         
         public void StartSpawn(RespawnController unit)

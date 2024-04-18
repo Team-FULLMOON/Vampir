@@ -165,7 +165,7 @@ MonoBehaviour:
   respawn: 0
   attackMove: 0
   normalMove: 0
-  cursorLockType: 0
+  cursorLockType: 2
   cursorType: 2
   cursorImg: []
 --- !u!1 &1889243612475854807
