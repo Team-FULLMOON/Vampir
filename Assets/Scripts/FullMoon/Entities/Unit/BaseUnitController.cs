@@ -69,19 +69,16 @@ namespace FullMoon.Entities.Unit
 
         public virtual void ReceiveDamage(int amount, BaseUnitController attacker)
         {
-            if (UnitType.Equals(attacker.UnitType))
+            Hp = Mathf.Clamp(Hp - amount, 0, System.Int32.MaxValue);
+
+            Debug.Log($"{gameObject.name} ({Hp}): D -{amount}, F {attacker.name}");
+
+            if (Hp > 0)
             {
                 return;
             }
-
-            Hp = Mathf.Clamp(Hp - amount, 0, System.Int32.MaxValue);
-
-            Debug.Log($"{gameObject.name} [{Hp}]: Damage -{amount}, From {attacker.name}");
             
-            if (Hp == 0)
-            {
-                Die();
-            }
+            Die();
         }
 
         public virtual void Die()

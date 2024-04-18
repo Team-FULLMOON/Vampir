@@ -42,11 +42,11 @@ namespace FullMoon.Entities.Unit
 
         public override void ReceiveDamage(int amount, BaseUnitController attacker)
         {
-            base.ReceiveDamage(amount, attacker);
             if (StateMachine.CurrentState.ToString().Equals(typeof(MeleeUnitIdle).ToString()))
             {
-                Agent.SetDestination(attacker.transform.position);
+                MoveToPosition(attacker.transform.position);
             }
+            base.ReceiveDamage(amount, attacker);
         }
 
         public void EnterViewRange(Collider unit)
