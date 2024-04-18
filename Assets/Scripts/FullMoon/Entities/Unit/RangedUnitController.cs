@@ -91,6 +91,12 @@ namespace FullMoon.Entities.Unit
             StateMachine.ChangeState(new RangedUnitIdle(this));
         }
 
+        public override void OnUnitAttack(Vector3 end)
+        {
+            base.OnUnitAttack(end);
+            StateMachine.ChangeState(new RangedUnitMove(this));
+        }
+
         protected override void OnDrawGizmos()
         {
             base.OnDrawGizmos();

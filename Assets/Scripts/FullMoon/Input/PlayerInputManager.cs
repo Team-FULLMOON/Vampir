@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 using FullMoon.Util;
+using MyBox;
+
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
@@ -8,11 +10,18 @@ using UnityEngine.InputSystem;
 namespace FullMoon.Input
 {
     [Serializable]
-    public enum CursorType
+    public enum CursorLockType
     {
         None,
         Locked,
-        Confined
+        Confined,
+    }
+
+    public enum CursorType
+    {
+        Idle,
+        Attack,
+        Move,
     }
     
     [RequireComponent(typeof(PlayerInput))]
@@ -27,9 +36,13 @@ namespace FullMoon.Input
         public bool hold;
         public bool rotation;
         public bool respawn;
+        public bool attack;
+        public bool moveKey;
 
-        [Header("Mouse Cursor Settings")] 
+        [Header("Mouse Cursor Lock Settings")] 
+        public CursorLockType cursorLockType;
         public CursorType cursorType;
+        public Texture2D[] cursorImg;
 
 #if ENABLE_INPUT_SYSTEM
         public void OnMove(InputValue value)
@@ -65,6 +78,16 @@ namespace FullMoon.Input
         public void OnRespawn(InputValue value)
         {
             RespawnInput(value.isPressed);
+        }
+
+        public void OnAttack(InputValue value)
+        {
+            AttackInput(value.isPressed);
+        }
+
+        public void OnMoveKey(InputValue value)
+        {
+            MoveKeyInput(value.isPressed);
         }
 #endif
 		
@@ -116,23 +139,51 @@ namespace FullMoon.Input
             respawn = input;
             RespawnEvent.TriggerEvent(input);
         } 
-        
-        private void OnApplicationFocus(bool hasFocus)
-        {
-            SetCursorState(cursorType);
-        }
 
-        private void SetCursorState(CursorType type)
+        public readonly GenericEventSystem<bool> AttackEvent = new();
+        public void AttackInput(bool input)
+        {
+            attack = input;
+            AttackEvent.TriggerEvent(input);
+        } 
+
+        public readonly GenericEventSystem<bool> MoveKeyEvent = new();
+        public void MoveKeyInput(bool input)
+        {
+            moveKey = input;
+            MoveKeyEvent.TriggerEvent(input);
+        }
+        
+        public void SetCursorState(CursorType type)
         {
             switch (type)
             {
-                case CursorType.None:
+                case CursorType.Idle:
+                    //Cursor.SetCursor()
+                    break;
+                case CursorType.Attack:
+                    break;
+                case CursorType.Move:
+                    break;
+            }
+        }
+
+        private void OnApplicationFocus(bool hasFocus)
+        {
+            SetCursorLockState(cursorLockType);
+        }
+
+        private void SetCursorLockState(CursorLockType type)
+        {
+            switch (type)
+            {
+                case CursorLockType.None:
                     Cursor.lockState = CursorLockMode.None;
                     break;
-                case CursorType.Locked:
+                case CursorLockType.Locked:
                     Cursor.lockState = CursorLockMode.Locked;
                     break;
-                case CursorType.Confined:
+                case CursorLockType.Confined:
                     Cursor.lockState = CursorLockMode.Confined;
                     break;
             }
