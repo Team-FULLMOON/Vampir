@@ -24,7 +24,32 @@ namespace FullMoon.Entities.Unit.States
         {
             if (PlayerInputManager.Instance.respawn)
             {
-                controller.CheckAbleToRespawn();
+                PlayerInputManager.Instance.respawn = false;
+                
+                if (MainUIController.Instance.CurrentUnitValue >= MainUIController.Instance.UnitLimitValue)
+                {
+                    return;
+                }
+                
+                RespawnController closestRespawnUnit = controller.RespawnUnitInsideViewArea
+                    .Where(t => MainUIController.Instance.ManaValue >= t.ManaCost)
+                    .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
+                    .FirstOrDefault();
+                
+                if (closestRespawnUnit == null)
+                {
+                    return;
+                }
+                
+                bool checkDistance = (closestRespawnUnit.transform.position - controller.transform.position).sqrMagnitude <=
+                                     controller.OverridenUnitData.RespawnRadius * controller.OverridenUnitData.RespawnRadius;
+                
+                if (checkDistance == false)
+                {
+                    return;
+                }
+                
+                controller.StateMachine.ChangeState(new MainUnitRespawn(controller));
             }
         }
 

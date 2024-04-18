@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using FullMoon.Util;
 using MyBox;
-using UnityEngine.Serialization;
 
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
@@ -30,8 +29,8 @@ namespace FullMoon.Input
         public bool hold;
         public bool rotation;
         public bool respawn;
-        public bool attackMove;
-        public bool normalMove;
+        public bool attack;
+        public bool moveKey;
 
         [Header("Mouse Cursor Lock Settings")] 
         public CursorLockType cursorLockType;
@@ -72,14 +71,14 @@ namespace FullMoon.Input
             RespawnInput(value.isPressed);
         }
 
-        public void OnAttackMove(InputValue value)
+        public void OnAttack(InputValue value)
         {
-            AttackMoveInput(value.isPressed);
+            AttackInput(value.isPressed);
         }
 
-        public void OnNormalMove(InputValue value)
+        public void OnMoveKey(InputValue value)
         {
-            NormalMoveInput(value.isPressed);
+            MoveKeyInput(value.isPressed);
         }
 #endif
 		
@@ -132,18 +131,18 @@ namespace FullMoon.Input
             RespawnEvent.TriggerEvent(input);
         } 
 
-        public readonly GenericEventSystem<bool> AttackMoveEvent = new();
-        public void AttackMoveInput(bool input)
+        public readonly GenericEventSystem<bool> AttackEvent = new();
+        public void AttackInput(bool input)
         {
-            attackMove = input;
-            AttackMoveEvent.TriggerEvent(input);
+            attack = input;
+            AttackEvent.TriggerEvent(input);
         } 
 
-        public readonly GenericEventSystem<bool> NormalMoveEvent = new();
-        public void NormalMoveInput(bool input)
+        public readonly GenericEventSystem<bool> MoveKeyEvent = new();
+        public void MoveKeyInput(bool input)
         {
-            normalMove = input;
-            NormalMoveEvent.TriggerEvent(input);
+            moveKey = input;
+            MoveKeyEvent.TriggerEvent(input);
         }
         
         private void OnApplicationFocus(bool hasFocus)

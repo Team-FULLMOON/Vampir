@@ -1,8 +1,6 @@
 using MyBox;
 using System.Collections.Generic;
-using System.Linq;
 using FullMoon.Entities.Unit.States;
-using FullMoon.Input;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering.Universal;
@@ -35,7 +33,6 @@ namespace FullMoon.Entities.Unit
 
 	        if (decalProjector != null)
             {
-                decalProjector.gameObject.SetActive(false);
                 decalProjector.size = new Vector3(((MainUnitData)unitData).RespawnRadius * 2f, ((MainUnitData)unitData).RespawnRadius * 2f, decalProjector.size.z);
             }
 
@@ -53,12 +50,12 @@ namespace FullMoon.Entities.Unit
             switch (unit.tag)
             {
                 case "RespawnUnit":
-                    RespawnController resController = unit.GetComponent<RespawnController>();
-                    if (resController == null)
+                    RespawnController respawnController = unit.GetComponent<RespawnController>();
+                    if (respawnController == null)
                     {
                         return;
                     }
-                    RespawnUnitInsideViewArea.Add(resController);
+                    RespawnUnitInsideViewArea.Add(respawnController);
                     break;
                 default:
                     BaseUnitController controller = unit.GetComponent<BaseUnitController>();
@@ -76,12 +73,12 @@ namespace FullMoon.Entities.Unit
             switch (unit.tag)
             {
                 case "RespawnUnit":
-                    RespawnController resController = unit.GetComponent<RespawnController>();
-                    if (resController == null)
+                    RespawnController respawnController = unit.GetComponent<RespawnController>();
+                    if (respawnController == null)
                     {
                         return;
                     }
-                    RespawnUnitInsideViewArea.Remove(resController);
+                    RespawnUnitInsideViewArea.Remove(respawnController);
                     break;
                 default:
                     BaseUnitController controller = unit.GetComponent<BaseUnitController>();
@@ -93,19 +90,7 @@ namespace FullMoon.Entities.Unit
                     break;
             }
         }
-
-        public override void Select()
-        {
-            base.Select();
-            decalProjector.gameObject.SetActive(true);
-        }
-
-        public override void Deselect()
-        {
-            base.Deselect();
-            decalProjector.gameObject.SetActive(false);
-        }
-
+        
         public override void MoveToPosition(Vector3 location)
         {
             base.MoveToPosition(location);
@@ -122,36 +107,6 @@ namespace FullMoon.Entities.Unit
         {
             base.OnUnitHold();
             StateMachine.ChangeState(new MainUnitIdle(this));
-        }
-        
-        public void CheckAbleToRespawn()
-        {
-            PlayerInputManager.Instance.respawn = false;
-                
-            if (MainUIController.Instance.CurrentUnitValue >= MainUIController.Instance.UnitLimitValue)
-            {
-                return;
-            }
-                
-            RespawnController closestRespawnUnit =  RespawnUnitInsideViewArea
-                .Where(t => MainUIController.Instance.ManaValue >= t.ManaCost)
-                .OrderBy(t => (t.transform.position - transform.position).sqrMagnitude)
-                .FirstOrDefault();
-                
-            if (closestRespawnUnit == null)
-            {
-                return;
-            }
-                
-            bool checkDistance = (closestRespawnUnit.transform.position - transform.position).sqrMagnitude <=
-                                 OverridenUnitData.RespawnRadius * OverridenUnitData.RespawnRadius;
-                
-            if (checkDistance == false)
-            {
-                return;
-            }
-                
-            StateMachine.ChangeState(new MainUnitRespawn(this));
         }
         
         public void StartSpawn(RespawnController unit)

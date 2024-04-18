@@ -87,7 +87,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "AttackMove",
+                    "name": "Attack",
                     "type": "Value",
                     "id": "2a97873b-c280-4af2-a7b4-b79f97e74b1a",
                     "expectedControlType": "Button",
@@ -96,7 +96,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "NormalMove",
+                    "name": "MoveKey",
                     "type": "Value",
                     "id": "8ed5ed86-db79-41d1-bef0-b8dcec60a8bb",
                     "expectedControlType": "Button",
@@ -278,7 +278,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "AttackMove",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -289,7 +289,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "NormalMove",
+                    "action": "MoveKey",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

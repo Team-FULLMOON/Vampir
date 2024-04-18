@@ -34,7 +34,6 @@ namespace FullMoon.Entities.Unit
 
             if (decalProjector != null)
             {
-                decalProjector.gameObject.SetActive(false);
                 decalProjector.size = new Vector3(unitData.AttackRadius * 2f, unitData.AttackRadius * 2f, decalProjector.size.z);
             }
 
@@ -45,14 +44,13 @@ namespace FullMoon.Entities.Unit
         {
             UnitInsideViewArea.RemoveAll(unit => unit == null || !unit.gameObject.activeInHierarchy);
         }
-        
         public override void ReceiveDamage(int amount, BaseUnitController attacker)
         {
+            base.ReceiveDamage(amount, attacker);
             if (StateMachine.CurrentState.ToString().Equals(typeof(RangedUnitIdle).ToString()))
             {
-                MoveToPosition(attacker.transform.position);
+                Agent.SetDestination(attacker.transform.position);
             }
-            base.ReceiveDamage(amount, attacker);
         }
 
         public void EnterViewRange(Collider unit)
@@ -81,18 +79,6 @@ namespace FullMoon.Entities.Unit
             bullet.GetComponent<BulletEffectController>().Fire(target, transform, OverridenUnitData.BulletSpeed, OverridenUnitData.AttackDamage);
         }
 
-        public override void Select()
-        {
-            base.Select();
-            decalProjector.gameObject.SetActive(true);
-        }
-
-        public override void Deselect()
-        {
-            base.Deselect();
-            decalProjector.gameObject.SetActive(false);
-        }
-        
         public override void MoveToPosition(Vector3 location)
         {
             base.MoveToPosition(location);
@@ -105,9 +91,9 @@ namespace FullMoon.Entities.Unit
             StateMachine.ChangeState(new RangedUnitIdle(this));
         }
 
-        public override void OnUnitAttack(Vector3 targetPosition)
+        public override void OnUnitAttack(Vector3 end)
         {
-            base.OnUnitAttack(targetPosition);
+            base.OnUnitAttack(end);
             StateMachine.ChangeState(new RangedUnitMove(this));
         }
 

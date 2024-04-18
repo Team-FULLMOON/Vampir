@@ -165,9 +165,7 @@ MonoBehaviour:
   respawn: 0
   attack: 0
   moveKey: 0
-  attackMove: 0
-  normalMove: 0
-  cursorLockType: 2
+  cursorLockType: 0
 --- !u!1 &1889243612475854807
 GameObject:
   m_ObjectHideFlags: 0
@@ -372,6 +370,7 @@ Transform:
   m_Children:
   - {fileID: 2714703728745606694}
   - {fileID: 6542061843157957838}
+  - {fileID: 2900129862130406697}
   m_Father: {fileID: 261678224792970686}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1327382350321120181
