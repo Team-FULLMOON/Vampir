@@ -36,7 +36,7 @@ namespace FullMoon.Entities.Unit.States
             bool checkDistance = (closestUnit.transform.position - controller.transform.position).sqrMagnitude <=
                                  controller.OverridenUnitData.AttackRadius * controller.OverridenUnitData.AttackRadius;
             
-            if (checkDistance == false && closestUnit.gameObject.activeSelf)
+            if (checkDistance == false)
             {
                 controller.StateMachine.ChangeState(new RangedUnitChase(controller));
                 return;

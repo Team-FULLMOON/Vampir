@@ -37,12 +37,12 @@ namespace FullMoon.Entities.Unit.States
             
             if (closestUnit != null)
             {
-                controller.isAttack = false;
+                controller.AttackMove = false;
                 controller.StateMachine.ChangeState(new RangedUnitIdle(controller));
                 return;
             }
 
-            if (controller.isAttack)
+            if (controller.AttackMove)
             {
                 closestUnit = controller.UnitInsideViewArea
                     .Where(t => !controller.UnitType.Equals(t.UnitType))

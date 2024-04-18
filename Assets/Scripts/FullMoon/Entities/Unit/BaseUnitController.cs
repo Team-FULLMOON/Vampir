@@ -16,13 +16,13 @@ namespace FullMoon.Entities.Unit
         public BaseUnitData unitData;
         
         [Foldout("Base Unit Settings")] 
+        public GameObject unitModel;
+        
+        [Foldout("Base Unit Settings")] 
         public GameObject unitMarker;
         
         [Foldout("Base Unit Settings")] 
         public SphereCollider viewRange;
-
-        [Foldout("Base Unit Settings")]
-        public GameObject hpUICanvas;
         
         public readonly StateMachine StateMachine = new();
         
@@ -34,7 +34,7 @@ namespace FullMoon.Entities.Unit
         public string UnitType { get; set; }
         public string UnitClass { get; set; }
 
-        public bool isAttack { get; set; }
+        public bool AttackMove { get; set; }
 
         protected virtual void Start()
         {
@@ -46,7 +46,12 @@ namespace FullMoon.Entities.Unit
             UnitClass = unitData.UnitClass;
             unitMarker.SetActive(false);
 
-	        if (viewRange != null && unitData != null)
+            if (UnitType == "Player")
+            {
+                MainUIController.Instance.AddUnit(1);
+            }
+
+            if (viewRange != null && unitData != null)
             {
                 viewRange.radius = unitData.ViewRadius;
             }
@@ -64,20 +69,16 @@ namespace FullMoon.Entities.Unit
 
         public virtual void ReceiveDamage(int amount, BaseUnitController attacker)
         {
-            if (UnitType.Equals(attacker.UnitType))
-            {
-                return;
-            }
-
             Hp = Mathf.Clamp(Hp - amount, 0, System.Int32.MaxValue);
 
-            Debug.Log($"{gameObject.name} [{Hp}]: Damage -{amount}, From {attacker.name}");
-            
-            if (Hp == 0)
+            Debug.Log($"{gameObject.name} ({Hp}): D -{amount}, F {attacker.name}");
+
+            if (Hp > 0)
             {
-                Die();
                 return;
             }
+            
+            Die();
         }
 
         public virtual void Die()
@@ -88,16 +89,28 @@ namespace FullMoon.Entities.Unit
                 RespawnController respawnController = ObjectPoolManager.SpawnObject(unitData.UnitRespawnController.gameObject, transform.position, transform.rotation).GetComponent<RespawnController>();
                 respawnController.Setup(unitData.ManaCost, unitData.CreatePrepareTime, unitData.SummonTime, unitData.UnitTransformObject);
                 MainUIController.Instance.AddMana(unitData.ManaDrop);
+                return;
             }
+            MainUIController.Instance.AddUnit(-1);
         }
 
         public virtual void Select()
         {
+            switch (UnitType)
+            {
+                case "Player":
+                    unitModel.layer = LayerMask.NameToLayer("SelectPlayer");
+                    break;
+                case "Enemy":
+                    unitModel.layer = LayerMask.NameToLayer("SelectEnemy");
+                    break;
+            }
             unitMarker.SetActive(true);
         }
         
         public virtual void Deselect()
         {
+            unitModel.layer = LayerMask.NameToLayer("Default");
             unitMarker.SetActive(false);
         }
 
@@ -117,10 +130,10 @@ namespace FullMoon.Entities.Unit
             MoveToPosition(transform.position);
         }
 
-        public virtual void OnUnitAttack(Vector3 end)
+        public virtual void OnUnitAttack(Vector3 targetPosition)
         {
-            MoveToPosition(end);
-            isAttack = true;
+            AttackMove = true;
+            MoveToPosition(targetPosition);
         }
 
         protected virtual void OnDrawGizmos()
