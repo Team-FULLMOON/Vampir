@@ -33,6 +33,7 @@ namespace FullMoon.Entities.Unit
 
 	        if (decalProjector != null)
             {
+                decalProjector.gameObject.SetActive(false);
                 decalProjector.size = new Vector3(((MainUnitData)unitData).RespawnRadius * 2f, ((MainUnitData)unitData).RespawnRadius * 2f, decalProjector.size.z);
             }
 
@@ -90,7 +91,19 @@ namespace FullMoon.Entities.Unit
                     break;
             }
         }
-        
+
+        public override void Select()
+        {
+            base.Select();
+            decalProjector.gameObject.SetActive(true);
+        }
+
+        public override void Deselect()
+        {
+            base.Deselect();
+            decalProjector.gameObject.SetActive(false);
+        }
+
         public override void MoveToPosition(Vector3 location)
         {
             base.MoveToPosition(location);

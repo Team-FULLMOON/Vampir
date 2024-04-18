@@ -34,7 +34,7 @@ namespace FullMoon.Entities.Unit
         public string UnitType { get; set; }
         public string UnitClass { get; set; }
 
-        public bool isAttack { get; set; }
+        public bool AttackMove { get; set; }
 
         protected virtual void Start()
         {
@@ -97,7 +97,7 @@ namespace FullMoon.Entities.Unit
             MainUIController.Instance.AddUnit(-1);
         }
 
-        public void Select()
+        public virtual void Select()
         {
             switch (UnitType)
             {
@@ -111,7 +111,7 @@ namespace FullMoon.Entities.Unit
             unitMarker.SetActive(true);
         }
         
-        public void Deselect()
+        public virtual void Deselect()
         {
             unitModel.layer = LayerMask.NameToLayer("Default");
             unitMarker.SetActive(false);
@@ -133,10 +133,10 @@ namespace FullMoon.Entities.Unit
             MoveToPosition(transform.position);
         }
 
-        public virtual void OnUnitAttack(Vector3 end)
+        public virtual void OnUnitAttack(Vector3 targetPosition)
         {
-            MoveToPosition(end);
-            isAttack = true;
+            AttackMove = true;
+            MoveToPosition(targetPosition);
         }
 
         protected virtual void OnDrawGizmos()

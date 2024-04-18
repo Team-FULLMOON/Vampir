@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +6,6 @@ using Cinemachine;
 using FullMoon.Input;
 using FullMoon.Entities.Unit;
 using UnityEngine.Rendering.Universal;
-using Unity.VisualScripting;
 
 namespace FullMoon.Camera
 {
@@ -32,26 +30,29 @@ namespace FullMoon.Camera
         
         [Header("ClickSetting")]
         List<BaseUnitController> selectedUnitList; // 플레이어가 클릭 or 드래그로 선택한 유닛
-        private UnityEngine.Camera mainCamera;
-        private Vector3 mousePos;
-        private Ray mouseRay;
-        private bool isMoveKey = false;
-        private bool isAttackKey = false;
 
         [Header("DragInfo")]
         [SerializeField] RectTransform dragRectangle; // 마우스로 드래그한 범위를 가시화하는 Image UI의 RectTransform
-        private Rect dragRect; // 마우스로 드래그 한 범위 (xMin~xMax, yMin~yMax)
-        private Vector2 start = Vector2.zero; // 드래그 시작 위치
-        private Vector2 end = Vector2.zero; // 드래그 종료 위치
 
         [Header("UI")]
         [SerializeField] private DecalProjector decal;
         [SerializeField] private float onCoverUIRange;
-        private List<GameObject> covers;
-
+        
+        private UnityEngine.Camera mainCamera;
         private float targetFov;
-        private float targetXAxis;
+        
+        private Vector3 mousePos;
+        private Ray mouseRay;
+        
+        private List<GameObject> covers;
+        
+        private bool isMoveKey;
+        private bool isAttackKey;
         private bool altRotation;
+        
+        private Rect dragRect; // 마우스로 드래그 한 범위 (xMin~xMax, yMin~yMax)
+        private Vector2 start = Vector2.zero; // 드래그 시작 위치
+        private Vector2 end = Vector2.zero; // 드래그 종료 위치
 
         private void Awake()
         {
@@ -65,7 +66,6 @@ namespace FullMoon.Camera
         private void Start()
         {
             targetFov = freeLookCamera.m_Lens.FieldOfView;
-            targetXAxis = freeLookCamera.m_XAxis.Value;
         
             PlayerInputManager.Instance.ZoomEvent.AddEvent(ZoomEvent);
             
@@ -448,15 +448,16 @@ namespace FullMoon.Camera
         /// <summary>
         /// 선택된 모든 유닛을 이동할 때 호출
         /// </summary>
-        private void MoveSelectedUnits(Vector3 end)
+        private void MoveSelectedUnits(Vector3 targetPosition)
         {
-            // 마우스 범위 안에 엄폐물 타겟이 있다면
             foreach (var unit in selectedUnitList)
             {
                 if (unit.UnitType.Equals("Enemy"))
+                {
                     continue;
+                }
 
-                unit.MoveToPosition(end);
+                unit.MoveToPosition(targetPosition);
             }
         }
 
@@ -498,11 +499,16 @@ namespace FullMoon.Camera
         /// <summary>
         /// 선택된 유닛들에게 어택땅 명령
         /// </summary>
-        private void AttackSelectedUnits(Vector3 end)
+        private void AttackSelectedUnits(Vector3 targetPosition)
         {
             foreach (var unit in selectedUnitList)
             {
-                unit.OnUnitAttack(end);
+                if (unit.UnitType.Equals("Enemy"))
+                {
+                    continue;
+                }
+                
+                unit.OnUnitAttack(targetPosition);
             }
         }
         

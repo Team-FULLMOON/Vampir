@@ -36,6 +36,7 @@ namespace FullMoon.Entities.Unit
 
             if (decalProjector != null)
             {
+                decalProjector.gameObject.SetActive(false);
                 decalProjector.size = new Vector3(unitData.AttackRadius * 2f, unitData.AttackRadius * 2f, decalProjector.size.z);
             }
 
@@ -87,6 +88,18 @@ namespace FullMoon.Entities.Unit
 
             targetController.ReceiveDamage(OverridenUnitData.AttackDamage, this);
         }
+        
+        public override void Select()
+        {
+            base.Select();
+            decalProjector.gameObject.SetActive(true);
+        }
+
+        public override void Deselect()
+        {
+            base.Deselect();
+            decalProjector.gameObject.SetActive(false);
+        }
 
         public override void MoveToPosition(Vector3 location)
         {
@@ -109,9 +122,9 @@ namespace FullMoon.Entities.Unit
             }
         }
 
-        public override void OnUnitAttack(Vector3 end)
+        public override void OnUnitAttack(Vector3 targetPosition)
         {
-            base.OnUnitAttack(end);
+            base.OnUnitAttack(targetPosition);
             StateMachine.ChangeState(new MeleeUnitMove(this));
         }
 

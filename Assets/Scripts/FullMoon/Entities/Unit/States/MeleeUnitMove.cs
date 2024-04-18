@@ -37,12 +37,12 @@ namespace FullMoon.Entities.Unit.States
             
             if (closestUnit != null)
             {
+                controller.AttackMove = false;
                 controller.StateMachine.ChangeState(new MeleeUnitIdle(controller));
-                controller.isAttack = false;
                 return;
             }
 
-            if (controller.isAttack)
+            if (controller.AttackMove)
             {
                 closestUnit = controller.UnitInsideViewArea
                     .Where(t => !controller.UnitType.Equals(t.UnitType))
@@ -59,10 +59,9 @@ namespace FullMoon.Entities.Unit.States
 
                 if (checkDistance)
                 {
+                    controller.AttackMove = false;
                     controller.LatestDestination = controller.transform.position;
                     controller.StateMachine.ChangeState(new MeleeUnitAttack(controller));
-                    controller.isAttack = false;
-                    return;
                 }
             }
         }
