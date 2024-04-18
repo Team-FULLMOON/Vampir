@@ -1,6 +1,7 @@
 using System.Linq;
 using UnityEngine;
 using FullMoon.FSM;
+using FullMoon.Input;
 
 namespace FullMoon.Entities.Unit.States
 {
@@ -38,6 +39,11 @@ namespace FullMoon.Entities.Unit.States
             if (closestUnit != null)
             {
                 controller.StateMachine.ChangeState(new MainUnitIdle(controller));
+            }
+            
+            if (PlayerInputManager.Instance.respawn)
+            {
+                controller.CheckAbleToRespawn();
             }
         }
 

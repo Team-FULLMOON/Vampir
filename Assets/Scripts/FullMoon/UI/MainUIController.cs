@@ -65,6 +65,7 @@ namespace FullMoon.UI
         {
             UnitLimitValue = value;
             UnitLimitText.text = $"{CurrentUnitValue} / {UnitLimitValue}";
+            UnitLimitText.style.color = new StyleColor(CurrentUnitValue >= UnitLimitValue ? Color.red : Color.white);
         }
         
         private void ExpandUnit(ClickEvent evt)
