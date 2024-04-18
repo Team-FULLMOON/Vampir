@@ -34,6 +34,8 @@ namespace FullMoon.Entities.Unit
         public string UnitType { get; set; }
         public string UnitClass { get; set; }
 
+        public bool isAttack { get; set; }
+
         protected virtual void Start()
         {
             Rb = GetComponent<Rigidbody>();
@@ -44,7 +46,7 @@ namespace FullMoon.Entities.Unit
             UnitClass = unitData.UnitClass;
             unitMarker.SetActive(false);
 
-	          if (viewRange != null && unitData != null)
+	        if (viewRange != null && unitData != null)
             {
                 viewRange.radius = unitData.ViewRadius;
             }
@@ -113,6 +115,12 @@ namespace FullMoon.Entities.Unit
         public virtual void OnUnitHold()
         {
             MoveToPosition(transform.position);
+        }
+
+        public virtual void OnUnitAttack(Vector3 end)
+        {
+            MoveToPosition(end);
+            isAttack = true;
         }
 
         protected virtual void OnDrawGizmos()

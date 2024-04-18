@@ -5,29 +5,32 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UnitHPUI : MonoBehaviour
+namespace FullMoon.UI
 {
-    BaseUnitController unit;
-    Camera mainCamera;
-    [SerializeField] Slider hpui;
-
-    void Start()
+    public class UnitHPUI : MonoBehaviour
     {
-        mainCamera = Camera.main;
-        GetComponent<Canvas>().worldCamera = mainCamera;
-        unit = GetComponentInParent<BaseUnitController>();
+        BaseUnitController unit;
+        UnityEngine.Camera mainCamera;
+        [SerializeField] Slider hpui;
 
-        hpui.maxValue = unit.unitData.MaxHp;
-        hpui.value = hpui.maxValue;
-    }
+        void Start()
+        {
+            mainCamera = UnityEngine.Camera.main;
+            GetComponent<Canvas>().worldCamera = mainCamera;
+            unit = GetComponentInParent<BaseUnitController>();
 
-    void LateUpdate()
-    {
-        hpui.value = unit.Hp;
-    }
+            hpui.maxValue = unit.unitData.MaxHp;
+            hpui.value = hpui.maxValue;
+        }
 
-    void Update()
-    {
-        transform.LookAt(mainCamera.transform.position);
+        void LateUpdate()
+        {
+            hpui.value = unit.Hp;
+        }
+
+        void Update()
+        {
+            transform.LookAt(mainCamera.transform.position);
+        }
     }
 }

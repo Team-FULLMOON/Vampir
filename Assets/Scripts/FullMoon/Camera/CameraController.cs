@@ -35,6 +35,8 @@ namespace FullMoon.Camera
         private UnityEngine.Camera mainCamera;
         private Vector3 mousePos;
         private Ray mouseRay;
+        private bool isMoveKey = false;
+        private bool isAttackKey = false;
 
         [Header("DragInfo")]
         [SerializeField] RectTransform dragRectangle; // 마우스로 드래그한 범위를 가시화하는 Image UI의 RectTransform
@@ -285,7 +287,22 @@ namespace FullMoon.Camera
                 }
                 else if (!PlayerInputManager.Instance.shift)
                 {
-                    DeselectAll();
+                    if (isMoveKey)
+                    {
+                        MoveSelectedUnits(hit.point);
+                        isMoveKey = false;
+                    }
+                    else if (isAttackKey)
+                    {
+                        AttackSelectedUnits(hit.point);
+                        isAttackKey = false;
+                    }
+                    else
+                    {
+                        DeselectAll();
+                    }
+
+                    PlayerInputManager.Instance.SetCursorState(CursorType.Idle);
                 }
             }
         }
@@ -319,18 +336,24 @@ namespace FullMoon.Camera
 
         private void HandleRightClick()
         {
+            if (isMoveKey || isAttackKey)
+            {
+                isAttackKey = false;
+                isMoveKey = false;
+                PlayerInputManager.Instance.SetCursorState(CursorType.Idle);
+                return;
+            }
+
             if (Physics.Raycast(mouseRay, out var hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Ground")))
             {
                 var rangedUnitController = hit.transform.GetComponent<BaseUnitController>();
                 if (rangedUnitController != null)
                 {
-                    AttackSelectedUnits(rangedUnitController);
+                    //AttackSelectedUnits(rangedUnitController);
                 }
                 else if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
                 {
-                    Collider[] coverColliders = Physics.OverlapSphere(hit.point, onCoverUIRange, LayerMask.GetMask("UIObject"));
-
-                    MoveSelectedUnits(hit.point, coverColliders);
+                    MoveSelectedUnits(hit.point);
                 }
             }
         }
@@ -420,48 +443,15 @@ namespace FullMoon.Camera
         /// <summary>
         /// 선택된 모든 유닛을 이동할 때 호출
         /// </summary>
-        private void MoveSelectedUnits(Vector3 end, Collider[] colliders)
+        private void MoveSelectedUnits(Vector3 end)
         {
             // 마우스 범위 안에 엄폐물 타겟이 있다면
-            if (!colliders.Length.Equals(0))
+            foreach (var unit in selectedUnitList)
             {
-                List<BaseUnitController> unitList = selectedUnitList.ToList();
+                if (unit.UnitType.Equals("Enemy"))
+                    continue;
 
-                // 가장 가까운 유닛이 누구인지 검사
-                foreach (var collider in colliders)
-                {
-                    BaseUnitController curUnit = unitList
-                        .Select(unit => new { Unit = unit, dis = Vector3.Distance(unit.transform.position, collider.transform.position)})
-                        .Where(coll => covers.Contains(collider.gameObject))
-                        .OrderBy(unitDis => unitDis.dis)
-                        .FirstOrDefault()?.Unit;
-
-                    if (curUnit != null && selectedUnitList.Contains(curUnit))
-                    {
-                        if (curUnit.UnitClass == "Infantry" && 
-                            curUnit.GetComponent<MeleeUnitController>().isGuard)
-                            continue;
-                        curUnit.MoveToPosition(collider.transform.position);
-                        unitList.Remove(curUnit);
-
-                        colliders = colliders.Where(coll => coll != collider).ToArray();
-                    }
-                }
-                // 남은 유닛은 마우스 지점으로 이동
-                foreach (var unit in unitList)
-                {
-                    unit.MoveToPosition(end);
-                }
-            }
-            else
-            {
-                foreach (var unit in selectedUnitList)
-                {
-                    if (unit.UnitType.Equals("Enemy"))
-                        continue;
-
-                    unit.MoveToPosition(end);
-                }
+                unit.MoveToPosition(end);
             }
         }
 
@@ -501,12 +491,14 @@ namespace FullMoon.Camera
         }
         
         /// <summary>
-        /// 선택된 유닛들에게 강제공격 명령
+        /// 선택된 유닛들에게 어택땅 명령
         /// </summary>
-        private void AttackSelectedUnits(BaseUnitController unit)
+        private void AttackSelectedUnits(Vector3 end)
         {
-            // for (int index = 0; index < selectedUnitList.Count; ++index)
-            //     selectedUnitList[index].SetTarget(unit);
+            foreach (var unit in selectedUnitList)
+            {
+                unit.OnUnitAttack(end);
+            }
         }
         
         #endregion Mouse
@@ -519,6 +511,10 @@ namespace FullMoon.Camera
                 StopSelectUnits();
             if (PlayerInputManager.Instance.hold)
                 HoldSelectUnits();
+            if (PlayerInputManager.Instance.attack)
+                OnAttackKeyAction();
+            if (PlayerInputManager.Instance.moveKey)
+                OnMoveKeyAction();
         }
 
         private void StopSelectUnits()
@@ -535,6 +531,22 @@ namespace FullMoon.Camera
             {
                 unit.OnUnitHold();
             }
+        }
+
+        private void OnMoveKeyAction()
+        {
+            if (selectedUnitList.Equals(0))
+                return;
+            isMoveKey = true;
+            PlayerInputManager.Instance.SetCursorState(CursorType.Move);
+        }
+
+        private void OnAttackKeyAction()
+        {
+            if (selectedUnitList.Equals(0))
+                return;
+            isAttackKey = true;
+            PlayerInputManager.Instance.SetCursorState(CursorType.Attack);
         }
 
         #endregion Button
