@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using FullMoon.Util;
 using MyBox;
+using UnityEngine.Serialization;
 
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
@@ -36,8 +37,8 @@ namespace FullMoon.Input
         public bool hold;
         public bool rotation;
         public bool respawn;
-        public bool attack;
-        public bool moveKey;
+        public bool attackMove;
+        public bool normalMove;
 
         [Header("Mouse Cursor Lock Settings")] 
         public CursorLockType cursorLockType;
@@ -80,14 +81,14 @@ namespace FullMoon.Input
             RespawnInput(value.isPressed);
         }
 
-        public void OnAttack(InputValue value)
+        public void OnAttackMove(InputValue value)
         {
-            AttackInput(value.isPressed);
+            AttackMoveInput(value.isPressed);
         }
 
-        public void OnMoveKey(InputValue value)
+        public void OnNormalMove(InputValue value)
         {
-            MoveKeyInput(value.isPressed);
+            NormalMoveInput(value.isPressed);
         }
 #endif
 		
@@ -140,18 +141,18 @@ namespace FullMoon.Input
             RespawnEvent.TriggerEvent(input);
         } 
 
-        public readonly GenericEventSystem<bool> AttackEvent = new();
-        public void AttackInput(bool input)
+        public readonly GenericEventSystem<bool> AttackMoveEvent = new();
+        public void AttackMoveInput(bool input)
         {
-            attack = input;
-            AttackEvent.TriggerEvent(input);
+            attackMove = input;
+            AttackMoveEvent.TriggerEvent(input);
         } 
 
-        public readonly GenericEventSystem<bool> MoveKeyEvent = new();
-        public void MoveKeyInput(bool input)
+        public readonly GenericEventSystem<bool> NormalMoveEvent = new();
+        public void NormalMoveInput(bool input)
         {
-            moveKey = input;
-            MoveKeyEvent.TriggerEvent(input);
+            normalMove = input;
+            NormalMoveEvent.TriggerEvent(input);
         }
         
         public void SetCursorState(CursorType type)
