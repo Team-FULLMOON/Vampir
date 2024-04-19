@@ -29,7 +29,7 @@ namespace FullMoon.Entities.Unit
         protected override void Start()
         {
             base.Start();
-            OverridenUnitData = (RangedUnitData)unitData;
+            OverridenUnitData = unitData as RangedUnitData;
             UnitInsideViewArea = new List<BaseUnitController>();
 
             if (decalProjector != null)

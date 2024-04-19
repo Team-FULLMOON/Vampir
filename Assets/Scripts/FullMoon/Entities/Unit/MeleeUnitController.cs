@@ -23,7 +23,7 @@ namespace FullMoon.Entities.Unit
         protected override void Start()
         {
             base.Start();
-            OverridenUnitData = (MeleeUnitData)unitData;
+            OverridenUnitData = unitData as MeleeUnitData;
             UnitInsideViewArea = new List<BaseUnitController>();
 
             if (decalProjector != null)
