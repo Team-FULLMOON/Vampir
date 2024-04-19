@@ -29,7 +29,7 @@ namespace FullMoon.Entities.Unit
         protected override void Start()
         {
             base.Start();
-            OverridenUnitData = (MainUnitData)unitData;
+            OverridenUnitData = unitData as MainUnitData;
             UnitInsideViewArea = new List<BaseUnitController>();
             RespawnUnitInsideViewArea = new List<RespawnController>();
 
