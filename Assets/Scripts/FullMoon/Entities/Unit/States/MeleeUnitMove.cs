@@ -55,12 +55,11 @@ namespace FullMoon.Entities.Unit.States
                 }
 
                 bool checkDistance = (closestUnit.transform.position - controller.transform.position).sqrMagnitude <=
-                            controller.OverridenUnitData.AttackRadius * controller.OverridenUnitData.AttackRadius;
+                            controller.OverridenUnitData.ViewRadius * controller.OverridenUnitData.ViewRadius;
 
                 if (checkDistance)
                 {
-                    controller.LatestDestination = controller.transform.position;
-                    controller.StateMachine.ChangeState(new MeleeUnitAttack(controller));
+                    controller.StateMachine.ChangeState(new MeleeUnitChase(controller));
                 }
             }
         }

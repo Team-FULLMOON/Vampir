@@ -58,6 +58,7 @@ namespace FullMoon.Entities.Unit.States
 
         public void Exit()
         {
+            controller.Agent.SetDestination(controller.transform.position);
         }
     }
 }

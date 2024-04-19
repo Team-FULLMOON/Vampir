@@ -124,6 +124,8 @@ namespace FullMoon.Entities.Unit
             StateMachine.ChangeState(new MainUnitIdle(this));
         }
         
+        public override void OnUnitAttack(Vector3 targetPosition) { }
+        
         public void CheckAbleToRespawn()
         {
             PlayerInputManager.Instance.respawn = false;

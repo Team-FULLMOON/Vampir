@@ -35,6 +35,7 @@ namespace FullMoon.Entities.Unit
         public string UnitClass { get; set; }
 
         public bool AttackMove { get; set; }
+        public Vector3 AttackMovePosition { get; set; }
 
         protected virtual void Start()
         {
@@ -133,6 +134,7 @@ namespace FullMoon.Entities.Unit
         public virtual void OnUnitAttack(Vector3 targetPosition)
         {
             AttackMove = true;
+            AttackMovePosition = targetPosition;
             MoveToPosition(targetPosition);
         }
 
