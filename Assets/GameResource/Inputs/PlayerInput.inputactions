@@ -105,7 +105,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Cancle",
+                    "name": "Cancel",
                     "type": "Value",
                     "id": "686cf1a6-c238-41a2-8b89-bf19509de1b1",
                     "expectedControlType": "Button",
@@ -309,7 +309,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Cancle",
+                    "action": "Cancel",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

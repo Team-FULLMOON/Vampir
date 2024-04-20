@@ -480,6 +480,9 @@ namespace FullMoon.Camera
 
         private void CheckCursorUnit()
         {
+            if (attackMove || normalMove)
+                return;
+
             if (Physics.Raycast(mouseRay, out var hit, Mathf.Infinity, (1 << LayerMask.NameToLayer("Unit"))))
             {
                 cursor.SetCursorState(CursorType.Unit);
@@ -506,9 +509,9 @@ namespace FullMoon.Camera
                 HoldSelectUnits();
             }
 
-            if (PlayerInputManager.Instance.cancle)
+            if (PlayerInputManager.Instance.cancel)
             {
-                OnCancleAction();
+                OnCancelAction();
             }
 
             if (selectedUnitList.Count != 0)
@@ -553,7 +556,7 @@ namespace FullMoon.Camera
             cursor.SetCursorState(CursorType.Attack);
         }
 
-        private void OnCancleAction()
+        private void OnCancelAction()
         {
             normalMove = false;
             attackMove = false;
