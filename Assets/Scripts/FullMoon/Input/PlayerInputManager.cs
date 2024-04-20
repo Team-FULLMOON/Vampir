@@ -32,6 +32,7 @@ namespace FullMoon.Input
         public bool respawn;
         public bool attackMove;
         public bool normalMove;
+        public bool cancle;
 
         [Header("Mouse Cursor Lock Settings")] 
         public CursorLockType cursorLockType;
@@ -80,6 +81,11 @@ namespace FullMoon.Input
         public void OnNormalMove(InputValue value)
         {
             NormalMoveInput(value.isPressed);
+        }
+
+        public void OnCancle(InputValue value)
+        {
+            CancleInput(value.isPressed);
         }
 #endif
 		
@@ -144,6 +150,13 @@ namespace FullMoon.Input
         {
             normalMove = input;
             NormalMoveEvent.TriggerEvent(input);
+        }
+
+        public readonly GenericEventSystem<bool> CancleEvent = new();
+        public void CancleInput(bool input)
+        {
+            cancle = input;
+            CancleEvent.TriggerEvent(input);
         }
         
         private void OnApplicationFocus(bool hasFocus)

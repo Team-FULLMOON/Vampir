@@ -1,11 +1,13 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using FullMoon.Input;
 using FullMoon.Entities.Unit;
-using UnityEngine.Rendering.Universal;
-using Unity.VisualScripting;
 using FullMoon.UI;
+using UniRx;
+using UniRx.Triggers;
+using System.Linq;
 
 namespace FullMoon.Camera
 {
@@ -64,6 +66,7 @@ namespace FullMoon.Camera
             targetFov = freeLookCamera.m_Lens.FieldOfView;
         
             PlayerInputManager.Instance.ZoomEvent.AddEvent(ZoomEvent);
+            DoubleClickAction();
         }
 
         private void Update()
@@ -318,6 +321,20 @@ namespace FullMoon.Camera
         }
 
         /// <summary>
+        /// 더블 클릭 상호작용
+        /// </summary>
+        private void DoubleClickAction()
+        {
+            var clickStream = this.UpdateAsObservable().Where(_ => UnityEngine.InputSystem.Mouse.current.leftButton.wasPressedThisFrame);
+            
+            clickStream
+                .Buffer(clickStream.Throttle(TimeSpan.FromMilliseconds(200)))
+                .Where(x => x.Count >= 2)
+                .Where(count => selectedUnitList.Count != 0)
+                .Subscribe(_ => SelectAllUnit(selectedUnitList.First()));
+        }
+
+        /// <summary>
         /// 마우스 클릭으로 유닛을 선택할 때 호출
         /// </summary>
         private void ClickSelectUnit(BaseUnitController newUnit)
@@ -414,6 +431,25 @@ namespace FullMoon.Camera
         }
 
         /// <summary>
+        /// 화면 안에 있는 모든 유닛 선택 (직군 별로)
+        /// </summary>
+        private void SelectAllUnit(BaseUnitController newUnit)
+        {
+            var units = FindObjectsByType<BaseUnitController>(FindObjectsSortMode.None);
+            foreach (var unit in units.Where(u => u.UnitClass == newUnit.UnitClass))
+            {
+                Vector3 screenPosition = mainCamera.WorldToScreenPoint(unit.transform.position);
+                Vector2 position2D = new Vector2(screenPosition.x, screenPosition.y);
+
+                Rect screenRect = new Rect(0, 0, mainCamera.pixelWidth, mainCamera.pixelHeight);
+                if (screenRect.Contains(position2D))
+                {
+                    DragSelectUnit(unit);
+                }
+            }
+        }
+
+        /// <summary>
         /// 매개변수로 받아온 newUnit 선택 해제 설정
         /// </summary>
         private void DeselectUnit(BaseUnitController newUnit)
@@ -456,6 +492,11 @@ namespace FullMoon.Camera
                 HoldSelectUnits();
             }
 
+            if (PlayerInputManager.Instance.cancle)
+            {
+                OnCancleAction();
+            }
+
             if (selectedUnitList.Count != 0)
             {
                 if (PlayerInputManager.Instance.attackMove)
@@ -496,6 +537,13 @@ namespace FullMoon.Camera
         {
             attackMove = true;
             cursor.SetCursorState(CursorType.Attack);
+        }
+
+        private void OnCancleAction()
+        {
+            normalMove = false;
+            attackMove = false;
+            cursor.SetCursorState(CursorType.Idle);
         }
 
         #endregion Button
