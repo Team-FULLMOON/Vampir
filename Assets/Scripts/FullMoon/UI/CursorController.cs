@@ -13,6 +13,7 @@ namespace FullMoon.UI
         Idle,
         Attack,
         Move,
+        Unit,
     }
 
     public class CursorController : MonoBehaviour
@@ -54,6 +55,9 @@ namespace FullMoon.UI
                     break;
                 case CursorType.Move:
                     Cursor.SetCursor(textures[2], Vector2.zero, CursorMode.ForceSoftware);
+                    break;
+                case CursorType.Unit:
+                    Cursor.SetCursor(textures[3], Vector2.zero, CursorMode.ForceSoftware);
                     break;
             }
         }

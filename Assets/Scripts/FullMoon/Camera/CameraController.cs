@@ -201,6 +201,8 @@ namespace FullMoon.Camera
         /// </summary>
         private void MouseAction()
         {
+            CheckCursorUnit();
+
             // 마우스 왼쪽 버튼 처리
             if (UnityEngine.InputSystem.Mouse.current.leftButton.wasPressedThisFrame)
             {
@@ -473,6 +475,18 @@ namespace FullMoon.Camera
                 }
                 
                 unit.OnUnitAttack(targetPosition);
+            }
+        }
+
+        private void CheckCursorUnit()
+        {
+            if (Physics.Raycast(mouseRay, out var hit, Mathf.Infinity, (1 << LayerMask.NameToLayer("Unit"))))
+            {
+                cursor.SetCursorState(CursorType.Unit);
+            }
+            else
+            {
+                cursor.SetCursorState(CursorType.Idle);
             }
         }
         
