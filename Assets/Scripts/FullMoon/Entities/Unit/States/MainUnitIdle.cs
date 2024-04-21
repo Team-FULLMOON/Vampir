@@ -22,10 +22,6 @@ namespace FullMoon.Entities.Unit.States
 
         public void Execute()
         {
-            if (PlayerInputManager.Instance.respawn)
-            {
-                controller.CheckAbleToRespawn();
-            }
         }
 
         public void FixedExecute()

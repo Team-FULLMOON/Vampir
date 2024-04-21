@@ -70,7 +70,7 @@ namespace FullMoon.Input
         
         public void OnRespawn(InputValue value)
         {
-            RespawnInput(value.isPressed);
+            RespawnInput(true);
         }
 
         public void OnAttackMove(InputValue value)

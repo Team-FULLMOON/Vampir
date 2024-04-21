@@ -14,6 +14,7 @@ namespace FullMoon.UI
         Attack,
         Move,
         Unit,
+        Create,
     }
 
     public class CursorController : MonoBehaviour
@@ -21,8 +22,11 @@ namespace FullMoon.UI
         [Header("Mouse Cursor Settings")] 
         CursorType cursorType;
 
-        [Header("Mouse Cursor Image")]
+        [Foldout("Mouse Cursor Image")]
         [SerializeField] Texture2D[] textures;
+
+        [Foldout("Mouse Cursor Image")] 
+        [SerializeField] GameObject moveAnim;
 
         void Start()
         {
@@ -38,12 +42,17 @@ namespace FullMoon.UI
             UpdateCursorState();
         }
 
+        public void SetMoveAniTarget(Vector3 pos)
+        {
+            ObjectPoolManager.SpawnObject(moveAnim, pos + new Vector3(0, 0.5f), Quaternion.Euler(90, 100, 0));
+        }
+
         public void SetCursorState(CursorType type)
         {
             cursorType = type;
         }
 
-        public void UpdateCursorState()
+        private void UpdateCursorState()
         {
             switch (cursorType)
             {
@@ -59,11 +68,14 @@ namespace FullMoon.UI
                 case CursorType.Unit:
                     Cursor.SetCursor(textures[3], Vector2.zero, CursorMode.ForceSoftware);
                     break;
+                case CursorType.Create:
+                    Cursor.SetCursor(textures[4], Vector2.zero, CursorMode.ForceSoftware);
+                    break;
             }
         }
 
         // Texture2D 크기 조정
-        public Texture2D ScaleTexture(Texture2D source, float _scaleFactor)
+        private Texture2D ScaleTexture(Texture2D source, float _scaleFactor)
         {
             if (_scaleFactor == 1f)
             {

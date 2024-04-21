@@ -2,7 +2,6 @@ using UnityEngine;
 
 namespace FullMoon.Util
 {
-    [ExecuteInEditMode]
     public abstract class ComponentSingleton<T> : MonoBehaviour where T : ComponentSingleton<T>
     {
         private static T _instance;
