@@ -17,7 +17,7 @@ MonoBehaviour:
   unitType: Enemy
   unitClass: Ranged
   maxHp: 80
-  movementSpeed: 2
+  movementSpeed: 3
   missRate: 0
   manaDrop: 7
   manaCost: 10

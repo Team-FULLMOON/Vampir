@@ -17,7 +17,7 @@ MonoBehaviour:
   unitType: Player
   unitClass: Main
   maxHp: 300
-  movementSpeed: 4
+  movementSpeed: 5
   missRate: 0
   manaDrop: 7
   manaCost: 10
