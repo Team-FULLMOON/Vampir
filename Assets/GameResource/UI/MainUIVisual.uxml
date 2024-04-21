@@ -20,17 +20,67 @@
                     </ui:VisualElement>
                 </ui:VisualElement>
                 <ui:VisualElement name="Div" style="flex-grow: 1; flex-direction: row;">
-                    <ui:VisualElement name="Unit" style="flex-grow: 1; width: 75%; background-color: rgba(55, 0, 0, 0.61);" />
-                    <ui:VisualElement name="Shortcuts" style="flex-grow: 1; width: 10%; background-color: rgba(255, 0, 0, 0.5);">
-                        <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row; height: 50%; -unity-text-align: upper-left; align-self: center; align-items: center;">
-                            <ui:Button text="[M]&#10;이동" parse-escape-sequences="true" display-tooltip-when-elided="true" style="padding-bottom: 0; padding-top: 0; padding-right: 0; padding-left: 0; margin-right: 4px; margin-left: 4px; height: 60px; width: 60px; margin-bottom: 4px; margin-top: 4px; -unity-font: resource(&apos;Fonts/JetBrainsMono-1.0.3/ttf/JetBrainsMono-Regular&apos;);" />
-                            <ui:Button text="[S]&#10;정지" parse-escape-sequences="true" display-tooltip-when-elided="true" style="padding-bottom: 0; padding-top: 0; padding-right: 0; padding-left: 0; margin-right: 6px; margin-left: 6px; height: 60px; width: 60px; margin-bottom: 4px; margin-top: 4px; -unity-font: resource(&apos;Fonts/JetBrainsMono-1.0.3/ttf/JetBrainsMono-Regular&apos;);" />
-                            <ui:Button text="[A]&#10;공격" parse-escape-sequences="true" display-tooltip-when-elided="true" style="padding-bottom: 0; padding-top: 0; padding-right: 0; padding-left: 0; margin-right: 4px; margin-left: 4px; height: 60px; width: 60px; margin-bottom: 4px; margin-top: 4px; -unity-font: resource(&apos;Fonts/JetBrainsMono-1.0.3/ttf/JetBrainsMono-Regular&apos;);" />
+                    <ui:VisualElement name="Unit" style="flex-grow: 1; width: 75%; background-color: rgba(255, 255, 255, 0); flex-direction: row;">
+                        <ui:VisualElement name="Div" style="flex-grow: 1; width: auto; max-width: 80px; background-color: rgba(255, 255, 255, 0); color: rgb(27, 27, 27);">
+                            <ui:Button text="1" parse-escape-sequences="true" display-tooltip-when-elided="true" enable-rich-text="true" name="UnitGroup1" style="height: 28px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+                            <ui:Button text="2" parse-escape-sequences="true" display-tooltip-when-elided="true" enable-rich-text="true" name="UnitGroup2" style="height: 28px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+                            <ui:Button text="3" parse-escape-sequences="true" display-tooltip-when-elided="true" enable-rich-text="true" name="UnitGroup3" style="height: 28px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+                            <ui:Button text="4" parse-escape-sequences="true" display-tooltip-when-elided="true" enable-rich-text="true" name="UnitGroup4" style="height: 28px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+                            <ui:Button text="5" parse-escape-sequences="true" display-tooltip-when-elided="true" enable-rich-text="true" name="UnitGroup5" style="height: 28px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
                         </ui:VisualElement>
-                        <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row; height: 50%; -unity-text-align: upper-left; align-self: center; align-items: center;">
-                            <ui:Button text="[H]&#10;홀드" parse-escape-sequences="true" display-tooltip-when-elided="true" style="padding-bottom: 0; padding-top: 0; padding-right: 0; padding-left: 0; margin-right: 4px; margin-left: 4px; height: 60px; width: 60px; margin-bottom: 4px; margin-top: 4px; -unity-font: resource(&apos;Fonts/JetBrainsMono-1.0.3/ttf/JetBrainsMono-Regular&apos;);" />
-                            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" style="padding-bottom: 0; padding-top: 0; padding-right: 0; padding-left: 0; margin-right: 6px; margin-left: 6px; height: 60px; width: 60px; margin-bottom: 4px; margin-top: 4px; -unity-font: resource(&apos;Fonts/JetBrainsMono-1.0.3/ttf/JetBrainsMono-Regular&apos;);" />
-                            <ui:Button text="[R]&#10;생성" parse-escape-sequences="true" display-tooltip-when-elided="true" style="padding-bottom: 0; padding-top: 0; padding-right: 0; padding-left: 0; margin-right: 4px; margin-left: 4px; height: 60px; width: 60px; margin-bottom: 4px; margin-top: 4px; -unity-font: resource(&apos;Fonts/JetBrainsMono-1.0.3/ttf/JetBrainsMono-Regular&apos;);" />
+                        <ui:VisualElement name="Div" style="flex-grow: 1; width: auto; max-width: none; background-color: rgba(236, 177, 155, 0.5); flex-direction: row;">
+                            <ui:VisualElement name="UnitList1" style="flex-grow: 1; width: auto; max-width: 100px; background-color: rgba(224, 236, 155, 0.5);">
+                                <ui:VisualElement style="flex-grow: 1;" />
+                                <ui:ProgressBar value="100" name="UnitHealthProgressBar" low-value="0" focusable="false" class="UnitHealthProgress" style="margin-right: 0; margin-bottom: 0; margin-left: 0; margin-top: 0; position: relative; opacity: 1; background-color: rgba(0, 0, 0, 0); transform-origin: center; translate: 0 0;" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="UnitList2" style="flex-grow: 1; width: auto; max-width: 100px; background-color: rgba(224, 236, 155, 0.5);">
+                                <ui:VisualElement style="flex-grow: 1;" />
+                                <ui:ProgressBar value="100" name="UnitHealthProgressBar" low-value="0" focusable="false" class="UnitHealthProgress" style="margin-right: 0; margin-bottom: 0; margin-left: 0; margin-top: 0; position: relative; opacity: 1; background-color: rgba(0, 0, 0, 0); transform-origin: center; translate: 0 0;" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="UnitList3" style="flex-grow: 1; width: auto; max-width: 100px; background-color: rgba(224, 236, 155, 0.5);">
+                                <ui:VisualElement style="flex-grow: 1;" />
+                                <ui:ProgressBar value="100" name="UnitHealthProgressBar" low-value="0" focusable="false" class="UnitHealthProgress" style="margin-right: 0; margin-bottom: 0; margin-left: 0; margin-top: 0; position: relative; opacity: 1; background-color: rgba(0, 0, 0, 0); transform-origin: center; translate: 0 0;" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="UnitList4" style="flex-grow: 1; width: auto; max-width: 100px; background-color: rgba(224, 236, 155, 0.5);">
+                                <ui:VisualElement style="flex-grow: 1;" />
+                                <ui:ProgressBar value="100" name="UnitHealthProgressBar" low-value="0" focusable="false" class="UnitHealthProgress" style="margin-right: 0; margin-bottom: 0; margin-left: 0; margin-top: 0; position: relative; opacity: 1; background-color: rgba(0, 0, 0, 0); transform-origin: center; translate: 0 0;" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="UnitList5" style="flex-grow: 1; width: auto; max-width: 100px; background-color: rgba(224, 236, 155, 0.5);">
+                                <ui:VisualElement style="flex-grow: 1;" />
+                                <ui:ProgressBar value="100" name="UnitHealthProgressBar" low-value="0" focusable="false" class="UnitHealthProgress" style="margin-right: 0; margin-bottom: 0; margin-left: 0; margin-top: 0; position: relative; opacity: 1; background-color: rgba(0, 0, 0, 0); transform-origin: center; translate: 0 0;" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="UnitList6" style="flex-grow: 1; width: auto; max-width: 100px; background-color: rgba(224, 236, 155, 0.5);">
+                                <ui:VisualElement style="flex-grow: 1;" />
+                                <ui:ProgressBar value="100" name="UnitHealthProgressBar" low-value="0" focusable="false" class="UnitHealthProgress" style="margin-right: 0; margin-bottom: 0; margin-left: 0; margin-top: 0; position: relative; opacity: 1; background-color: rgba(0, 0, 0, 0); transform-origin: center; translate: 0 0;" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="UnitList7" style="flex-grow: 1; width: auto; max-width: 100px; background-color: rgba(224, 236, 155, 0.5);">
+                                <ui:VisualElement style="flex-grow: 1;" />
+                                <ui:ProgressBar value="100" name="UnitHealthProgressBar" low-value="0" focusable="false" class="UnitHealthProgress" style="margin-right: 0; margin-bottom: 0; margin-left: 0; margin-top: 0; position: relative; opacity: 1; background-color: rgba(0, 0, 0, 0); transform-origin: center; translate: 0 0;" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="UnitList8" style="flex-grow: 1; width: auto; max-width: 100px; background-color: rgba(224, 236, 155, 0.5);">
+                                <ui:VisualElement style="flex-grow: 1;" />
+                                <ui:ProgressBar value="100" name="UnitHealthProgressBar" low-value="0" focusable="false" class="UnitHealthProgress" style="margin-right: 0; margin-bottom: 0; margin-left: 0; margin-top: 0; position: relative; opacity: 1; background-color: rgba(0, 0, 0, 0); transform-origin: center; translate: 0 0;" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="UnitList9" style="flex-grow: 1; width: auto; max-width: 100px; background-color: rgba(224, 236, 155, 0.5);">
+                                <ui:VisualElement style="flex-grow: 1;" />
+                                <ui:ProgressBar value="100" name="UnitHealthProgressBar" low-value="0" focusable="false" class="UnitHealthProgress" style="margin-right: 0; margin-bottom: 0; margin-left: 0; margin-top: 0; position: relative; opacity: 1; background-color: rgba(0, 0, 0, 0); transform-origin: center; translate: 0 0;" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="UnitList10" style="flex-grow: 1; width: auto; max-width: 100px; background-color: rgba(224, 236, 155, 0.5);">
+                                <ui:VisualElement style="flex-grow: 1;" />
+                                <ui:ProgressBar value="100" name="UnitHealthProgressBar" low-value="0" focusable="false" class="UnitHealthProgress" style="margin-right: 0; margin-bottom: 0; margin-left: 0; margin-top: 0; position: relative; opacity: 1; background-color: rgba(0, 0, 0, 0); transform-origin: center; translate: 0 0;" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Shortcuts" style="flex-grow: 1; width: 10%; background-color: rgba(255, 0, 0, 0.5);">
+                        <ui:VisualElement name="ShortcutFirstRow" style="flex-grow: 1; flex-direction: row; height: 50%; -unity-text-align: upper-left; align-self: center; align-items: center;">
+                            <ui:Button text="[M]&#10;이동" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ShortcutMove" style="padding-bottom: 0; padding-top: 0; padding-right: 0; padding-left: 0; margin-right: 4px; margin-left: 4px; height: 60px; width: 60px; margin-bottom: 4px; margin-top: 4px; -unity-font: resource(&apos;Fonts/JetBrainsMono-1.0.3/ttf/JetBrainsMono-Regular&apos;);" />
+                            <ui:Button text="[S]&#10;정지" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ShortcutStop" style="padding-bottom: 0; padding-top: 0; padding-right: 0; padding-left: 0; margin-right: 6px; margin-left: 6px; height: 60px; width: 60px; margin-bottom: 4px; margin-top: 4px; -unity-font: resource(&apos;Fonts/JetBrainsMono-1.0.3/ttf/JetBrainsMono-Regular&apos;);" />
+                            <ui:Button text="[A]&#10;공격" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ShortcutAttack" style="padding-bottom: 0; padding-top: 0; padding-right: 0; padding-left: 0; margin-right: 4px; margin-left: 4px; height: 60px; width: 60px; margin-bottom: 4px; margin-top: 4px; -unity-font: resource(&apos;Fonts/JetBrainsMono-1.0.3/ttf/JetBrainsMono-Regular&apos;);" />
+                        </ui:VisualElement>
+                        <ui:VisualElement name="ShortcutSecondRow" style="flex-grow: 1; flex-direction: row; height: 50%; -unity-text-align: upper-left; align-self: center; align-items: center;">
+                            <ui:Button text="[H]&#10;홀드" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ShortcutHold" style="padding-bottom: 0; padding-top: 0; padding-right: 0; padding-left: 0; margin-right: 4px; margin-left: 4px; height: 60px; width: 60px; margin-bottom: 4px; margin-top: 4px; -unity-font: resource(&apos;Fonts/JetBrainsMono-1.0.3/ttf/JetBrainsMono-Regular&apos;);" />
+                            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="ShortcutNone" style="padding-bottom: 0; padding-top: 0; padding-right: 0; padding-left: 0; margin-right: 6px; margin-left: 6px; height: 60px; width: 60px; margin-bottom: 4px; margin-top: 4px; -unity-font: resource(&apos;Fonts/JetBrainsMono-1.0.3/ttf/JetBrainsMono-Regular&apos;);" />
+                            <ui:Button text="[R]&#10;생성" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ShortcutRespawn" style="padding-bottom: 0; padding-top: 0; padding-right: 0; padding-left: 0; margin-right: 4px; margin-left: 4px; height: 60px; width: 60px; margin-bottom: 4px; margin-top: 4px; -unity-font: resource(&apos;Fonts/JetBrainsMono-1.0.3/ttf/JetBrainsMono-Regular&apos;);" />
                         </ui:VisualElement>
                     </ui:VisualElement>
                 </ui:VisualElement>
