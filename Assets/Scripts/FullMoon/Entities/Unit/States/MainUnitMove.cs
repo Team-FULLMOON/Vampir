@@ -28,16 +28,18 @@ namespace FullMoon.Entities.Unit.States
                 return;
             }
             
-            if (controller.ReviveTarget != null)
+            if (controller.ReviveTarget is not null && controller.ReviveTarget.gameObject.activeInHierarchy)
             {
-                foreach (var unit in controller.RespawnUnitInsideViewArea
-                    .Select(u => u.GetComponent<RespawnController>())
-                    .Where(c => c != null))
+                bool checkDistance = (controller.ReviveTarget.transform.position - controller.transform.position).sqrMagnitude <= 
+                                     controller.OverridenUnitData.RespawnRadius * controller.OverridenUnitData.RespawnRadius;
+                
+                if (checkDistance == false)
                 {
-                    Debug.Log(unit.name);
-                    if (unit == controller.ReviveTarget)
-                        controller.CheckAbleToRespawn(controller.ReviveTarget);
+                    return;
                 }
+                
+                controller.StateMachine.ChangeState(new MainUnitRespawn(controller));
+                return;
             }
 
             BaseUnitController closestUnit  = controller.UnitInsideViewArea
@@ -48,7 +50,7 @@ namespace FullMoon.Entities.Unit.States
                             && Mathf.Approximately(controller.LatestDestination.z, t.LatestDestination.z))
                 .FirstOrDefault(t => Vector3.Distance(controller.transform.position, t.transform.position) <= 2f);
             
-            if (closestUnit != null)
+            if (closestUnit is not null)
             {
                 controller.StateMachine.ChangeState(new MainUnitIdle(controller));
             }

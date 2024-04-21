@@ -8,6 +8,7 @@ using FullMoon.UI;
 using UniRx;
 using UniRx.Triggers;
 using System.Linq;
+using UnityEngine.EventSystems;
 
 namespace FullMoon.Camera
 {
@@ -221,12 +222,21 @@ namespace FullMoon.Camera
             // 마우스 오른쪽 버튼 처리
             if (UnityEngine.InputSystem.Mouse.current.rightButton.wasPressedThisFrame)
             {
+                if (EventSystem.current.IsPointerOverGameObject())
+                {
+                    return;
+                }
                 HandleRightClick();
             }
         }
 
         private void HandleLeftClick()
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
+            
             dragStart = mousePos;
             dragRect = new Rect();
 
@@ -286,6 +296,11 @@ namespace FullMoon.Camera
 
         private void HandleLeftDrag()
         {
+            if (dragStart == Vector2.zero)
+            {
+                return;
+            }
+            
             if (altRotation == false)
             {
                 dragEnd = mousePos;
@@ -313,6 +328,11 @@ namespace FullMoon.Camera
 
         private void HandleRightClick()
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
+            
             if (normalMove || attackMove || createUnit)
             {
                 attackMove = false;
@@ -327,11 +347,11 @@ namespace FullMoon.Camera
                 var unitController = hit.transform.GetComponent<BaseUnitController>();
                 var deadUnit = hit.transform.GetComponent<RespawnController>();
 
-                if (deadUnit != null)
+                if (deadUnit is not null)
                 {
                     ReviveUnit(deadUnit);
                 }
-                else if (unitController != null && selectedUnitList.Count != 0)
+                else if (unitController is not null && selectedUnitList.Count != 0)
                 {
                     AttackSelectedUnits(unitController.transform.position);
                 }
@@ -349,9 +369,10 @@ namespace FullMoon.Camera
         private void DoubleClickAction()
         {
             var clickStream = this.UpdateAsObservable().Where(_ => UnityEngine.InputSystem.Mouse.current.leftButton.wasPressedThisFrame);
-            
+
             clickStream
                 .Buffer(clickStream.Throttle(TimeSpan.FromMilliseconds(150)))
+                .Where(_ => EventSystem.current.IsPointerOverGameObject() == false)
                 .Where(x => x.Count >= 2)
                 .Where(count => selectedUnitList.Count != 0)
                 .Subscribe(_ => SelectAllUnit(selectedUnitList.First()));
@@ -488,23 +509,21 @@ namespace FullMoon.Camera
         private void CheckCursorUnit()
         {
             if (attackMove || normalMove || createUnit)
+            {
                 return;
+            }
 
-            if (Physics.Raycast(mouseRay, out var hit, Mathf.Infinity, (1 << LayerMask.NameToLayer("Unit"))))
-            {
-                cursor.SetCursorState(CursorType.Unit);
-            }
-            else
-            {
-                cursor.SetCursorState(CursorType.Idle);
-            }
+            cursor.SetCursorState(
+                Physics.Raycast(mouseRay, out var _, Mathf.Infinity, 1 << LayerMask.NameToLayer("Unit"))
+                    ? CursorType.Unit
+                    : CursorType.Idle);
         }
 
         private void ReviveUnit(RespawnController unit)
         {
             foreach (var controller in selectedUnitList
-                .Select(u => u.GetComponent<MainUnitController>())
-                .Where(controller => controller != null))
+                .Where(controller => controller.GetComponent<BaseUnitController>() is MainUnitController)
+                .Select(controller => controller.GetComponent<MainUnitController>()))
             {
                 controller.CheckAbleToRespawn(unit);
             }
