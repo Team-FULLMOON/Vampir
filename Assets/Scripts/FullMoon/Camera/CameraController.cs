@@ -47,6 +47,7 @@ namespace FullMoon.Camera
         
         private bool normalMove;
         private bool attackMove;
+        private bool createUnit;
         private bool altRotation;
         
         private Rect dragRect; // 마우스로 드래그 한 범위 (xMin~xMax, yMin~yMax)
@@ -249,7 +250,16 @@ namespace FullMoon.Camera
                 {
                     AttackSelectedUnits(hit.point);
                     cursor.SetMoveAniTarget(hit.point);
-                    attackMove = false;
+                }
+                else if (createUnit)
+                {
+                    var deadUnit = hit.transform.GetComponent<RespawnController>();
+                    if (deadUnit != null)
+                    {
+                        ReviveUnit(deadUnit);
+                        cursor.SetCursorState(CursorType.Idle);
+                        createUnit = false;
+                    }
                 }
                 else
                 {
@@ -303,20 +313,27 @@ namespace FullMoon.Camera
 
         private void HandleRightClick()
         {
-            if (normalMove || attackMove)
+            if (normalMove || attackMove || createUnit)
             {
                 attackMove = false;
                 normalMove = false;
+                createUnit = false;
                 cursor.SetCursorState(CursorType.Idle);
                 return;
             }
 
-            if (Physics.Raycast(mouseRay, out var hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Ground")))
+            if (Physics.Raycast(mouseRay, out var hit, Mathf.Infinity, (1 << LayerMask.NameToLayer("Unit")) | (1 << LayerMask.NameToLayer("Ground"))))
             {
                 var unitController = hit.transform.GetComponent<BaseUnitController>();
-                if (unitController != null)
+                var deadUnit = hit.transform.GetComponent<RespawnController>();
+
+                if (deadUnit != null)
                 {
-                    //AttackSelectedUnits(rangedUnitController);
+                    ReviveUnit(deadUnit);
+                }
+                else if (unitController != null && selectedUnitList.Count != 0)
+                {
+                    AttackSelectedUnits(unitController.transform.position);
                 }
                 else if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
                 {
@@ -464,11 +481,13 @@ namespace FullMoon.Camera
                 
                 unit.OnUnitAttack(targetPosition);
             }
+
+            attackMove = false;
         }
 
         private void CheckCursorUnit()
         {
-            if (attackMove || normalMove)
+            if (attackMove || normalMove || createUnit)
                 return;
 
             if (Physics.Raycast(mouseRay, out var hit, Mathf.Infinity, (1 << LayerMask.NameToLayer("Unit"))))
@@ -479,6 +498,18 @@ namespace FullMoon.Camera
             {
                 cursor.SetCursorState(CursorType.Idle);
             }
+        }
+
+        private void ReviveUnit(RespawnController unit)
+        {
+            foreach (var controller in selectedUnitList
+                .Select(u => u.GetComponent<MainUnitController>())
+                .Where(controller => controller != null))
+            {
+                controller.CheckAbleToRespawn(unit);
+            }
+
+            cursor.SetCursorState(CursorType.Idle);
         }
         
         #endregion Mouse
@@ -553,20 +584,21 @@ namespace FullMoon.Camera
         {
             normalMove = false;
             attackMove = false;
+            createUnit = false;
             cursor.SetCursorState(CursorType.Idle);
         }
 
         private void OnRespawnAction()
         {
-            MainUnitController controller;
-
-            foreach(var unit in selectedUnitList)
+            foreach (var controller in selectedUnitList
+                .Select(u => u.GetComponent<MainUnitController>())
+                .Where(c => c != null))
             {
-                if (unit.TryGetComponent<MainUnitController>(out controller))
-                {
-                    controller.CheckAbleToRespawn();
-                }
+                createUnit = true;
+                cursor.SetCursorState(CursorType.Create);
             }
+            
+            PlayerInputManager.Instance.respawn = false;
         }
 
         #endregion Button

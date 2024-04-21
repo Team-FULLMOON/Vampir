@@ -28,6 +28,16 @@ namespace FullMoon.Entities.Unit.States
                 return;
             }
             
+            if (controller.ReviveTarget != null)
+            {
+                foreach (var unit in controller.RespawnUnitInsideViewArea
+                    .Select(u => u.GetComponent<RespawnController>())
+                    .Where(c => c != null))
+                {
+                    controller.CheckAbleToRespawn(controller.ReviveTarget);
+                }
+            }
+
             BaseUnitController closestUnit  = controller.UnitInsideViewArea
                 .Where(t => controller.UnitType.Equals(t.UnitType))
                 .Where(t => t.Agent.isStopped)
@@ -39,11 +49,6 @@ namespace FullMoon.Entities.Unit.States
             if (closestUnit != null)
             {
                 controller.StateMachine.ChangeState(new MainUnitIdle(controller));
-            }
-            
-            if (PlayerInputManager.Instance.respawn)
-            {
-                //controller.CheckAbleToRespawn();
             }
         }
 

@@ -23,6 +23,7 @@ namespace FullMoon.Entities.Unit
         
         public List<BaseUnitController> UnitInsideViewArea { get; set; }
         public List<RespawnController> RespawnUnitInsideViewArea { get; set; }
+        public RespawnController ReviveTarget;
 
         private RespawnController respawnController;
         
@@ -126,7 +127,7 @@ namespace FullMoon.Entities.Unit
         
         public override void OnUnitAttack(Vector3 targetPosition) { }
         
-        public void CheckAbleToRespawn()
+        public void CheckAbleToRespawn(RespawnController unit)
         {
             PlayerInputManager.Instance.respawn = false;
                 
@@ -135,10 +136,7 @@ namespace FullMoon.Entities.Unit
                 return;
             }
                 
-            RespawnController closestRespawnUnit =  RespawnUnitInsideViewArea
-                .Where(t => MainUIController.Instance.ManaValue >= t.ManaCost)
-                .OrderBy(t => (t.transform.position - transform.position).sqrMagnitude)
-                .FirstOrDefault();
+            RespawnController closestRespawnUnit = unit;
                 
             if (closestRespawnUnit == null)
             {
@@ -150,10 +148,16 @@ namespace FullMoon.Entities.Unit
                 
             if (checkDistance == false)
             {
+                ReviveTarget = closestRespawnUnit;
+                MoveToPosition(closestRespawnUnit.transform.position);
+                StateMachine.ChangeState(new MainUnitMove(this));
                 return;
             }
-                
-            StateMachine.ChangeState(new MainUnitRespawn(this));
+            else
+            {
+                StateMachine.ChangeState(new MainUnitRespawn(this));
+                return;
+            }  
         }
         
         public void StartSpawn(RespawnController unit)
@@ -161,6 +165,7 @@ namespace FullMoon.Entities.Unit
             Debug.Log($"Spawn Start: {name}");
             respawnController = unit;
             Invoke(nameof(Spawn), respawnController.SummonTime);
+            ReviveTarget = null;
         }
         
         public void CancelSpawn()
