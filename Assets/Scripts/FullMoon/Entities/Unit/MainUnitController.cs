@@ -167,6 +167,13 @@ namespace FullMoon.Entities.Unit
         
         private void Respawn()
         {
+            if (MainUIController.Instance.ManaValue < ReviveTarget.ManaCost)
+            {
+                ReviveTarget = null;
+                StateMachine.ChangeState(new MainUnitIdle(this));
+                return;
+            }
+            
             MainUIController.Instance.AddMana(-ReviveTarget.ManaCost);
             ObjectPoolManager.SpawnObject(ReviveTarget.UnitTransformObject, ReviveTarget.transform.position, ReviveTarget.transform.rotation);
             ObjectPoolManager.ReturnObjectToPool(ReviveTarget.gameObject);

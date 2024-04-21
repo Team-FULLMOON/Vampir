@@ -407,8 +407,6 @@ MonoBehaviour:
   unitMarker: {fileID: 2055024435388714017}
   viewRange: {fileID: 24826111065963529}
   decalProjector: {fileID: 1643748580956532414}
-  hidePrefab: {fileID: 0}
-  isGuard: 0
 --- !u!136 &1403729167336867511
 CapsuleCollider:
   m_ObjectHideFlags: 0

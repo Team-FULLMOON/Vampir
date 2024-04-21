@@ -23,6 +23,7 @@ namespace FullMoon.Entities.Unit.States
         {
             if (!controller.Agent.pathPending && controller.Agent.remainingDistance <= controller.Agent.stoppingDistance)
             {
+                Debug.Log($"{controller.Agent.remainingDistance}");
                 controller.StateMachine.ChangeState(new RangedUnitIdle(controller));
                 return;
             }

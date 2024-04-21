@@ -29,7 +29,7 @@ namespace FullMoon.Entities.Unit.States
 
             if (closestUnit == null)
             {
-                controller.StateMachine.ChangeState(new MeleeUnitMove(controller));
+                controller.StateMachine.ChangeState(new MeleeUnitIdle(controller));
                 return;
             }
             
@@ -52,13 +52,8 @@ namespace FullMoon.Entities.Unit.States
             timer = controller.OverridenUnitData.AttackSpeed;
         }
 
-        public void FixedExecute()
-        {
-        }
+        public void FixedExecute() { }
 
-        public void Exit()
-        {
-            controller.Agent.SetDestination(controller.transform.position);
-        }
+        public void Exit() { }
     }
 }
