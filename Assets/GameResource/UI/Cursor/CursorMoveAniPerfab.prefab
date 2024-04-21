@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6470390197065784894}
   - component: {fileID: 6407626900127044485}
   - component: {fileID: -5941545532939431556}
+  - component: {fileID: 5265514637601106399}
   m_Layer: 0
   m_Name: CursorMoveAniPerfab
   m_TagString: Untagged
@@ -119,3 +120,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 684dc2c84f81bce4d877298e2481d2c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5265514637601106399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2819891737234058987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32df70130de8f5140a73a97be76ad4bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  followX: 1
+  followY: 1

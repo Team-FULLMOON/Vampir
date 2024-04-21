@@ -431,7 +431,6 @@ namespace FullMoon.Camera
 
                 unit.AttackMove = false;
                 unit.MoveToPosition(end);
-                Debug.Log($"Mouse: {end.x}, {end.y}, {end.z}");
             }
         }
 
