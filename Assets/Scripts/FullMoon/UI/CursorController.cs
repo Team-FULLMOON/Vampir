@@ -23,7 +23,7 @@ namespace FullMoon.UI
         CursorType cursorType;
 
         [Foldout("Mouse Cursor Image")]
-        [SerializeField] Texture2D[] textures;
+        [SerializeField] List<Texture2D> textures;
 
         [Foldout("Mouse Cursor Image")] 
         [SerializeField] GameObject moveAnim;
@@ -31,7 +31,7 @@ namespace FullMoon.UI
         private void Start()
         {
             cursorType = CursorType.Idle;
-            textures = textures.Select(tex => ScaleTexture(tex, 0.3f)).ToArray();
+            textures = textures.Select(tex => ScaleTexture(tex, 0.3f)).ToList();
         }
 
         private void Update()

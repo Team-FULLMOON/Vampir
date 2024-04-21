@@ -23,6 +23,7 @@ namespace FullMoon.Effect
         {
             groundLayer = LayerMask.NameToLayer("Ground");
             unitLayer = LayerMask.NameToLayer("Unit");
+            transform.position += new Vector3(0f, 1f, 0f);
             lastPosition = transform.position;
             isFired = false;
             CancelInvoke(nameof(DestroyEffect));
@@ -38,7 +39,7 @@ namespace FullMoon.Effect
 
             if (target != null && target.gameObject.activeInHierarchy)
             {
-                Vector3 targetDirection = (target.transform.position - transform.position).normalized;
+                Vector3 targetDirection = ((target.transform.position + new Vector3(0f, 1f, 0f)) - transform.position).normalized;
                 transform.forward = targetDirection;
             }
 
@@ -68,7 +69,7 @@ namespace FullMoon.Effect
 
             float missRate = targetTransform.GetComponent<BaseUnitController>().unitData.MissRate;
             
-            Vector3 targetDirection = (target.transform.position - transform.position).normalized;
+            Vector3 targetDirection = ((target.transform.position + new Vector3(0f, 1f, 0f)) - transform.position).normalized;
             
             if (Random.Range(0f, 100f) < missRate)
             {
