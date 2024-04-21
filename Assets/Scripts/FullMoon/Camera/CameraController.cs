@@ -238,35 +238,38 @@ namespace FullMoon.Camera
             if (Physics.Raycast(mouseRay, out var hit, Mathf.Infinity, (1 << LayerMask.NameToLayer("Unit")) | (1 << LayerMask.NameToLayer("Ground"))))
             {
                 var unitController = hit.transform.GetComponent<BaseUnitController>();
-                if (unitController != null)
+
+                if (normalMove)
                 {
-                    if (PlayerInputManager.Instance.shift)
-                    {
-                        ShiftClickSelectUnit(unitController);
-                    }
-                    else
-                    {
-                        ClickSelectUnit(unitController);
-                    }
+                    ForceMoveSelectedUnites(hit.point);
+                    cursor.SetMoveAniTarget(hit.point);
+                    normalMove = false;
                 }
-                else if (!PlayerInputManager.Instance.shift)
+                else if (attackMove)
                 {
-                    if (normalMove)
+                    AttackSelectedUnits(hit.point);
+                    cursor.SetMoveAniTarget(hit.point);
+                    attackMove = false;
+                }
+                else
+                {
+                    if (unitController != null)
                     {
-                        MoveSelectedUnits(hit.point);
-                        normalMove = false;
+                        if (PlayerInputManager.Instance.shift)
+                        {
+                            ShiftClickSelectUnit(unitController);
+                        }
+                        else
+                        {
+                            ClickSelectUnit(unitController);
+                        }
                     }
-                    else if (attackMove)
-                    {
-                        AttackSelectedUnits(hit.point);
-                        attackMove = false;
-                    }
-                    else
+                    else if (!PlayerInputManager.Instance.shift)
                     {
                         DeselectAll();
-                    }
 
-                    cursor.SetCursorState(CursorType.Idle);
+                        cursor.SetCursorState(CursorType.Idle);
+                    }
                 }
             }
         }
@@ -318,6 +321,7 @@ namespace FullMoon.Camera
                 else if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
                 {
                     ForceMoveSelectedUnites(hit.point);
+                    cursor.SetMoveAniTarget(hit.point);
                 }
             }
         }
@@ -330,7 +334,7 @@ namespace FullMoon.Camera
             var clickStream = this.UpdateAsObservable().Where(_ => UnityEngine.InputSystem.Mouse.current.leftButton.wasPressedThisFrame);
             
             clickStream
-                .Buffer(clickStream.Throttle(TimeSpan.FromMilliseconds(200)))
+                .Buffer(clickStream.Throttle(TimeSpan.FromMilliseconds(150)))
                 .Where(x => x.Count >= 2)
                 .Where(count => selectedUnitList.Count != 0)
                 .Subscribe(_ => SelectAllUnit(selectedUnitList.First()));
@@ -377,22 +381,6 @@ namespace FullMoon.Camera
             SelectUnit(newUnit);
         }
         
-        /// <summary>
-        /// 선택된 모든 유닛을 이동할 때 호출
-        /// </summary>
-        private void MoveSelectedUnits(Vector3 targetPosition)
-        {
-            foreach (var unit in selectedUnitList)
-            {
-                if (unit.UnitType.Equals("Enemy"))
-                {
-                    continue;
-                }
-
-                unit.MoveToPosition(targetPosition);
-            }
-        }
-
         /// <summary>
         /// 선택된 모든 유닛을 강제로 이동
         /// </summary>
@@ -525,6 +513,11 @@ namespace FullMoon.Camera
                 {
                     OnNormalMoveAction();
                 }
+
+                if (PlayerInputManager.Instance.respawn)
+                {
+                    OnRespawnAction();
+                }
             }
         }
 
@@ -561,6 +554,19 @@ namespace FullMoon.Camera
             normalMove = false;
             attackMove = false;
             cursor.SetCursorState(CursorType.Idle);
+        }
+
+        private void OnRespawnAction()
+        {
+            MainUnitController controller;
+
+            foreach(var unit in selectedUnitList)
+            {
+                if (unit.TryGetComponent<MainUnitController>(out controller))
+                {
+                    controller.CheckAbleToRespawn();
+                }
+            }
         }
 
         #endregion Button

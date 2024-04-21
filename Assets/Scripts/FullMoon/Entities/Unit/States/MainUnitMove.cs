@@ -43,7 +43,7 @@ namespace FullMoon.Entities.Unit.States
             
             if (PlayerInputManager.Instance.respawn)
             {
-                controller.CheckAbleToRespawn();
+                //controller.CheckAbleToRespawn();
             }
         }
 
