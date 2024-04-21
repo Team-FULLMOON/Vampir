@@ -5,7 +5,7 @@
             <ui:VisualElement name="MiniMap" style="flex-grow: 1; position: absolute; height: 300px; width: 100%; top: auto; left: auto; background-color: rgba(81, 255, 100, 0.47); bottom: 0; flex-shrink: 1;" />
         </ui:VisualElement>
         <ui:VisualElement name="Middle" style="flex-grow: 1; background-color: rgba(255, 255, 255, 0); width: 28%; height: 100%; -unity-background-scale-mode: stretch-to-fill; flex-direction: column; max-height: none; max-width: none; transform-origin: center; translate: 0 0; position: relative; top: auto; left: auto; bottom: auto; right: auto; justify-content: flex-start; align-items: stretch; margin-right: 10px; margin-left: 10px; opacity: 1; flex-shrink: 1;">
-            <ui:VisualElement name="Tools" style="flex-grow: 1; background-color: rgba(255, 255, 255, 0); width: 100%; height: 180px; -unity-background-scale-mode: stretch-to-fill; flex-direction: column; max-height: none; max-width: none; transform-origin: center; translate: 0 0; position: absolute; top: auto; left: auto; bottom: 0; right: auto; justify-content: flex-start; align-items: stretch; margin-right: 0; margin-left: 0; opacity: 1;">
+            <ui:VisualElement name="Tools" style="flex-grow: 1; background-color: rgba(255, 255, 255, 0); width: 100%; height: 140px; -unity-background-scale-mode: stretch-to-fill; flex-direction: column; max-height: none; max-width: none; transform-origin: center; translate: 0 0; position: absolute; top: auto; left: auto; bottom: 0; right: auto; justify-content: flex-start; align-items: stretch; margin-right: 0; margin-left: 0; opacity: 1;">
                 <ui:VisualElement name="Div" style="flex-grow: 1; flex-direction: column;">
                     <ui:VisualElement name="Div" style="flex-grow: 1; position: absolute; bottom: 0; background-color: rgba(255, 255, 255, 0); width: 100%; height: 30px; flex-direction: row;">
                         <ui:VisualElement name="Div" style="flex-grow: 1; background-color: rgba(255, 255, 255, 0);">
@@ -21,7 +21,18 @@
                 </ui:VisualElement>
                 <ui:VisualElement name="Div" style="flex-grow: 1; flex-direction: row;">
                     <ui:VisualElement name="Unit" style="flex-grow: 1; width: 75%; background-color: rgba(55, 0, 0, 0.61);" />
-                    <ui:VisualElement name="Shortcuts" style="flex-grow: 1; width: 25%; background-color: rgba(255, 0, 0, 0.5);" />
+                    <ui:VisualElement name="Shortcuts" style="flex-grow: 1; width: 10%; background-color: rgba(255, 0, 0, 0.5);">
+                        <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row; height: 50%; -unity-text-align: upper-left; align-self: center; align-items: center;">
+                            <ui:Button text="[M]&#10;이동" parse-escape-sequences="true" display-tooltip-when-elided="true" style="padding-bottom: 0; padding-top: 0; padding-right: 0; padding-left: 0; margin-right: 4px; margin-left: 4px; height: 60px; width: 60px; margin-bottom: 4px; margin-top: 4px; -unity-font: resource(&apos;Fonts/JetBrainsMono-1.0.3/ttf/JetBrainsMono-Regular&apos;);" />
+                            <ui:Button text="[S]&#10;정지" parse-escape-sequences="true" display-tooltip-when-elided="true" style="padding-bottom: 0; padding-top: 0; padding-right: 0; padding-left: 0; margin-right: 6px; margin-left: 6px; height: 60px; width: 60px; margin-bottom: 4px; margin-top: 4px; -unity-font: resource(&apos;Fonts/JetBrainsMono-1.0.3/ttf/JetBrainsMono-Regular&apos;);" />
+                            <ui:Button text="[A]&#10;공격" parse-escape-sequences="true" display-tooltip-when-elided="true" style="padding-bottom: 0; padding-top: 0; padding-right: 0; padding-left: 0; margin-right: 4px; margin-left: 4px; height: 60px; width: 60px; margin-bottom: 4px; margin-top: 4px; -unity-font: resource(&apos;Fonts/JetBrainsMono-1.0.3/ttf/JetBrainsMono-Regular&apos;);" />
+                        </ui:VisualElement>
+                        <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row; height: 50%; -unity-text-align: upper-left; align-self: center; align-items: center;">
+                            <ui:Button text="[H]&#10;홀드" parse-escape-sequences="true" display-tooltip-when-elided="true" style="padding-bottom: 0; padding-top: 0; padding-right: 0; padding-left: 0; margin-right: 4px; margin-left: 4px; height: 60px; width: 60px; margin-bottom: 4px; margin-top: 4px; -unity-font: resource(&apos;Fonts/JetBrainsMono-1.0.3/ttf/JetBrainsMono-Regular&apos;);" />
+                            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" style="padding-bottom: 0; padding-top: 0; padding-right: 0; padding-left: 0; margin-right: 6px; margin-left: 6px; height: 60px; width: 60px; margin-bottom: 4px; margin-top: 4px; -unity-font: resource(&apos;Fonts/JetBrainsMono-1.0.3/ttf/JetBrainsMono-Regular&apos;);" />
+                            <ui:Button text="[R]&#10;생성" parse-escape-sequences="true" display-tooltip-when-elided="true" style="padding-bottom: 0; padding-top: 0; padding-right: 0; padding-left: 0; margin-right: 4px; margin-left: 4px; height: 60px; width: 60px; margin-bottom: 4px; margin-top: 4px; -unity-font: resource(&apos;Fonts/JetBrainsMono-1.0.3/ttf/JetBrainsMono-Regular&apos;);" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
