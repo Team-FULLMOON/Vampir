@@ -35,7 +35,7 @@ namespace FullMoon.Entities.Unit.States
                             && Mathf.Approximately(controller.LatestDestination.z, t.LatestDestination.z))
                 .FirstOrDefault(t => Vector3.Distance(controller.transform.position, t.transform.position) <= 2f);
             
-            if (closestUnit != null)
+            if (closestUnit is not null)
             {
                 controller.AttackMove = false;
                 controller.StateMachine.ChangeState(new MeleeUnitIdle(controller));

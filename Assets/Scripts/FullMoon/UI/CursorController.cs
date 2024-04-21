@@ -41,7 +41,7 @@ namespace FullMoon.UI
 
         public void SetMoveAniTarget(Vector3 pos)
         {
-            ObjectPoolManager.SpawnObject(moveAnim, pos + new Vector3(0, 0.5f), Quaternion.Euler(90, 100, 0));
+            ObjectPoolManager.SpawnObject(moveAnim, pos + new Vector3(0, 0.5f), Quaternion.identity);
         }
 
         public void SetCursorState(CursorType type)

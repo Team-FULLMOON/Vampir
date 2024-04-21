@@ -16,7 +16,6 @@ namespace FullMoon.Entities.Unit.States
 
         public void Enter()
         {
-            controller.Rb.velocity = Vector3.zero;
             timer = controller.OverridenUnitData.AttackDelay;
         }
 
@@ -29,7 +28,7 @@ namespace FullMoon.Entities.Unit.States
 
             if (closestUnit == null)
             {
-                controller.StateMachine.ChangeState(new RangedUnitMove(controller));
+                controller.StateMachine.ChangeState(new RangedUnitIdle(controller));
                 return;
             }
             
@@ -52,13 +51,8 @@ namespace FullMoon.Entities.Unit.States
             timer = controller.OverridenUnitData.AttackSpeed;
         }
 
-        public void FixedExecute()
-        {
-        }
+        public void FixedExecute() { }
 
-        public void Exit()
-        {
-            controller.Agent.SetDestination(controller.transform.position);
-        }
+        public void Exit() { }
     }
 }
