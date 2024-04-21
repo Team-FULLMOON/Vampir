@@ -138,6 +138,13 @@ namespace FullMoon.Entities.Unit
                 return;
             }
             
+            if (MainUIController.Instance.ManaValue < ReviveTarget.ManaCost)
+            {
+                ReviveTarget = null;
+                StateMachine.ChangeState(new MainUnitIdle(this));
+                return;
+            }
+            
             ReviveTarget = unit;
             
             bool checkDistance = (ReviveTarget.transform.position - transform.position).sqrMagnitude <=
@@ -155,6 +162,13 @@ namespace FullMoon.Entities.Unit
         
         public void StartRespawn(RespawnController unit)
         {
+            if (MainUIController.Instance.CurrentUnitValue >= MainUIController.Instance.UnitLimitValue)
+            {
+                ReviveTarget = null;
+                StateMachine.ChangeState(new MainUnitIdle(this));
+                return;
+            }
+            
             ReviveTarget = unit;
             Invoke(nameof(Respawn), ReviveTarget.SummonTime);
         }
@@ -167,13 +181,6 @@ namespace FullMoon.Entities.Unit
         
         private void Respawn()
         {
-            if (MainUIController.Instance.ManaValue < ReviveTarget.ManaCost)
-            {
-                ReviveTarget = null;
-                StateMachine.ChangeState(new MainUnitIdle(this));
-                return;
-            }
-            
             MainUIController.Instance.AddMana(-ReviveTarget.ManaCost);
             ObjectPoolManager.SpawnObject(ReviveTarget.UnitTransformObject, ReviveTarget.transform.position, ReviveTarget.transform.rotation);
             ObjectPoolManager.ReturnObjectToPool(ReviveTarget.gameObject);
