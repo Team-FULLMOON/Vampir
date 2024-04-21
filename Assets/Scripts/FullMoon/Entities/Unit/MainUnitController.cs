@@ -124,8 +124,11 @@ namespace FullMoon.Entities.Unit
             base.OnUnitHold();
             StateMachine.ChangeState(new MainUnitIdle(this));
         }
-        
-        public override void OnUnitAttack(Vector3 targetPosition) { }
+
+        public override void OnUnitAttack(Vector3 targetPosition)
+        {
+            MoveToPosition(targetPosition);
+        }
         
         public void CheckAbleToRespawn(RespawnController unit)
         {
