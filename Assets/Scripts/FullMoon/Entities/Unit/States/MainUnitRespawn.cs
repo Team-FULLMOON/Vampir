@@ -20,7 +20,7 @@ namespace FullMoon.Entities.Unit.States
             
             RespawnController closestRespawnUnit = controller.RespawnUnitInsideViewArea
                 .Where(t => MainUIController.Instance.ManaValue >= t.ManaCost)
-                .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
+                .Where(t => t == controller.ReviveTarget)
                 .FirstOrDefault();
                 
             if (closestRespawnUnit == null)

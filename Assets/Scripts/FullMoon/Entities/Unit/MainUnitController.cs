@@ -130,26 +130,26 @@ namespace FullMoon.Entities.Unit
         public void CheckAbleToRespawn(RespawnController unit)
         {
             PlayerInputManager.Instance.respawn = false;
+            ReviveTarget = unit;
                 
             if (MainUIController.Instance.CurrentUnitValue >= MainUIController.Instance.UnitLimitValue)
             {
                 return;
             }
                 
-            RespawnController closestRespawnUnit = unit;
-                
-            if (closestRespawnUnit == null)
+            if (unit == null)
             {
                 return;
             }
                 
-            bool checkDistance = (closestRespawnUnit.transform.position - transform.position).sqrMagnitude <=
+            bool checkDistance = (unit.transform.position - transform.position).sqrMagnitude <=
                                  OverridenUnitData.RespawnRadius * OverridenUnitData.RespawnRadius;
-                
+            
+
+
             if (checkDistance == false)
             {
-                ReviveTarget = closestRespawnUnit;
-                MoveToPosition(closestRespawnUnit.transform.position);
+                MoveToPosition(unit.transform.position);
                 StateMachine.ChangeState(new MainUnitMove(this));
                 return;
             }

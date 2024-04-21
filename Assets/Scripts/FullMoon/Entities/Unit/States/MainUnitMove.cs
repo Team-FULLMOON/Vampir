@@ -34,7 +34,9 @@ namespace FullMoon.Entities.Unit.States
                     .Select(u => u.GetComponent<RespawnController>())
                     .Where(c => c != null))
                 {
-                    controller.CheckAbleToRespawn(controller.ReviveTarget);
+                    Debug.Log(unit.name);
+                    if (unit == controller.ReviveTarget)
+                        controller.CheckAbleToRespawn(controller.ReviveTarget);
                 }
             }
 
