@@ -16,7 +16,6 @@ namespace FullMoon.Entities.Unit.States
 
         public void Enter()
         {
-            controller.Rb.velocity = Vector3.zero;
             timer = controller.OverridenUnitData.AttackDelay;
         }
 

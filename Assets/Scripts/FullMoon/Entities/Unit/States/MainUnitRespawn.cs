@@ -14,8 +14,6 @@ namespace FullMoon.Entities.Unit.States
         
         public void Enter()
         {
-            controller.Rb.velocity = Vector3.zero;
-            
             if (controller.ReviveTarget is null || controller.ReviveTarget.gameObject.activeInHierarchy == false)
             {
                 return;
