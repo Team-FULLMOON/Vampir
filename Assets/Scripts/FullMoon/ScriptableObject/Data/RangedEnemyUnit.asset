@@ -33,5 +33,5 @@ MonoBehaviour:
   attackCoolTime: 2.5
   attackRadius: 10
   viewRadius: 11
-  fogOfWarRadius: 8
+  fogOfWarRadius: 10
   bulletSpeed: 55

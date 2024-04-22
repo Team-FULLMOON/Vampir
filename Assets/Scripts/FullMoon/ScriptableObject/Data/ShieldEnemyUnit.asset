@@ -33,4 +33,4 @@ MonoBehaviour:
   attackCoolTime: 1
   attackRadius: 2
   viewRadius: 8
-  fogOfWarRadius: 8
+  fogOfWarRadius: 10
