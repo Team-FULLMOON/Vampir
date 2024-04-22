@@ -123,7 +123,7 @@ namespace FullMoon.Effect
         
         private void DestroyEffect()
         {
-            if (!gameObject.activeSelf)
+            if (gameObject.activeInHierarchy == false)
             {
                 return;
             }
