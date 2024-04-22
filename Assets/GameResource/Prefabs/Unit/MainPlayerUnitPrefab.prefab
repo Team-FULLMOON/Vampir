@@ -68,7 +68,7 @@ GameObject:
   - component: {fileID: 8816133494026741828}
   - component: {fileID: 2268042740748443340}
   - component: {fileID: 1930282699847763958}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: View Range
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -545,12 +545,12 @@ PrefabInstance:
     - target: {fileID: 8969961608407241986, guid: 0d665691312219243b2d9c769c8faf2b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1920
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8969961608407241986, guid: 0d665691312219243b2d9c769c8faf2b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 1080
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8969961608407241986, guid: 0d665691312219243b2d9c769c8faf2b,
         type: 3}
