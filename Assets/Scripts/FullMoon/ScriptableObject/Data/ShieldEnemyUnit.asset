@@ -30,7 +30,7 @@ MonoBehaviour:
   attackEnabled: 1
   attackDamage: 10
   attackDelay: 0
-  attackSpeed: 1
+  attackCoolTime: 1
   attackRadius: 2
   viewRadius: 8
-  fogOfWarRadius: 20
+  fogOfWarRadius: 8
