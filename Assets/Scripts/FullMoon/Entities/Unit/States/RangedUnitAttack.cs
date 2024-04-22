@@ -7,7 +7,7 @@ namespace FullMoon.Entities.Unit.States
     public class RangedUnitAttack : IState
     {
         private readonly RangedUnitController controller;
-        private float timer;
+        private float attackDelay;
 
         public RangedUnitAttack(RangedUnitController controller)
         {
@@ -16,7 +16,7 @@ namespace FullMoon.Entities.Unit.States
 
         public void Enter()
         {
-            timer = controller.OverridenUnitData.AttackDelay;
+            attackDelay = controller.OverridenUnitData.AttackDelay;
         }
 
         public void Execute()
@@ -41,14 +41,19 @@ namespace FullMoon.Entities.Unit.States
                 return;
             }
             
-            if (timer > 0)
+            if (attackDelay > 0)
             {
-                timer -= Time.deltaTime;
+                attackDelay -= Time.deltaTime;
                 return;
             }
             
+            if (controller.CurrentAttackCoolTime > 0)
+            {
+                return;
+            }
+
+            controller.CurrentAttackCoolTime = controller.OverridenUnitData.AttackCoolTime;
             controller.ExecuteAttack(closestUnit.transform);
-            timer = controller.OverridenUnitData.AttackSpeed;
         }
 
         public void FixedExecute() { }
