@@ -322,8 +322,10 @@ MonoBehaviour:
   unitModel: {fileID: 3319720673469424743}
   unitMarker: {fileID: 6798072512803417028}
   viewRange: {fileID: 2268042740748443340}
+  fogWar: {fileID: 0}
+  fogVisibilityAgent: {fileID: 0}
   decalProjector: {fileID: 6081375030924233605}
-  attackEffect: {fileID: 8679279780333392621, guid: 5889d295f07756941ad4200554eb901c,
+  attackEffect: {fileID: 9036353568100132131, guid: a5da6e8d518ace146858e31332e291a9,
     type: 3}
 --- !u!136 &6372571031042578545
 CapsuleCollider:
