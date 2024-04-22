@@ -124,11 +124,13 @@ namespace FullMoon.Entities.Unit
         public virtual void OnUnitStop()
         {
             MoveToPosition(transform.position);
+            AttackMove = false;
         }
 
         public virtual void OnUnitHold()
         {
             MoveToPosition(transform.position);
+            AttackMove = false;
         }
 
         public virtual void OnUnitAttack(Vector3 targetPosition)

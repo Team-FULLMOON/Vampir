@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Cinemachine;
 using FullMoon.Input;
 using FullMoon.Entities.Unit;
@@ -55,6 +56,7 @@ namespace FullMoon.Camera
         private Vector2 dragStart = Vector2.zero; // 드래그 시작 위치
         private Vector2 dragEnd = Vector2.zero; // 드래그 종료 위치
 
+        int test = 0;
         private void Awake()
         {
             mainCamera = UnityEngine.Camera.main;
@@ -69,6 +71,46 @@ namespace FullMoon.Camera
         
             PlayerInputManager.Instance.ZoomEvent.AddEvent(ZoomEvent);
             DoubleClickAction();
+
+            MainUIController.Instance.ShortcutCancelButton.RegisterCallback<ClickEvent>(evt =>
+            {
+                OnCancelAction();
+            });
+            MainUIController.Instance.ShortcutAttackMoveButton.RegisterCallback<ClickEvent>(evt =>
+            {
+                if (selectedUnitList.Count is not 0)
+                {
+                    OnAttackMoveAction();
+                }
+            });
+            MainUIController.Instance.ShortcutHoldButton.RegisterCallback<ClickEvent>(evt =>
+            {
+                if (selectedUnitList.Count is not 0)
+                {
+                    HoldSelectUnits();
+                }
+            });
+            MainUIController.Instance.ShortcutMoveButton.RegisterCallback<ClickEvent>(evt =>
+            {
+                if (selectedUnitList.Count is not 0)
+                {
+                    OnNormalMoveAction();
+                }
+            });
+            MainUIController.Instance.ShortcutRespawnButton.RegisterCallback<ClickEvent>(evt =>
+            {
+                if (selectedUnitList.Count is not 0)
+                {
+                    OnRespawnAction();
+                }
+            });
+            MainUIController.Instance.ShortcutStopButton.RegisterCallback<ClickEvent>(evt =>
+            {
+                if (selectedUnitList.Count is not 0)
+                {
+                    StopSelectUnits();
+                }
+            });
         }
 
         private void Update()
@@ -102,7 +144,7 @@ namespace FullMoon.Camera
 
         private Vector2 GetScreenMovementInput()
         {
-            if (Cursor.lockState != CursorLockMode.Confined)
+            if (UnityEngine.Cursor.lockState != CursorLockMode.Confined)
             {
                 return Vector2.zero;
             }
@@ -267,7 +309,6 @@ namespace FullMoon.Camera
                     if (deadUnit != null)
                     {
                         ReviveUnit(deadUnit);
-                        cursor.SetCursorState(CursorType.Idle);
                         createUnit = false;
                     }
                 }
@@ -335,10 +376,7 @@ namespace FullMoon.Camera
             
             if (normalMove || attackMove || createUnit)
             {
-                attackMove = false;
-                normalMove = false;
-                createUnit = false;
-                cursor.SetCursorState(CursorType.Idle);
+                OnCancelAction();
                 return;
             }
 
@@ -432,6 +470,8 @@ namespace FullMoon.Camera
                 unit.AttackMove = false;
                 unit.MoveToPosition(end);
             }
+
+            MainUIController.Instance.canMove.Value = false;
         }
 
         /// <summary>
@@ -444,6 +484,7 @@ namespace FullMoon.Camera
                 unit.Deselect();
             }
 
+            MainUIController.Instance.OffButton();
             selectedUnitList.Clear();
         }
 
@@ -452,6 +493,17 @@ namespace FullMoon.Camera
         /// </summary>
         private void SelectUnit(BaseUnitController newUnit)
         {
+            if (newUnit.UnitType is "Player")
+            {
+                if (newUnit.UnitClass is "Main")
+                {
+                    MainUIController.Instance.isMainUnit = true;
+                    MainUIController.Instance.MainUnitActiveButton();
+                }
+                else
+                    MainUIController.Instance.UnitActiveButton();
+            }
+
             // 유닛이 선택되었을 때 호출하는 메소드
             newUnit.Select();
             // 선택한 유닛 정보를 리스트에 저장
@@ -482,6 +534,15 @@ namespace FullMoon.Camera
         /// </summary>
         private void DeselectUnit(BaseUnitController newUnit)
         {
+            if (newUnit.UnitType is "Player")
+            {
+                if (newUnit.UnitClass is "Main")
+                {
+                    MainUIController.Instance.isMainUnit = false;
+                    MainUIController.Instance.ShortcutRespawnButton.SetEnabled(false);
+                }
+            }
+
             // 유닛이 해제되었을 때 호출하는 메소드
             newUnit.Deselect();
             // 선택한 유닛 정보를 리스트에서 삭제
@@ -504,6 +565,7 @@ namespace FullMoon.Camera
             }
 
             attackMove = false;
+            MainUIController.Instance.canAttack.Value = false;
         }
 
         private void CheckCursorUnit()
@@ -529,6 +591,8 @@ namespace FullMoon.Camera
             }
 
             cursor.SetCursorState(CursorType.Idle);
+
+            MainUIController.Instance.canRespawn.Value = false;
         }
         
         #endregion Mouse
@@ -591,12 +655,14 @@ namespace FullMoon.Camera
         {
             normalMove = true;
             cursor.SetCursorState(CursorType.Move);
+            MainUIController.Instance.canMove.Value = true;
         }
 
         private void OnAttackMoveAction()
         {
             attackMove = true;
             cursor.SetCursorState(CursorType.Attack);
+            MainUIController.Instance.canAttack.Value = true;
         }
 
         private void OnCancelAction()
@@ -605,6 +671,10 @@ namespace FullMoon.Camera
             attackMove = false;
             createUnit = false;
             cursor.SetCursorState(CursorType.Idle);
+
+            MainUIController.Instance.canAttack.Value = false;
+            MainUIController.Instance.canMove.Value = false;
+            MainUIController.Instance.canRespawn.Value = false;
         }
 
         private void OnRespawnAction()
@@ -615,6 +685,7 @@ namespace FullMoon.Camera
             {
                 createUnit = true;
                 cursor.SetCursorState(CursorType.Create);
+                MainUIController.Instance.canRespawn.Value = true;
             }
             
             PlayerInputManager.Instance.respawn = false;
