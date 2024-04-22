@@ -6,6 +6,7 @@ using UnityEngine.Rendering.Universal;
 using FullMoon.Interfaces;
 using FullMoon.Entities.Unit.States;
 using FullMoon.ScriptableObject;
+using FullMoon.Util;
 
 namespace FullMoon.Entities.Unit
 {
@@ -15,6 +16,9 @@ namespace FullMoon.Entities.Unit
     {
         [Foldout("Melee Unit Settings")]
         public DecalProjector decalProjector;
+        
+        [Foldout("Melee Unit Settings")]
+        public GameObject attackEffect;
 
         public MeleeUnitData OverridenUnitData { get; private set; }
         
@@ -81,6 +85,15 @@ namespace FullMoon.Entities.Unit
             {
                 return;
             }
+
+            Vector3 targetDirection = target.transform.position - transform.position;
+            Vector3 hitPosition = target.transform.position;
+            if (Physics.Raycast(transform.position + new Vector3(0f, 1f, 0f), targetDirection.normalized, out var hit, OverridenUnitData.AttackRadius, 1 << LayerMask.NameToLayer("Unit")))
+            {
+                hitPosition = hit.point;
+            }
+            GameObject hitFX = ObjectPoolManager.SpawnObject(attackEffect, hitPosition, Quaternion.identity);
+            hitFX.transform.forward = targetDirection.normalized;
 
             targetController.ReceiveDamage(OverridenUnitData.AttackDamage, this);
         }
