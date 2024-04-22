@@ -1,6 +1,7 @@
 using MyBox;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 using FullMoon.Entities.Unit;
 
 namespace FullMoon.UI
@@ -15,21 +16,24 @@ namespace FullMoon.UI
         [SerializeField] private Color enemyColor = Color.red;
 
         private BaseUnitController Unit { get; set; }
-        
+
         private void Start()
         {
             GetComponent<Canvas>().worldCamera = UnityEngine.Camera.main;
             Unit = GetComponentInParent<BaseUnitController>();
-            
+
             hpSlider.gameObject.SetActive(true);
             hpFillImage.color = Unit.unitData.UnitType == "Player" ? playerColor : enemyColor;
             hpSlider.maxValue = Unit.unitData.MaxHp;
-            hpSlider.value = hpSlider.maxValue;
+            hpSlider.value = Unit.unitData.MaxHp;
         }
 
-        private void LateUpdate()
+        private void Update()
         {
-            hpSlider.value = Unit.Hp;
+            if (Unit.Hp != (int)hpSlider.value)
+            {
+                hpSlider.DOValue(Unit.Hp, 0.3f).SetEase(Ease.OutQuad);
+            }
         }
     }
 }

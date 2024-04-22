@@ -68,7 +68,7 @@ GameObject:
   - component: {fileID: 8816133494026741828}
   - component: {fileID: 2268042740748443340}
   - component: {fileID: 1930282699847763958}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: View Range
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,7 +262,7 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!54 &8221377267059292143
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -286,7 +286,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 1
@@ -309,7 +309,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 1
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!1 &6798072512803417028
@@ -423,7 +423,7 @@ Transform:
   m_GameObject: {fileID: 8030955277002928265}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -500,11 +500,16 @@ PrefabInstance:
     - target: {fileID: 2614293188193899902, guid: 0d665691312219243b2d9c769c8faf2b,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2614293188193899902, guid: 0d665691312219243b2d9c769c8faf2b,
         type: 3}
       propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7928543598331837122, guid: 0d665691312219243b2d9c769c8faf2b,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8969961608407241986, guid: 0d665691312219243b2d9c769c8faf2b,
@@ -540,12 +545,12 @@ PrefabInstance:
     - target: {fileID: 8969961608407241986, guid: 0d665691312219243b2d9c769c8faf2b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1920
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8969961608407241986, guid: 0d665691312219243b2d9c769c8faf2b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 1080
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8969961608407241986, guid: 0d665691312219243b2d9c769c8faf2b,
         type: 3}

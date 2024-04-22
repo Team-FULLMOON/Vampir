@@ -19,12 +19,15 @@ namespace FullMoon.Entities.Unit
         public MeleeUnitData OverridenUnitData { get; private set; }
         
         public List<BaseUnitController> UnitInsideViewArea { get; set; }
+        
+        public float CurrentAttackCoolTime { get; set; }
 
         protected override void Start()
         {
             base.Start();
-            OverridenUnitData = (MeleeUnitData)unitData;
+            OverridenUnitData = unitData as MeleeUnitData;
             UnitInsideViewArea = new List<BaseUnitController>();
+            CurrentAttackCoolTime = unitData.AttackCoolTime;
 
             if (decalProjector != null)
             {
@@ -37,6 +40,7 @@ namespace FullMoon.Entities.Unit
         
         protected void LateUpdate()
         {
+            ReduceAttackCoolTime();
             UnitInsideViewArea.RemoveAll(unit => unit == null || !unit.gameObject.activeInHierarchy);
         }
 
@@ -115,6 +119,14 @@ namespace FullMoon.Entities.Unit
         {
             base.OnUnitAttack(targetPosition);
             StateMachine.ChangeState(new MeleeUnitMove(this));
+        }
+        
+        private void ReduceAttackCoolTime()
+        {
+            if (CurrentAttackCoolTime > 0)
+            {
+                CurrentAttackCoolTime -= Time.deltaTime;
+            }
         }
 
         protected override void OnDrawGizmos()

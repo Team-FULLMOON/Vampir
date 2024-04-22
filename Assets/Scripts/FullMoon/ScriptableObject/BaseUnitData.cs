@@ -1,6 +1,7 @@
 using FullMoon.Entities.Unit;
 using MyBox;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace FullMoon.ScriptableObject
 {
@@ -77,9 +78,9 @@ namespace FullMoon.ScriptableObject
         private float attackDelay = 1f;
         public float AttackDelay => attackDelay;
     
-        [SerializeField, ConditionalField(nameof(attackEnabled)), OverrideLabel("공격 속도")]
-        private float attackSpeed = 1f;
-        public float AttackSpeed => attackSpeed;
+        [SerializeField, ConditionalField(nameof(attackEnabled)), OverrideLabel("공격 쿨타임")]
+        private float attackCoolTime = 1f;
+        public float AttackCoolTime => attackCoolTime;
         
         [SerializeField, ConditionalField(nameof(attackEnabled)), OverrideLabel("공격 반경")] 
         private float attackRadius = 10f;

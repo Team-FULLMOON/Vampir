@@ -35,7 +35,7 @@ namespace FullMoon.Entities.Unit.States
                             && Mathf.Approximately(controller.LatestDestination.z, t.LatestDestination.z))
                 .FirstOrDefault(t => Vector3.Distance(controller.transform.position, t.transform.position) <= 2f);
             
-            if (closestUnit != null)
+            if (closestUnit is not null)
             {
                 controller.AttackMove = false;
                 controller.StateMachine.ChangeState(new MeleeUnitIdle(controller));
@@ -55,12 +55,11 @@ namespace FullMoon.Entities.Unit.States
                 }
 
                 bool checkDistance = (closestUnit.transform.position - controller.transform.position).sqrMagnitude <=
-                            controller.OverridenUnitData.AttackRadius * controller.OverridenUnitData.AttackRadius;
+                            controller.OverridenUnitData.ViewRadius * controller.OverridenUnitData.ViewRadius;
 
                 if (checkDistance)
                 {
-                    controller.LatestDestination = controller.transform.position;
-                    controller.StateMachine.ChangeState(new MeleeUnitAttack(controller));
+                    controller.StateMachine.ChangeState(new MeleeUnitChase(controller));
                 }
             }
         }

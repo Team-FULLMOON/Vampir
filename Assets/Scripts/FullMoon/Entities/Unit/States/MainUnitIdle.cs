@@ -1,8 +1,4 @@
-using System.Linq;
-using UnityEngine;
 using FullMoon.FSM;
-using FullMoon.Input;
-using FullMoon.UI;
 
 namespace FullMoon.Entities.Unit.States
 {
@@ -15,27 +11,12 @@ namespace FullMoon.Entities.Unit.States
             this.controller = controller;
         }
         
-        public void Enter()
-        {
-            controller.Rb.velocity = Vector3.zero;
-        }
+        public void Enter() { }
 
-        public void Execute()
-        {
-            if (PlayerInputManager.Instance.respawn)
-            {
-                controller.CheckAbleToRespawn();
-            }
-        }
+        public void Execute() { }
 
-        public void FixedExecute()
-        {
-            
-        }
+        public void FixedExecute() { }
 
-        public void Exit()
-        {
-            
-        }
+        public void Exit() { }
     }
 }

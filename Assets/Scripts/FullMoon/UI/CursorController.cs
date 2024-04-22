@@ -13,6 +13,8 @@ namespace FullMoon.UI
         Idle,
         Attack,
         Move,
+        Unit,
+        Create,
     }
 
     public class CursorController : MonoBehaviour
@@ -20,21 +22,26 @@ namespace FullMoon.UI
         [Header("Mouse Cursor Settings")] 
         CursorType cursorType;
 
-        [Header("Mouse Cursor Image")]
-        [SerializeField] Texture2D[] textures;
+        [Foldout("Mouse Cursor Image")]
+        [SerializeField] List<Texture2D> textures;
 
-        void Start()
+        [Foldout("Mouse Cursor Image")] 
+        [SerializeField] GameObject moveAnim;
+
+        private void Start()
         {
             cursorType = CursorType.Idle;
-            textures = textures.Select(tex => ScaleTexture(tex, 0.3f)).ToArray();
+            textures = textures.Select(tex => ScaleTexture(tex, 0.3f)).ToList();
         }
 
-        void Update()
+        private void Update()
         {
-            if (!Application.isPlaying)
-                return;
-
             UpdateCursorState();
+        }
+
+        public void SetMoveAniTarget(Vector3 pos)
+        {
+            ObjectPoolManager.SpawnObject(moveAnim, pos + new Vector3(0, 0.5f), Quaternion.identity);
         }
 
         public void SetCursorState(CursorType type)
@@ -42,57 +49,67 @@ namespace FullMoon.UI
             cursorType = type;
         }
 
-        public void UpdateCursorState()
+        private void UpdateCursorState()
         {
+            if (!Application.isPlaying)
+            {
+                return;
+            }
+            
             switch (cursorType)
             {
                 case CursorType.Idle:
                     Cursor.SetCursor(textures[0], Vector2.zero, CursorMode.ForceSoftware);
                     break;
                 case CursorType.Attack:
-                    Cursor.SetCursor(textures[1], new Vector2(textures[1].width / 2, textures[1].height / 2), CursorMode.ForceSoftware);
+                    Cursor.SetCursor(textures[1], new Vector2(textures[1].width / 2f, textures[1].height / 2f), CursorMode.ForceSoftware);
                     break;
                 case CursorType.Move:
                     Cursor.SetCursor(textures[2], Vector2.zero, CursorMode.ForceSoftware);
+                    break;
+                case CursorType.Unit:
+                    Cursor.SetCursor(textures[3], Vector2.zero, CursorMode.ForceSoftware);
+                    break;
+                case CursorType.Create:
+                    Cursor.SetCursor(textures[4], Vector2.zero, CursorMode.ForceSoftware);
                     break;
             }
         }
 
         // Texture2D 크기 조정
-        public Texture2D ScaleTexture(Texture2D source, float _scaleFactor)
+        private Texture2D ScaleTexture(Texture2D source, float scaleFactor)
         {
-            if (_scaleFactor == 1f)
+            if (Mathf.Approximately(scaleFactor, 1f))
             {
                 return source;
             }
-            else if (_scaleFactor == 0f)
+
+            if (Mathf.Approximately(scaleFactor, 0f))
             {
                 return Texture2D.blackTexture;
             }
 
-            int _newWidth = Mathf.RoundToInt(source.width * _scaleFactor);
-            int _newHeight = Mathf.RoundToInt(source.height * _scaleFactor);
-
-
+            int newWidth = Mathf.RoundToInt(source.width * scaleFactor);
+            int newHeight = Mathf.RoundToInt(source.height * scaleFactor);
             
-            Color[] _scaledTexPixels = new Color[_newWidth * _newHeight];
+            Color[] scaledTexPixels = new Color[newWidth * newHeight];
 
-            for (int _yCord = 0; _yCord < _newHeight; _yCord++)
+            for (int yCord = 0; yCord < newHeight; yCord++)
             {
-                float _vCord = _yCord / (_newHeight * 1f);
-                int _scanLineIndex = _yCord * _newWidth;
+                float vCord = yCord / (newHeight * 1f);
+                int scanLineIndex = yCord * newWidth;
 
-                for (int _xCord = 0; _xCord < _newWidth; _xCord++)
+                for (int xCord = 0; xCord < newWidth; xCord++)
                 {
-                    float _uCord = _xCord / (_newWidth * 1f);
+                    float uCord = xCord / (newWidth * 1f);
 
-                    _scaledTexPixels[_scanLineIndex + _xCord] = source.GetPixelBilinear(_uCord, _vCord);
+                    scaledTexPixels[scanLineIndex + xCord] = source.GetPixelBilinear(uCord, vCord);
                 }
             }
 
             // Create Scaled Texture
-            Texture2D result = new Texture2D(_newWidth, _newHeight, source.format, false);
-            result.SetPixels(_scaledTexPixels, 0);
+            Texture2D result = new Texture2D(newWidth, newHeight, source.format, false);
+            result.SetPixels(scaledTexPixels, 0);
             result.Apply();
 
             return result;

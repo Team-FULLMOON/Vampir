@@ -13,10 +13,7 @@ namespace FullMoon.Entities.Unit.States
             this.controller = controller;
         }
         
-        public void Enter()
-        {
-            controller.Rb.velocity = Vector3.zero;
-        }
+        public void Enter() { }
 
         public void Execute()
         {
@@ -24,6 +21,10 @@ namespace FullMoon.Entities.Unit.States
             
             if (enemyCount == 0)
             {
+                if (controller.AttackMove)
+                {
+                    controller.OnUnitAttack(controller.AttackMovePosition);
+                }
                 return;
             }
             

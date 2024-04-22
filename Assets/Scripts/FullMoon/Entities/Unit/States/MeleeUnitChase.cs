@@ -36,6 +36,7 @@ namespace FullMoon.Entities.Unit.States
             
             if (checkDistance)
             {
+                controller.LatestDestination = controller.transform.position;
                 controller.StateMachine.ChangeState(new MeleeUnitAttack(controller));
             }
             else

@@ -23,20 +23,21 @@ namespace FullMoon.Entities.Unit
         
         public List<BaseUnitController> UnitInsideViewArea { get; set; }
         public List<RespawnController> RespawnUnitInsideViewArea { get; set; }
-
-        private RespawnController respawnController;
+        public RespawnController ReviveTarget { get; set; }
         
         protected override void Start()
         {
             base.Start();
-            OverridenUnitData = (MainUnitData)unitData;
+            OverridenUnitData = unitData as MainUnitData;
             UnitInsideViewArea = new List<BaseUnitController>();
             RespawnUnitInsideViewArea = new List<RespawnController>();
 
-	        if (decalProjector != null)
+	        if (decalProjector is not null)
             {
                 decalProjector.gameObject.SetActive(false);
-                decalProjector.size = new Vector3(((MainUnitData)unitData).RespawnRadius * 2f, ((MainUnitData)unitData).RespawnRadius * 2f, decalProjector.size.z);
+                decalProjector.size = new Vector3(((MainUnitData)unitData).RespawnRadius * 2f, 
+                    ((MainUnitData)unitData).RespawnRadius * 2f, 
+                    decalProjector.size.z);
             }
 
             StateMachine.ChangeState(new MainUnitIdle(this));
@@ -44,8 +45,8 @@ namespace FullMoon.Entities.Unit
         
         protected void LateUpdate()
         {
-            UnitInsideViewArea.RemoveAll(unit => unit == null || !unit.gameObject.activeInHierarchy);
-            RespawnUnitInsideViewArea.RemoveAll(unit => unit == null || !unit.gameObject.activeInHierarchy);
+            UnitInsideViewArea.RemoveAll(unit => unit is null || !unit.gameObject.activeInHierarchy);
+            RespawnUnitInsideViewArea.RemoveAll(unit => unit is null || !unit.gameObject.activeInHierarchy);
         }
 
         public void EnterViewRange(Collider unit)
@@ -54,7 +55,7 @@ namespace FullMoon.Entities.Unit
             {
                 case "RespawnUnit":
                     RespawnController resController = unit.GetComponent<RespawnController>();
-                    if (resController == null)
+                    if (resController is null)
                     {
                         return;
                     }
@@ -62,7 +63,7 @@ namespace FullMoon.Entities.Unit
                     break;
                 default:
                     BaseUnitController controller = unit.GetComponent<BaseUnitController>();
-                    if (controller == null)
+                    if (controller is null)
                     {
                         return;
                     }
@@ -77,7 +78,7 @@ namespace FullMoon.Entities.Unit
             {
                 case "RespawnUnit":
                     RespawnController resController = unit.GetComponent<RespawnController>();
-                    if (resController == null)
+                    if (resController is null)
                     {
                         return;
                     }
@@ -85,7 +86,7 @@ namespace FullMoon.Entities.Unit
                     break;
                 default:
                     BaseUnitController controller = unit.GetComponent<BaseUnitController>();
-                    if (controller == null)
+                    if (controller is null)
                     {
                         return;
                     }
@@ -108,6 +109,7 @@ namespace FullMoon.Entities.Unit
 
         public override void MoveToPosition(Vector3 location)
         {
+            ReviveTarget = null;
             base.MoveToPosition(location);
             StateMachine.ChangeState(new MainUnitMove(this));
         }
@@ -123,56 +125,60 @@ namespace FullMoon.Entities.Unit
             base.OnUnitHold();
             StateMachine.ChangeState(new MainUnitIdle(this));
         }
-        
-        public void CheckAbleToRespawn()
+
+        public override void OnUnitAttack(Vector3 targetPosition)
         {
-            PlayerInputManager.Instance.respawn = false;
-                
-            if (MainUIController.Instance.CurrentUnitValue >= MainUIController.Instance.UnitLimitValue)
+            MoveToPosition(targetPosition);
+        }
+        
+        public void CheckAbleToRespawn(RespawnController unit)
+        {
+            if (unit is null || unit.gameObject.activeInHierarchy == false)
             {
                 return;
             }
-                
-            RespawnController closestRespawnUnit =  RespawnUnitInsideViewArea
-                .Where(t => MainUIController.Instance.ManaValue >= t.ManaCost)
-                .OrderBy(t => (t.transform.position - transform.position).sqrMagnitude)
-                .FirstOrDefault();
-                
-            if (closestRespawnUnit == null)
-            {
-                return;
-            }
-                
-            bool checkDistance = (closestRespawnUnit.transform.position - transform.position).sqrMagnitude <=
+            
+            ReviveTarget = unit;
+            
+            bool checkDistance = (ReviveTarget.transform.position - transform.position).sqrMagnitude <=
                                  OverridenUnitData.RespawnRadius * OverridenUnitData.RespawnRadius;
-                
+            
             if (checkDistance == false)
             {
+                base.MoveToPosition(ReviveTarget.transform.position);
+                StateMachine.ChangeState(new MainUnitMove(this));
                 return;
             }
-                
+            
             StateMachine.ChangeState(new MainUnitRespawn(this));
         }
         
-        public void StartSpawn(RespawnController unit)
+        public void StartRespawn(RespawnController unit)
         {
-            Debug.Log($"Spawn Start: {name}");
-            respawnController = unit;
-            Invoke(nameof(Spawn), respawnController.SummonTime);
+            if (MainUIController.Instance.ManaValue < unit.ManaCost ||
+                MainUIController.Instance.CurrentUnitValue >= MainUIController.Instance.UnitLimitValue)
+            {
+                ReviveTarget = null;
+                StateMachine.ChangeState(new MainUnitIdle(this));
+                return;
+            }
+            
+            ReviveTarget = unit;
+            Invoke(nameof(Respawn), ReviveTarget.SummonTime);
         }
         
-        public void CancelSpawn()
+        public void CancelRespawn()
         {
-            Debug.Log($"Spawn Cancel: {name}");
-            respawnController = null;
-            CancelInvoke(nameof(Spawn));
+            ReviveTarget = null;
+            CancelInvoke(nameof(Respawn));
         }
         
-        private void Spawn()
+        private void Respawn()
         {
-            MainUIController.Instance.AddMana(-respawnController.ManaCost);
-            ObjectPoolManager.SpawnObject(respawnController.UnitTransformObject, respawnController.transform.position, respawnController.transform.rotation);
-            ObjectPoolManager.ReturnObjectToPool(respawnController.gameObject);
+            MainUIController.Instance.AddMana(-ReviveTarget.ManaCost);
+            ObjectPoolManager.SpawnObject(ReviveTarget.UnitTransformObject, ReviveTarget.transform.position, ReviveTarget.transform.rotation);
+            ObjectPoolManager.ReturnObjectToPool(ReviveTarget.gameObject);
+            ReviveTarget = null;
             StateMachine.ChangeState(new MainUnitIdle(this));
         }
 

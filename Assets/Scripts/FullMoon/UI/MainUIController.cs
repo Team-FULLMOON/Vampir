@@ -1,3 +1,4 @@
+using UniRx;
 using System;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -19,6 +20,17 @@ namespace FullMoon.UI
         public TextElement UnitLimitText { get; private set; }
         
         public Button RetryButton { get; private set; }
+
+        #region Shortcuts
+
+        public Button ShortcutMoveButton { get; private set; }
+        public Button ShortcutStopButton { get; private set; }
+        public Button ShortcutAttackMoveButton { get; private set; }
+        public Button ShortcutHoldButton { get; private set; }
+        public Button ShortcutRespawnButton { get; private set; }
+        public Button ShortcutCancelButton { get; private set; }
+
+        #endregion
         
         public int ManaValue => (int)ManaProgressBar.value;
         public int UnitLimitValue { get; private set; }
@@ -40,6 +52,50 @@ namespace FullMoon.UI
             RetryButton = root.Q<Button>("RetryButton");
             RetryButton.RegisterCallback<ClickEvent>(Retry);
             AddMana(30);
+
+            ShortcutMoveButton = root.Q<Button>("ShortcutMoveButton");
+            ShortcutStopButton = root.Q<Button>("ShortcutStopButton");
+            ShortcutAttackMoveButton = root.Q<Button>("ShortcutAttackMoveButton");
+            ShortcutHoldButton = root.Q<Button>("ShortcutHoldButton");
+            ShortcutRespawnButton = root.Q<Button>("ShortcutRespawnButton");
+            ShortcutCancelButton = root.Q<Button>("ShortcutCancelButton");
+            
+            var canCancel = new ReactiveProperty<bool>(false);
+
+            canCancel.Subscribe(cancel =>
+            {
+                ShortcutMoveButton.SetEnabled(!cancel);
+                ShortcutStopButton.SetEnabled(!cancel);
+                ShortcutAttackMoveButton.SetEnabled(!cancel);
+                ShortcutHoldButton.SetEnabled(!cancel);
+                ShortcutRespawnButton.SetEnabled(!cancel);
+                ShortcutCancelButton.SetEnabled(cancel);
+            });
+    
+            ShortcutMoveButton.RegisterCallback<ClickEvent>(evt =>
+            {
+                canCancel.Value = true;
+            });
+            ShortcutStopButton.RegisterCallback<ClickEvent>(evt =>
+            {
+                canCancel.Value = true;
+            });
+            ShortcutAttackMoveButton.RegisterCallback<ClickEvent>(evt =>
+            {
+                canCancel.Value = true;
+            });
+            ShortcutHoldButton.RegisterCallback<ClickEvent>(evt =>
+            {
+                canCancel.Value = true;
+            });
+            ShortcutRespawnButton.RegisterCallback<ClickEvent>(evt =>
+            {
+                canCancel.Value = true;
+            });
+            ShortcutCancelButton.RegisterCallback<ClickEvent>(evt =>
+            {
+                canCancel.Value = false;
+            });
         }
         
         public void AddMana(int value)

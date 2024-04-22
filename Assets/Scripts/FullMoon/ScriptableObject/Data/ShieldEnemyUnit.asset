@@ -17,7 +17,7 @@ MonoBehaviour:
   unitType: Enemy
   unitClass: Shield
   maxHp: 300
-  movementSpeed: 2
+  movementSpeed: 4
   missRate: 0
   manaDrop: 7
   manaCost: 10

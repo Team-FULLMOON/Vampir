@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5619838282135775707}
   - component: {fileID: 7512172322329104421}
   - component: {fileID: 6018550284340522713}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: View Range
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,7 +208,7 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!54 &-6551739423607355598
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -232,7 +232,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 1
@@ -255,7 +255,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 1
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!1 &7576867232460400837
@@ -425,7 +425,7 @@ Transform:
   m_GameObject: {fileID: 8588698409971925917}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -537,12 +537,12 @@ PrefabInstance:
     - target: {fileID: 8969961608407241986, guid: 0d665691312219243b2d9c769c8faf2b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1920
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8969961608407241986, guid: 0d665691312219243b2d9c769c8faf2b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 1080
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8969961608407241986, guid: 0d665691312219243b2d9c769c8faf2b,
         type: 3}

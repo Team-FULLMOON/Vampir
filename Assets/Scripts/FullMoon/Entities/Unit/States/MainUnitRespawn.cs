@@ -1,7 +1,5 @@
-using System.Linq;
 using UnityEngine;
 using FullMoon.FSM;
-using FullMoon.UI;
 
 namespace FullMoon.Entities.Unit.States
 {
@@ -16,27 +14,21 @@ namespace FullMoon.Entities.Unit.States
         
         public void Enter()
         {
-            controller.Rb.velocity = Vector3.zero;
-            
-            RespawnController closestRespawnUnit = controller.RespawnUnitInsideViewArea
-                .Where(t => MainUIController.Instance.ManaValue >= t.ManaCost)
-                .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
-                .FirstOrDefault();
-                
-            if (closestRespawnUnit == null)
+            if (controller.ReviveTarget is null || controller.ReviveTarget.gameObject.activeInHierarchy == false)
             {
                 return;
             }
-                
-            bool checkDistance = (closestRespawnUnit.transform.position - controller.transform.position).sqrMagnitude <=
+            
+            bool checkDistance = (controller.ReviveTarget.transform.position - controller.transform.position).sqrMagnitude <=
                                  controller.OverridenUnitData.RespawnRadius * controller.OverridenUnitData.RespawnRadius;
-                
+            
             if (checkDistance == false)
             {
+                controller.CheckAbleToRespawn(controller.ReviveTarget);
                 return;
             }
             
-            controller.StartSpawn(closestRespawnUnit);
+            controller.StartRespawn(controller.ReviveTarget);
         }
 
         public void Execute()
@@ -51,7 +43,7 @@ namespace FullMoon.Entities.Unit.States
 
         public void Exit()
         {
-            controller.CancelSpawn();
+            controller.CancelRespawn();
         }
     }
 }
