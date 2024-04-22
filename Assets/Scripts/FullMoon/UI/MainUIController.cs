@@ -30,6 +30,11 @@ namespace FullMoon.UI
         public Button ShortcutRespawnButton { get; private set; }
         public Button ShortcutCancelButton { get; private set; }
 
+        public ReactiveProperty<bool> canMove;
+        public ReactiveProperty<bool> canAttack;
+        public ReactiveProperty<bool> canRespawn;
+        public bool isMainUnit = false;
+
         #endregion
         
         public int ManaValue => (int)ManaProgressBar.value;
@@ -60,44 +65,82 @@ namespace FullMoon.UI
             ShortcutRespawnButton = root.Q<Button>("ShortcutRespawnButton");
             ShortcutCancelButton = root.Q<Button>("ShortcutCancelButton");
             
-            var canCancel = new ReactiveProperty<bool>(false);
+            canMove = new ReactiveProperty<bool>(false);
+            canAttack = new ReactiveProperty<bool>(false);
+            canRespawn = new ReactiveProperty<bool>(false);
 
-            canCancel.Subscribe(cancel =>
+            canMove.Subscribe(move =>
             {
-                ShortcutMoveButton.SetEnabled(!cancel);
-                ShortcutStopButton.SetEnabled(!cancel);
-                ShortcutAttackMoveButton.SetEnabled(!cancel);
-                ShortcutHoldButton.SetEnabled(!cancel);
-                ShortcutRespawnButton.SetEnabled(!cancel);
-                ShortcutCancelButton.SetEnabled(cancel);
+                ShortcutMoveButton.SetEnabled(move);
+                ShortcutStopButton.SetEnabled(!move);
+                ShortcutAttackMoveButton.SetEnabled(!move);
+                ShortcutHoldButton.SetEnabled(!move);
+                if (isMainUnit)
+                    ShortcutRespawnButton.SetEnabled(!move);
+                ShortcutCancelButton.SetEnabled(move);
+                if (!move)
+                    ShortcutMoveButton.SetEnabled(true);
             });
-    
-            ShortcutMoveButton.RegisterCallback<ClickEvent>(evt =>
+
+            canAttack.Subscribe(attack =>
             {
-                canCancel.Value = true;
+                ShortcutMoveButton.SetEnabled(!attack);
+                ShortcutStopButton.SetEnabled(!attack);
+                ShortcutAttackMoveButton.SetEnabled(attack);
+                ShortcutHoldButton.SetEnabled(!attack);
+                if (isMainUnit)
+                {
+                    Debug.Log(isMainUnit);
+                    ShortcutRespawnButton.SetEnabled(!attack);
+                }
+                ShortcutCancelButton.SetEnabled(attack);
+                if (!attack)
+                    ShortcutAttackMoveButton.SetEnabled(true);
             });
-            ShortcutStopButton.RegisterCallback<ClickEvent>(evt =>
+
+            canRespawn.Subscribe(respawn =>
             {
-                canCancel.Value = true;
+                ShortcutMoveButton.SetEnabled(!respawn);
+                ShortcutStopButton.SetEnabled(!respawn);
+                ShortcutAttackMoveButton.SetEnabled(!respawn);
+                ShortcutHoldButton.SetEnabled(!respawn);
+                ShortcutRespawnButton.SetEnabled(respawn);
+                ShortcutCancelButton.SetEnabled(respawn);
+                if (!respawn)
+                    ShortcutRespawnButton.SetEnabled(true);
             });
-            ShortcutAttackMoveButton.RegisterCallback<ClickEvent>(evt =>
-            {
-                canCancel.Value = true;
-            });
-            ShortcutHoldButton.RegisterCallback<ClickEvent>(evt =>
-            {
-                canCancel.Value = true;
-            });
-            ShortcutRespawnButton.RegisterCallback<ClickEvent>(evt =>
-            {
-                canCancel.Value = true;
-            });
-            ShortcutCancelButton.RegisterCallback<ClickEvent>(evt =>
-            {
-                canCancel.Value = false;
-            });
+
+            OffButton();
         }
-        
+
+        public void MainUnitActiveButton()
+        {
+            ShortcutMoveButton.SetEnabled(true);
+            ShortcutStopButton.SetEnabled(true);
+            ShortcutAttackMoveButton.SetEnabled(true);
+            ShortcutHoldButton.SetEnabled(true);
+            ShortcutRespawnButton.SetEnabled(true);
+        }
+
+        public void UnitActiveButton()
+        {
+            ShortcutMoveButton.SetEnabled(true);
+            ShortcutStopButton.SetEnabled(true);
+            ShortcutAttackMoveButton.SetEnabled(true);
+            ShortcutHoldButton.SetEnabled(true);
+        }
+
+        public void OffButton()
+        {
+            ShortcutMoveButton.SetEnabled(false);
+            ShortcutStopButton.SetEnabled(false);
+            ShortcutAttackMoveButton.SetEnabled(false);
+            ShortcutHoldButton.SetEnabled(false);
+            ShortcutRespawnButton.SetEnabled(false);
+            ShortcutCancelButton.SetEnabled(false);
+            isMainUnit = false;
+        }
+
         public void AddMana(int value)
         {
             ManaProgressBar.value = Mathf.Clamp(ManaProgressBar.value + value, 0f, ManaProgressBar.highValue);
