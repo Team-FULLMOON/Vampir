@@ -279,6 +279,7 @@ GameObject:
   - component: {fileID: 6372571031042578545}
   - component: {fileID: 8221377267059292143}
   - component: {fileID: 7538470333555455201}
+  - component: {fileID: 6865480049484353522}
   m_Layer: 8
   m_Name: EnemyShieldUnitPrefab
   m_TagString: Player
@@ -322,6 +323,7 @@ MonoBehaviour:
   unitModel: {fileID: 3319720673469424743}
   unitMarker: {fileID: 6798072512803417028}
   viewRange: {fileID: 2268042740748443340}
+  fogWar: {fileID: 0}
   decalProjector: {fileID: 6081375030924233605}
   attackEffect: {fileID: 8679279780333392621, guid: 5889d295f07756941ad4200554eb901c,
     type: 3}
@@ -397,6 +399,21 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &6865480049484353522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4972936984483943875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 985add12ee4836e40b7241671b1d892c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fogWar: {fileID: 0}
+  visibility: 0
+  additionalRadius: 0
 --- !u!1 &6798072512803417028
 GameObject:
   m_ObjectHideFlags: 0

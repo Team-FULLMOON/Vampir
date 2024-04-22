@@ -91,7 +91,7 @@ namespace FullMoon.ScriptableObject
         [SerializeField, OverrideLabel("시야 반경")] private float viewRadius = 10f;
         public float ViewRadius => viewRadius;
     
-        [SerializeField, OverrideLabel("전장의 안개 반경")] private float fogOfWarRadius = 20f;
-        public float FogOfWarRadius => fogOfWarRadius;
+        [SerializeField, OverrideLabel("전장의 안개 반경")] private int fogOfWarRadius = 10;
+        public int FogOfWarRadius => fogOfWarRadius;
     }
 }

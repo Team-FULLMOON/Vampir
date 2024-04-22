@@ -1,3 +1,4 @@
+using FischlWorks_FogWar;
 using MyBox;
 using UnityEngine;
 using UnityEngine.AI;
@@ -23,6 +24,12 @@ namespace FullMoon.Entities.Unit
         
         [Foldout("Base Unit Settings")] 
         public SphereCollider viewRange;
+
+        [Foldout("Base Unit Settings")] 
+        public csFogWar fogWar;
+        
+        [Foldout("Base Unit Settings")] 
+        public csFogVisibilityAgent fogVisibilityAgent;
         
         public readonly StateMachine StateMachine = new();
         
@@ -47,14 +54,30 @@ namespace FullMoon.Entities.Unit
             UnitClass = unitData.UnitClass;
             unitMarker.SetActive(false);
 
-            if (UnitType == "Player")
-            {
-                MainUIController.Instance.AddUnit(1);
-            }
-
             if (viewRange != null && unitData != null)
             {
                 viewRange.radius = unitData.ViewRadius;
+            }
+
+            if (UnitType == "Player")
+            {
+                MainUIController.Instance.AddUnit(1);
+
+                try
+                {
+                    fogWar = GameObject.Find("FogWar").GetComponent<csFogWar>();
+                    fogWar.AddFogRevealer(new csFogWar.FogRevealer(transform, unitData.FogOfWarRadius * 2, true));
+                }
+                catch
+                {
+                    Debug.LogErrorFormat("Failed to fetch csFogWar component. " +
+                                         "Please rename the gameobject that the module is attachted to as \"FogWar\", " +
+                                         "or change the implementation located in the csFogVisibilityAgent.cs script.");
+                }
+            }
+            else
+            {
+                fogVisibilityAgent = GetComponent<csFogVisibilityAgent>();
             }
         }
 
@@ -92,7 +115,19 @@ namespace FullMoon.Entities.Unit
                 MainUIController.Instance.AddMana(unitData.ManaDrop);
                 return;
             }
+            
             MainUIController.Instance.AddUnit(-1);
+            try
+            {
+                fogWar.RemoveFogRevealer(transform);
+                fogWar.UpdateFog();
+            }
+            catch
+            {
+                Debug.LogErrorFormat("Failed to fetch csFogWar component. " +
+                                     "Please rename the gameobject that the module is attachted to as \"FogWar\", " +
+                                     "or change the implementation located in the csFogVisibilityAgent.cs script.");
+            }
         }
 
         public virtual void Select()
