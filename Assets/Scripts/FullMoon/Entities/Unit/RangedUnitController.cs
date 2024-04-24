@@ -123,6 +123,7 @@ namespace FullMoon.Entities.Unit
             
             List<BaseUnitController> transitionControllers = UnitInsideViewArea
                 .Where(t => UnitType.Equals(t.UnitType))
+                .Where(t => t.StateMachine.CurrentState is MeleeUnitIdle or RangedUnitIdle)
                 .Where(t => (t.transform.position - transform.position).sqrMagnitude <=
                             OverridenUnitData.StateTransitionRadius * OverridenUnitData.StateTransitionRadius).ToList();
             
@@ -147,6 +148,7 @@ namespace FullMoon.Entities.Unit
             }
         }
 
+#if UNITY_EDITOR
         protected override void OnDrawGizmos()
         {
             base.OnDrawGizmos();
@@ -156,5 +158,6 @@ namespace FullMoon.Entities.Unit
                 decalProjector.size = new Vector3(unitData.AttackRadius * 2f, unitData.AttackRadius * 2f, decalProjector.size.z);
             }
         }
+#endif
     }
 }

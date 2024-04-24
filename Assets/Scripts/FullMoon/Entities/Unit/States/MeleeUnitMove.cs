@@ -42,7 +42,7 @@ namespace FullMoon.Entities.Unit.States
                 return;
             }
 
-            if (controller.AttackMove)
+            if (controller.AttackMove || controller.UnitType == "Enemy")
             {
                 closestUnit = controller.UnitInsideViewArea
                     .Where(t => !controller.UnitType.Equals(t.UnitType))
