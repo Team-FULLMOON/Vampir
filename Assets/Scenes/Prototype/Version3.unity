@@ -45394,7 +45394,7 @@ PrefabInstance:
     - target: {fileID: 1126037894601000355, guid: 45c0e8983dfd155438c71a93215887d2,
         type: 3}
       propertyPath: cursorLockType
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1327382350321120181, guid: 45c0e8983dfd155438c71a93215887d2,
         type: 3}

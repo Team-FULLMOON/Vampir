@@ -23,7 +23,6 @@ namespace FullMoon.Entities.Unit.States
         {
             if (!controller.Agent.pathPending && controller.Agent.remainingDistance <= controller.Agent.stoppingDistance)
             {
-                Debug.Log($"{controller.Agent.remainingDistance}");
                 controller.StateMachine.ChangeState(new RangedUnitIdle(controller));
                 return;
             }
@@ -36,14 +35,14 @@ namespace FullMoon.Entities.Unit.States
                             && Mathf.Approximately(controller.LatestDestination.z, t.LatestDestination.z))
                 .FirstOrDefault(t => Vector3.Distance(controller.transform.position, t.transform.position) <= 2f);
             
-            if (closestUnit != null)
+            if (closestUnit is not null)
             {
                 controller.AttackMove = false;
                 controller.StateMachine.ChangeState(new RangedUnitIdle(controller));
                 return;
             }
 
-            if (controller.AttackMove)
+            if (controller.AttackMove || controller.UnitType == "Enemy")
             {
                 closestUnit = controller.UnitInsideViewArea
                     .Where(t => !controller.UnitType.Equals(t.UnitType))

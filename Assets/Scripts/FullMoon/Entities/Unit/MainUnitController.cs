@@ -182,7 +182,8 @@ namespace FullMoon.Entities.Unit
             ReviveTarget = null;
             StateMachine.ChangeState(new MainUnitIdle(this));
         }
-
+        
+#if UNITY_EDITOR
         protected override void OnDrawGizmos()
         {
             base.OnDrawGizmos();
@@ -192,5 +193,6 @@ namespace FullMoon.Entities.Unit
                 decalProjector.size = new Vector3(((MainUnitData)unitData).RespawnRadius * 2f, ((MainUnitData)unitData).RespawnRadius * 2f, decalProjector.size.z);
             }
         }
+#endif
     }
 }

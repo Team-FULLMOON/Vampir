@@ -177,9 +177,10 @@ namespace FullMoon.Entities.Unit
 
         public virtual void OnUnitStateTransition(Vector3 targetPosition)
         {
-            Debug.Log("Transition");
+            Debug.Log("asdf");
         }
 
+#if UNITY_EDITOR
         protected virtual void OnDrawGizmos()
         {
             if (viewRange != null && unitData != null)
@@ -187,5 +188,6 @@ namespace FullMoon.Entities.Unit
                 viewRange.radius = unitData.ViewRadius;
             }
         }
+#endif
     }
 }

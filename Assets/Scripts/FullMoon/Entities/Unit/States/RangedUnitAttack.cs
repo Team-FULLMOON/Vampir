@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using FullMoon.FSM;
@@ -24,7 +23,7 @@ namespace FullMoon.Entities.Unit.States
                 return;
             }
             
-            BaseUnitController closestUnit  = controller.UnitInsideViewArea
+            BaseUnitController closestUnit = controller.UnitInsideViewArea
                 .Where(t => !controller.UnitType.Equals(t.UnitType))
                 .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
                 .FirstOrDefault();
