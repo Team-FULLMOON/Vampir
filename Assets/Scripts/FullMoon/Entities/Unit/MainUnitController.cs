@@ -43,10 +43,11 @@ namespace FullMoon.Entities.Unit
             StateMachine.ChangeState(new MainUnitIdle(this));
         }
         
-        protected void LateUpdate()
+        protected override void Update()
         {
             UnitInsideViewArea.RemoveAll(unit => unit is null || !unit.gameObject.activeInHierarchy);
             RespawnUnitInsideViewArea.RemoveAll(unit => unit is null || !unit.gameObject.activeInHierarchy);
+            base.Update();
         }
 
         public void EnterViewRange(Collider unit)
