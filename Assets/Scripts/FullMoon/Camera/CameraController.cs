@@ -413,7 +413,7 @@ namespace FullMoon.Camera
                 .Where(_ => EventSystem.current.IsPointerOverGameObject() == false)
                 .Where(x => x.Count >= 2)
                 .Where(count => selectedUnitList.Count != 0)
-                .Subscribe(_ => SelectAllUnit(selectedUnitList.First()));
+                .Subscribe(_ => SelectAllUnit(selectedUnitList.First().UnitClass));
         }
 
         /// <summary>
@@ -513,10 +513,10 @@ namespace FullMoon.Camera
         /// <summary>
         /// 화면 안에 있는 모든 유닛 선택 (직군 별로)
         /// </summary>
-        private void SelectAllUnit(BaseUnitController newUnit)
+        private void SelectAllUnit(string unitClass)
         {
             var units = FindObjectsByType<BaseUnitController>(FindObjectsSortMode.None);
-            foreach (var unit in units.Where(u => u.UnitClass == newUnit.UnitClass))
+            foreach (var unit in units.Where(u => u.UnitClass == unitClass))
             {
                 Vector3 screenPosition = mainCamera.WorldToScreenPoint(unit.transform.position);
                 Vector2 position2D = new Vector2(screenPosition.x, screenPosition.y);
@@ -605,30 +605,49 @@ namespace FullMoon.Camera
             {
                 StopSelectUnits();
             }
-
-            if (PlayerInputManager.Instance.hold)
+            else if (PlayerInputManager.Instance.hold)
             {
                 HoldSelectUnits();
             }
-
-            if (PlayerInputManager.Instance.cancel)
+            else if (PlayerInputManager.Instance.cancel)
             {
                 OnCancelAction();
             }
-
-            if (selectedUnitList.Count != 0)
+            else if (PlayerInputManager.Instance.mainSelect)
+            {
+                DeselectAll();
+                OnCancelAction();
+                SelectAllUnit("Main");
+            }
+            else if (PlayerInputManager.Instance.shieldSelect)
+            {
+                DeselectAll();
+                OnCancelAction();
+                SelectAllUnit("Shield");
+            }
+            else if (PlayerInputManager.Instance.rangedSelect)
+            {
+                DeselectAll();
+                OnCancelAction();
+                SelectAllUnit("Ranged");
+            }
+            else if (PlayerInputManager.Instance.meleeSelect)
+            {
+                DeselectAll();
+                OnCancelAction();
+                SelectAllUnit("Melee");
+            }
+            else if (selectedUnitList.Count != 0)
             {
                 if (PlayerInputManager.Instance.attackMove)
                 {
                     OnAttackMoveAction();
                 }
-                
-                if (PlayerInputManager.Instance.normalMove)
+                else if (PlayerInputManager.Instance.normalMove)
                 {
                     OnNormalMoveAction();
                 }
-
-                if (PlayerInputManager.Instance.respawn)
+                else if (PlayerInputManager.Instance.respawn)
                 {
                     OnRespawnAction();
                 }
