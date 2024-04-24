@@ -25,8 +25,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 31388649963703528}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.3538488, y: 0.6395254, z: -0.42170057, w: 0.5366255}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.3538488, y: 0.6395255, z: -0.4217006, w: 0.5366255}
+  m_LocalPosition: {x: -0.0000038146973, y: 0, z: 0.0000009536743}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -195,8 +195,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1889243612475854807}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.3538488, y: 0.6395254, z: -0.42170057, w: 0.5366255}
-  m_LocalPosition: {x: -11.817694, y: 28, z: 2.0837803}
+  m_LocalRotation: {x: 0.3538488, y: 0.6395255, z: -0.4217006, w: 0.5366255}
+  m_LocalPosition: {x: -11.817696, y: 28, z: 2.0837803}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -364,8 +364,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2474712166693596168}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -21.9, y: 0, z: 6}
+  m_LocalRotation: {x: -0, y: 0.5997032, z: -0, w: 0.8002226}
+  m_LocalPosition: {x: -51.1, y: 2.783, z: -17.63}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -373,7 +373,7 @@ Transform:
   - {fileID: 6542061843157957838}
   - {fileID: 2900129862130406697}
   m_Father: {fileID: 261678224792970686}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 73.697, z: 0}
 --- !u!114 &1327382350321120181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -387,7 +387,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   freeLookCamera: {fileID: 7414321399674627490}
-  enableCursorMovement: 0
+  enableCursorMovement: 1
   moveSpeed: 12
   shiftMoveSpeed: 25
   zoomSensitivity: 5
@@ -478,8 +478,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2634768523580393475}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.3538488, y: 0.6395254, z: -0.42170057, w: 0.5366255}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.3538488, y: 0.6395255, z: -0.4217006, w: 0.5366255}
+  m_LocalPosition: {x: -0.0000038146973, y: 0, z: 0.0000009536743}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -721,8 +721,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3817388134677654357}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.3538488, y: 0.6395254, z: -0.42170057, w: 0.5366255}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.3538488, y: 0.6395255, z: -0.4217006, w: 0.5366255}
+  m_LocalPosition: {x: -0.0000076293945, y: 0, z: 0.0000019073486}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -958,7 +958,7 @@ Transform:
   m_GameObject: {fileID: 5295517717770386916}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.817694, y: 28, z: 2.0837803}
+  m_LocalPosition: {x: -11.817696, y: 28, z: 2.0837803}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -989,7 +989,7 @@ MonoBehaviour:
   m_Follow: {fileID: 3450615881860291595}
   m_CommonLens: 1
   m_Lens:
-    FieldOfView: 55
+    FieldOfView: 65
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -1299,6 +1299,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitControlData: {fileID: 11400000, guid: bc7316a50f904ad489752886c4e22b3a, type: 2}
+  canMove:
+    value: 0
+  canAttack:
+    value: 0
+  canRespawn:
+    value: 0
+  isMainUnit: 0
 --- !u!1 &8015035892718466246
 GameObject:
   m_ObjectHideFlags: 0
@@ -1979,6 +1986,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5984626541885889036, guid: dce5e86e17447c648859eec2b7a1486f,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee,
+        type: 2}
+    - target: {fileID: 5984626541885889036, guid: dce5e86e17447c648859eec2b7a1486f,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 7261215782348513280, guid: dce5e86e17447c648859eec2b7a1486f,
         type: 3}
       propertyPath: m_Name
