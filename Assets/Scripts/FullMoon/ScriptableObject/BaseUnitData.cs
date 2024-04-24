@@ -28,7 +28,7 @@ namespace FullMoon.ScriptableObject
         
         [Separator]
     
-        [SerializeField, OverrideLabel("최대 체력")] private int maxHp = 5;
+        [SerializeField, OverrideLabel("최대 체력")] private int maxHp = 100;
         public int MaxHp => maxHp;
         
         [SerializeField, OverrideLabel("이동 속도")] private float movementSpeed = 5f;
@@ -71,7 +71,7 @@ namespace FullMoon.ScriptableObject
         public bool AttackEnabled => attackEnabled;
     
         [SerializeField, ConditionalField(nameof(attackEnabled)), OverrideLabel("공격 당 데미지")]
-        private int attackDamage = 1;
+        private int attackDamage = 10;
         public int AttackDamage => attackDamage;
         
         [SerializeField, ConditionalField(nameof(attackEnabled)), OverrideLabel("첫 공격 딜레이")]
@@ -90,6 +90,10 @@ namespace FullMoon.ScriptableObject
         
         [SerializeField, OverrideLabel("시야 반경")] private float viewRadius = 10f;
         public float ViewRadius => viewRadius;
+        
+        
+        [SerializeField, OverrideLabel("상태 전이 반경")] private float stateTransitionRadius = 10f;
+        public float StateTransitionRadius => stateTransitionRadius;
     
         [SerializeField, OverrideLabel("전장의 안개 반경")] private int fogOfWarRadius = 10;
         public int FogOfWarRadius => fogOfWarRadius;

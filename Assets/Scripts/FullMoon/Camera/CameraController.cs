@@ -409,7 +409,7 @@ namespace FullMoon.Camera
             var clickStream = this.UpdateAsObservable().Where(_ => UnityEngine.InputSystem.Mouse.current.leftButton.wasPressedThisFrame);
 
             clickStream
-                .Buffer(clickStream.Throttle(TimeSpan.FromMilliseconds(150)))
+                .Buffer(clickStream.Throttle(TimeSpan.FromMilliseconds(200)))
                 .Where(_ => EventSystem.current.IsPointerOverGameObject() == false)
                 .Where(x => x.Count >= 2)
                 .Where(count => selectedUnitList.Count != 0)

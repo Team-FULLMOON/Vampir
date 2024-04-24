@@ -1,5 +1,6 @@
 using MyBox;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering.Universal;
@@ -42,17 +43,19 @@ namespace FullMoon.Entities.Unit
             StateMachine.ChangeState(new MeleeUnitIdle(this));
         }
         
-        protected void LateUpdate()
+        protected override void Update()
         {
             ReduceAttackCoolTime();
             UnitInsideViewArea.RemoveAll(unit => unit == null || !unit.gameObject.activeInHierarchy);
+            base.Update();
         }
 
         public override void ReceiveDamage(int amount, BaseUnitController attacker)
         {
-            if (StateMachine.CurrentState.ToString().Equals(typeof(MeleeUnitIdle).ToString()))
+            if (StateMachine.CurrentState is MeleeUnitIdle)
             {
                 MoveToPosition(attacker.transform.position);
+                OnUnitStateTransition(attacker.transform.position);
             }
             base.ReceiveDamage(amount, attacker);
         }
@@ -133,7 +136,29 @@ namespace FullMoon.Entities.Unit
             base.OnUnitAttack(targetPosition);
             StateMachine.ChangeState(new MeleeUnitMove(this));
         }
-        
+
+        public override void OnUnitStateTransition(Vector3 targetPosition)
+        {
+            base.OnUnitStateTransition(targetPosition);
+            
+            List<BaseUnitController> transitionControllers = UnitInsideViewArea
+                .Where(t => UnitType.Equals(t.UnitType))
+                .Where(t => (t.transform.position - transform.position).sqrMagnitude <=
+                            OverridenUnitData.StateTransitionRadius * OverridenUnitData.StateTransitionRadius).ToList();
+            
+            foreach (var unit in transitionControllers)
+            {
+                unit.MoveToPosition(targetPosition);
+            }
+            
+            if (StateMachine.CurrentState is not RangedUnitIdle)
+            {
+                return;
+            }
+            
+            MoveToPosition(targetPosition);
+        }
+
         private void ReduceAttackCoolTime()
         {
             if (CurrentAttackCoolTime > 0)
