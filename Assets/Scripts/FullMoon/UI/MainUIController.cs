@@ -76,10 +76,14 @@ namespace FullMoon.UI
                 ShortcutAttackMoveButton.SetEnabled(!move);
                 ShortcutHoldButton.SetEnabled(!move);
                 if (isMainUnit)
+                {
                     ShortcutRespawnButton.SetEnabled(!move);
+                }
                 ShortcutCancelButton.SetEnabled(move);
                 if (!move)
+                {
                     ShortcutMoveButton.SetEnabled(true);
+                }
             });
 
             canAttack.Subscribe(attack =>
@@ -89,10 +93,14 @@ namespace FullMoon.UI
                 ShortcutAttackMoveButton.SetEnabled(attack);
                 ShortcutHoldButton.SetEnabled(!attack);
                 if (isMainUnit)
+                {
                     ShortcutRespawnButton.SetEnabled(!attack);
+                }
                 ShortcutCancelButton.SetEnabled(attack);
                 if (!attack)
+                {
                     ShortcutAttackMoveButton.SetEnabled(true);
+                }
             });
 
             canRespawn.Subscribe(respawn =>
@@ -104,7 +112,9 @@ namespace FullMoon.UI
                 ShortcutRespawnButton.SetEnabled(respawn);
                 ShortcutCancelButton.SetEnabled(respawn);
                 if (!respawn)
+                {
                     ShortcutRespawnButton.SetEnabled(true);
+                }
             });
 
             OffButton();
