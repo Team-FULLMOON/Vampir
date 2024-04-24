@@ -33,6 +33,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Ctrl",
+                    "type": "Value",
+                    "id": "dc6abc28-bf8a-4a4d-aa58-f1951c2a6c04",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Shift",
                     "type": "Value",
                     "id": "607fde00-2ec7-4802-a5c2-3802c043fa5a",
@@ -390,6 +399,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "MeleeSelect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fff11628-12fc-49f3-b977-085037bc4779",
+                    "path": "<Keyboard>/leftCtrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Ctrl",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

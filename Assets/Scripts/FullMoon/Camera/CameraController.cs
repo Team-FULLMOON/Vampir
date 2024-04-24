@@ -131,6 +131,10 @@ namespace FullMoon.Camera
             if (moveDirection == Vector3.zero && enableCursorMovement)
             {
                 moveDirection = AdjustMovementToCamera(GetScreenMovementInput());
+                if (moveDirection != Vector3.zero)
+                {
+                    cursor.SetCursorState(CursorType.Camera);
+                }
             }
         
             float movementSpeed = PlayerInputManager.Instance.shift ? shiftMoveSpeed : moveSpeed;
@@ -319,6 +323,10 @@ namespace FullMoon.Camera
                         if (PlayerInputManager.Instance.shift)
                         {
                             ShiftClickSelectUnit(unitController);
+                        }
+                        else if (PlayerInputManager.Instance.ctrl)
+                        {
+                            SelectAllUnit(unitController.UnitClass);
                         }
                         else
                         {
