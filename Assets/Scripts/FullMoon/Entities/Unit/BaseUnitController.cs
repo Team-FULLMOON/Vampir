@@ -175,10 +175,7 @@ namespace FullMoon.Entities.Unit
             MoveToPosition(targetPosition);
         }
 
-        public virtual void OnUnitStateTransition(Vector3 targetPosition)
-        {
-            Debug.Log("asdf");
-        }
+        public virtual void OnUnitStateTransition(Vector3 targetPosition) { }
 
 #if UNITY_EDITOR
         protected virtual void OnDrawGizmos()
