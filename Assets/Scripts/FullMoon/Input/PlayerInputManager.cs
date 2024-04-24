@@ -25,6 +25,7 @@ namespace FullMoon.Input
         public Vector2 move;
         public bool analogMovement;
         public bool shift;
+        public bool ctrl;
         public Vector2 zoom;
         public bool stop;
         public bool hold;
@@ -50,6 +51,11 @@ namespace FullMoon.Input
         private void OnShift(InputValue value)
         {
             ShiftInput(value.isPressed);
+        }
+
+        public void OnCtrl(InputValue value)
+        {
+            CtrlInput(value.isPressed);
         }
 
         public void OnZoom(InputValue value)
@@ -125,6 +131,13 @@ namespace FullMoon.Input
         {
             shift = input;
             ShiftEvent.TriggerEvent(input);
+        }
+
+        public readonly GenericEventSystem<bool> CtrlEvent = new();
+        public void CtrlInput(bool input)
+        {
+            ctrl = input;
+            CtrlEvent.TriggerEvent(input);
         }
         
         public readonly GenericEventSystem<Vector2> ZoomEvent = new();

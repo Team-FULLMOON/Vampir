@@ -15,6 +15,7 @@ namespace FullMoon.UI
         Move,
         Unit,
         Create,
+        Camera,
     }
 
     public class CursorController : MonoBehaviour
@@ -46,6 +47,10 @@ namespace FullMoon.UI
 
         public void SetCursorState(CursorType type)
         {
+            if (cursorType is not CursorType.Idle && type is CursorType.Camera)
+            {
+                return;
+            }
             cursorType = type;
         }
 
@@ -72,6 +77,9 @@ namespace FullMoon.UI
                     break;
                 case CursorType.Create:
                     Cursor.SetCursor(textures[4], Vector2.zero, CursorMode.ForceSoftware);
+                    break;
+                case CursorType.Camera:
+                    Cursor.SetCursor(textures[5], Vector2.zero, CursorMode.ForceSoftware);
                     break;
             }
         }
