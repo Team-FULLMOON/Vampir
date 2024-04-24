@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{fe28daea-ce8f-4e09-823e-f200e618713b}">
+		<property name="assetPath">
+			<value>bullet_impact_metal_heavy_05.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.84847916666666667</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{ad92bd7e-102f-4e69-8093-b644ba451d04}</destination>
+		</relationship>
+	</object>
+</objects>

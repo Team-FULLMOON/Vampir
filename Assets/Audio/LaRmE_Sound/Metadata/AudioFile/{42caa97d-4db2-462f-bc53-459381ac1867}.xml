@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{42caa97d-4db2-462f-bc53-459381ac1867}">
+		<property name="assetPath">
+			<value>Amb_TropicalForestLoop4.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>5.2359410430839004</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{ad92bd7e-102f-4e69-8093-b644ba451d04}</destination>
+		</relationship>
+	</object>
+</objects>
