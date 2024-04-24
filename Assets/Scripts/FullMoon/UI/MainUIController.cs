@@ -89,10 +89,7 @@ namespace FullMoon.UI
                 ShortcutAttackMoveButton.SetEnabled(attack);
                 ShortcutHoldButton.SetEnabled(!attack);
                 if (isMainUnit)
-                {
-                    Debug.Log(isMainUnit);
                     ShortcutRespawnButton.SetEnabled(!attack);
-                }
                 ShortcutCancelButton.SetEnabled(attack);
                 if (!attack)
                     ShortcutAttackMoveButton.SetEnabled(true);

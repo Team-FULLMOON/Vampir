@@ -33,6 +33,10 @@ namespace FullMoon.Input
         public bool attackMove;
         public bool normalMove;
         public bool cancel;
+        public bool mainSelect;
+        public bool shieldSelect;
+        public bool rangedSelect;
+        public bool meleeSelect;
 
         [Header("Mouse Cursor Lock Settings")] 
         public CursorLockType cursorLockType;
@@ -86,6 +90,26 @@ namespace FullMoon.Input
         public void OnCancel(InputValue value)
         {
             CancelInput(value.isPressed);
+        }
+
+        public void OnMainSelect(InputValue value)
+        {
+            MainSelectInput(value.isPressed);
+        }
+
+        public void OnShieldSelect(InputValue value)
+        {
+            ShieldSelectInput(value.isPressed);
+        }
+
+        public void OnRangedSelect(InputValue value)
+        {
+            RangedSelectInput(value.isPressed);
+        }
+
+        public void OnMeleeSelect(InputValue value)
+        {
+            MeleeSelectInput(value.isPressed);
         }
 #endif
 		
@@ -158,7 +182,35 @@ namespace FullMoon.Input
             cancel = input;
             CancelEvent.TriggerEvent(input);
         }
+
+        public readonly GenericEventSystem<bool> MainSelectEvent = new();
+        public void MainSelectInput(bool input)
+        {
+            mainSelect = input;
+            MainSelectEvent.TriggerEvent(input);
+        }
+
+        public readonly GenericEventSystem<bool> ShieldSelectEvent = new();
+        public void ShieldSelectInput(bool input)
+        {
+            shieldSelect = input;
+            ShieldSelectEvent.TriggerEvent(input);
+        }
         
+        public readonly GenericEventSystem<bool> RangedSelectEvent = new();
+        public void RangedSelectInput(bool input)
+        {
+            rangedSelect = input;
+            RangedSelectEvent.TriggerEvent(input);
+        }
+
+        public readonly GenericEventSystem<bool> MeleeSelectEvent = new();
+        public void MeleeSelectInput(bool input)
+        {
+            meleeSelect = input;
+            MeleeSelectEvent.TriggerEvent(input);
+        }
+
         private void OnApplicationFocus(bool hasFocus)
         {
             SetCursorLockState(cursorLockType);
