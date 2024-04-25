@@ -583,7 +583,7 @@ namespace FullMoon.Camera
         {
             foreach (var unit in selectedUnitList)
             {
-                if (unit.UnitType.Equals("Enemy"))
+                if (unit.UnitType.Equals("Enemy") || unit.UnitType == target.UnitType)
                 {
                     continue;
                 }
