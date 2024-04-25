@@ -116,7 +116,13 @@ namespace FullMoon.Entities.Unit
             base.OnUnitAttack(targetPosition);
             StateMachine.ChangeState(new RangedUnitMove(this));
         }
-        
+
+        public override void OnUnitForceAttack(BaseUnitController target)
+        {
+            base.OnUnitForceAttack(target);
+            StateMachine.ChangeState(new RangedUnitAttack(this));
+        }
+
         public override void OnUnitStateTransition(Vector3 targetPosition)
         {
             base.OnUnitStateTransition(targetPosition);

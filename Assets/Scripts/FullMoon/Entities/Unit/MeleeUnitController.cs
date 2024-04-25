@@ -137,6 +137,12 @@ namespace FullMoon.Entities.Unit
             StateMachine.ChangeState(new MeleeUnitMove(this));
         }
 
+        public override void OnUnitForceAttack(BaseUnitController target)
+        {
+            base.OnUnitForceAttack(target);
+            StateMachine.ChangeState(new MeleeUnitAttack(this));
+        }
+
         public override void OnUnitStateTransition(Vector3 targetPosition)
         {
             base.OnUnitStateTransition(targetPosition);
