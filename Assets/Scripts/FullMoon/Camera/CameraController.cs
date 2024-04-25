@@ -55,8 +55,6 @@ namespace FullMoon.Camera
         private Rect dragRect; // 마우스로 드래그 한 범위 (xMin~xMax, yMin~yMax)
         private Vector2 dragStart = Vector2.zero; // 드래그 시작 위치
         private Vector2 dragEnd = Vector2.zero; // 드래그 종료 위치
-
-        int test = 0;
         private void Awake()
         {
             mainCamera = UnityEngine.Camera.main;
@@ -304,6 +302,11 @@ namespace FullMoon.Camera
                 }
                 else if (attackMove)
                 {
+                    if (unitController is not null)
+                    {
+                        ForceAttackSelectUnits(unitController);
+                        return;
+                    }
                     AttackSelectedUnits(hit.point);
                     cursor.SetMoveAniTarget(hit.point);
                 }
@@ -399,7 +402,7 @@ namespace FullMoon.Camera
                 }
                 else if (unitController is not null && selectedUnitList.Count != 0)
                 {
-                    AttackSelectedUnits(unitController.transform.position);
+                    ForceAttackSelectUnits(unitController);
                 }
                 else if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
                 {
@@ -574,6 +577,19 @@ namespace FullMoon.Camera
 
             attackMove = false;
             MainUIController.Instance.canAttack.Value = false;
+        }
+
+        private void ForceAttackSelectUnits(BaseUnitController target)
+        {
+            foreach (var unit in selectedUnitList)
+            {
+                if (unit.UnitType.Equals("Enemy"))
+                {
+                    continue;
+                }
+
+                unit.OnUnitForceAttack(target);
+            }
         }
 
         private void CheckCursorUnit()

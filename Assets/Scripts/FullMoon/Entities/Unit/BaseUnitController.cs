@@ -42,6 +42,7 @@ namespace FullMoon.Entities.Unit
         public string UnitClass { get; set; }
 
         public bool AttackMove { get; set; }
+        public BaseUnitController attackTarget = null;
         public Vector3 AttackMovePosition { get; set; }
 
         protected virtual void Start()
@@ -160,19 +161,28 @@ namespace FullMoon.Entities.Unit
         {
             MoveToPosition(transform.position);
             AttackMove = false;
+            attackTarget = null;
         }
 
         public virtual void OnUnitHold()
         {
             MoveToPosition(transform.position);
             AttackMove = false;
+            attackTarget = null;
         }
 
         public virtual void OnUnitAttack(Vector3 targetPosition)
         {
+            attackTarget = null;
             AttackMove = true;
             AttackMovePosition = targetPosition;
             MoveToPosition(targetPosition);
+        }
+
+        public virtual void OnUnitForceAttack(BaseUnitController target)
+        {
+            attackTarget = target;
+            AttackMove = false;
         }
 
         public virtual void OnUnitStateTransition(Vector3 targetPosition) { }

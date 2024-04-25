@@ -85,7 +85,7 @@ namespace FullMoon.ScriptableObject
         [SerializeField, ConditionalField(nameof(attackEnabled)), OverrideLabel("공격 반경")] 
         private float attackRadius = 10f;
         public float AttackRadius => attackRadius;
-    
+
         [Separator]
         
         [SerializeField, OverrideLabel("시야 반경")] private float viewRadius = 10f;
