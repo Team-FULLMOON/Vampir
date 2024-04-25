@@ -39,7 +39,7 @@ namespace FullMoon.Entities.Unit.States
 
         public void Execute()
         {
-            if (controller.attackTarget is not null && !controller.attackTarget.gameObject.activeSelf)
+            if (controller.attackTarget is not null && !controller.attackTarget.gameObject.activeInHierarchy)
             {
                 controller.attackTarget = null;
             }

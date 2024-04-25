@@ -42,7 +42,7 @@ namespace FullMoon.Entities.Unit
         public string UnitClass { get; set; }
 
         public bool AttackMove { get; set; }
-        public BaseUnitController attackTarget = null;
+        public BaseUnitController attackTarget { get; set; }
         public Vector3 AttackMovePosition { get; set; }
 
         protected virtual void Start()
