@@ -2,9 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using FullMoon.FSM;
+using Unity.Burst;
 
 namespace FullMoon.Entities.Unit.States
 {
+    [BurstCompile]
     public class MeleeUnitAttack : IState
     {
         private readonly MeleeUnitController controller;
@@ -37,6 +39,7 @@ namespace FullMoon.Entities.Unit.States
             controller.OnUnitStateTransition(closestUnit.transform.position);
         }
 
+        [BurstCompile]
         public void Execute()
         {
             if (controller.AttackTarget is not null && !controller.AttackTarget.gameObject.activeInHierarchy)
@@ -44,7 +47,7 @@ namespace FullMoon.Entities.Unit.States
                 controller.AttackTarget = null;
             }
 
-            BaseUnitController closestUnit = controller.AttackTarget ?? controller.UnitInsideViewArea
+            BaseUnitController closestUnit = controller.AttackTarget ? controller.AttackTarget : controller.UnitInsideViewArea
                 .Where(t => !controller.UnitType.Equals(t.UnitType))
                 .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
                 .FirstOrDefault();

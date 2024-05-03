@@ -1,9 +1,11 @@
 using System.Linq;
 using UnityEngine;
 using FullMoon.FSM;
+using Unity.Burst;
 
 namespace FullMoon.Entities.Unit.States
 {
+    [BurstCompile]
     public class RangedUnitMove : IState
     {
         private readonly RangedUnitController controller;
@@ -19,6 +21,7 @@ namespace FullMoon.Entities.Unit.States
             controller.Agent.speed = controller.OverridenUnitData.MovementSpeed;
         }
 
+        [BurstCompile]
         public void Execute()   
         {
             if (!controller.Agent.pathPending && controller.Agent.remainingDistance <= controller.Agent.stoppingDistance)

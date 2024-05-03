@@ -203,7 +203,7 @@ MonoBehaviour:
     IsIconRecursive: 0
     BackgroundType: 0
     BackgroundTexture: {fileID: 0}
-    IsBackgroundRecursive: 0
+    IsBackgroundRecursive: 1
     IsHidden: 0
   - Type: 0
     Key: Scripts
@@ -336,4 +336,16 @@ MonoBehaviour:
     BackgroundType: 0
     BackgroundTexture: {fileID: 0}
     IsBackgroundRecursive: 0
+    IsHidden: 0
+  - Type: 1
+    Key: Assets/GameResource
+    Ordinal: 27
+    Priority: 0
+    IconType: 2140
+    SmallIcon: {fileID: 0}
+    LargeIcon: {fileID: 0}
+    IsIconRecursive: 0
+    BackgroundType: 0
+    BackgroundTexture: {fileID: 0}
+    IsBackgroundRecursive: 1
     IsHidden: 0

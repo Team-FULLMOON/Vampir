@@ -6,9 +6,11 @@ using FullMoon.Interfaces;
 using FullMoon.ScriptableObject;
 using FullMoon.UI;
 using FullMoon.Util;
+using Unity.Burst;
 
 namespace FullMoon.Entities.Unit
 {
+    [BurstCompile]
     public abstract class BaseUnitController
         : MonoBehaviour, IDamageable, ISelectable, INavigation
     {
@@ -59,11 +61,13 @@ namespace FullMoon.Entities.Unit
             }
         }
 
+        [BurstCompile]
         protected virtual void Update()
         {
             StateMachine.ExecuteCurrentState();
         }
 
+        [BurstCompile]
         protected virtual void FixedUpdate()
         {
             StateMachine.FixedExecuteCurrentState();

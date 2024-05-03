@@ -8,10 +8,11 @@ using FullMoon.Interfaces;
 using FullMoon.Entities.Unit.States;
 using FullMoon.ScriptableObject;
 using FullMoon.Util;
+using Unity.Burst;
 
 namespace FullMoon.Entities.Unit
 {
-    [RequireComponent(typeof(NavMeshAgent))]
+    [RequireComponent(typeof(NavMeshAgent)), BurstCompile]
     public class MeleeUnitController 
         : BaseUnitController, IAttackable
     {
@@ -43,6 +44,7 @@ namespace FullMoon.Entities.Unit
             StateMachine.ChangeState(new MeleeUnitIdle(this));
         }
         
+        [BurstCompile]
         protected override void Update()
         {
             ReduceAttackCoolTime();
@@ -80,6 +82,7 @@ namespace FullMoon.Entities.Unit
             UnitInsideViewArea.Remove(controller);
         }
 
+        [BurstCompile]
         public void ExecuteAttack(Transform target)
         {
             BaseUnitController targetController = target.GetComponent<BaseUnitController>();
@@ -143,6 +146,7 @@ namespace FullMoon.Entities.Unit
             StateMachine.ChangeState(new MeleeUnitAttack(this));
         }
 
+        [BurstCompile]
         public override void OnUnitStateTransition(Vector3 targetPosition)
         {
             base.OnUnitStateTransition(targetPosition);

@@ -1,5 +1,8 @@
+using Unity.Burst;
+
 namespace FullMoon.FSM
 {
+    [BurstCompile]
     public class StateMachine
     {
         public IState CurrentState { get; private set; }

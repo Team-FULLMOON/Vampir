@@ -9,10 +9,11 @@ using FullMoon.Effect;
 using FullMoon.Interfaces;
 using FullMoon.Entities.Unit.States;
 using FullMoon.ScriptableObject;
+using Unity.Burst;
 
 namespace FullMoon.Entities.Unit
 {
-    [RequireComponent(typeof(NavMeshAgent))]
+    [RequireComponent(typeof(NavMeshAgent)), BurstCompile]
     public class RangedUnitController 
         : BaseUnitController, IAttackable
     {
@@ -44,6 +45,7 @@ namespace FullMoon.Entities.Unit
             StateMachine.ChangeState(new RangedUnitIdle(this));
         }
 
+        [BurstCompile]
         protected override void Update()
         {
             ReduceAttackCoolTime();
@@ -123,6 +125,7 @@ namespace FullMoon.Entities.Unit
             StateMachine.ChangeState(new RangedUnitAttack(this));
         }
 
+        [BurstCompile]
         public override void OnUnitStateTransition(Vector3 targetPosition)
         {
             base.OnUnitStateTransition(targetPosition);
