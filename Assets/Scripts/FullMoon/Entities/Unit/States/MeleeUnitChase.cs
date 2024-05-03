@@ -22,7 +22,7 @@ namespace FullMoon.Entities.Unit.States
                 return;
             }
             
-            BaseUnitController closestUnit = controller.AttackTarget ?? controller.UnitInsideViewArea
+            BaseUnitController closestUnit = controller.AttackTarget ? controller.AttackTarget : controller.UnitInsideViewArea
                 .Where(t => !controller.UnitType.Equals(t.UnitType))
                 .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
                 .FirstOrDefault();

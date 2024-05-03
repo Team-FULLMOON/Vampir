@@ -95,17 +95,6 @@ namespace FullMoon.Entities.Unit
             }
             
             MainUIController.Instance.AddUnit(-1);
-            // try
-            // {
-            //     fogWar.RemoveFogRevealer(transform);
-            //     fogWar.UpdateFog();
-            // }
-            // catch
-            // {
-            //     Debug.LogErrorFormat("Failed to fetch csFogWar component. " +
-            //                          "Please rename the gameobject that the module is attachted to as \"FogWar\", " +
-            //                          "or change the implementation located in the csFogVisibilityAgent.cs script.");
-            // }
         }
 
         public virtual void Select()
@@ -133,7 +122,6 @@ namespace FullMoon.Entities.Unit
             NavMeshPath path = new NavMeshPath();
             Agent.CalculatePath(location, path);
             Agent.SetPath(path);
-            // Agent.SetDestination(location);
             LatestDestination = location;
         }
 
