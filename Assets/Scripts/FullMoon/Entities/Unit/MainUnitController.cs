@@ -9,10 +9,11 @@ using UnityEngine.Rendering.Universal;
 using FullMoon.ScriptableObject;
 using FullMoon.UI;
 using FullMoon.Util;
+using Unity.Burst;
 
 namespace FullMoon.Entities.Unit
 {
-    [RequireComponent(typeof(NavMeshAgent))]
+    [RequireComponent(typeof(NavMeshAgent)), BurstCompile]
     public class MainUnitController 
         : BaseUnitController
     {
@@ -43,6 +44,7 @@ namespace FullMoon.Entities.Unit
             StateMachine.ChangeState(new MainUnitIdle(this));
         }
         
+        [BurstCompile]
         protected override void Update()
         {
             UnitInsideViewArea.RemoveAll(unit => unit is null || !unit.gameObject.activeInHierarchy);

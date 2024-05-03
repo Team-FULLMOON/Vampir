@@ -1,4 +1,3 @@
-using FischlWorks_FogWar;
 using MyBox;
 using UnityEngine;
 using UnityEngine.AI;
@@ -7,9 +6,11 @@ using FullMoon.Interfaces;
 using FullMoon.ScriptableObject;
 using FullMoon.UI;
 using FullMoon.Util;
+using Unity.Burst;
 
 namespace FullMoon.Entities.Unit
 {
+    [BurstCompile]
     public abstract class BaseUnitController
         : MonoBehaviour, IDamageable, ISelectable, INavigation
     {
@@ -24,12 +25,6 @@ namespace FullMoon.Entities.Unit
         
         [Foldout("Base Unit Settings")] 
         public SphereCollider viewRange;
-
-        [Foldout("Base Unit Settings")] 
-        public csFogWar fogWar;
-        
-        [Foldout("Base Unit Settings")] 
-        public csFogVisibilityAgent fogVisibilityAgent;
         
         public readonly StateMachine StateMachine = new();
         
@@ -42,7 +37,7 @@ namespace FullMoon.Entities.Unit
         public string UnitClass { get; set; }
 
         public bool AttackMove { get; set; }
-        public BaseUnitController attackTarget { get; set; }
+        public BaseUnitController AttackTarget { get; set; }
         public Vector3 AttackMovePosition { get; set; }
 
         protected virtual void Start()
@@ -63,30 +58,16 @@ namespace FullMoon.Entities.Unit
             if (UnitType == "Player")
             {
                 MainUIController.Instance.AddUnit(1);
-
-                try
-                {
-                    fogWar = GameObject.Find("FogWar").GetComponent<csFogWar>();
-                    fogWar.AddFogRevealer(new csFogWar.FogRevealer(transform, unitData.FogOfWarRadius * 2, true));
-                }
-                catch
-                {
-                    Debug.LogErrorFormat("Failed to fetch csFogWar component. " +
-                                         "Please rename the gameobject that the module is attachted to as \"FogWar\", " +
-                                         "or change the implementation located in the csFogVisibilityAgent.cs script.");
-                }
-            }
-            else
-            {
-                fogVisibilityAgent = GetComponent<csFogVisibilityAgent>();
             }
         }
 
+        [BurstCompile]
         protected virtual void Update()
         {
             StateMachine.ExecuteCurrentState();
         }
 
+        [BurstCompile]
         protected virtual void FixedUpdate()
         {
             StateMachine.FixedExecuteCurrentState();
@@ -118,17 +99,6 @@ namespace FullMoon.Entities.Unit
             }
             
             MainUIController.Instance.AddUnit(-1);
-            try
-            {
-                fogWar.RemoveFogRevealer(transform);
-                fogWar.UpdateFog();
-            }
-            catch
-            {
-                Debug.LogErrorFormat("Failed to fetch csFogWar component. " +
-                                     "Please rename the gameobject that the module is attachted to as \"FogWar\", " +
-                                     "or change the implementation located in the csFogVisibilityAgent.cs script.");
-            }
         }
 
         public virtual void Select()
@@ -153,7 +123,9 @@ namespace FullMoon.Entities.Unit
 
         public virtual void MoveToPosition(Vector3 location)
         {
-            Agent.SetDestination(location);
+            NavMeshPath path = new NavMeshPath();
+            Agent.CalculatePath(location, path);
+            Agent.SetPath(path);
             LatestDestination = location;
         }
 
@@ -161,19 +133,19 @@ namespace FullMoon.Entities.Unit
         {
             MoveToPosition(transform.position);
             AttackMove = false;
-            attackTarget = null;
+            AttackTarget = null;
         }
 
         public virtual void OnUnitHold()
         {
             MoveToPosition(transform.position);
             AttackMove = false;
-            attackTarget = null;
+            AttackTarget = null;
         }
 
         public virtual void OnUnitAttack(Vector3 targetPosition)
         {
-            attackTarget = null;
+            AttackTarget = null;
             AttackMove = true;
             AttackMovePosition = targetPosition;
             MoveToPosition(targetPosition);
@@ -181,7 +153,7 @@ namespace FullMoon.Entities.Unit
 
         public virtual void OnUnitForceAttack(BaseUnitController target)
         {
-            attackTarget = target;
+            AttackTarget = target;
             AttackMove = false;
         }
 

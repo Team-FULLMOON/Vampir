@@ -363,7 +363,6 @@ GameObject:
   - component: {fileID: 1403729167336867511}
   - component: {fileID: 1774472376304774426}
   - component: {fileID: 5670669024920615344}
-  - component: {fileID: 3861730120138586741}
   m_Layer: 8
   m_Name: EnemyMeleeUnitPrefab
   m_TagString: Enemy
@@ -407,7 +406,6 @@ MonoBehaviour:
   unitModel: {fileID: 7390654526172291232}
   unitMarker: {fileID: 2055024435388714017}
   viewRange: {fileID: 24826111065963529}
-  fogWar: {fileID: 0}
   decalProjector: {fileID: 1643748580956532414}
   attackEffect: {fileID: 8679279780333392621, guid: 5889d295f07756941ad4200554eb901c,
     type: 3}
@@ -474,7 +472,7 @@ NavMeshAgent:
   m_Speed: 3.5
   m_Acceleration: 50
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 1000
   m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -483,21 +481,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &3861730120138586741
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7683656216664130443}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 985add12ee4836e40b7241671b1d892c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fogWar: {fileID: 0}
-  visibility: 0
-  additionalRadius: 0
 --- !u!1001 &2260042526159909742
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,9 +1,11 @@
 using System.Linq;
 using UnityEngine;
 using FullMoon.FSM;
+using Unity.Burst;
 
 namespace FullMoon.Entities.Unit.States
 {
+    [BurstCompile]
     public class RangedUnitIdle : IState
     {
         private readonly RangedUnitController controller;
@@ -15,6 +17,7 @@ namespace FullMoon.Entities.Unit.States
         
         public void Enter() { }
 
+        [BurstCompile]
         public void Execute()
         {
             int enemyCount = controller.UnitInsideViewArea.Count(t => !controller.UnitType.Equals(t.UnitType));
