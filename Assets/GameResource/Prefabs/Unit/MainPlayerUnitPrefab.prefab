@@ -156,7 +156,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 20
+  m_Radius: 8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1930282699847763958
 MonoBehaviour:
@@ -302,8 +302,8 @@ NavMeshAgent:
   m_Radius: 0.55
   m_Speed: 3.5
   m_Acceleration: 50
-  avoidancePriority: 50
-  m_AngularSpeed: 120
+  avoidancePriority: 49
+  m_AngularSpeed: 1000
   m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1

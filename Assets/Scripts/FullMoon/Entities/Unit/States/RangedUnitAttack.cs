@@ -23,7 +23,7 @@ namespace FullMoon.Entities.Unit.States
                 return;
             }
             
-            BaseUnitController closestUnit = controller.attackTarget ?? controller.UnitInsideViewArea
+            BaseUnitController closestUnit = controller.AttackTarget ?? controller.UnitInsideViewArea
                 .Where(t => !controller.UnitType.Equals(t.UnitType))
                 .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
                 .FirstOrDefault();
@@ -38,12 +38,12 @@ namespace FullMoon.Entities.Unit.States
 
         public void Execute()
         {
-            if (controller.attackTarget is not null && !controller.attackTarget.gameObject.activeInHierarchy)
+            if (controller.AttackTarget is not null && !controller.AttackTarget.gameObject.activeInHierarchy)
             {
-                controller.attackTarget = null;
+                controller.AttackTarget = null;
             }
 
-            BaseUnitController closestUnit = controller.attackTarget ?? controller.UnitInsideViewArea
+            BaseUnitController closestUnit = controller.AttackTarget ?? controller.UnitInsideViewArea
                 .Where(t => !controller.UnitType.Equals(t.UnitType))
                 .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
                 .FirstOrDefault();

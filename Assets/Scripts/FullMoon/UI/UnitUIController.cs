@@ -30,11 +30,6 @@ namespace FullMoon.UI
 
         private void Update()
         {
-            if (Unit.UnitType == "Enemy" && Unit.fogVisibilityAgent is not null)
-            {
-                hpSlider.gameObject.SetActive(Unit.fogVisibilityAgent.visibility);
-            }
-            
             if (Unit.Hp != (int)hpSlider.value)
             {
                 hpSlider.DOValue(Unit.Hp, 0.3f).SetEase(Ease.OutQuad);
