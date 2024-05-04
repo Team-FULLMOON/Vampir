@@ -31,9 +31,6 @@ namespace FullMoon.Camera
         
         [Header("Rotation")]
         [SerializeField] private float rotationSensitivity = 3f; // 회전 감도
-        
-        [Header("ClickSetting")]
-        List<BaseUnitController> selectedUnitList; // 플레이어가 클릭 or 드래그로 선택한 유닛
 
         [Header("DragInfo")]
         [SerializeField] RectTransform dragRectangle; // 마우스로 드래그한 범위를 가시화하는 Image UI의 RectTransform
@@ -55,6 +52,9 @@ namespace FullMoon.Camera
         private Rect dragRect; // 마우스로 드래그 한 범위 (xMin~xMax, yMin~yMax)
         private Vector2 dragStart = Vector2.zero; // 드래그 시작 위치
         private Vector2 dragEnd = Vector2.zero; // 드래그 종료 위치
+        
+        private List<BaseUnitController> selectedUnitList; // 플레이어가 클릭 or 드래그로 선택한 유닛
+        
         private void Awake()
         {
             mainCamera = UnityEngine.Camera.main;

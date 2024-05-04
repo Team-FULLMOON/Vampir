@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
+using MyBox;
 using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 using FullMoon.Util;
-using MyBox;
-using Unity.VisualScripting;
 
 namespace FullMoon.UI
 {
@@ -15,19 +13,20 @@ namespace FullMoon.UI
         Move,
         Unit,
         Create,
-        Camera,
+        Camera
     }
 
     public class CursorController : MonoBehaviour
     {
-        [Header("Mouse Cursor Settings")] 
-        CursorType cursorType;
+        [SerializeField] private bool enable = true;
+        
+        [Separator("Mouse Cursor Settings")] 
 
-        [Foldout("Mouse Cursor Image")]
-        [SerializeField] List<Texture2D> textures;
+        [SerializeField] private CursorType cursorType;
 
-        [Foldout("Mouse Cursor Image")] 
-        [SerializeField] GameObject moveAnim;
+        [SerializeField] private List<Texture2D> textures;
+
+        [SerializeField] private GameObject moveAnim;
 
         private void Start()
         {
@@ -56,7 +55,7 @@ namespace FullMoon.UI
 
         private void UpdateCursorState()
         {
-            if (!Application.isPlaying)
+            if (!Application.isPlaying || enable == false)
             {
                 return;
             }
