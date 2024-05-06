@@ -42,6 +42,8 @@ namespace FullMoon.Entities.Unit
             }
 
             StateMachine.ChangeState(new MainUnitIdle(this));
+            
+            OnStartEvent.TriggerEvent();
         }
         
         [BurstCompile]
@@ -162,7 +164,9 @@ namespace FullMoon.Entities.Unit
                 unit.MoveToPosition(targetPosition);
             }
             
-            if (StateMachine.CurrentState is not MainUnitIdle or MeleeUnitIdle or RangedUnitIdle)
+            if (StateMachine.CurrentState is not MainUnitIdle ||
+                StateMachine.CurrentState is not MeleeUnitIdle ||
+                StateMachine.CurrentState is not RangedUnitIdle)
             {
                 return;
             }

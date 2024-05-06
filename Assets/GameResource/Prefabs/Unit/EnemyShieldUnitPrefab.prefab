@@ -67,6 +67,7 @@ GameObject:
   - component: {fileID: 2491358687867300248}
   - component: {fileID: 6982601304385976259}
   - component: {fileID: 3359667606338139777}
+  - component: {fileID: 5602221594897940763}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -139,6 +140,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &5602221594897940763
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3319720673469424743}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3766662488880838298
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,6 +342,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitData: {fileID: 11400000, guid: 530ac18220ecd7041882410cc393e5aa, type: 2}
   unitModel: {fileID: 3319720673469424743}
+  unitAnimator: {fileID: 5602221594897940763}
   unitMarker: {fileID: 6798072512803417028}
   viewRange: {fileID: 2268042740748443340}
   decalProjector: {fileID: 6081375030924233605}

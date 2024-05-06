@@ -237,6 +237,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitData: {fileID: 11400000, guid: e5dadd47231e5ed499e7907f4070cbf9, type: 2}
   unitModel: {fileID: 8030955277002928265}
+  unitAnimator: {fileID: 6801677442721976047}
   unitMarker: {fileID: 6798072512803417028}
   viewRange: {fileID: 2268042740748443340}
   decalProjector: {fileID: 6081375030924233605}
@@ -409,6 +410,7 @@ GameObject:
   - component: {fileID: 1574219607581939791}
   - component: {fileID: 1052647258386473720}
   - component: {fileID: 7377476463752024418}
+  - component: {fileID: 6801677442721976047}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -481,6 +483,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &6801677442721976047
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8030955277002928265}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &3452945396386944543
 PrefabInstance:
   m_ObjectHideFlags: 0

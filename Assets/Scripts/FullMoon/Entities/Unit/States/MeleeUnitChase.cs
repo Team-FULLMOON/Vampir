@@ -1,6 +1,7 @@
 using System.Linq;
 using FullMoon.FSM;
 using Unity.Burst;
+using UnityEngine;
 
 namespace FullMoon.Entities.Unit.States
 {
@@ -18,6 +19,8 @@ namespace FullMoon.Entities.Unit.States
         {
             controller.Agent.isStopped = false;
             controller.Agent.speed = controller.OverridenUnitData.MovementSpeed;
+            
+            controller.SetAnimation(Animator.StringToHash("Move"));
             
             if (controller.UnitType != "Enemy")
             {
