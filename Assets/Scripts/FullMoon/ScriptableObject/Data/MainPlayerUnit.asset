@@ -25,12 +25,13 @@ MonoBehaviour:
   summonTime: 3
   unitTransformObject: {fileID: 0}
   unitRespawnController: {fileID: 0}
-  attackEnabled: 0
-  attackDamage: 1
-  attackDelay: 1
+  attackEnabled: 1
+  attackDamage: 10
+  attackDelay: 0
   attackCoolTime: 1
-  attackRadius: 10
+  attackRadius: 2
   viewRadius: 8
+  stateTransitionRadius: 10
   fogOfWarRadius: 10
   unitControlData: {fileID: 11400000, guid: bc7316a50f904ad489752886c4e22b3a, type: 2}
   respawnRadius: 3
