@@ -16,7 +16,7 @@ MonoBehaviour:
   unitName: "\uBA54\uC774\uC2A4 \uC778\uD615"
   unitType: Player
   unitClass: Melee
-  maxHp: 125
+  maxHp: 1
   movementSpeed: 5
   missRate: 0
   manaDrop: 7
@@ -24,11 +24,12 @@ MonoBehaviour:
   createPrepareTime: 2.5
   summonTime: 3
   unitTransformObject: {fileID: 0}
-  unitRespawnController: {fileID: 0}
+  respawnUnitObject: {fileID: 0}
   attackEnabled: 1
-  attackDamage: 10
+  attackDamage: 2
   attackDelay: 0
   attackCoolTime: 1
   attackRadius: 2
   viewRadius: 8
+  stateTransitionRadius: 10
   fogOfWarRadius: 10
