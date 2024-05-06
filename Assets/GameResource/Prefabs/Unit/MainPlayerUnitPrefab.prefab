@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   filterTags:
-  - RespawnUnit
+  - Enemy
   - Player
   executeEnterAfterFrame: 0
   onEnterEvent:

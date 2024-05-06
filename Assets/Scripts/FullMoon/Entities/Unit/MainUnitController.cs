@@ -107,13 +107,13 @@ namespace FullMoon.Entities.Unit
         public override void Select()
         {
             base.Select();
-            decalProjector.gameObject.SetActive(true);
+            // decalProjector.gameObject.SetActive(true);
         }
 
         public override void Deselect()
         {
             base.Deselect();
-            decalProjector.gameObject.SetActive(false);
+            // decalProjector.gameObject.SetActive(false);
         }
 
         public override void MoveToPosition(Vector3 location)
@@ -153,7 +153,7 @@ namespace FullMoon.Entities.Unit
             
             List<BaseUnitController> transitionControllers = UnitInsideViewArea
                 .Where(t => UnitType.Equals(t.UnitType))
-                .Where(t => t.StateMachine.CurrentState is MeleeUnitIdle or RangedUnitIdle)
+                .Where(t => t.StateMachine.CurrentState is MainUnitIdle or MeleeUnitIdle or RangedUnitIdle)
                 .Where(t => (t.transform.position - transform.position).sqrMagnitude <=
                             OverridenUnitData.StateTransitionRadius * OverridenUnitData.StateTransitionRadius).ToList();
 
@@ -162,7 +162,7 @@ namespace FullMoon.Entities.Unit
                 unit.MoveToPosition(targetPosition);
             }
             
-            if (StateMachine.CurrentState is not RangedUnitIdle)
+            if (StateMachine.CurrentState is not MainUnitIdle or MeleeUnitIdle or RangedUnitIdle)
             {
                 return;
             }

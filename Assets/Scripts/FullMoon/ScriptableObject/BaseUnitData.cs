@@ -61,9 +61,9 @@ namespace FullMoon.ScriptableObject
         private GameObject unitTransformObject;
         public GameObject UnitTransformObject => unitTransformObject;
         
-        [SerializeField, ConditionalField(nameof(unitType), false, "Enemy"), OverrideLabel("유닛 리스폰 컨트롤러")] 
-        private RespawnController unitRespawnController;
-        public RespawnController UnitRespawnController => unitRespawnController;
+        [SerializeField, ConditionalField(nameof(unitType), false, "Enemy"), OverrideLabel("유닛 리스폰 오브젝트")] 
+        private GameObject respawnUnitObject;
+        public GameObject RespawnUnitObject => respawnUnitObject;
     
         [Separator]
     

@@ -92,14 +92,18 @@ namespace FullMoon.Entities.Unit
             gameObject.SetActive(false);
             if (UnitType == "Enemy")
             {
-                RespawnController respawnController = ObjectPoolManager.SpawnObject(unitData.UnitRespawnController.gameObject, transform.position, transform.rotation).GetComponent<RespawnController>();
-                respawnController.Setup(unitData.ManaCost, unitData.CreatePrepareTime, unitData.SummonTime, unitData.UnitTransformObject);
+                for (int i = 0; i < 5; i++)
+                {
+                    Vector3 randomPosition = transform.position + new Vector3(Random.Range(-2f, 2f), 0, Random.Range(-2f, 2f));
+                    ObjectPoolManager.SpawnObject(unitData.RespawnUnitObject.gameObject, randomPosition, Quaternion.identity);
+                }
                 MainUIController.Instance.AddMana(unitData.ManaDrop);
                 return;
             }
-            
+
             MainUIController.Instance.AddUnit(-1);
         }
+
 
         public virtual void Select()
         {
