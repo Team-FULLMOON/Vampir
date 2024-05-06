@@ -1,7 +1,6 @@
 using System.Linq;
 using UnityEngine;
 using FullMoon.FSM;
-using FullMoon.Input;
 using Unity.Burst;
 
 namespace FullMoon.Entities.Unit.States
@@ -31,20 +30,6 @@ namespace FullMoon.Entities.Unit.States
                 return;
             }
             
-            if (controller.ReviveTarget is not null && controller.ReviveTarget.gameObject.activeInHierarchy)
-            {
-                bool checkDistance = (controller.ReviveTarget.transform.position - controller.transform.position).sqrMagnitude <= 
-                                     controller.OverridenUnitData.RespawnRadius * controller.OverridenUnitData.RespawnRadius;
-                
-                if (checkDistance == false)
-                {
-                    return;
-                }
-                
-                controller.StateMachine.ChangeState(new MainUnitRespawn(controller));
-                return;
-            }
-
             BaseUnitController closestUnit  = controller.UnitInsideViewArea
                 .Where(t => controller.UnitType.Equals(t.UnitType))
                 .Where(t => t.Agent.isStopped)
@@ -55,7 +40,30 @@ namespace FullMoon.Entities.Unit.States
             
             if (closestUnit is not null)
             {
+                controller.AttackMove = false;
                 controller.StateMachine.ChangeState(new MainUnitIdle(controller));
+                return;
+            }
+
+            if (controller.AttackMove || controller.UnitType == "Enemy")
+            {
+                closestUnit = controller.UnitInsideViewArea
+                    .Where(t => !controller.UnitType.Equals(t.UnitType))
+                    .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
+                    .FirstOrDefault();
+
+                if (closestUnit == null)
+                {
+                    return;
+                }
+
+                bool checkDistance = (closestUnit.transform.position - controller.transform.position).sqrMagnitude <=
+                            controller.OverridenUnitData.ViewRadius * controller.OverridenUnitData.ViewRadius;
+
+                if (checkDistance)
+                {
+                    controller.StateMachine.ChangeState(new MainUnitChase(controller));
+                }
             }
         }
 

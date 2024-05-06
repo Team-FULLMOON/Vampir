@@ -1,12 +1,13 @@
 using MyBox;
 using UnityEngine;
 using UnityEngine.AI;
-using FullMoon.FSM;
 using FullMoon.Interfaces;
 using FullMoon.ScriptableObject;
 using FullMoon.UI;
 using FullMoon.Util;
 using Unity.Burst;
+using Unity.VisualScripting;
+using StateMachine = FullMoon.FSM.StateMachine;
 
 namespace FullMoon.Entities.Unit
 {
@@ -19,6 +20,9 @@ namespace FullMoon.Entities.Unit
         
         [Foldout("Base Unit Settings")] 
         public GameObject unitModel;
+        
+        [Foldout("Base Unit Settings")] 
+        public Animator unitAnimator;
         
         [Foldout("Base Unit Settings")] 
         public GameObject unitMarker;
@@ -39,6 +43,8 @@ namespace FullMoon.Entities.Unit
         public bool AttackMove { get; set; }
         public BaseUnitController AttackTarget { get; set; }
         public Vector3 AttackMovePosition { get; set; }
+        
+        public readonly SimpleEventSystem OnStartEvent = new();
 
         protected virtual void Start()
         {
@@ -72,12 +78,31 @@ namespace FullMoon.Entities.Unit
         {
             StateMachine.FixedExecuteCurrentState();
         }
+        
+        public void SetAnimation(int stateID, float transitionDuration = 0f)
+        {
+            if (unitAnimator is null)
+            {
+                return;
+            }
+            
+            if (unitAnimator.HasState(0, stateID) == false)
+            {
+                Debug.LogWarning($"{stateID} 애니메이션이 존재하지 않습니다.");
+                return;
+            }
+            
+            unitAnimator.Play(stateID, 0, 0);
+            unitAnimator.CrossFade(stateID, transitionDuration);
+        }
 
         public virtual void ReceiveDamage(int amount, BaseUnitController attacker)
         {
             Hp = Mathf.Clamp(Hp - amount, 0, System.Int32.MaxValue);
-
+            
             Debug.Log($"{gameObject.name} ({Hp}): D -{amount}, F {attacker.name}");
+            
+            SetAnimation(Animator.StringToHash("Hit"));
 
             if (Hp > 0)
             {
@@ -92,14 +117,18 @@ namespace FullMoon.Entities.Unit
             gameObject.SetActive(false);
             if (UnitType == "Enemy")
             {
-                RespawnController respawnController = ObjectPoolManager.SpawnObject(unitData.UnitRespawnController.gameObject, transform.position, transform.rotation).GetComponent<RespawnController>();
-                respawnController.Setup(unitData.ManaCost, unitData.CreatePrepareTime, unitData.SummonTime, unitData.UnitTransformObject);
+                for (int i = 0; i < 5; i++)
+                {
+                    Vector3 randomPosition = transform.position + new Vector3(Random.Range(-2f, 2f), 0, Random.Range(-2f, 2f));
+                    ObjectPoolManager.SpawnObject(unitData.RespawnUnitObject.gameObject, randomPosition, Quaternion.identity);
+                }
                 MainUIController.Instance.AddMana(unitData.ManaDrop);
                 return;
             }
-            
+
             MainUIController.Instance.AddUnit(-1);
         }
+
 
         public virtual void Select()
         {
@@ -158,7 +187,7 @@ namespace FullMoon.Entities.Unit
         }
 
         public virtual void OnUnitStateTransition(Vector3 targetPosition) { }
-
+        
 #if UNITY_EDITOR
         protected virtual void OnDrawGizmos()
         {

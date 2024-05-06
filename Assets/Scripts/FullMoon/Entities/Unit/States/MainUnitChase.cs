@@ -1,16 +1,15 @@
 using System.Linq;
 using FullMoon.FSM;
 using Unity.Burst;
-using UnityEngine;
 
 namespace FullMoon.Entities.Unit.States
 {
     [BurstCompile]
-    public class MeleeUnitChase : IState
+    public class MainUnitChase : IState
     {
-        private readonly MeleeUnitController controller;
+        private readonly MainUnitController controller;
 
-        public MeleeUnitChase(MeleeUnitController controller)
+        public MainUnitChase(MainUnitController controller)
         {
             this.controller = controller;
         }
@@ -19,8 +18,6 @@ namespace FullMoon.Entities.Unit.States
         {
             controller.Agent.isStopped = false;
             controller.Agent.speed = controller.OverridenUnitData.MovementSpeed;
-            
-            controller.SetAnimation(Animator.StringToHash("Move"));
             
             if (controller.UnitType != "Enemy")
             {
@@ -50,7 +47,7 @@ namespace FullMoon.Entities.Unit.States
 
             if (closestUnit == null)
             {
-                controller.StateMachine.ChangeState(new MeleeUnitIdle(controller));
+                controller.StateMachine.ChangeState(new MainUnitIdle(controller));
                 return;
             }
 
@@ -60,7 +57,7 @@ namespace FullMoon.Entities.Unit.States
             if (checkDistance)
             {
                 controller.LatestDestination = controller.transform.position;
-                controller.StateMachine.ChangeState(new MeleeUnitAttack(controller));
+                controller.StateMachine.ChangeState(new MainUnitAttack(controller));
             }
             else
             {

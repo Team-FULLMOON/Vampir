@@ -132,7 +132,7 @@ namespace FullMoon.Entities.Unit
             
             List<BaseUnitController> transitionControllers = UnitInsideViewArea
                 .Where(t => UnitType.Equals(t.UnitType))
-                .Where(t => t.StateMachine.CurrentState is MeleeUnitIdle or RangedUnitIdle)
+                .Where(t => t.StateMachine.CurrentState is MainUnitIdle or MeleeUnitIdle or RangedUnitIdle)
                 .Where(t => (t.transform.position - transform.position).sqrMagnitude <=
                             OverridenUnitData.StateTransitionRadius * OverridenUnitData.StateTransitionRadius).ToList();
             
@@ -141,12 +141,16 @@ namespace FullMoon.Entities.Unit
                 unit.MoveToPosition(targetPosition);
             }
             
-            if (StateMachine.CurrentState is not RangedUnitIdle)
+            if (StateMachine.CurrentState is not MainUnitIdle ||
+                StateMachine.CurrentState is not MeleeUnitIdle ||
+                StateMachine.CurrentState is not RangedUnitIdle)
             {
                 return;
             }
             
             MoveToPosition(targetPosition);
+            
+            OnStartEvent.TriggerEvent();
         }
         
         private void ReduceAttackCoolTime()

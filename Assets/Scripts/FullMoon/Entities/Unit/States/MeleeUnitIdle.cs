@@ -14,8 +14,11 @@ namespace FullMoon.Entities.Unit.States
         {
             this.controller = controller;
         }
-        
-        public void Enter() { }
+
+        public void Enter()
+        {
+            controller.SetAnimation(Animator.StringToHash("Idle"));
+        }
 
         [BurstCompile]
         public void Execute()

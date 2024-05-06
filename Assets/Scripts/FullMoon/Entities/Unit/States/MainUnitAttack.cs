@@ -1,26 +1,25 @@
+using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using FullMoon.FSM;
 using Unity.Burst;
-using UnityEngine;
 
 namespace FullMoon.Entities.Unit.States
 {
     [BurstCompile]
-    public class MeleeUnitChase : IState
+    public class MainUnitAttack : IState
     {
-        private readonly MeleeUnitController controller;
+        private readonly MainUnitController controller;
+        private float attackDelay;
 
-        public MeleeUnitChase(MeleeUnitController controller)
+        public MainUnitAttack(MainUnitController controller)
         {
             this.controller = controller;
         }
-        
+
         public void Enter()
         {
-            controller.Agent.isStopped = false;
-            controller.Agent.speed = controller.OverridenUnitData.MovementSpeed;
-            
-            controller.SetAnimation(Animator.StringToHash("Move"));
+            attackDelay = controller.OverridenUnitData.AttackDelay;
             
             if (controller.UnitType != "Enemy")
             {
@@ -43,6 +42,11 @@ namespace FullMoon.Entities.Unit.States
         [BurstCompile]
         public void Execute()
         {
+            if (controller.AttackTarget is not null && !controller.AttackTarget.gameObject.activeInHierarchy)
+            {
+                controller.AttackTarget = null;
+            }
+
             BaseUnitController closestUnit = controller.AttackTarget ? controller.AttackTarget : controller.UnitInsideViewArea
                 .Where(t => !controller.UnitType.Equals(t.UnitType))
                 .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
@@ -50,32 +54,37 @@ namespace FullMoon.Entities.Unit.States
 
             if (closestUnit == null)
             {
-                controller.StateMachine.ChangeState(new MeleeUnitIdle(controller));
+                controller.StateMachine.ChangeState(new MainUnitIdle(controller));
+                return;
+            }
+            
+            bool checkDistance = (closestUnit.transform.position - controller.transform.position).sqrMagnitude <=
+                                 controller.OverridenUnitData.AttackRadius * controller.OverridenUnitData.AttackRadius;
+            
+            if (checkDistance == false)
+            {
+                controller.StateMachine.ChangeState(new MainUnitChase(controller));
+                return;
+            }
+            
+            if (attackDelay > 0)
+            {
+                attackDelay -= Time.deltaTime;
+                return;
+            }
+            
+            if (controller.CurrentAttackCoolTime > 0)
+            {
                 return;
             }
 
-            bool checkDistance = (closestUnit.transform.position - controller.transform.position).sqrMagnitude <=
-                           controller.OverridenUnitData.AttackRadius * controller.OverridenUnitData.AttackRadius;
+            controller.CurrentAttackCoolTime = controller.OverridenUnitData.AttackCoolTime;
             
-            if (checkDistance)
-            {
-                controller.LatestDestination = controller.transform.position;
-                controller.StateMachine.ChangeState(new MeleeUnitAttack(controller));
-            }
-            else
-            {
-                controller.Agent.SetDestination(closestUnit.transform.position);
-            }
+            controller.ExecuteAttack(closestUnit.transform);
         }
 
-        public void FixedExecute()
-        {
-            
-        }
+        public void FixedExecute() { }
 
-        public void Exit()
-        {
-            controller.Agent.isStopped = true;
-        }
+        public void Exit() { }
     }
 }

@@ -607,12 +607,12 @@ namespace FullMoon.Camera
 
         private void ReviveUnit(RespawnController unit)
         {
-            foreach (var controller in selectedUnitList
-                .Where(controller => controller.GetComponent<BaseUnitController>() is MainUnitController)
-                .Select(controller => controller.GetComponent<MainUnitController>()))
-            {
-                controller.CheckAbleToRespawn(unit);
-            }
+            // foreach (var controller in selectedUnitList
+            //     .Where(controller => controller.GetComponent<BaseUnitController>() is MainUnitController)
+            //     .Select(controller => controller.GetComponent<MainUnitController>()))
+            // {
+            //     controller.CheckAbleToRespawn(unit);
+            // }
 
             cursor.SetCursorState(CursorType.Idle);
 
