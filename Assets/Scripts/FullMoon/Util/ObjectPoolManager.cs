@@ -11,8 +11,7 @@ namespace FullMoon.Util
 
         public static GameObject SpawnObject(GameObject objectToSpawn, Vector3 spawnPosition, Quaternion spawnRotation)
         {
-            string name = NameReplace(objectToSpawn);
-            string goName = name.Substring(0, name.Length - 7);
+            string goName = NameReplace(objectToSpawn);
 
             PooledObjectInfo pool = ObjectPools.Find(p => p.LookupString == goName);
             
@@ -40,8 +39,7 @@ namespace FullMoon.Util
 
         public static void ReturnObjectToPool(GameObject obj)
         {
-            string name = NameReplace(obj);
-            string goName = name.Substring(0, name.Length - 7);
+            string goName = NameReplace(obj);
 
             PooledObjectInfo pool = ObjectPools.Find(p => p.LookupString == goName);
 
@@ -62,7 +60,8 @@ namespace FullMoon.Util
         private static string NameReplace(GameObject obj)
         {
             string originalString = obj.name;
-            string modifiedString = Regex.Replace(originalString, @" (\d+)", "");
+            string modifiedString = Regex.Replace(originalString, @" (\d+)|\(Clone\)", "");
+            Debug.Log(modifiedString);
             return modifiedString;
         }
     }
