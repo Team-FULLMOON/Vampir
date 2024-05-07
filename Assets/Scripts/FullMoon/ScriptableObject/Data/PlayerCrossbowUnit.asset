@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0da91f06fca8f9a46a3fe3533154bd91, type: 3}
-  m_Name: RangedPlayerUnit
+  m_Name: PlayerCrossbowUnit
   m_EditorClassIdentifier: 
   unitCode: 102
   unitName: "\uBA38\uC2A4\uD0B7 \uC778\uD615"
   unitType: Player
   unitClass: Ranged
-  maxHp: 80
+  maxHp: 45
   movementSpeed: 3
   missRate: 0
   manaDrop: 7
@@ -24,12 +24,14 @@ MonoBehaviour:
   createPrepareTime: 2.5
   summonTime: 3
   unitTransformObject: {fileID: 0}
-  unitRespawnController: {fileID: 0}
+  respawnUnitObject: {fileID: 0}
   attackEnabled: 1
   attackDamage: 20
   attackDelay: 0.5
   attackCoolTime: 2.5
-  attackRadius: 10
+  attackRadius: 6.5
   viewRadius: 11
+  stateTransitionRadius: 10
   fogOfWarRadius: 10
   bulletSpeed: 55
+  hitAnimationFrame: 12

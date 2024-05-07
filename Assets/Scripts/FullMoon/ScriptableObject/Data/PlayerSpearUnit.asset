@@ -29,7 +29,8 @@ MonoBehaviour:
   attackDamage: 10
   attackDelay: 0.2
   attackCoolTime: 0.8
-  attackRadius: 5
+  attackRadius: 4
   viewRadius: 8
   stateTransitionRadius: 10
   fogOfWarRadius: 10
+  hitAnimationFrame: 12

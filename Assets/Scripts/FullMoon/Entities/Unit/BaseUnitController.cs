@@ -81,7 +81,7 @@ namespace FullMoon.Entities.Unit
             StateMachine.FixedExecuteCurrentState();
         }
         
-        public bool SetAnimation(int stateID, float transitionDuration = 0f)
+        public bool SetAnimation(int stateID, float transitionDuration = 1f)
         {
             if (unitAnimator is null)
             {

@@ -44,6 +44,8 @@ namespace FullMoon.Entities.Unit
             }
 
             StateMachine.ChangeState(new RangedUnitIdle(this));
+            
+            OnStartEvent.TriggerEvent();
         }
 
         [BurstCompile]
@@ -62,6 +64,12 @@ namespace FullMoon.Entities.Unit
                 OnUnitStateTransition(attacker.transform.position);
             }
             base.ReceiveDamage(amount, attacker);
+        }
+
+        public override void Die()
+        {
+            base.Die();
+            StateMachine.ChangeState(new RangedUnitDead(this));
         }
 
         public void EnterViewRange(Collider unit)
@@ -86,6 +94,15 @@ namespace FullMoon.Entities.Unit
 
         public async UniTaskVoid ExecuteAttack(Transform target)
         {
+            Vector3 targetDirection = target.transform.position - transform.position;
+
+            transform.forward = targetDirection.normalized;
+            transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, transform.eulerAngles.z);
+            
+            SetAnimation(Animator.StringToHash("Attack"));
+            
+            await UniTask.DelayFrame(OverridenUnitData.HitAnimationFrame);
+            
             GameObject bullet = ObjectPoolManager.SpawnObject(attackEffect, transform.position, Quaternion.identity);
             bullet.GetComponent<BulletEffectController>().Fire(target, transform, OverridenUnitData.BulletSpeed, OverridenUnitData.AttackDamage);
         }
@@ -93,13 +110,13 @@ namespace FullMoon.Entities.Unit
         public override void Select()
         {
             base.Select();
-            decalProjector.gameObject.SetActive(true);
+            // decalProjector.gameObject.SetActive(true);
         }
 
         public override void Deselect()
         {
             base.Deselect();
-            decalProjector.gameObject.SetActive(false);
+            // decalProjector.gameObject.SetActive(false);
         }
         
         public override void MoveToPosition(Vector3 location)
