@@ -38,6 +38,7 @@ namespace FullMoon.Entities.Unit.States
             controller.OnUnitStateTransition(closestUnit.transform.position);
         }
 
+        // ReSharper disable Unity.PerformanceAnalysis
         [BurstCompile]
         public void Execute()
         {

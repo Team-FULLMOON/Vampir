@@ -1,6 +1,7 @@
 using MyBox;
 using System.Linq;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering.Universal;
@@ -36,20 +37,22 @@ namespace FullMoon.Entities.Unit
             UnitInsideViewArea = new List<BaseUnitController>();
             CurrentAttackCoolTime = unitData.AttackCoolTime;
 
-            if (decalProjector != null)
+            if (decalProjector is not null)
             {
                 decalProjector.gameObject.SetActive(false);
                 decalProjector.size = new Vector3(unitData.AttackRadius * 2f, unitData.AttackRadius * 2f, decalProjector.size.z);
             }
 
             StateMachine.ChangeState(new RangedUnitIdle(this));
+            
+            OnStartEvent.TriggerEvent();
         }
 
         [BurstCompile]
         protected override void Update()
         {
             ReduceAttackCoolTime();
-            UnitInsideViewArea.RemoveAll(unit => unit == null || !unit.gameObject.activeInHierarchy);
+            UnitInsideViewArea.RemoveAll(unit => unit is null || !unit.gameObject.activeInHierarchy || !unit.Alive);
             base.Update();
         }
         
@@ -63,10 +66,16 @@ namespace FullMoon.Entities.Unit
             base.ReceiveDamage(amount, attacker);
         }
 
+        public override void Die()
+        {
+            base.Die();
+            StateMachine.ChangeState(new RangedUnitDead(this));
+        }
+
         public void EnterViewRange(Collider unit)
         {
             BaseUnitController controller = unit.GetComponent<BaseUnitController>();
-            if (controller == null)
+            if (controller is null)
             {
                 return;
             }
@@ -76,15 +85,24 @@ namespace FullMoon.Entities.Unit
         public void ExitViewRange(Collider unit)
         {
             BaseUnitController controller = unit.GetComponent<BaseUnitController>();
-            if (controller == null)
+            if (controller is null)
             {
                 return;
             }
             UnitInsideViewArea.Remove(controller);
         }
 
-        public void ExecuteAttack(Transform target)
+        public async UniTaskVoid ExecuteAttack(Transform target)
         {
+            Vector3 targetDirection = target.transform.position - transform.position;
+
+            transform.forward = targetDirection.normalized;
+            transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, transform.eulerAngles.z);
+            
+            SetAnimation(Animator.StringToHash("Attack"));
+            
+            await UniTask.DelayFrame(OverridenUnitData.HitAnimationFrame);
+            
             GameObject bullet = ObjectPoolManager.SpawnObject(attackEffect, transform.position, Quaternion.identity);
             bullet.GetComponent<BulletEffectController>().Fire(target, transform, OverridenUnitData.BulletSpeed, OverridenUnitData.AttackDamage);
         }
@@ -92,13 +110,13 @@ namespace FullMoon.Entities.Unit
         public override void Select()
         {
             base.Select();
-            decalProjector.gameObject.SetActive(true);
+            // decalProjector.gameObject.SetActive(true);
         }
 
         public override void Deselect()
         {
             base.Deselect();
-            decalProjector.gameObject.SetActive(false);
+            // decalProjector.gameObject.SetActive(false);
         }
         
         public override void MoveToPosition(Vector3 location)
