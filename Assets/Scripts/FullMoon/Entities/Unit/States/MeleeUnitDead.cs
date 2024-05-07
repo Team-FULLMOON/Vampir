@@ -35,11 +35,11 @@ namespace FullMoon.Entities.Unit.States
                     return stateInfo.shortNameHash.Equals(animationHash) && stateInfo.normalizedTime >= 1.0f;
                 });
                 await UniTask.Delay(500);
-                controller.gameObject.SetActive(false);
+                ObjectPoolManager.ReturnObjectToPool(controller.gameObject);
             }
             else
             {
-                controller.gameObject.SetActive(false);
+                ObjectPoolManager.ReturnObjectToPool(controller.gameObject);
             }
         }
     }

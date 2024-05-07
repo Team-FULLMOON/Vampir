@@ -55,6 +55,12 @@ namespace FullMoon.Entities.Unit
             base.Update();
         }
 
+        public override void Die()
+        {
+            base.Die();
+            ObjectPoolManager.ReturnObjectToPool(gameObject);
+        }
+
         public override void ReceiveDamage(int amount, BaseUnitController attacker)
         {
             if (StateMachine.CurrentState is MeleeUnitIdle)
