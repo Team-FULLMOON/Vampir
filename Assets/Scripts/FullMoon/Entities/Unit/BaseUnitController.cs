@@ -36,6 +36,7 @@ namespace FullMoon.Entities.Unit
         public NavMeshAgent Agent { get; set; }
         public Vector3 LatestDestination { get; set; }
         public int Hp { get; set; }
+        public bool Alive { get; set; }
 
         public string UnitType { get; set; }
         public string UnitClass { get; set; }
@@ -52,6 +53,7 @@ namespace FullMoon.Entities.Unit
             Agent = GetComponent<NavMeshAgent>();
             LatestDestination = transform.position;
             Hp = unitData.MaxHp;
+            Alive = true;
             UnitType = unitData.UnitType;
             UnitClass = unitData.UnitClass;
             unitMarker.SetActive(false);
@@ -79,30 +81,43 @@ namespace FullMoon.Entities.Unit
             StateMachine.FixedExecuteCurrentState();
         }
         
-        public void SetAnimation(int stateID, float transitionDuration = 0f)
+        public bool SetAnimation(int stateID, float transitionDuration = 1f)
         {
             if (unitAnimator is null)
             {
-                return;
+                return false;
             }
             
             if (unitAnimator.HasState(0, stateID) == false)
             {
                 Debug.LogWarning($"{stateID} 애니메이션이 존재하지 않습니다.");
-                return;
+                return false;
             }
             
             unitAnimator.Play(stateID, 0, 0);
             unitAnimator.CrossFade(stateID, transitionDuration);
+
+            return true;
         }
 
         public virtual void ReceiveDamage(int amount, BaseUnitController attacker)
         {
+            if (Alive == false)
+            {
+                return;
+            }
+            
             Hp = Mathf.Clamp(Hp - amount, 0, System.Int32.MaxValue);
             
             Debug.Log($"{gameObject.name} ({Hp}): D -{amount}, F {attacker.name}");
             
-            SetAnimation(Animator.StringToHash("Hit"));
+            int attackHash = Animator.StringToHash("Attack");
+            AnimatorStateInfo stateInfo = unitAnimator.GetCurrentAnimatorStateInfo(0);
+
+            if (!stateInfo.shortNameHash.Equals(attackHash) || stateInfo.normalizedTime >= 0.9f)
+            {
+                SetAnimation(Animator.StringToHash("Hit"));
+            }
 
             if (Hp > 0)
             {
@@ -114,7 +129,8 @@ namespace FullMoon.Entities.Unit
 
         public virtual void Die()
         {
-            gameObject.SetActive(false);
+            Alive = false;
+            
             if (UnitType == "Enemy")
             {
                 for (int i = 0; i < 5; i++)
@@ -152,6 +168,11 @@ namespace FullMoon.Entities.Unit
 
         public virtual void MoveToPosition(Vector3 location)
         {
+            if (Alive == false)
+            {
+                return;
+            }
+            
             NavMeshPath path = new NavMeshPath();
             Agent.CalculatePath(location, path);
             Agent.SetPath(path);

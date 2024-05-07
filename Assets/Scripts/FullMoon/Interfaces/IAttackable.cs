@@ -1,6 +1,7 @@
 using UnityEngine;
 using FullMoon.Entities.Unit;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 
 namespace FullMoon.Interfaces
 {
@@ -9,6 +10,6 @@ namespace FullMoon.Interfaces
         List<BaseUnitController> UnitInsideViewArea { get; set; }
         void EnterViewRange(Collider unit);
         void ExitViewRange(Collider unit);
-        void ExecuteAttack(Transform location);
+        UniTaskVoid ExecuteAttack(Transform location);
     }
 }
