@@ -100,7 +100,7 @@ namespace FullMoon.Entities.Unit
         {
             Hp = Mathf.Clamp(Hp - amount, 0, System.Int32.MaxValue);
             
-            Debug.Log($"{gameObject.name} ({Hp}): D -{amount}, F {attacker.name}");
+            //Debug.Log($"{gameObject.name} ({Hp}): D -{amount}, F {attacker.name}");
             
             SetAnimation(Animator.StringToHash("Hit"));
 
@@ -114,7 +114,7 @@ namespace FullMoon.Entities.Unit
 
         public virtual void Die()
         {
-            gameObject.SetActive(false);
+            ObjectPoolManager.ReturnObjectToPool(gameObject);
             if (UnitType == "Enemy")
             {
                 for (int i = 0; i < 5; i++)

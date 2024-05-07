@@ -10,11 +10,13 @@ namespace FullMoon.Util
 
         public static GameObject SpawnObject(GameObject objectToSpawn, Vector3 spawnPosition, Quaternion spawnRotation)
         {
-            PooledObjectInfo pool = ObjectPools.Find(p => p.LookupString == objectToSpawn.name);
+            string goName = objectToSpawn.name.Substring(0, objectToSpawn.name.Length - 7);
 
+            PooledObjectInfo pool = ObjectPools.Find(p => p.LookupString == goName);
+            
             if (pool == null)
             {
-                pool = new PooledObjectInfo() { LookupString = objectToSpawn.name };
+                pool = new PooledObjectInfo() { LookupString = goName };
                 ObjectPools.Add(pool);
             }
 
@@ -42,7 +44,10 @@ namespace FullMoon.Util
 
             if (pool == null)
             {
-                Debug.LogWarning("Trying To release an object that is not pooled " + obj.name);
+                pool = new PooledObjectInfo() { LookupString = goName };
+                ObjectPools.Add(pool);
+                pool.InactiveObject.Add(obj);
+                obj.SetActive(false);
             }
             else
             {
