@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System.Text.RegularExpressions;
 
 namespace FullMoon.Util
 {
@@ -10,7 +11,8 @@ namespace FullMoon.Util
 
         public static GameObject SpawnObject(GameObject objectToSpawn, Vector3 spawnPosition, Quaternion spawnRotation)
         {
-            string goName = objectToSpawn.name.Substring(0, objectToSpawn.name.Length - 7);
+            string name = NameReplace(objectToSpawn);
+            string goName = name.Substring(0, name.Length - 7);
 
             PooledObjectInfo pool = ObjectPools.Find(p => p.LookupString == goName);
             
@@ -38,7 +40,8 @@ namespace FullMoon.Util
 
         public static void ReturnObjectToPool(GameObject obj)
         {
-            string goName = obj.name.Substring(0, obj.name.Length - 7);
+            string name = NameReplace(obj);
+            string goName = name.Substring(0, name.Length - 7);
 
             PooledObjectInfo pool = ObjectPools.Find(p => p.LookupString == goName);
 
@@ -54,6 +57,13 @@ namespace FullMoon.Util
                 pool.InactiveObject.Add(obj);
                 obj.SetActive(false);
             }
+        }
+
+        private static string NameReplace(GameObject obj)
+        {
+            string originalString = obj.name;
+            string modifiedString = Regex.Replace(originalString, @" (\d+)", "");
+            return modifiedString;
         }
     }
 
