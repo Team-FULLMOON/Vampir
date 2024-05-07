@@ -197,7 +197,7 @@ GameObject:
   - component: {fileID: 8221377267059292143}
   - component: {fileID: 7538470333555455201}
   m_Layer: 8
-  m_Name: PlayerMeleeUnitPrefab
+  m_Name: PlayerSwordUnitPrefab
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

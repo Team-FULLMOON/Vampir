@@ -113,10 +113,13 @@ namespace FullMoon.Entities.Unit
             
             SetAnimation(Animator.StringToHash("Attack"));
 
-            await UniTask.DelayFrame(12);
-            
-            GameObject hitFX = ObjectPoolManager.SpawnObject(attackEffect, hitPosition, Quaternion.identity);
-            hitFX.transform.forward = targetDirection.normalized;
+            await UniTask.DelayFrame(OverridenUnitData.HitAnimationFrame);
+
+            if (attackEffect != null)
+            {
+                GameObject hitFX = ObjectPoolManager.SpawnObject(attackEffect, hitPosition, Quaternion.identity);
+                hitFX.transform.forward = targetDirection.normalized;
+            }
             
             if (targetController.gameObject.activeInHierarchy == false)
             {
