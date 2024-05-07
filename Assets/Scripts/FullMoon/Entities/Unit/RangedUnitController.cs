@@ -1,6 +1,7 @@
 using MyBox;
 using System.Linq;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering.Universal;
@@ -36,7 +37,7 @@ namespace FullMoon.Entities.Unit
             UnitInsideViewArea = new List<BaseUnitController>();
             CurrentAttackCoolTime = unitData.AttackCoolTime;
 
-            if (decalProjector != null)
+            if (decalProjector is not null)
             {
                 decalProjector.gameObject.SetActive(false);
                 decalProjector.size = new Vector3(unitData.AttackRadius * 2f, unitData.AttackRadius * 2f, decalProjector.size.z);
@@ -49,7 +50,7 @@ namespace FullMoon.Entities.Unit
         protected override void Update()
         {
             ReduceAttackCoolTime();
-            UnitInsideViewArea.RemoveAll(unit => unit == null || !unit.gameObject.activeInHierarchy);
+            UnitInsideViewArea.RemoveAll(unit => unit is null || !unit.gameObject.activeInHierarchy || !unit.Alive);
             base.Update();
         }
         
@@ -66,7 +67,7 @@ namespace FullMoon.Entities.Unit
         public void EnterViewRange(Collider unit)
         {
             BaseUnitController controller = unit.GetComponent<BaseUnitController>();
-            if (controller == null)
+            if (controller is null)
             {
                 return;
             }
@@ -76,14 +77,14 @@ namespace FullMoon.Entities.Unit
         public void ExitViewRange(Collider unit)
         {
             BaseUnitController controller = unit.GetComponent<BaseUnitController>();
-            if (controller == null)
+            if (controller is null)
             {
                 return;
             }
             UnitInsideViewArea.Remove(controller);
         }
 
-        public void ExecuteAttack(Transform target)
+        public async UniTaskVoid ExecuteAttack(Transform target)
         {
             GameObject bullet = ObjectPoolManager.SpawnObject(attackEffect, transform.position, Quaternion.identity);
             bullet.GetComponent<BulletEffectController>().Fire(target, transform, OverridenUnitData.BulletSpeed, OverridenUnitData.AttackDamage);
