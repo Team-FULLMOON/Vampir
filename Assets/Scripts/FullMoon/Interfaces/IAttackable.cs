@@ -7,7 +7,6 @@ namespace FullMoon.Interfaces
 {
     public interface IAttackable
     {
-        List<BaseUnitController> UnitInsideViewArea { get; set; }
         void EnterViewRange(Collider unit);
         void ExitViewRange(Collider unit);
         UniTaskVoid ExecuteAttack(Transform location);

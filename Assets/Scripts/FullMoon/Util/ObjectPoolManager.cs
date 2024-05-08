@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
@@ -55,14 +56,14 @@ namespace FullMoon.Util
 
     public class PooledObjectInfo
     {
-        private readonly List<GameObject> inactiveObject = new();
+        private readonly HashSet<GameObject> inactiveObject = new();
 
         public GameObject GetInactiveObject()
         {
             if (inactiveObject.Count > 0)
             {
-                GameObject obj = inactiveObject[0];
-                inactiveObject.RemoveAt(0);
+                GameObject obj = inactiveObject.First();
+                inactiveObject.Remove(obj);
                 return obj;
             }
             return null;

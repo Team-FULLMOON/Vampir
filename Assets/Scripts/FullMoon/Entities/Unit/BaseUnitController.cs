@@ -1,5 +1,4 @@
-using System;
-using Cysharp.Threading.Tasks;
+using System.Collections.Generic;
 using MyBox;
 using UnityEngine;
 using UnityEngine.AI;
@@ -8,7 +7,6 @@ using FullMoon.ScriptableObject;
 using FullMoon.UI;
 using FullMoon.Util;
 using Unity.Burst;
-using Unity.VisualScripting;
 using Random = UnityEngine.Random;
 using StateMachine = FullMoon.FSM.StateMachine;
 
@@ -47,12 +45,15 @@ namespace FullMoon.Entities.Unit
         public bool AttackMove { get; set; }
         public BaseUnitController AttackTarget { get; set; }
         public Vector3 AttackMovePosition { get; set; }
+        
+        public HashSet<BaseUnitController> UnitInsideViewArea { get; set; }
 
         protected virtual void OnEnable()
         {
             Alive = true;
             Rb = GetComponent<Rigidbody>();
             Agent = GetComponent<NavMeshAgent>();
+            UnitInsideViewArea = new HashSet<BaseUnitController>();
             LatestDestination = transform.position;
             Hp = unitData.MaxHp;
             UnitType = unitData.UnitType;
@@ -208,10 +209,7 @@ namespace FullMoon.Entities.Unit
             AttackMove = false;
         }
 
-        public virtual void OnUnitStateTransition(Vector3 targetPosition)
-        { 
-            Debug.Log("asdf");
-        }
+        public virtual void OnUnitStateTransition(BaseUnitController target) { }
         
 #if UNITY_EDITOR
         protected virtual void OnDrawGizmos()
