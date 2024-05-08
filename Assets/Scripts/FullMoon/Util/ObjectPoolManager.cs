@@ -1,27 +1,24 @@
 using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 using System.Text.RegularExpressions;
+using UnityEngine;
 
 namespace FullMoon.Util
 {
-    public class ObjectPoolManager : MonoBehaviour
+    public class ObjectPoolManager : ComponentSingleton<ObjectPoolManager>
     {
-        public static List<PooledObjectInfo> ObjectPools = new List<PooledObjectInfo>();
-
-        public static GameObject SpawnObject(GameObject objectToSpawn, Vector3 spawnPosition, Quaternion spawnRotation)
+        private readonly Dictionary<string, PooledObjectInfo> objectPools = new();
+        
+        public GameObject SpawnObject(GameObject objectToSpawn, Vector3 spawnPosition, Quaternion spawnRotation)
         {
             string goName = NameReplace(objectToSpawn);
 
-            PooledObjectInfo pool = ObjectPools.Find(p => p.LookupString == goName);
-            
-            if (pool == null)
+            if (!objectPools.TryGetValue(goName, out PooledObjectInfo pool))
             {
-                pool = new PooledObjectInfo() { LookupString = goName };
-                ObjectPools.Add(pool);
+                pool = new PooledObjectInfo();
+                objectPools.Add(goName, pool);
             }
 
-            GameObject spawnableObj = pool.InactiveObject.FirstOrDefault();
+            GameObject spawnableObj = pool.GetInactiveObject();
 
             if (spawnableObj == null)
             {
@@ -29,7 +26,6 @@ namespace FullMoon.Util
             }
             else
             {
-                pool.InactiveObject.Remove(spawnableObj);
                 spawnableObj.transform.position = spawnPosition;
                 spawnableObj.transform.rotation = spawnRotation;
                 spawnableObj.SetActive(true);
@@ -37,38 +33,45 @@ namespace FullMoon.Util
             return spawnableObj;
         }
 
-        public static void ReturnObjectToPool(GameObject obj)
+        public void ReturnObjectToPool(GameObject obj)
         {
             string goName = NameReplace(obj);
 
-            PooledObjectInfo pool = ObjectPools.Find(p => p.LookupString == goName);
+            if (!objectPools.TryGetValue(goName, out PooledObjectInfo pool))
+            {
+                pool = new PooledObjectInfo();
+                objectPools[goName] = pool;
+            }
 
-            if (pool == null)
-            {
-                pool = new PooledObjectInfo() { LookupString = goName };
-                ObjectPools.Add(pool);
-                pool.InactiveObject.Add(obj);
-                obj.SetActive(false);
-            }
-            else
-            {
-                pool.InactiveObject.Add(obj);
-                obj.SetActive(false);
-            }
+            pool.ReturnObject(obj);
         }
 
-        private static string NameReplace(GameObject obj)
+        private string NameReplace(GameObject obj)
         {
             string originalString = obj.name;
-            string modifiedString = Regex.Replace(originalString, @" (\d+)|\(Clone\)", "");
-            Debug.Log(modifiedString);
-            return modifiedString;
+            return Regex.Replace(originalString, @" (\d+)|\(Clone\)", "");
         }
     }
 
     public class PooledObjectInfo
     {
-        public string LookupString;
-        public List<GameObject> InactiveObject = new List<GameObject>();
+        private readonly List<GameObject> inactiveObject = new();
+
+        public GameObject GetInactiveObject()
+        {
+            if (inactiveObject.Count > 0)
+            {
+                GameObject obj = inactiveObject[0];
+                inactiveObject.RemoveAt(0);
+                return obj;
+            }
+            return null;
+        }
+
+        public void ReturnObject(GameObject obj)
+        {
+            inactiveObject.Add(obj);
+            obj.SetActive(false);
+        }
     }
 }

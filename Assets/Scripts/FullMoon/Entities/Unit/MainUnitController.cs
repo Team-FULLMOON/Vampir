@@ -1,3 +1,4 @@
+using System;
 using MyBox;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,9 +30,9 @@ namespace FullMoon.Entities.Unit
         
         public float CurrentAttackCoolTime { get; set; }
 
-        protected override void Start()
+        protected override void OnEnable()
         {
-            base.Start();
+            base.OnEnable();
             OverridenUnitData = unitData as MainUnitData;
             UnitInsideViewArea = new List<BaseUnitController>();
             CurrentAttackCoolTime = unitData.AttackCoolTime;
@@ -43,10 +44,8 @@ namespace FullMoon.Entities.Unit
             }
 
             StateMachine.ChangeState(new MainUnitIdle(this));
-            
-            OnStartEvent.TriggerEvent();
         }
-        
+
         [BurstCompile]
         protected override void Update()
         {
@@ -58,7 +57,7 @@ namespace FullMoon.Entities.Unit
         public override void Die()
         {
             base.Die();
-            ObjectPoolManager.ReturnObjectToPool(gameObject);
+            ObjectPoolManager.Instance.ReturnObjectToPool(gameObject);
         }
 
         public override void ReceiveDamage(int amount, BaseUnitController attacker)
@@ -107,7 +106,7 @@ namespace FullMoon.Entities.Unit
             {
                 hitPosition = hit.point;
             }
-            GameObject hitFX = ObjectPoolManager.SpawnObject(attackEffect, hitPosition, Quaternion.identity);
+            GameObject hitFX = ObjectPoolManager.Instance.SpawnObject(attackEffect, hitPosition, Quaternion.identity);
             hitFX.transform.forward = targetDirection.normalized;
 
             targetController.ReceiveDamage(OverridenUnitData.AttackDamage, this);
@@ -171,9 +170,7 @@ namespace FullMoon.Entities.Unit
                 unit.MoveToPosition(targetPosition);
             }
             
-            if (StateMachine.CurrentState is not MainUnitIdle ||
-                StateMachine.CurrentState is not MeleeUnitIdle ||
-                StateMachine.CurrentState is not RangedUnitIdle)
+            if (StateMachine.CurrentState is not (MainUnitIdle or MeleeUnitIdle or RangedUnitIdle))
             {
                 return;
             }

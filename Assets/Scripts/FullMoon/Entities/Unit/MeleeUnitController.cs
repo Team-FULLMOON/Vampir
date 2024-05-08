@@ -1,3 +1,4 @@
+using System;
 using MyBox;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,9 +30,9 @@ namespace FullMoon.Entities.Unit
         
         public float CurrentAttackCoolTime { get; set; }
 
-        protected override void Start()
+        protected override void OnEnable()
         {
-            base.Start();
+            base.OnEnable();
             OverridenUnitData = unitData as MeleeUnitData;
             UnitInsideViewArea = new List<BaseUnitController>();
             CurrentAttackCoolTime = unitData.AttackCoolTime;
@@ -43,10 +44,8 @@ namespace FullMoon.Entities.Unit
             }
 
             StateMachine.ChangeState(new MeleeUnitIdle(this));
-            
-            OnStartEvent.TriggerEvent();
         }
-        
+
         [BurstCompile]
         protected override void Update()
         {
@@ -110,22 +109,32 @@ namespace FullMoon.Entities.Unit
 
             transform.forward = targetDirection.normalized;
             transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, transform.eulerAngles.z);
-            
+    
             SetAnimation(Animator.StringToHash("Attack"));
 
             await UniTask.DelayFrame(OverridenUnitData.HitAnimationFrame);
 
+            if (OverridenUnitData.UnitClass.Equals("Spear"))
+            {
+                targetController.Rb.isKinematic = false;
+                targetController.Rb.AddForce(transform.forward * 10f, ForceMode.Impulse);
+
+                await UniTask.DelayFrame(2);
+                
+                targetController.Rb.isKinematic = true;
+            }
+    
             if (attackEffect != null)
             {
-                GameObject hitFX = ObjectPoolManager.SpawnObject(attackEffect, hitPosition, Quaternion.identity);
+                GameObject hitFX = ObjectPoolManager.Instance.SpawnObject(attackEffect, hitPosition, Quaternion.identity);
                 hitFX.transform.forward = targetDirection.normalized;
             }
-            
+    
             if (targetController.gameObject.activeInHierarchy == false)
             {
                 return;
             }
-            
+    
             targetController.ReceiveDamage(OverridenUnitData.AttackDamage, this);
         }
         
@@ -187,9 +196,7 @@ namespace FullMoon.Entities.Unit
                 unit.MoveToPosition(targetPosition);
             }
             
-            if (StateMachine.CurrentState is not MainUnitIdle ||
-                StateMachine.CurrentState is not MeleeUnitIdle ||
-                StateMachine.CurrentState is not RangedUnitIdle)
+            if (StateMachine.CurrentState is not (MainUnitIdle or MeleeUnitIdle or RangedUnitIdle))
             {
                 return;
             }

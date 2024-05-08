@@ -15,7 +15,7 @@ MonoBehaviour:
   unitCode: 102
   unitName: "\uBA38\uC2A4\uD0B7 \uC778\uD615"
   unitType: Player
-  unitClass: Ranged
+  unitClass: Crossbow
   maxHp: 45
   movementSpeed: 3
   missRate: 0

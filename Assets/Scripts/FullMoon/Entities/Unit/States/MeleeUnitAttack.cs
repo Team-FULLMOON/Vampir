@@ -58,6 +58,10 @@ namespace FullMoon.Entities.Unit.States
                 return;
             }
             
+            Vector3 targetDirection = closestUnit.transform.position - controller.transform.position;
+            controller.transform.forward = targetDirection.normalized;
+            controller.transform.eulerAngles = new Vector3(0f, controller.transform.eulerAngles.y, controller.transform.eulerAngles.z);
+            
             bool checkDistance = (closestUnit.transform.position - controller.transform.position).sqrMagnitude <=
                                  controller.OverridenUnitData.AttackRadius * controller.OverridenUnitData.AttackRadius;
             

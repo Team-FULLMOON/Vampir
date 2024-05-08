@@ -30,9 +30,9 @@ namespace FullMoon.Entities.Unit
         
         public float CurrentAttackCoolTime { get; set; }
 
-        protected override void Start()
+        protected override void OnEnable()
         {
-            base.Start();
+            base.OnEnable();
             OverridenUnitData = unitData as RangedUnitData;
             UnitInsideViewArea = new List<BaseUnitController>();
             CurrentAttackCoolTime = unitData.AttackCoolTime;
@@ -44,8 +44,6 @@ namespace FullMoon.Entities.Unit
             }
 
             StateMachine.ChangeState(new RangedUnitIdle(this));
-            
-            OnStartEvent.TriggerEvent();
         }
 
         [BurstCompile]
@@ -103,7 +101,7 @@ namespace FullMoon.Entities.Unit
             
             await UniTask.DelayFrame(OverridenUnitData.HitAnimationFrame);
             
-            GameObject bullet = ObjectPoolManager.SpawnObject(attackEffect, transform.position, Quaternion.identity);
+            GameObject bullet = ObjectPoolManager.Instance.SpawnObject(attackEffect, transform.position, Quaternion.identity);
             bullet.GetComponent<BulletEffectController>().Fire(target, transform, OverridenUnitData.BulletSpeed, OverridenUnitData.AttackDamage);
         }
 
@@ -159,16 +157,12 @@ namespace FullMoon.Entities.Unit
                 unit.MoveToPosition(targetPosition);
             }
             
-            if (StateMachine.CurrentState is not MainUnitIdle ||
-                StateMachine.CurrentState is not MeleeUnitIdle ||
-                StateMachine.CurrentState is not RangedUnitIdle)
+            if (StateMachine.CurrentState is not (MainUnitIdle or MeleeUnitIdle or RangedUnitIdle))
             {
                 return;
             }
             
             MoveToPosition(targetPosition);
-            
-            OnStartEvent.TriggerEvent();
         }
         
         private void ReduceAttackCoolTime()

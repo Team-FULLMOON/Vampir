@@ -421,7 +421,7 @@ namespace FullMoon.Camera
 
             clickStream
                 .Buffer(clickStream.Throttle(TimeSpan.FromMilliseconds(200)))
-                .Where(_ => EventSystem.current.IsPointerOverGameObject() == false)
+                .Where(_ => EventSystem.current is not null && EventSystem.current.IsPointerOverGameObject() == false)
                 .Where(x => x.Count >= 2)
                 .Where(count => selectedUnitList.Count != 0)
                 .Subscribe(_ => SelectAllUnit(selectedUnitList.First().UnitClass));

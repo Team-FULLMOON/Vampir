@@ -15,7 +15,7 @@ MonoBehaviour:
   unitCode: 101
   unitName: "\uBA54\uC774\uC2A4 \uC778\uD615"
   unitType: Player
-  unitClass: Melee
+  unitClass: Sword
   maxHp: 25
   movementSpeed: 5
   missRate: 0
