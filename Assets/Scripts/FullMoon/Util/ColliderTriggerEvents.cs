@@ -1,8 +1,8 @@
 using MyBox;
 using UnityEngine;
 using UnityEngine.Events;
-using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 
 namespace FullMoon.Util
 {
@@ -14,18 +14,14 @@ namespace FullMoon.Util
         [SerializeField, Space(10)] private bool executeExitAfterFrame;
         [SerializeField] private UnityEvent<Collider> onExitEvent;
 
-        private IEnumerator ExecuteAfterFrame(UnityEvent<Collider> unityEvent, Collider other)
-        {
-            yield return null;
-            unityEvent?.Invoke(other);
-        }
-    
-        private void OnTriggerEnter(Collider other)
+        public List<string> GetFilterTags => filterTags;
+        
+        private async void OnTriggerEnter(Collider other)
         {
             bool filterResult = false;
-            foreach (var tag in filterTags)
+            foreach (var filterTag in filterTags)
             {
-                if (other.CompareTag(tag))
+                if (other.CompareTag(filterTag))
                 {
                     filterResult = true;
                 }
@@ -38,19 +34,19 @@ namespace FullMoon.Util
         
             if (executeEnterAfterFrame)
             {
-                StartCoroutine(ExecuteAfterFrame(onEnterEvent, other));
-                return;
+                await UniTask.NextFrame();
+                onEnterEvent?.Invoke(other);
             }
         
             onEnterEvent?.Invoke(other);
         }
 
-        private void OnTriggerExit(Collider other)
+        private async void OnTriggerExit(Collider other)
         {
             bool filterResult = false;
-            foreach (var tag in filterTags)
+            foreach (var filterTag in filterTags)
             {
-                if (other.CompareTag(tag))
+                if (other.CompareTag(filterTag))
                 {
                     filterResult = true;
                 }
@@ -63,7 +59,8 @@ namespace FullMoon.Util
         
             if (executeExitAfterFrame)
             {
-                StartCoroutine(ExecuteAfterFrame(onExitEvent, other));
+                await UniTask.NextFrame();
+                onEnterEvent?.Invoke(other);
                 return;
             }
 

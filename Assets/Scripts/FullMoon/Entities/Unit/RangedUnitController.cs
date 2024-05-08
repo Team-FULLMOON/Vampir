@@ -26,17 +26,30 @@ namespace FullMoon.Entities.Unit
 
         public RangedUnitData OverridenUnitData { get; private set; }
         
-        public List<BaseUnitController> UnitInsideViewArea { get; set; }
-        
         public float CurrentAttackCoolTime { get; set; }
 
-        protected override void Start()
+        protected override void OnEnable()
         {
-            base.Start();
+            base.OnEnable();
             OverridenUnitData = unitData as RangedUnitData;
-            UnitInsideViewArea = new List<BaseUnitController>();
             CurrentAttackCoolTime = unitData.AttackCoolTime;
 
+            var triggerEvent = viewRange.GetComponent<ColliderTriggerEvents>();
+            if (triggerEvent is not null)
+            {
+                float worldRadius = viewRange.radius * Mathf.Max(transform.lossyScale.x, transform.lossyScale.y, transform.lossyScale.z);
+
+                var units = Physics.OverlapSphere(transform.position + viewRange.center, worldRadius)
+                    .Where(t => triggerEvent.GetFilterTags.Contains(t.tag) && t.gameObject != gameObject)
+                    .Where(t => t.GetComponent<BaseUnitController>() is not null)
+                    .ToList();
+
+                foreach (var unit in units)
+                {
+                    UnitInsideViewArea.Add(unit.GetComponent<BaseUnitController>());
+                }
+            }
+            
             if (decalProjector is not null)
             {
                 decalProjector.gameObject.SetActive(false);
@@ -44,15 +57,13 @@ namespace FullMoon.Entities.Unit
             }
 
             StateMachine.ChangeState(new RangedUnitIdle(this));
-            
-            OnStartEvent.TriggerEvent();
         }
 
         [BurstCompile]
         protected override void Update()
         {
             ReduceAttackCoolTime();
-            UnitInsideViewArea.RemoveAll(unit => unit is null || !unit.gameObject.activeInHierarchy || !unit.Alive);
+            UnitInsideViewArea.RemoveWhere(unit => unit is null || !unit.gameObject.activeInHierarchy || !unit.Alive);
             base.Update();
         }
         
@@ -61,7 +72,7 @@ namespace FullMoon.Entities.Unit
             if (StateMachine.CurrentState is RangedUnitIdle)
             {
                 MoveToPosition(attacker.transform.position);
-                OnUnitStateTransition(attacker.transform.position);
+                OnUnitStateTransition(attacker);
             }
             base.ReceiveDamage(amount, attacker);
         }
@@ -103,7 +114,7 @@ namespace FullMoon.Entities.Unit
             
             await UniTask.DelayFrame(OverridenUnitData.HitAnimationFrame);
             
-            GameObject bullet = ObjectPoolManager.SpawnObject(attackEffect, transform.position, Quaternion.identity);
+            GameObject bullet = ObjectPoolManager.Instance.SpawnObject(attackEffect, transform.position, Quaternion.identity);
             bullet.GetComponent<BulletEffectController>().Fire(target, transform, OverridenUnitData.BulletSpeed, OverridenUnitData.AttackDamage);
         }
 
@@ -144,31 +155,28 @@ namespace FullMoon.Entities.Unit
         }
 
         [BurstCompile]
-        public override void OnUnitStateTransition(Vector3 targetPosition)
+        public override void OnUnitStateTransition(BaseUnitController target)
         {
-            base.OnUnitStateTransition(targetPosition);
+            base.OnUnitStateTransition(target);
             
             List<BaseUnitController> transitionControllers = UnitInsideViewArea
                 .Where(t => UnitType.Equals(t.UnitType))
                 .Where(t => t.StateMachine.CurrentState is MainUnitIdle or MeleeUnitIdle or RangedUnitIdle)
                 .Where(t => (t.transform.position - transform.position).sqrMagnitude <=
                             OverridenUnitData.StateTransitionRadius * OverridenUnitData.StateTransitionRadius).ToList();
-            
+
             foreach (var unit in transitionControllers)
             {
-                unit.MoveToPosition(targetPosition);
+                unit.UnitInsideViewArea.Add(target);
+                
             }
             
-            if (StateMachine.CurrentState is not MainUnitIdle ||
-                StateMachine.CurrentState is not MeleeUnitIdle ||
-                StateMachine.CurrentState is not RangedUnitIdle)
+            if (StateMachine.CurrentState is not (MainUnitIdle or MeleeUnitIdle or RangedUnitIdle))
             {
                 return;
             }
             
-            MoveToPosition(targetPosition);
-            
-            OnStartEvent.TriggerEvent();
+            UnitInsideViewArea.Add(target);
         }
         
         private void ReduceAttackCoolTime()

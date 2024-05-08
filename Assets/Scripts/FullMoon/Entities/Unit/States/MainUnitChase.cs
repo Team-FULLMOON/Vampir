@@ -19,11 +19,6 @@ namespace FullMoon.Entities.Unit.States
             controller.Agent.isStopped = false;
             controller.Agent.speed = controller.OverridenUnitData.MovementSpeed;
             
-            if (controller.UnitType != "Enemy")
-            {
-                return;
-            }
-            
             BaseUnitController closestUnit = controller.AttackTarget ? controller.AttackTarget : controller.UnitInsideViewArea
                 .Where(t => !controller.UnitType.Equals(t.UnitType))
                 .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
@@ -34,7 +29,7 @@ namespace FullMoon.Entities.Unit.States
                 return;
             }
             
-            controller.OnUnitStateTransition(closestUnit.transform.position);
+            controller.OnUnitStateTransition(closestUnit);
         }
 
         [BurstCompile]

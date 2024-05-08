@@ -41,7 +41,7 @@ namespace FullMoon.UI
         public int UnitLimitValue { get; private set; }
         public int CurrentUnitValue { get; private set; }
         
-        private void Start()
+        private void OnEnable()
         {
             VisualElement root = GetComponent<UIDocument>().rootVisualElement;
             

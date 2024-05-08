@@ -21,11 +21,6 @@ namespace FullMoon.Entities.Unit.States
         {
             attackDelay = controller.OverridenUnitData.AttackDelay;
             
-            if (controller.UnitType != "Enemy")
-            {
-                return;
-            }
-            
             BaseUnitController closestUnit = controller.AttackTarget ? controller.AttackTarget : controller.UnitInsideViewArea
                 .Where(t => !controller.UnitType.Equals(t.UnitType))
                 .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
@@ -36,7 +31,7 @@ namespace FullMoon.Entities.Unit.States
                 return;
             }
             
-            controller.OnUnitStateTransition(closestUnit.transform.position);
+            controller.OnUnitStateTransition(closestUnit);
         }
 
         [BurstCompile]
@@ -57,6 +52,10 @@ namespace FullMoon.Entities.Unit.States
                 controller.StateMachine.ChangeState(new MainUnitIdle(controller));
                 return;
             }
+            
+            Vector3 targetDirection = closestUnit.transform.position - controller.transform.position;
+            controller.transform.forward = targetDirection.normalized;
+            controller.transform.eulerAngles = new Vector3(0f, controller.transform.eulerAngles.y, controller.transform.eulerAngles.z);
             
             bool checkDistance = (closestUnit.transform.position - controller.transform.position).sqrMagnitude <=
                                  controller.OverridenUnitData.AttackRadius * controller.OverridenUnitData.AttackRadius;

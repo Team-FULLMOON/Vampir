@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using MyBox;
 using UnityEngine;
 using UnityEngine.AI;
@@ -6,7 +7,7 @@ using FullMoon.ScriptableObject;
 using FullMoon.UI;
 using FullMoon.Util;
 using Unity.Burst;
-using Unity.VisualScripting;
+using Random = UnityEngine.Random;
 using StateMachine = FullMoon.FSM.StateMachine;
 
 namespace FullMoon.Entities.Unit
@@ -45,15 +46,16 @@ namespace FullMoon.Entities.Unit
         public BaseUnitController AttackTarget { get; set; }
         public Vector3 AttackMovePosition { get; set; }
         
-        public readonly SimpleEventSystem OnStartEvent = new();
+        public HashSet<BaseUnitController> UnitInsideViewArea { get; set; }
 
-        protected virtual void Start()
+        protected virtual void OnEnable()
         {
+            Alive = true;
             Rb = GetComponent<Rigidbody>();
             Agent = GetComponent<NavMeshAgent>();
+            UnitInsideViewArea = new HashSet<BaseUnitController>();
             LatestDestination = transform.position;
             Hp = unitData.MaxHp;
-            Alive = true;
             UnitType = unitData.UnitType;
             UnitClass = unitData.UnitClass;
             unitMarker.SetActive(false);
@@ -81,7 +83,7 @@ namespace FullMoon.Entities.Unit
             StateMachine.FixedExecuteCurrentState();
         }
         
-        public bool SetAnimation(int stateID, float transitionDuration = 1f)
+        public bool SetAnimation(int stateID, float transitionDuration = 0.3f)
         {
             if (unitAnimator is null)
             {
@@ -109,7 +111,7 @@ namespace FullMoon.Entities.Unit
             
             Hp = Mathf.Clamp(Hp - amount, 0, System.Int32.MaxValue);
             
-            Debug.Log($"{gameObject.name} ({Hp}): D -{amount}, F {attacker.name}");
+            // Debug.Log($"{gameObject.name} ({Hp}): D -{amount}, F {attacker.name}");
             
             int attackHash = Animator.StringToHash("Attack");
             AnimatorStateInfo stateInfo = unitAnimator.GetCurrentAnimatorStateInfo(0);
@@ -136,7 +138,7 @@ namespace FullMoon.Entities.Unit
                 for (int i = 0; i < 5; i++)
                 {
                     Vector3 randomPosition = transform.position + new Vector3(Random.Range(-2f, 2f), 0, Random.Range(-2f, 2f));
-                    ObjectPoolManager.SpawnObject(unitData.RespawnUnitObject.gameObject, randomPosition, Quaternion.identity);
+                    ObjectPoolManager.Instance.SpawnObject(unitData.RespawnUnitObject.gameObject, randomPosition, Quaternion.identity);
                 }
                 MainUIController.Instance.AddMana(unitData.ManaDrop);
                 return;
@@ -207,7 +209,7 @@ namespace FullMoon.Entities.Unit
             AttackMove = false;
         }
 
-        public virtual void OnUnitStateTransition(Vector3 targetPosition) { }
+        public virtual void OnUnitStateTransition(BaseUnitController target) { }
         
 #if UNITY_EDITOR
         protected virtual void OnDrawGizmos()

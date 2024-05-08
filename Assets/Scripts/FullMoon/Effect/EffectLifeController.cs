@@ -3,12 +3,14 @@ using FullMoon.Util;
 
 namespace FullMoon.Effect
 {
-    public class SwordEffectController : MonoBehaviour
+    public class EffectLifeController : MonoBehaviour
     {
+        [SerializeField] private float lifeDuration = 2f;
+        
         private void OnEnable()
         {
             CancelInvoke(nameof(DestroyEffect));
-            Invoke(nameof(DestroyEffect), 2f);
+            Invoke(nameof(DestroyEffect), lifeDuration);
         }
 
         private void DestroyEffect()
@@ -17,7 +19,7 @@ namespace FullMoon.Effect
             {
                 return;
             }
-            ObjectPoolManager.ReturnObjectToPool(gameObject);
+            ObjectPoolManager.Instance.ReturnObjectToPool(gameObject);
         }
     }
 }

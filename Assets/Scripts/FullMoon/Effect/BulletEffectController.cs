@@ -10,7 +10,7 @@ namespace FullMoon.Effect
         [SerializeField] private GameObject hitEffect;
         
         private BaseUnitController target;
-        public BaseUnitController shooter;
+        private BaseUnitController shooter;
         private float speed;
         private int damage;
 
@@ -82,7 +82,7 @@ namespace FullMoon.Effect
 
             transform.forward = targetDirection.normalized;
 
-            GameObject fireFX = ObjectPoolManager.SpawnObject(firingEffect, transform.position, Quaternion.identity);
+            GameObject fireFX = ObjectPoolManager.Instance.SpawnObject(firingEffect, transform.position, Quaternion.identity);
             fireFX.transform.forward = targetDirection.normalized;
             fireFX.transform.eulerAngles = new Vector3(0f, fireFX.transform.eulerAngles.y - 90f, 0f);
             
@@ -100,8 +100,8 @@ namespace FullMoon.Effect
 
             if (otherLayer == groundLayer)
             {
-                ObjectPoolManager.ReturnObjectToPool(gameObject);
-                ObjectPoolManager.SpawnObject(hitEffect, hit.point, Quaternion.identity);
+                ObjectPoolManager.Instance.ReturnObjectToPool(gameObject);
+                ObjectPoolManager.Instance.SpawnObject(hitEffect, hit.point, Quaternion.identity);
             }
             
             if (otherLayer == unitLayer)
@@ -115,8 +115,8 @@ namespace FullMoon.Effect
                 if (unitController != null && !unitController.UnitType.Equals(shooter.UnitType))
                 {
                     unitController.ReceiveDamage(damage, shooter);
-                    ObjectPoolManager.ReturnObjectToPool(gameObject);
-                    ObjectPoolManager.SpawnObject(hitEffect, hit.point, Quaternion.identity);
+                    ObjectPoolManager.Instance.ReturnObjectToPool(gameObject);
+                    ObjectPoolManager.Instance.SpawnObject(hitEffect, hit.point, Quaternion.identity);
                 }
             }
         }
@@ -127,7 +127,7 @@ namespace FullMoon.Effect
             {
                 return;
             }
-            ObjectPoolManager.ReturnObjectToPool(gameObject);
+            ObjectPoolManager.Instance.ReturnObjectToPool(gameObject);
         }
     }
 }
