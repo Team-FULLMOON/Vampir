@@ -87,15 +87,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Respawn",
-                    "type": "Value",
-                    "id": "4ef2a7d9-3ebc-43b9-b31f-3bcf5b7e924c",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "AttackMove",
                     "type": "Value",
                     "id": "2a97873b-c280-4af2-a7b4-b79f97e74b1a",
@@ -132,7 +123,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "ShieldSelect",
+                    "name": "SwordSelect",
                     "type": "Value",
                     "id": "67d901f0-499a-4cad-81b0-9eb9fa9a5f9c",
                     "expectedControlType": "Button",
@@ -141,7 +132,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "RangedSelect",
+                    "name": "CrossbowSelect",
                     "type": "Value",
                     "id": "437d4d14-6349-46b7-8e9a-fc18f9c6d8f1",
                     "expectedControlType": "Button",
@@ -150,7 +141,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "MeleeSelect",
+                    "name": "SpearSelect",
                     "type": "Value",
                     "id": "47f00f3f-f4f0-41a0-a535-3f7b23cffbef",
                     "expectedControlType": "Button",
@@ -316,17 +307,6 @@
                 },
                 {
                     "name": "",
-                    "id": "8b03ddfa-d19a-4f91-8e59-e41651ea77dd",
-                    "path": "<Keyboard>/r",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Respawn",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "7d29169c-6d26-407f-b04f-9f5e82979c29",
                     "path": "<Keyboard>/a",
                     "interactions": "",
@@ -376,7 +356,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "ShieldSelect",
+                    "action": "SwordSelect",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -387,7 +367,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "RangedSelect",
+                    "action": "CrossbowSelect",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -398,7 +378,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "MeleeSelect",
+                    "action": "SpearSelect",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

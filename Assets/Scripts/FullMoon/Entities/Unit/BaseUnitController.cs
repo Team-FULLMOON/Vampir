@@ -143,7 +143,7 @@ namespace FullMoon.Entities.Unit
                 MainUIController.Instance.AddMana(unitData.ManaDrop);
                 return;
             }
-
+            
             MainUIController.Instance.AddUnit(-1);
         }
 
@@ -159,6 +159,7 @@ namespace FullMoon.Entities.Unit
                     unitModel.layer = LayerMask.NameToLayer("SelectEnemy");
                     break;
             }
+            
             unitMarker.SetActive(true);
         }
         

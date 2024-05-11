@@ -30,14 +30,13 @@ namespace FullMoon.Input
         public bool stop;
         public bool hold;
         public bool rotation;
-        public bool respawn;
         public bool attackMove;
         public bool normalMove;
         public bool cancel;
         public bool mainSelect;
-        public bool shieldSelect;
-        public bool rangedSelect;
-        public bool meleeSelect;
+        public bool swordSelect;
+        public bool crossbowSelect;
+        public bool spearSelect;
 
         [Header("Mouse Cursor Lock Settings")] 
         public CursorLockType cursorLockType;
@@ -78,11 +77,6 @@ namespace FullMoon.Input
             RotationInput(value.isPressed);
         }
         
-        public void OnRespawn(InputValue value)
-        {
-            RespawnInput(true);
-        }
-
         public void OnAttackMove(InputValue value)
         {
             AttackMoveInput(value.isPressed);
@@ -103,19 +97,19 @@ namespace FullMoon.Input
             MainSelectInput(value.isPressed);
         }
 
-        public void OnShieldSelect(InputValue value)
+        public void OnSwordSelect(InputValue value)
         {
-            ShieldSelectInput(value.isPressed);
+            SwordSelectInput(value.isPressed);
         }
 
-        public void OnRangedSelect(InputValue value)
+        public void OnCrossbowSelect(InputValue value)
         {
-            RangedSelectInput(value.isPressed);
+            CrossbowSelectInput(value.isPressed);
         }
 
-        public void OnMeleeSelect(InputValue value)
+        public void OnSpearSelect(InputValue value)
         {
-            MeleeSelectInput(value.isPressed);
+            SpearSelectInput(value.isPressed);
         }
 #endif
 		
@@ -168,13 +162,6 @@ namespace FullMoon.Input
             RotationEvent.TriggerEvent(input);
         } 
         
-        public readonly GenericEventSystem<bool> RespawnEvent = new();
-        public void RespawnInput(bool input)
-        {
-            respawn = input;
-            RespawnEvent.TriggerEvent(input);
-        } 
-
         public readonly GenericEventSystem<bool> AttackMoveEvent = new();
         public void AttackMoveInput(bool input)
         {
@@ -203,25 +190,25 @@ namespace FullMoon.Input
             MainSelectEvent.TriggerEvent(input);
         }
 
-        public readonly GenericEventSystem<bool> ShieldSelectEvent = new();
-        public void ShieldSelectInput(bool input)
+        public readonly GenericEventSystem<bool> SwordSelectEvent = new();
+        public void SwordSelectInput(bool input)
         {
-            shieldSelect = input;
-            ShieldSelectEvent.TriggerEvent(input);
+            swordSelect = input;
+            SwordSelectEvent.TriggerEvent(input);
         }
         
-        public readonly GenericEventSystem<bool> RangedSelectEvent = new();
-        public void RangedSelectInput(bool input)
+        public readonly GenericEventSystem<bool> CrossbowSelectEvent = new();
+        public void CrossbowSelectInput(bool input)
         {
-            rangedSelect = input;
-            RangedSelectEvent.TriggerEvent(input);
+            crossbowSelect = input;
+            CrossbowSelectEvent.TriggerEvent(input);
         }
 
-        public readonly GenericEventSystem<bool> MeleeSelectEvent = new();
-        public void MeleeSelectInput(bool input)
+        public readonly GenericEventSystem<bool> SpearSelectEvent = new();
+        public void SpearSelectInput(bool input)
         {
-            meleeSelect = input;
-            MeleeSelectEvent.TriggerEvent(input);
+            spearSelect = input;
+            SpearSelectEvent.TriggerEvent(input);
         }
 
         private void OnApplicationFocus(bool hasFocus)
