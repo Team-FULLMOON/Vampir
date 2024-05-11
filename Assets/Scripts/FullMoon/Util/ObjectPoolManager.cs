@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
+using System;
 
 namespace FullMoon.Util
 {
@@ -45,6 +47,22 @@ namespace FullMoon.Util
             }
 
             pool.ReturnObject(obj);
+        }
+
+        public async UniTask ReturnObjectToPool(GameObject obj, float time)
+        {
+            string goName = NameReplace(obj);
+
+            if (!objectPools.TryGetValue(goName, out PooledObjectInfo pool))
+            {
+                pool = new PooledObjectInfo();
+                objectPools[goName] = pool;
+            }
+
+            await UniTask.Delay(TimeSpan.FromSeconds(time));
+
+            pool.ReturnObject(obj);
+
         }
 
         private string NameReplace(GameObject obj)
