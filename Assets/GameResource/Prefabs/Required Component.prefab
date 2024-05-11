@@ -163,14 +163,13 @@ MonoBehaviour:
   stop: 0
   hold: 0
   rotation: 0
-  respawn: 0
   attackMove: 0
   normalMove: 0
   cancel: 0
   mainSelect: 0
-  shieldSelect: 0
-  rangedSelect: 0
-  meleeSelect: 0
+  swordSelect: 0
+  crossbowSelect: 0
+  spearSelect: 0
   cursorLockType: 2
 --- !u!1 &1889243612475854807
 GameObject:
@@ -395,13 +394,14 @@ MonoBehaviour:
   enableCursorMovement: 1
   moveSpeed: 12
   shiftMoveSpeed: 25
-  zoomSensitivity: 5
+  zoomSensitivity: 1
   zoomSpeed: 10
-  minFov: 25
-  maxFov: 65
+  minFov: 7
+  maxFov: 15
   rotationSensitivity: 5
   dragRectangle: {fileID: 6410134052024422841}
   cursor: {fileID: 2179864655310582506}
+  targetFov: 0
 --- !u!1 &2558575844570174616
 GameObject:
   m_ObjectHideFlags: 0
@@ -824,6 +824,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87291a3892c3fcc40b0f3311af407627, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enable: 1
+  cursorType: 0
   textures:
   - {fileID: 2800000, guid: ff8ee024686a956408b8f799c4acfc11, type: 3}
   - {fileID: 2800000, guid: 002a1352f6f68d949a460c3c35bd0658, type: 3}
@@ -1308,8 +1310,6 @@ MonoBehaviour:
   canMove:
     value: 0
   canAttack:
-    value: 0
-  canRespawn:
     value: 0
   isMainUnit: 0
 --- !u!1 &8015035892718466246

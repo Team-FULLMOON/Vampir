@@ -21811,21 +21811,6 @@ PrefabInstance:
       propertyPath: m_FollowOffset.z
       value: -25
       objectReference: {fileID: 0}
-    - target: {fileID: 1327382350321120181, guid: 45c0e8983dfd155438c71a93215887d2,
-        type: 3}
-      propertyPath: maxFov
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1327382350321120181, guid: 45c0e8983dfd155438c71a93215887d2,
-        type: 3}
-      propertyPath: minFov
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1327382350321120181, guid: 45c0e8983dfd155438c71a93215887d2,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1563821940271334436, guid: 45c0e8983dfd155438c71a93215887d2,
         type: 3}
       propertyPath: m_Lens.FieldOfView
@@ -21999,7 +21984,7 @@ PrefabInstance:
     - target: {fileID: 4095248380876283897, guid: 45c0e8983dfd155438c71a93215887d2,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.21512666
+      value: -0.2151267
       objectReference: {fileID: 0}
     - target: {fileID: 4173717737813788761, guid: 45c0e8983dfd155438c71a93215887d2,
         type: 3}
