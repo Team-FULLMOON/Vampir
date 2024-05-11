@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using System;
 
 namespace FullMoon.Util
 {
@@ -48,7 +49,7 @@ namespace FullMoon.Util
             pool.ReturnObject(obj);
         }
 
-        public async UniTask ReturnObjectToPool(GameObject obj, int millisecond)
+        public async UniTask ReturnObjectToPool(GameObject obj, float time)
         {
             string goName = NameReplace(obj);
 
@@ -58,7 +59,7 @@ namespace FullMoon.Util
                 objectPools[goName] = pool;
             }
 
-            await UniTask.Delay(millisecond);
+            await UniTask.Delay(TimeSpan.FromSeconds(time));
 
             pool.ReturnObject(obj);
 
