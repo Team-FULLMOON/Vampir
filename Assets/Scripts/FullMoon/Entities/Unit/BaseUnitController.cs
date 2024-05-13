@@ -35,16 +35,13 @@ namespace FullMoon.Entities.Unit
         
         public Rigidbody Rb { get; private set; }
         public NavMeshAgent Agent { get; set; }
+        public UnitFlagController Flag { get; set; }
         public Vector3 LatestDestination { get; set; }
         public int Hp { get; set; }
         public bool Alive { get; set; }
 
         public string UnitType { get; set; }
         public string UnitClass { get; set; }
-
-        public bool AttackMove { get; set; }
-        public BaseUnitController AttackTarget { get; set; }
-        public Vector3 AttackMovePosition { get; set; }
         
         public HashSet<BaseUnitController> UnitInsideViewArea { get; set; }
 
@@ -135,11 +132,7 @@ namespace FullMoon.Entities.Unit
             
             if (UnitType == "Enemy")
             {
-                for (int i = 0; i < 5; i++)
-                {
-                    Vector3 randomPosition = transform.position + new Vector3(Random.Range(-2f, 2f), 0, Random.Range(-2f, 2f));
-                    ObjectPoolManager.Instance.SpawnObject(unitData.RespawnUnitObject.gameObject, randomPosition, Quaternion.identity);
-                }
+                ObjectPoolManager.Instance.SpawnObject(unitData.RespawnUnitObject.gameObject, transform.position, Quaternion.identity);
                 MainUIController.Instance.AddMana(unitData.ManaDrop);
                 return;
             }
@@ -181,36 +174,6 @@ namespace FullMoon.Entities.Unit
             Agent.SetPath(path);
             LatestDestination = location;
         }
-
-        public virtual void OnUnitStop()
-        {
-            MoveToPosition(transform.position);
-            AttackMove = false;
-            AttackTarget = null;
-        }
-
-        public virtual void OnUnitHold()
-        {
-            MoveToPosition(transform.position);
-            AttackMove = false;
-            AttackTarget = null;
-        }
-
-        public virtual void OnUnitAttack(Vector3 targetPosition)
-        {
-            AttackTarget = null;
-            AttackMove = true;
-            AttackMovePosition = targetPosition;
-            MoveToPosition(targetPosition);
-        }
-
-        public virtual void OnUnitForceAttack(BaseUnitController target)
-        {
-            AttackTarget = target;
-            AttackMove = false;
-        }
-
-        public virtual void OnUnitStateTransition(BaseUnitController target) { }
         
 #if UNITY_EDITOR
         protected virtual void OnDrawGizmos()

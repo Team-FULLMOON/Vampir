@@ -19,6 +19,7 @@ namespace FullMoon.Entities.Unit.States
         {
             controller.Agent.isStopped = false;
             controller.Agent.speed = controller.OverridenUnitData.MovementSpeed;
+            controller.SetAnimation(Animator.StringToHash("Move"));
         }
 
         [BurstCompile]
@@ -40,12 +41,11 @@ namespace FullMoon.Entities.Unit.States
             
             if (closestUnit is not null)
             {
-                controller.AttackMove = false;
                 controller.StateMachine.ChangeState(new RangedUnitIdle(controller));
                 return;
             }
 
-            if (controller.AttackMove || controller.UnitType == "Enemy")
+            if (controller.UnitType == "Enemy")
             {
                 closestUnit = controller.UnitInsideViewArea
                     .Where(t => !controller.UnitType.Equals(t.UnitType))

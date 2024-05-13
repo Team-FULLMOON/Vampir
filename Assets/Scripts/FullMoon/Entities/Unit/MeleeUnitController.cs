@@ -66,16 +66,6 @@ namespace FullMoon.Entities.Unit
             base.Update();
         }
 
-        public override void ReceiveDamage(int amount, BaseUnitController attacker)
-        {
-            if (StateMachine.CurrentState is MeleeUnitIdle)
-            {
-                MoveToPosition(attacker.transform.position);
-                OnUnitStateTransition(attacker);
-            }
-            base.ReceiveDamage(amount, attacker);
-        }
-
         public override void Die()
         {
             base.Die();
@@ -153,13 +143,13 @@ namespace FullMoon.Entities.Unit
         public override void Select()
         {
             base.Select();
-            // decalProjector.gameObject.SetActive(true);
+            decalProjector.gameObject.SetActive(true);
         }
 
         public override void Deselect()
         {
             base.Deselect();
-            // decalProjector.gameObject.SetActive(false);
+            decalProjector.gameObject.SetActive(false);
         }
 
         public override void MoveToPosition(Vector3 location)
@@ -167,55 +157,7 @@ namespace FullMoon.Entities.Unit
             base.MoveToPosition(location);
             StateMachine.ChangeState(new MeleeUnitMove(this));
         }
-
-        public override void OnUnitStop()
-        {
-            base.OnUnitStop();
-            StateMachine.ChangeState(new MeleeUnitIdle(this));
-        }
-
-        public override void OnUnitHold()
-        {
-            base.OnUnitHold();
-            StateMachine.ChangeState(new MeleeUnitIdle(this));
-        }
-
-        public override void OnUnitAttack(Vector3 targetPosition)
-        {
-            base.OnUnitAttack(targetPosition);
-            StateMachine.ChangeState(new MeleeUnitMove(this));
-        }
-
-        public override void OnUnitForceAttack(BaseUnitController target)
-        {
-            base.OnUnitForceAttack(target);
-            StateMachine.ChangeState(new MeleeUnitAttack(this));
-        }
-
-        [BurstCompile]
-        public override void OnUnitStateTransition(BaseUnitController target)
-        {
-            base.OnUnitStateTransition(target);
-            
-            List<BaseUnitController> transitionControllers = UnitInsideViewArea
-                .Where(t => UnitType.Equals(t.UnitType))
-                .Where(t => t.StateMachine.CurrentState is MainUnitIdle or MeleeUnitIdle or RangedUnitIdle)
-                .Where(t => (t.transform.position - transform.position).sqrMagnitude <=
-                            OverridenUnitData.StateTransitionRadius * OverridenUnitData.StateTransitionRadius).ToList();
-
-            foreach (var unit in transitionControllers)
-            {
-                unit.UnitInsideViewArea.Add(target);
-            }
-            
-            if (StateMachine.CurrentState is not (MainUnitIdle or MeleeUnitIdle or RangedUnitIdle))
-            {
-                return;
-            }
-            
-            UnitInsideViewArea.Add(target);
-        }
-
+        
         private void ReduceAttackCoolTime()
         {
             if (CurrentAttackCoolTime > 0)

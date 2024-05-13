@@ -21,24 +21,12 @@ namespace FullMoon.Entities.Unit.States
             controller.Agent.speed = controller.OverridenUnitData.MovementSpeed;
             
             controller.SetAnimation(Animator.StringToHash("Move"));
-            
-            BaseUnitController closestUnit = controller.AttackTarget ? controller.AttackTarget : controller.UnitInsideViewArea
-                .Where(t => !controller.UnitType.Equals(t.UnitType))
-                .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
-                .FirstOrDefault();
-            
-            if (closestUnit is null)
-            {
-                return;
-            }
-            
-            controller.OnUnitStateTransition(closestUnit);
         }
 
         [BurstCompile]
         public void Execute()
         {
-            BaseUnitController closestUnit = controller.AttackTarget ? controller.AttackTarget : controller.UnitInsideViewArea
+            BaseUnitController closestUnit = (controller.Flag ? controller.Flag.UnitInsideViewArea : controller.UnitInsideViewArea)
                 .Where(t => !controller.UnitType.Equals(t.UnitType))
                 .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
                 .FirstOrDefault();

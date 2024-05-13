@@ -49,12 +49,12 @@ namespace FullMoon.Input
         
         private void OnShift(InputValue value)
         {
-            ShiftInput(value.isPressed);
+            // ShiftInput(value.isPressed);
         }
 
         public void OnCtrl(InputValue value)
         {
-            CtrlInput(value.isPressed);
+            // CtrlInput(value.isPressed);
         }
 
         public void OnZoom(InputValue value)
@@ -64,12 +64,12 @@ namespace FullMoon.Input
 
         public void OnStop(InputValue value)
         {
-            StopInput(value.isPressed);
+            // StopInput(value.isPressed);
         }
 
         public void OnHold(InputValue value)
         {
-            HoldInput(value.isPressed);
+            // HoldInput(value.isPressed);
         }
         
         public void OnRotation(InputValue value)
@@ -94,22 +94,22 @@ namespace FullMoon.Input
 
         public void OnMainSelect(InputValue value)
         {
-            MainSelectInput(value.isPressed);
+            // MainSelectInput(value.isPressed);
         }
 
         public void OnSwordSelect(InputValue value)
         {
-            SwordSelectInput(value.isPressed);
+            // SwordSelectInput(value.isPressed);
         }
 
         public void OnCrossbowSelect(InputValue value)
         {
-            CrossbowSelectInput(value.isPressed);
+            // CrossbowSelectInput(value.isPressed);
         }
 
         public void OnSpearSelect(InputValue value)
         {
-            SpearSelectInput(value.isPressed);
+            // SpearSelectInput(value.isPressed);
         }
 #endif
 		

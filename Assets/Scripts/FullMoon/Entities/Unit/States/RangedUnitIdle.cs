@@ -14,20 +14,20 @@ namespace FullMoon.Entities.Unit.States
         {
             this.controller = controller;
         }
-        
-        public void Enter() { }
+
+        public void Enter()
+        {
+            controller.SetAnimation(Animator.StringToHash("Idle"));
+        }
 
         [BurstCompile]
         public void Execute()
         {
-            int enemyCount = controller.UnitInsideViewArea.Count(t => !controller.UnitType.Equals(t.UnitType));
+            int enemyCount = (controller.Flag ? controller.Flag.UnitInsideViewArea : controller.UnitInsideViewArea)
+                .Count(t => !controller.UnitType.Equals(t.UnitType));
             
             if (enemyCount == 0)
             {
-                if (controller.AttackMove)
-                {
-                    controller.OnUnitAttack(controller.AttackMovePosition);
-                }
                 return;
             }
             
