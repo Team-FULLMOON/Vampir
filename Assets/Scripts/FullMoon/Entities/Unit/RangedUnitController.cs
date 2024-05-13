@@ -66,16 +66,6 @@ namespace FullMoon.Entities.Unit
             UnitInsideViewArea.RemoveWhere(unit => unit is null || !unit.gameObject.activeInHierarchy || !unit.Alive);
             base.Update();
         }
-        
-        public override void ReceiveDamage(int amount, BaseUnitController attacker)
-        {
-            if (StateMachine.CurrentState is RangedUnitIdle)
-            {
-                MoveToPosition(attacker.transform.position);
-                OnUnitStateTransition(attacker);
-            }
-            base.ReceiveDamage(amount, attacker);
-        }
 
         public override void Die()
         {
@@ -134,37 +124,6 @@ namespace FullMoon.Entities.Unit
         {
             base.MoveToPosition(location);
             StateMachine.ChangeState(new RangedUnitMove(this));
-        }
-
-        public override void OnUnitStop()
-        {
-            base.OnUnitStop();
-            StateMachine.ChangeState(new RangedUnitIdle(this));
-        }
-
-        [BurstCompile]
-        public override void OnUnitStateTransition(BaseUnitController target)
-        {
-            base.OnUnitStateTransition(target);
-            
-            List<BaseUnitController> transitionControllers = UnitInsideViewArea
-                .Where(t => UnitType.Equals(t.UnitType))
-                .Where(t => t.StateMachine.CurrentState is MainUnitIdle or MeleeUnitIdle or RangedUnitIdle)
-                .Where(t => (t.transform.position - transform.position).sqrMagnitude <=
-                            OverridenUnitData.StateTransitionRadius * OverridenUnitData.StateTransitionRadius).ToList();
-
-            foreach (var unit in transitionControllers)
-            {
-                unit.UnitInsideViewArea.Add(target);
-                
-            }
-            
-            if (StateMachine.CurrentState is not (MainUnitIdle or MeleeUnitIdle or RangedUnitIdle))
-            {
-                return;
-            }
-            
-            UnitInsideViewArea.Add(target);
         }
         
         private void ReduceAttackCoolTime()

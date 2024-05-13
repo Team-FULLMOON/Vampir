@@ -72,16 +72,6 @@ namespace FullMoon.Entities.Unit
             ObjectPoolManager.Instance.ReturnObjectToPool(gameObject);
         }
 
-        public override void ReceiveDamage(int amount, BaseUnitController attacker)
-        {
-            if (StateMachine.CurrentState is MeleeUnitIdle)
-            {
-                MoveToPosition(attacker.transform.position);
-                OnUnitStateTransition(attacker);
-            }
-            base.ReceiveDamage(amount, attacker);
-        }
-
         public void EnterViewRange(Collider unit)
         {
             BaseUnitController controller = unit.GetComponent<BaseUnitController>();
@@ -140,42 +130,6 @@ namespace FullMoon.Entities.Unit
         {
             base.MoveToPosition(location);
             StateMachine.ChangeState(new MainUnitMove(this));
-        }
-
-        public override void OnUnitStop()
-        {
-            base.OnUnitStop();
-            StateMachine.ChangeState(new MainUnitIdle(this));
-        }
-
-        public override void OnUnitHold()
-        {
-            base.OnUnitHold();
-            StateMachine.ChangeState(new MainUnitIdle(this));
-        }
-
-        [BurstCompile]
-        public override void OnUnitStateTransition(BaseUnitController target)
-        {
-            base.OnUnitStateTransition(target);
-            
-            List<BaseUnitController> transitionControllers = UnitInsideViewArea
-                .Where(t => UnitType.Equals(t.UnitType))
-                .Where(t => t.StateMachine.CurrentState is MainUnitIdle or MeleeUnitIdle or RangedUnitIdle)
-                .Where(t => (t.transform.position - transform.position).sqrMagnitude <=
-                            OverridenUnitData.StateTransitionRadius * OverridenUnitData.StateTransitionRadius).ToList();
-
-            foreach (var unit in transitionControllers)
-            {
-                unit.UnitInsideViewArea.Add(target);
-            }
-            
-            if (StateMachine.CurrentState is not (MainUnitIdle or MeleeUnitIdle or RangedUnitIdle))
-            {
-                return;
-            }
-            
-            UnitInsideViewArea.Add(target);
         }
 
         private void ReduceAttackCoolTime()

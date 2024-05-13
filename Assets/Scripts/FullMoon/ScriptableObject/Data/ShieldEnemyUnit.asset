@@ -25,7 +25,7 @@ MonoBehaviour:
   summonTime: 0.1
   unitTransformObject: {fileID: 4972936984483943875, guid: 7bef7179671f08f42aa705b89df610ab,
     type: 3}
-  respawnUnitObject: {fileID: 4972936984483943875, guid: f96fbfa994cb5d54f9b8ca6bf125cb0a,
+  respawnUnitObject: {fileID: 4633298641363955378, guid: ba7ece11e3996174f84f284bbf0e86b5,
     type: 3}
   attackEnabled: 1
   attackDamage: 10
@@ -35,3 +35,4 @@ MonoBehaviour:
   viewRadius: 8
   stateTransitionRadius: 10
   fogOfWarRadius: 10
+  hitAnimationFrame: 12

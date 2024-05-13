@@ -132,11 +132,7 @@ namespace FullMoon.Entities.Unit
             
             if (UnitType == "Enemy")
             {
-                for (int i = 0; i < 5; i++)
-                {
-                    Vector3 randomPosition = transform.position + new Vector3(Random.Range(-2f, 2f), 0, Random.Range(-2f, 2f));
-                    ObjectPoolManager.Instance.SpawnObject(unitData.RespawnUnitObject.gameObject, randomPosition, Quaternion.identity);
-                }
+                ObjectPoolManager.Instance.SpawnObject(unitData.RespawnUnitObject.gameObject, transform.position, Quaternion.identity);
                 MainUIController.Instance.AddMana(unitData.ManaDrop);
                 return;
             }
@@ -178,18 +174,6 @@ namespace FullMoon.Entities.Unit
             Agent.SetPath(path);
             LatestDestination = location;
         }
-
-        public virtual void OnUnitStop()
-        {
-            MoveToPosition(transform.position);
-        }
-
-        public virtual void OnUnitHold()
-        {
-            MoveToPosition(transform.position);
-        }
-
-        public virtual void OnUnitStateTransition(BaseUnitController target) { }
         
 #if UNITY_EDITOR
         protected virtual void OnDrawGizmos()

@@ -23,7 +23,8 @@ namespace FullMoon.Entities.Unit.States
         [BurstCompile]
         public void Execute()
         {
-            int enemyCount = controller.UnitInsideViewArea.Count(t => !controller.UnitType.Equals(t.UnitType));
+            int enemyCount = (controller.Flag ? controller.Flag.UnitInsideViewArea : controller.UnitInsideViewArea)
+                .Count(t => !controller.UnitType.Equals(t.UnitType));
             
             if (enemyCount == 0)
             {

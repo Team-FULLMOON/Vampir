@@ -97,6 +97,10 @@ namespace FullMoon.Entities.Unit
             ChangeParentPosition(newPosition);
             for (int i = 0; i < unitPreset.Count; i++)
             {
+                if (unitPreset[i] is null || unitPreset[i].gameObject.activeInHierarchy == false || unitPreset[i].Alive == false)
+                {
+                    continue;
+                }
                 Vector3 worldPosition = transform.TransformPoint(localPositionsPreset[i]);
                 unitPreset[i].MoveToPosition(worldPosition);
             }
