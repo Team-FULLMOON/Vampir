@@ -860,7 +860,7 @@ PrefabInstance:
     - target: {fileID: 4330860745881565272, guid: b75cb8d9cb0664e42be65535da437939,
         type: 3}
       propertyPath: CustomDataModule.vector0_0.scalar
-      value: 1.5647454
+      value: 1.3726767
       objectReference: {fileID: 0}
     - target: {fileID: 4330860745881565272, guid: b75cb8d9cb0664e42be65535da437939,
         type: 3}
