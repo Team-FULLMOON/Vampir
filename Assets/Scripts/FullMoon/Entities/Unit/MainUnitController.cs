@@ -25,8 +25,6 @@ namespace FullMoon.Entities.Unit
 
         public MainUnitData OverridenUnitData { get; private set; }
         
-        public HashSet<BaseUnitController> UnitInsideViewArea { get; set; }
-        
         public float CurrentAttackCoolTime { get; set; }
 
         protected override void OnEnable()
@@ -129,13 +127,13 @@ namespace FullMoon.Entities.Unit
         public override void Select()
         {
             base.Select();
-            // decalProjector.gameObject.SetActive(true);
+            decalProjector.gameObject.SetActive(true);
         }
 
         public override void Deselect()
         {
             base.Deselect();
-            // decalProjector.gameObject.SetActive(false);
+            decalProjector.gameObject.SetActive(false);
         }
 
         public override void MoveToPosition(Vector3 location)
@@ -154,18 +152,6 @@ namespace FullMoon.Entities.Unit
         {
             base.OnUnitHold();
             StateMachine.ChangeState(new MainUnitIdle(this));
-        }
-
-        public override void OnUnitAttack(Vector3 targetPosition)
-        {
-            base.OnUnitAttack(targetPosition);
-            StateMachine.ChangeState(new MainUnitMove(this));
-        }
-
-        public override void OnUnitForceAttack(BaseUnitController target)
-        {
-            base.OnUnitForceAttack(target);
-            StateMachine.ChangeState(new MainUnitAttack(this));
         }
 
         [BurstCompile]

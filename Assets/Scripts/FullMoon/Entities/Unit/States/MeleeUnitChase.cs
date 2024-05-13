@@ -22,7 +22,7 @@ namespace FullMoon.Entities.Unit.States
             
             controller.SetAnimation(Animator.StringToHash("Move"));
             
-            BaseUnitController closestUnit = controller.AttackTarget ? controller.AttackTarget : controller.UnitInsideViewArea
+            BaseUnitController closestUnit = controller.UnitInsideViewArea
                 .Where(t => !controller.UnitType.Equals(t.UnitType))
                 .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
                 .FirstOrDefault();
@@ -38,7 +38,7 @@ namespace FullMoon.Entities.Unit.States
         [BurstCompile]
         public void Execute()
         {
-            BaseUnitController closestUnit = controller.AttackTarget ? controller.AttackTarget : controller.UnitInsideViewArea
+            BaseUnitController closestUnit = controller.UnitInsideViewArea
                 .Where(t => !controller.UnitType.Equals(t.UnitType))
                 .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
                 .FirstOrDefault();

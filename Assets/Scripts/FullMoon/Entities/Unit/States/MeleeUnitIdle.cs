@@ -27,10 +27,6 @@ namespace FullMoon.Entities.Unit.States
             
             if (enemyCount == 0)
             {
-                if (controller.AttackMove)
-                {
-                    controller.OnUnitAttack(controller.AttackMovePosition);
-                }
                 return;
             }
             
