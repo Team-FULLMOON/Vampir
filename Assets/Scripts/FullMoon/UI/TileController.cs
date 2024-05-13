@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using FullMoon.Util;
+using UniRx;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -23,10 +24,11 @@ namespace FullMoon.UI
         }
 
         // 월드 좌표 -> 타일 좌표
-        public Vector2 WorldToTileVector(Vector3 pos)
+        public (Vector2, Vector2) WorldToTileVector(Vector3 mousePos, float size)
         {
-            Vector2 vector = new Vector2(pos.x, pos.z);
-            Vector2 value = new Vector2(0, 0);
+            Vector2 vector = new Vector2(mousePos.x, mousePos.z);
+            Vector2 startValue = new Vector2(0, 0);
+            Vector2 endValue = new Vector2(0, 0);
 
             if (castleRect.Contains(vector))
             {
@@ -35,32 +37,34 @@ namespace FullMoon.UI
             {
                 if (vector.x < castleRect.center.x)
                 {
-                    value.y = Mathf.Abs((int)(castleRect.center.x - vector.x) / rectLength);
+                    startValue.y = Mathf.Abs((int)(castleRect.center.x - vector.x) / rectLength);
                 }
                 else if (vector.x > castleRect.center.x)
                 {
-                    value.y = (int)((castleRect.center.x - vector.x) / rectLength);
+                    startValue.y = (int)((castleRect.center.x - vector.x) / rectLength);
                 }
                 if (vector.y < castleRect.center.y)
                 {
-                    value.x = Mathf.Abs((int)(castleRect.center.y - vector.y) / rectLength);
+                    startValue.x = Mathf.Abs((int)(castleRect.center.y - vector.y) / rectLength);
                 }
                 else if (vector.y >= castleRect.center.y)
                 {
-                    value.x = (int)((castleRect.center.y - vector.y) / rectLength);
+                    startValue.x = (int)((castleRect.center.y - vector.y) / rectLength);
                 }
+
+                endValue.x = startValue.x * size;
+                endValue.y = startValue.y * size;
             }
             
-            return value;
+            return (startValue, endValue);
         }
 
         // 타일 좌표 -> 월드 좌표(타일 중앙 값)
-        public Vector2 TileToWorldVector(Vector3 pos)
+        public Vector2 TileToWorldVector(Vector3 pos, float size)
         {
-            Vector2 vector = WorldToTileVector(pos);
+            (Vector2 startVec, Vector2 endVec) = WorldToTileVector(pos, size);
 
-            return new Vector2(castleRect.center.x + (vector.x * rectLength), 
-                               castleRect.center.y + (vector.y * rectLength));
+            return new Vector2(castleRect.center.x + (startVec.x * rectLength), castleRect.center.y + (startVec.y * rectLength));
         }
     }
 }
