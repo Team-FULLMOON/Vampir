@@ -273,8 +273,8 @@ namespace FullMoon.Camera
                 return;
             }
             
-            dragStart = mousePos;
-            dragRect = new Rect();
+            // dragStart = mousePos;
+            // dragRect = new Rect();
 
             if (PlayerInputManager.Instance.rotation)
             {
@@ -338,8 +338,8 @@ namespace FullMoon.Camera
             
             if (altRotation == false)
             {
-                dragEnd = mousePos;
-                DrawDragRectangle();
+                // dragEnd = mousePos;
+                // DrawDragRectangle();
                 return;
             }
             
@@ -353,12 +353,12 @@ namespace FullMoon.Camera
 
         private void HandleLeftRelease()
         {
-            CalculateDragRect();
-            SelectUnits();
-            dragStart = Vector2.zero;
-            dragEnd = Vector2.zero;
+            // CalculateDragRect();
+            // SelectUnits();
+            // dragStart = Vector2.zero;
+            // dragEnd = Vector2.zero;
             altRotation = false;
-            DrawDragRectangle();
+            // DrawDragRectangle();
         }
 
         private void HandleRightClick()
