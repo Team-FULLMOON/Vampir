@@ -45,6 +45,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2994058808069562623, guid: 800f669c734f42a4ea4320191f1cf8e7,
         type: 3}
+      propertyPath: ShapeModule.m_Position.y
+      value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 2994058808069562623, guid: 800f669c734f42a4ea4320191f1cf8e7,
+        type: 3}
       propertyPath: ShapeModule.radius.value
       value: 0.09
       objectReference: {fileID: 0}
@@ -121,17 +126,17 @@ PrefabInstance:
     - target: {fileID: 2994058808069562623, guid: 800f669c734f42a4ea4320191f1cf8e7,
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
-      value: 0.99215686
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2994058808069562623, guid: 800f669c734f42a4ea4320191f1cf8e7,
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.g
-      value: 0.8098309
+      value: 0.8665968
       objectReference: {fileID: 0}
     - target: {fileID: 2994058808069562623, guid: 800f669c734f42a4ea4320191f1cf8e7,
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.r
-      value: 0.46274507
+      value: 0.6084906
       objectReference: {fileID: 0}
     - target: {fileID: 2994058808069562623, guid: 800f669c734f42a4ea4320191f1cf8e7,
         type: 3}

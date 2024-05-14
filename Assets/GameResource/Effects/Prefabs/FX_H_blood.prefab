@@ -839,6 +839,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4330860745881565272, guid: b75cb8d9cb0664e42be65535da437939,
         type: 3}
+      propertyPath: ShapeModule.m_Position.y
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 4330860745881565272, guid: b75cb8d9cb0664e42be65535da437939,
+        type: 3}
       propertyPath: UVModule.frameOverTime.scalar
       value: 0.1875
       objectReference: {fileID: 0}
@@ -1065,17 +1070,17 @@ PrefabInstance:
     - target: {fileID: 4641256163254827632, guid: b75cb8d9cb0664e42be65535da437939,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4641256163254827632, guid: b75cb8d9cb0664e42be65535da437939,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4641256163254827632, guid: b75cb8d9cb0664e42be65535da437939,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4641256163254827632, guid: b75cb8d9cb0664e42be65535da437939,
         type: 3}
