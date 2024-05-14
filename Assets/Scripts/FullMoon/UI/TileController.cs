@@ -32,7 +32,7 @@ namespace FullMoon.UI
 
         public void CreateTile(Vector3 pos)
         {
-            Vector3Int vector = new Vector3Int((int)pos.x, 5, (int)pos.z);
+            Vector3Int vector = new Vector3Int((int)pos.x, (int)pos.z, 5);
             tileMap.SetTile(vector, new Tile()
             {
                 gameObject = tile
