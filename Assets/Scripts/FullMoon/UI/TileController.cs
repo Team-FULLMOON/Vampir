@@ -2,15 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using FullMoon.Util;
 using UniRx;
+using Unity.AI.Navigation;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace FullMoon.UI
 {
-    [DefaultExecutionOrder(-1)]
     public class TileController : ComponentSingleton<TileController>
     {
+        [Header("TileMap")]
+        [SerializeField] Tilemap tileMap;
+        [SerializeField] GameObject tile;
+        [SerializeField] NavMeshSurface nav;
+        [SerializeField] NavMeshSurface nav2;
+
         Rect castleRect;
         private Vector2 castleMiddlePos;
         private Vector2 castleSize;
@@ -21,6 +28,17 @@ namespace FullMoon.UI
             castleMiddlePos = new Vector2(-1f, -6f);
             castleSize = new Vector2(8f, 8f);
             castleRect = new Rect(castleMiddlePos, castleSize * 2);
+        }
+
+        public void CreateTile(Vector3 pos)
+        {
+            Vector3Int vector = new Vector3Int((int)pos.x, 5, (int)pos.z);
+            tileMap.SetTile(vector, new Tile()
+            {
+                gameObject = tile
+            });
+            // nav.BuildNavMesh();
+            // nav2.BuildNavMesh();
         }
 
         // 월드 좌표 -> 타일 좌표
