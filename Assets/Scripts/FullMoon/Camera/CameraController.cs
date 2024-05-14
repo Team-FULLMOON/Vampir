@@ -182,6 +182,14 @@ namespace FullMoon.Camera
                 return;
             }
 
+            if (Physics.Raycast(mouseRay, out var groundHit, Mathf.Infinity, (1 << LayerMask.NameToLayer("Ground"))))
+            {
+                if (TileController.Exists)
+                {
+                    TileController.Instance.CreateTile(groundHit.point);
+                }
+            }
+
             DeselectAll();
             
             if (Physics.Raycast(mouseRay, out var hit, Mathf.Infinity, (1 << LayerMask.NameToLayer("Unit"))))

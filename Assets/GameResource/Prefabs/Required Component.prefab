@@ -399,7 +399,6 @@ MonoBehaviour:
   minFov: 7
   maxFov: 15
   rotationSensitivity: 5
-  dragRectangle: {fileID: 6410134052024422841}
   cursor: {fileID: 2179864655310582506}
   targetFov: 0
 --- !u!1 &2558575844570174616
@@ -727,7 +726,7 @@ Transform:
   m_GameObject: {fileID: 3817388134677654357}
   serializedVersion: 2
   m_LocalRotation: {x: 0.3538488, y: 0.6395255, z: -0.4217006, w: 0.5366255}
-  m_LocalPosition: {x: -0.00002193451, y: 0, z: 0.00000667572}
+  m_LocalPosition: {x: -0.0000371933, y: 0, z: 0.0000104904175}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
