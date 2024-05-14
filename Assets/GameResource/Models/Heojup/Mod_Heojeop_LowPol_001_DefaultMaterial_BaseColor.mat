@@ -41,6 +41,6 @@ Material:
     m_Floats:
     - _Float: 3.45
     m_Colors:
-    - _Color: {r: 1.9900227, g: 0.7791126, b: 0.7791126, a: 1}
+    - _Color: {r: 2.1185472, g: 0.72949976, b: 1.0451927, a: 1}
     - _Light_dir: {r: -0.16863033, g: -0.91594553, b: -0.36415356, a: 0}
   m_BuildTextureStacks: []
