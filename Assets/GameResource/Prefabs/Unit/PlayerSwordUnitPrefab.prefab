@@ -241,7 +241,9 @@ MonoBehaviour:
   unitMarker: {fileID: 6798072512803417028}
   viewRange: {fileID: 2268042740748443340}
   decalProjector: {fileID: 6081375030924233605}
-  attackEffect: {fileID: 8679279780333392621, guid: 5889d295f07756941ad4200554eb901c,
+  attackEffect: {fileID: 7586770102894279329, guid: 241038e3c339073489d99db34820ff62,
+    type: 3}
+  attackPointEffect: {fileID: 8063394454265005579, guid: 102d0180e193bcb449a1d220f6b6cea5,
     type: 3}
 --- !u!136 &6372571031042578545
 CapsuleCollider:
@@ -396,7 +398,7 @@ SpriteRenderer:
   m_Size: {x: 1.31, y: 1.32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1001 &5458766795355848431

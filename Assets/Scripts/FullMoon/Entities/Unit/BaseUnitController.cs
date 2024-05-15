@@ -108,12 +108,10 @@ namespace FullMoon.Entities.Unit
             
             Hp = Mathf.Clamp(Hp - amount, 0, System.Int32.MaxValue);
             
-            // Debug.Log($"{gameObject.name} ({Hp}): D -{amount}, F {attacker.name}");
-            
             int attackHash = Animator.StringToHash("Attack");
             AnimatorStateInfo stateInfo = unitAnimator.GetCurrentAnimatorStateInfo(0);
 
-            if (!stateInfo.shortNameHash.Equals(attackHash) || stateInfo.normalizedTime >= 0.9f)
+            if (!stateInfo.shortNameHash.Equals(attackHash) || stateInfo.normalizedTime >= 0.8f)
             {
                 SetAnimation(Animator.StringToHash("Hit"));
             }

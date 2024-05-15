@@ -22,6 +22,9 @@ namespace FullMoon.Entities.Unit
         
         [Foldout("Melee Unit Settings")]
         public GameObject attackEffect;
+        
+        [Foldout("Melee Unit Settings")]
+        public GameObject attackPointEffect;
 
         public MeleeUnitData OverridenUnitData { get; private set; }
         
@@ -114,22 +117,28 @@ namespace FullMoon.Entities.Unit
     
             SetAnimation(Animator.StringToHash("Attack"));
 
+            if (attackEffect != null)
+            {
+                GameObject attackFX = ObjectPoolManager.Instance.SpawnObject(attackEffect, unitModel.transform.position, Quaternion.identity);
+                attackFX.transform.forward = targetDirection.normalized;
+            }
+
             await UniTask.DelayFrame(OverridenUnitData.HitAnimationFrame);
 
             if (OverridenUnitData.UnitClass.Equals("Spear"))
             {
                 targetController.Rb.isKinematic = false;
-                targetController.Rb.AddForce(transform.forward * 10f, ForceMode.Impulse);
+                targetController.Rb.AddForce(transform.forward * OverridenUnitData.SpearPushForce, ForceMode.Impulse);
 
-                await UniTask.DelayFrame(2);
+                await UniTask.DelayFrame(OverridenUnitData.SpearPushFrame);
                 
                 targetController.Rb.isKinematic = true;
             }
     
-            if (attackEffect != null)
+            if (attackPointEffect != null)
             {
-                GameObject hitFX = ObjectPoolManager.Instance.SpawnObject(attackEffect, hitPosition, Quaternion.identity);
-                hitFX.transform.forward = targetDirection.normalized;
+                GameObject attackPointFX = ObjectPoolManager.Instance.SpawnObject(attackPointEffect, hitPosition, Quaternion.identity);
+                attackPointFX.transform.forward = targetDirection.normalized;
             }
     
             if (targetController.gameObject.activeInHierarchy == false)

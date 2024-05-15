@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8024496795293898348}
   - component: {fileID: 9031215256870271828}
   - component: {fileID: 3561150258937756861}
+  - component: {fileID: 6162085714707245330}
   m_Layer: 0
   m_Name: FX_sword_attack
   m_TagString: Untagged
@@ -4897,3 +4898,16 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &6162085714707245330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7586770102894279329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 156181df0230c06419aa2db7f9d75c5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeDuration: 1
