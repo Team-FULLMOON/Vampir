@@ -1,3 +1,4 @@
+using System;
 using MyBox;
 using UnityEngine;
 using System.Linq;
@@ -36,14 +37,9 @@ namespace FullMoon.Entities.Unit
             unitPreset = GetComponentsInChildren<BaseUnitController>().ToList();
             SaveLocalPositions();
         }
-
-        private void SaveLocalPositions()
-        {
-            localPositionsPreset = unitPreset.Select(u => u.transform.localPosition).ToList();
-        }
-
+        
         [ButtonMethod]
-        public void PrintWorldPositions()
+        public void InitUnitPositions()
         {
             for (int i = 0; i < unitPreset.Count; i++)
             {
@@ -51,7 +47,54 @@ namespace FullMoon.Entities.Unit
                 unitPreset[i].transform.position = worldPosition;
             }
         }
+        
+        public Vector3 GetPresetPosition(BaseUnitController targetObject)
+        {
+            int index = unitPreset.IndexOf(targetObject);
+            if (index == -1)
+            {
+                throw new ArgumentException("The object does not exist in the preset.");
+            }
+            Vector3 localPosition = localPositionsPreset[index];
+            Vector3 worldPosition = transform.TransformPoint(localPosition);
+            return worldPosition;
+        }
+        
+        public void MoveToPosition(Vector3 newPosition)
+        {
+            ChangeParentPosition(newPosition);
+            for (int i = 0; i < unitPreset.Count; i++)
+            {
+                if (unitPreset[i] is null || unitPreset[i].gameObject.activeInHierarchy == false || unitPreset[i].Alive == false)
+                {
+                    continue;
+                }
+                Vector3 worldPosition = transform.TransformPoint(localPositionsPreset[i]);
+                unitPreset[i].MoveToPosition(worldPosition);
+            }
+        }
+        
+        private void SaveLocalPositions()
+        {
+            localPositionsPreset = unitPreset.Select(u => u.transform.localPosition).ToList();
+        }
+        
+        private void ChangeParentPosition(Vector3 newPosition)
+        {
+            List<Vector3> currentWorldPositions = new List<Vector3>();
+            foreach (var t in unitPreset)
+            {
+                currentWorldPositions.Add(t.transform.position);
+            }
 
+            transform.position = newPosition;
+
+            for (int i = 0; i < unitPreset.Count; i++)
+            {
+                unitPreset[i].transform.position = currentWorldPositions[i];
+            }
+        }
+        
         private void InitViewRange()
         {
             var triggerEvent = viewRange.GetComponent<ColliderTriggerEvents>();
@@ -90,36 +133,6 @@ namespace FullMoon.Entities.Unit
                 return;
             }
             UnitInsideViewArea.Remove(controller);
-        }
-        
-        public void MoveToPosition(Vector3 newPosition)
-        {
-            ChangeParentPosition(newPosition);
-            for (int i = 0; i < unitPreset.Count; i++)
-            {
-                if (unitPreset[i] is null || unitPreset[i].gameObject.activeInHierarchy == false || unitPreset[i].Alive == false)
-                {
-                    continue;
-                }
-                Vector3 worldPosition = transform.TransformPoint(localPositionsPreset[i]);
-                unitPreset[i].MoveToPosition(worldPosition);
-            }
-        }
-        
-        private void ChangeParentPosition(Vector3 newPosition)
-        {
-            List<Vector3> currentWorldPositions = new List<Vector3>();
-            foreach (var t in unitPreset)
-            {
-                currentWorldPositions.Add(t.transform.position);
-            }
-
-            transform.position = newPosition;
-
-            for (int i = 0; i < unitPreset.Count; i++)
-            {
-                unitPreset[i].transform.position = currentWorldPositions[i];
-            }
         }
     }
 }

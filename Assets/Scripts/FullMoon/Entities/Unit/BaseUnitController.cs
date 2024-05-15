@@ -128,9 +128,9 @@ namespace FullMoon.Entities.Unit
         {
             Alive = false;
             
-            if (UnitType == "Enemy")
+            if (UnitType == "Enemy" && unitData.RespawnUnitObject != null)
             {
-                ObjectPoolManager.Instance.SpawnObject(unitData.RespawnUnitObject.gameObject, transform.position, Quaternion.identity);
+                ObjectPoolManager.Instance.SpawnObject(unitData.RespawnUnitObject, transform.position, Quaternion.identity);
                 MainUIController.Instance.AddMana(unitData.ManaDrop);
                 return;
             }

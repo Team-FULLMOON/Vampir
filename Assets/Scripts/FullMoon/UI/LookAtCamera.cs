@@ -15,7 +15,7 @@ namespace FullMoon.UI
             UpdateRotation();
         }
 
-        private void Update()
+        private void LateUpdate()
         {
             UpdateRotation();
         }
