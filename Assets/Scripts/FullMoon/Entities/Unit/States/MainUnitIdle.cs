@@ -23,12 +23,20 @@ namespace FullMoon.Entities.Unit.States
             int enemyCount = (controller.Flag ? controller.Flag.UnitInsideViewArea : controller.UnitInsideViewArea)
                 .Count(t => !controller.UnitType.Equals(t.UnitType));
             
-            if (enemyCount == 0)
+            if (enemyCount > 0)
             {
+                controller.StateMachine.ChangeState(new MainUnitChase(controller));
                 return;
             }
             
-            controller.StateMachine.ChangeState(new MainUnitChase(controller));
+            if (controller.Flag is not null)
+            {
+                Vector3 targetPosition = controller.Flag.GetPresetPosition(controller);
+                if (Vector3.Distance(controller.transform.position, targetPosition) > controller.Agent.stoppingDistance)
+                {
+                    controller.MoveToPosition(targetPosition);
+                }
+            }
         }
 
         public void FixedExecute()

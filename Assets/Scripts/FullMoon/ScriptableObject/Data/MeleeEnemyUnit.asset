@@ -23,10 +23,8 @@ MonoBehaviour:
   manaCost: 10
   createPrepareTime: 2.5
   summonTime: 0.1
-  unitTransformObject: {fileID: 4972936984483943875, guid: f96fbfa994cb5d54f9b8ca6bf125cb0a,
-    type: 3}
-  respawnUnitObject: {fileID: 4972936984483943875, guid: f96fbfa994cb5d54f9b8ca6bf125cb0a,
-    type: 3}
+  unitTransformObject: {fileID: 0}
+  respawnUnitObject: {fileID: 0}
   attackEnabled: 1
   attackDamage: 10
   attackDelay: 0
@@ -36,3 +34,5 @@ MonoBehaviour:
   stateTransitionRadius: 10
   fogOfWarRadius: 10
   hitAnimationFrame: 12
+  spearPushFrame: 2
+  spearPushForce: 10

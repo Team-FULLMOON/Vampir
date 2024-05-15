@@ -37,13 +37,13 @@ namespace FullMoon.Util
         {
             GameObject singletonObject = new GameObject
             {
-                name = typeof(T).Name + "(Singleton)"
+                name = typeof(T).Name + " (Singleton)"
             };
             
-            // if (Application.isPlaying)
-            // {
-            //     DontDestroyOnLoad(singletonObject);
-            // }
+            if (Application.isPlaying)
+            {
+                DontDestroyOnLoad(singletonObject);
+            }
             
             return singletonObject.AddComponent<T>();
         }
