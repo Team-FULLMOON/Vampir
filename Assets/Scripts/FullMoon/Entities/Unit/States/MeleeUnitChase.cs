@@ -19,7 +19,6 @@ namespace FullMoon.Entities.Unit.States
         {
             controller.Agent.isStopped = false;
             controller.Agent.speed = controller.OverridenUnitData.MovementSpeed;
-            
             controller.SetAnimation(Animator.StringToHash("Move"));
         }
 
