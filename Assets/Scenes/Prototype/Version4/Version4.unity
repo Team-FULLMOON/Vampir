@@ -32129,11 +32129,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainPlayerUnitPrefab
       objectReference: {fileID: 0}
-    - target: {fileID: 4972936984483943875, guid: 625c37e27f351e346b7f619fb6b66abe,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7766593230699737532, guid: 625c37e27f351e346b7f619fb6b66abe,
         type: 3}
       propertyPath: m_LocalPosition.x
