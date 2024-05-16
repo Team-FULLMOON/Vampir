@@ -10,6 +10,9 @@ namespace FullMoon.ScriptableObject
     {
         [Separator("Main Unit Settings")] 
         
+        [SerializeField, OverrideLabel("공격 애니메이션 프레임")] private int hitAnimationFrame = 12;
+        public int HitAnimationFrame => hitAnimationFrame;
+        
         [SerializeField, OverrideLabel("유닛 컨트롤 데이터")]
         private UnitControlData unitControlData;
         public UnitControlData UnitControlData => unitControlData;

@@ -14,8 +14,11 @@ namespace FullMoon.Entities.Unit.States
         {
             this.controller = controller;
         }
-        
-        public void Enter() { }
+
+        public void Enter()
+        {
+            controller.SetAnimation(Animator.StringToHash("Idle"));
+        }
 
         [BurstCompile]
         public void Execute()
@@ -32,7 +35,7 @@ namespace FullMoon.Entities.Unit.States
             if (controller.Flag is not null)
             {
                 Vector3 targetPosition = controller.Flag.GetPresetPosition(controller);
-                if (Vector3.Distance(controller.transform.position, targetPosition) > controller.Agent.stoppingDistance)
+                if (Vector3.Distance(controller.transform.position, targetPosition) > controller.Agent.stoppingDistance * 3f)
                 {
                     controller.MoveToPosition(targetPosition);
                 }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerCrossbowUnit
   m_EditorClassIdentifier: 
   unitCode: 102
-  unitName: "\uBA38\uC2A4\uD0B7 \uC778\uD615"
+  unitName: "\uC11D\uAD81\uD5C8\uC811"
   unitType: Player
   unitClass: Crossbow
   maxHp: 45

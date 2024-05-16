@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerSpearUnit
   m_EditorClassIdentifier: 
   unitCode: 101
-  unitName: "\uBA54\uC774\uC2A4 \uC778\uD615"
+  unitName: "\uCC3D\uD5C8\uC811"
   unitType: Player
   unitClass: Spear
   maxHp: 25
@@ -34,3 +34,5 @@ MonoBehaviour:
   stateTransitionRadius: 8
   fogOfWarRadius: 10
   hitAnimationFrame: 12
+  spearPushFrame: 2
+  spearPushForce: 10

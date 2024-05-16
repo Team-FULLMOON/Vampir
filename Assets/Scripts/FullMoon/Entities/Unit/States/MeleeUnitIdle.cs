@@ -35,7 +35,7 @@ namespace FullMoon.Entities.Unit.States
             if (controller.Flag is not null)
             {
                 Vector3 targetPosition = controller.Flag.GetPresetPosition(controller);
-                if (Vector3.Distance(controller.transform.position, targetPosition) > Mathf.Pow(controller.Agent.stoppingDistance, 2f))
+                if (Vector3.Distance(controller.transform.position, targetPosition) > controller.Agent.stoppingDistance * 3f)
                 {
                     controller.MoveToPosition(targetPosition);
                 }

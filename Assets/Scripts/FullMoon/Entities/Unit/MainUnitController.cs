@@ -22,6 +22,9 @@ namespace FullMoon.Entities.Unit
         
         [Foldout("Main Unit Settings")]
         public GameObject attackEffect;
+        
+        [Foldout("Main Unit Settings")]
+        public GameObject attackPointEffect;
 
         public MainUnitData OverridenUnitData { get; private set; }
         
@@ -97,7 +100,7 @@ namespace FullMoon.Entities.Unit
         {
             BaseUnitController targetController = target.GetComponent<BaseUnitController>();
 
-            if (targetController == null || targetController.gameObject.activeInHierarchy == false)
+            if (targetController is null || targetController.gameObject.activeInHierarchy == false)
             {
                 return;
             }
@@ -108,9 +111,31 @@ namespace FullMoon.Entities.Unit
             {
                 hitPosition = hit.point;
             }
-            GameObject hitFX = ObjectPoolManager.Instance.SpawnObject(attackEffect, hitPosition, Quaternion.identity);
-            hitFX.transform.forward = targetDirection.normalized;
 
+            transform.forward = targetDirection.normalized;
+            transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, transform.eulerAngles.z);
+    
+            SetAnimation(Animator.StringToHash("Attack"));
+
+            if (attackEffect != null)
+            {
+                GameObject attackFX = ObjectPoolManager.Instance.SpawnObject(attackEffect, unitModel.transform.position, Quaternion.identity);
+                attackFX.transform.forward = targetDirection.normalized;
+            }
+
+            await UniTask.DelayFrame(OverridenUnitData.HitAnimationFrame);
+    
+            if (attackPointEffect != null)
+            {
+                GameObject attackPointFX = ObjectPoolManager.Instance.SpawnObject(attackPointEffect, hitPosition, Quaternion.identity);
+                attackPointFX.transform.forward = targetDirection.normalized;
+            }
+    
+            if (targetController.gameObject.activeInHierarchy == false)
+            {
+                return;
+            }
+    
             targetController.ReceiveDamage(OverridenUnitData.AttackDamage, this);
         }
         
