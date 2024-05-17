@@ -141,7 +141,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     - _lit: 1
-    - _metalic: 0.063
+    - _metalic: 0
     - _mul_color_float: 0.73
     - _noise_scale: 104.94
     - _pattern_int: 0.83
@@ -150,11 +150,11 @@ Material:
     - _smoothness: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.9528302, g: 0.9528302, b: 0.9528302, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _PatternColor: {r: 0.09972411, g: 0.7830189, b: 0.6004769, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _close_color: {r: 0.033018887, g: 0.11180992, b: 1, a: 1}
+    - _close_color: {r: 0, g: 1, b: 0.44623923, a: 1}
     - _farcolor: {r: 0.51370597, g: 0.5533535, b: 0.9811321, a: 0}
     - _mesh_uv_topcolor: {r: 0.7122642, g: 0.9807014, b: 1, a: 0}
   m_BuildTextureStacks: []
