@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c39a19249f81cee42a81e4a3c75018b8
+guid: 44cc372a810882e4d9b85b3b1655f23b
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,9 +33,9 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Move_001
-      takeName: EnemyCommon@Walk_002
-      internalID: -2948700383253243555
+      name: Walk_001
+      takeName: EnemyCommon@Walk_001
+      internalID: 3005826945810791031
       firstFrame: 0
       lastFrame: 40
       wrapMode: 0
