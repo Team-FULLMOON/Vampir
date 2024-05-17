@@ -241,10 +241,8 @@ MonoBehaviour:
   unitMarker: {fileID: 6798072512803417028}
   viewRange: {fileID: 2268042740748443340}
   decalProjector: {fileID: 6081375030924233605}
-  attackEffect: {fileID: 7586770102894279329, guid: 241038e3c339073489d99db34820ff62,
-    type: 3}
-  attackPointEffect: {fileID: 8063394454265005579, guid: 102d0180e193bcb449a1d220f6b6cea5,
-    type: 3}
+  attackEffect: {fileID: 0}
+  attackPointEffect: {fileID: 0}
 --- !u!136 &6372571031042578545
 CapsuleCollider:
   m_ObjectHideFlags: 0
