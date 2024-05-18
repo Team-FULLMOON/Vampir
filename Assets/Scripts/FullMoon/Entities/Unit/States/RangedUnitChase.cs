@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using FullMoon.FSM;
 using Unity.Burst;
@@ -10,23 +9,25 @@ namespace FullMoon.Entities.Unit.States
     public class RangedUnitChase : IState
     {
         private readonly RangedUnitController controller;
+        private static readonly int MoveHash = Animator.StringToHash("Move");
 
         public RangedUnitChase(RangedUnitController controller)
         {
             this.controller = controller;
         }
-        
+
         public void Enter()
         {
             controller.Agent.isStopped = false;
             controller.Agent.speed = controller.OverridenUnitData.MovementSpeed;
-            controller.SetAnimation(Animator.StringToHash("Move"));
+            controller.SetAnimation(MoveHash);
         }
 
         [BurstCompile]
         public void Execute()
         {
-            BaseUnitController closestUnit = (controller.Flag ? controller.Flag.UnitInsideViewArea : controller.UnitInsideViewArea)
+            var unitsInView = controller.Flag != null ? controller.Flag.UnitInsideViewArea : controller.UnitInsideViewArea;
+            BaseUnitController closestUnit = unitsInView
                 .Where(t => !controller.UnitType.Equals(t.UnitType))
                 .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
                 .FirstOrDefault();
@@ -37,10 +38,8 @@ namespace FullMoon.Entities.Unit.States
                 return;
             }
 
-            bool checkDistance = (closestUnit.transform.position - controller.transform.position).sqrMagnitude <=
-                           controller.OverridenUnitData.AttackRadius * controller.OverridenUnitData.AttackRadius;
-            
-            if (checkDistance)
+            float sqrAttackRadius = controller.OverridenUnitData.AttackRadius * controller.OverridenUnitData.AttackRadius;
+            if ((closestUnit.transform.position - controller.transform.position).sqrMagnitude <= sqrAttackRadius)
             {
                 controller.LatestDestination = controller.transform.position;
                 controller.StateMachine.ChangeState(new RangedUnitAttack(controller));
@@ -51,10 +50,7 @@ namespace FullMoon.Entities.Unit.States
             }
         }
 
-        public void FixedExecute()
-        {
-            
-        }
+        public void FixedExecute() { }
 
         public void Exit()
         {

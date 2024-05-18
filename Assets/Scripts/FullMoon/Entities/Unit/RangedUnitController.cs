@@ -1,6 +1,5 @@
 using MyBox;
 using System.Linq;
-using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
@@ -15,18 +14,19 @@ using Unity.Burst;
 namespace FullMoon.Entities.Unit
 {
     [RequireComponent(typeof(NavMeshAgent)), BurstCompile]
-    public class RangedUnitController 
-        : BaseUnitController, IAttackable
+    public class RangedUnitController : BaseUnitController, IAttackable
     {
         [Foldout("Ranged Unit Settings")]
         public DecalProjector decalProjector;
-        
+
         [Foldout("Ranged Unit Settings")]
         public GameObject attackEffect;
 
         public RangedUnitData OverridenUnitData { get; private set; }
-        
+
         public float CurrentAttackCoolTime { get; set; }
+        
+        private static readonly int AttackHash = Animator.StringToHash("Attack");
 
         protected override void OnEnable()
         {
@@ -34,26 +34,11 @@ namespace FullMoon.Entities.Unit
             OverridenUnitData = unitData as RangedUnitData;
             CurrentAttackCoolTime = unitData.AttackCoolTime;
 
-            var triggerEvent = viewRange.GetComponent<ColliderTriggerEvents>();
-            if (triggerEvent is not null)
-            {
-                float worldRadius = viewRange.radius * Mathf.Max(transform.lossyScale.x, transform.lossyScale.y, transform.lossyScale.z);
+            InitializeViewRange();
 
-                var units = Physics.OverlapSphere(transform.position + viewRange.center, worldRadius)
-                    .Where(t => triggerEvent.GetFilterTags.Contains(t.tag) && t.gameObject != gameObject)
-                    .Where(t => t.GetComponent<BaseUnitController>() is not null)
-                    .ToList();
-
-                foreach (var unit in units)
-                {
-                    UnitInsideViewArea.Add(unit.GetComponent<BaseUnitController>());
-                }
-            }
-            
-            if (decalProjector is not null)
+            if (decalProjector != null)
             {
-                decalProjector.gameObject.SetActive(false);
-                decalProjector.size = new Vector3(unitData.AttackRadius * 2f, unitData.AttackRadius * 2f, decalProjector.size.z);
+                InitializeDecalProjector();
             }
 
             StateMachine.ChangeState(new RangedUnitIdle(this));
@@ -63,7 +48,7 @@ namespace FullMoon.Entities.Unit
         protected override void Update()
         {
             ReduceAttackCoolTime();
-            UnitInsideViewArea.RemoveWhere(unit => unit is null || !unit.gameObject.activeInHierarchy || !unit.Alive);
+            UnitInsideViewArea.RemoveWhere(unit => unit == null || !unit.gameObject.activeInHierarchy || !unit.Alive);
             base.Update();
         }
 
@@ -75,63 +60,96 @@ namespace FullMoon.Entities.Unit
 
         public void EnterViewRange(Collider unit)
         {
-            BaseUnitController controller = unit.GetComponent<BaseUnitController>();
-            if (controller is null)
+            if (unit.TryGetComponent(out BaseUnitController controller))
             {
-                return;
+                UnitInsideViewArea.Add(controller);
             }
-            UnitInsideViewArea.Add(controller);
         }
 
         public void ExitViewRange(Collider unit)
         {
-            BaseUnitController controller = unit.GetComponent<BaseUnitController>();
-            if (controller is null)
+            if (unit.TryGetComponent(out BaseUnitController controller))
             {
-                return;
+                UnitInsideViewArea.Remove(controller);
             }
-            UnitInsideViewArea.Remove(controller);
         }
 
         public async UniTaskVoid ExecuteAttack(Transform target)
         {
-            Vector3 targetDirection = target.transform.position - transform.position;
+            Vector3 targetDirection = target.position - transform.position;
 
-            transform.forward = targetDirection.normalized;
-            transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, transform.eulerAngles.z);
-            
-            SetAnimation(Animator.StringToHash("Attack"));
-            
+            AlignToTarget(targetDirection);
+
+            SetAnimation(AttackHash);
+
             await UniTask.DelayFrame(OverridenUnitData.HitAnimationFrame);
-            
-            GameObject bullet = ObjectPoolManager.Instance.SpawnObject(attackEffect, transform.position, Quaternion.identity);
-            bullet.GetComponent<BulletEffectController>().Fire(target, transform, OverridenUnitData.BulletSpeed, OverridenUnitData.AttackDamage);
+
+            FireBullet(target);
         }
 
         public override void Select()
         {
             base.Select();
-            decalProjector.gameObject.SetActive(true);
+            decalProjector?.gameObject.SetActive(true);
         }
 
         public override void Deselect()
         {
             base.Deselect();
-            decalProjector.gameObject.SetActive(false);
+            decalProjector?.gameObject.SetActive(false);
         }
-        
+
         public override void MoveToPosition(Vector3 location)
         {
             base.MoveToPosition(location);
             StateMachine.ChangeState(new RangedUnitMove(this));
         }
-        
+
         private void ReduceAttackCoolTime()
         {
             if (CurrentAttackCoolTime > 0)
             {
                 CurrentAttackCoolTime -= Time.deltaTime;
             }
+        }
+
+        private void InitializeViewRange()
+        {
+            if (viewRange != null && unitData != null)
+            {
+                float worldRadius = viewRange.radius * Mathf.Max(transform.lossyScale.x, transform.lossyScale.y, transform.lossyScale.z);
+                var triggerEvent = viewRange.GetComponent<ColliderTriggerEvents>();
+
+                if (triggerEvent != null)
+                {
+                    var units = Physics.OverlapSphere(transform.position + viewRange.center, worldRadius)
+                        .Where(t => triggerEvent.GetFilterTags.Contains(t.tag) && t.gameObject != gameObject)
+                        .Select(t => t.GetComponent<BaseUnitController>())
+                        .Where(unit => unit != null)
+                        .ToList();
+
+                    UnitInsideViewArea.UnionWith(units);
+                }
+            }
+        }
+
+        private void InitializeDecalProjector()
+        {
+            decalProjector.gameObject.SetActive(false);
+            decalProjector.size = new Vector3(unitData.AttackRadius * 2f, unitData.AttackRadius * 2f, decalProjector.size.z);
+        }
+
+        private void AlignToTarget(Vector3 targetDirection)
+        {
+            transform.forward = targetDirection.normalized;
+            transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, transform.eulerAngles.z);
+        }
+
+        private void FireBullet(Transform target)
+        {
+            GameObject bullet = ObjectPoolManager.Instance.SpawnObject(attackEffect,
+                transform.TransformPoint(GetComponent<CapsuleCollider>().center), Quaternion.identity);
+            bullet.GetComponent<BulletEffectController>().Fire(target, transform, OverridenUnitData.BulletSpeed, OverridenUnitData.AttackDamage);
         }
 
 #if UNITY_EDITOR

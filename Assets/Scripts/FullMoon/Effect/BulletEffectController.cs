@@ -21,13 +21,12 @@ namespace FullMoon.Effect
 
         private void OnEnable()
         {
+            isFired = false;
             groundLayer = LayerMask.NameToLayer("Ground");
             unitLayer = LayerMask.NameToLayer("Unit");
-            transform.position += new Vector3(0f, 1f, 0f);
             lastPosition = transform.position;
-            isFired = false;
             CancelInvoke(nameof(DestroyEffect));
-            Invoke(nameof(DestroyEffect), 7f);
+            Invoke(nameof(DestroyEffect), 3f);
         }
 
         private void Update()
@@ -39,7 +38,7 @@ namespace FullMoon.Effect
 
             if (target != null && target.gameObject.activeInHierarchy)
             {
-                Vector3 targetDirection = ((target.transform.position + new Vector3(0f, 1f, 0f)) - transform.position).normalized;
+                Vector3 targetDirection = (GetTargetCenter() - transform.position).normalized;
                 transform.forward = targetDirection;
             }
 
@@ -48,12 +47,9 @@ namespace FullMoon.Effect
             Vector3 direction = currentPosition - lastPosition;
             float distance = direction.magnitude;
 
-            if (distance > 0)
+            if (distance > 0 && Physics.Raycast(lastPosition, direction.normalized, out var hit, distance + step))
             {
-                if (Physics.Raycast(lastPosition, direction.normalized, out var hit, distance + step))
-                {
-                    HandleCollision(hit);
-                }
+                HandleCollision(hit);
             }
 
             lastPosition = currentPosition;
@@ -67,15 +63,13 @@ namespace FullMoon.Effect
             speed = speedValue;
             damage = damageValue;
 
-            float missRate = targetTransform.GetComponent<BaseUnitController>().unitData.MissRate;
-            
-            Vector3 targetDirection = ((target.transform.position + new Vector3(0f, 1f, 0f)) - transform.position).normalized;
-            
+            float missRate = target.unitData.MissRate;
+            Vector3 targetDirection = (GetTargetCenter() - transform.position).normalized;
+
             if (Random.Range(0f, 100f) < missRate)
             {
                 target = null;
-                
-                Vector3 randomDirection = Random.insideUnitSphere * 0.1f;   
+                Vector3 randomDirection = Random.insideUnitSphere * 0.1f;
                 randomDirection -= Vector3.Project(randomDirection, targetDirection);
                 targetDirection += randomDirection;
             }
@@ -85,49 +79,45 @@ namespace FullMoon.Effect
             GameObject fireFX = ObjectPoolManager.Instance.SpawnObject(firingEffect, transform.position, Quaternion.identity);
             fireFX.transform.forward = targetDirection.normalized;
             fireFX.transform.eulerAngles = new Vector3(0f, fireFX.transform.eulerAngles.y - 90f, 0f);
-            
+
             isFired = true;
         }
 
         private void HandleCollision(RaycastHit hit)
         {
-            if (target == null)
-            {
-                return;
-            }
-            
             int otherLayer = hit.collider.gameObject.layer;
 
             if (otherLayer == groundLayer)
             {
-                ObjectPoolManager.Instance.ReturnObjectToPool(gameObject);
                 ObjectPoolManager.Instance.SpawnObject(hitEffect, hit.point, Quaternion.identity);
+                ObjectPoolManager.Instance.ReturnObjectToPool(gameObject);
+                return;
             }
-            
-            if (otherLayer == unitLayer)
+
+            if (otherLayer == unitLayer && target != null && target.gameObject == hit.transform.gameObject)
             {
-                if (target.gameObject != hit.transform.gameObject)
-                {
-                    return;
-                }
-                
                 var unitController = hit.collider.GetComponent<BaseUnitController>();
                 if (unitController != null && !unitController.UnitType.Equals(shooter.UnitType))
                 {
                     unitController.ReceiveDamage(damage, shooter);
-                    ObjectPoolManager.Instance.ReturnObjectToPool(gameObject);
                     ObjectPoolManager.Instance.SpawnObject(hitEffect, hit.point, Quaternion.identity);
+                    ObjectPoolManager.Instance.ReturnObjectToPool(gameObject);
                 }
             }
         }
         
+        private Vector3 GetTargetCenter()
+        {
+            CapsuleCollider capsuleCollider = target.GetComponent<CapsuleCollider>();
+            return capsuleCollider != null ? target.transform.TransformPoint(capsuleCollider.center) : target.transform.position;
+        }
+        
         private void DestroyEffect()
         {
-            if (gameObject.activeInHierarchy == false)
+            if (gameObject.activeInHierarchy)
             {
-                return;
+                ObjectPoolManager.Instance.ReturnObjectToPool(gameObject);
             }
-            ObjectPoolManager.Instance.ReturnObjectToPool(gameObject);
         }
     }
 }
