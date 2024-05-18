@@ -9,6 +9,7 @@ namespace FullMoon.Entities.Unit.States
     public class MainUnitIdle : IState
     {
         private readonly MainUnitController controller;
+        private static readonly int IdleHash = Animator.StringToHash("Idle");
 
         public MainUnitIdle(MainUnitController controller)
         {
@@ -17,22 +18,22 @@ namespace FullMoon.Entities.Unit.States
 
         public void Enter()
         {
-            controller.SetAnimation(Animator.StringToHash("Idle"));
+            controller.SetAnimation(IdleHash);
         }
 
         [BurstCompile]
         public void Execute()
         {
-            int enemyCount = (controller.Flag ? controller.Flag.UnitInsideViewArea : controller.UnitInsideViewArea)
-                .Count(t => !controller.UnitType.Equals(t.UnitType));
-            
+            var unitsInView = controller.Flag != null ? controller.Flag.UnitInsideViewArea : controller.UnitInsideViewArea;
+            int enemyCount = unitsInView.Count(t => !controller.UnitType.Equals(t.UnitType));
+
             if (enemyCount > 0)
             {
                 controller.StateMachine.ChangeState(new MainUnitChase(controller));
                 return;
             }
-            
-            if (controller.Flag is not null)
+
+            if (controller.Flag != null)
             {
                 Vector3 targetPosition = controller.Flag.GetPresetPosition(controller);
                 if (Vector3.Distance(controller.transform.position, targetPosition) > controller.Agent.stoppingDistance * 3f)
@@ -42,14 +43,8 @@ namespace FullMoon.Entities.Unit.States
             }
         }
 
-        public void FixedExecute()
-        {
-            
-        }
+        public void FixedExecute() { }
 
-        public void Exit()
-        {
-            // Debug.Log($"{controller.name} Idle Exit");
-        }
+        public void Exit() { }
     }
 }

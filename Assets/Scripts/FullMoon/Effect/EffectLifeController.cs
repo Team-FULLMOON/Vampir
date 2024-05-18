@@ -15,11 +15,10 @@ namespace FullMoon.Effect
 
         private void DestroyEffect()
         {
-            if (gameObject.activeInHierarchy == false)
+            if (gameObject.activeInHierarchy)
             {
-                return;
+                ObjectPoolManager.Instance.ReturnObjectToPool(gameObject);
             }
-            ObjectPoolManager.Instance.ReturnObjectToPool(gameObject);
         }
     }
 }

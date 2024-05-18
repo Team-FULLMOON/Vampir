@@ -9,6 +9,7 @@ namespace FullMoon.Entities.Unit.States
     public class MeleeUnitChase : IState
     {
         private readonly MeleeUnitController controller;
+        private static readonly int MoveHash = Animator.StringToHash("Move");
 
         public MeleeUnitChase(MeleeUnitController controller)
         {
@@ -19,13 +20,14 @@ namespace FullMoon.Entities.Unit.States
         {
             controller.Agent.isStopped = false;
             controller.Agent.speed = controller.OverridenUnitData.MovementSpeed;
-            controller.SetAnimation(Animator.StringToHash("Move"));
+            controller.SetAnimation(MoveHash);
         }
 
         [BurstCompile]
         public void Execute()
         {
-            BaseUnitController closestUnit = (controller.Flag ? controller.Flag.UnitInsideViewArea : controller.UnitInsideViewArea)
+            var unitsInView = controller.Flag != null ? controller.Flag.UnitInsideViewArea : controller.UnitInsideViewArea;
+            BaseUnitController closestUnit = unitsInView
                 .Where(t => !controller.UnitType.Equals(t.UnitType))
                 .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
                 .FirstOrDefault();
@@ -36,10 +38,8 @@ namespace FullMoon.Entities.Unit.States
                 return;
             }
 
-            bool checkDistance = (closestUnit.transform.position - controller.transform.position).sqrMagnitude <=
-                           controller.OverridenUnitData.AttackRadius * controller.OverridenUnitData.AttackRadius;
-            
-            if (checkDistance)
+            float sqrAttackRadius = controller.OverridenUnitData.AttackRadius * controller.OverridenUnitData.AttackRadius;
+            if ((closestUnit.transform.position - controller.transform.position).sqrMagnitude <= sqrAttackRadius)
             {
                 controller.LatestDestination = controller.transform.position;
                 controller.StateMachine.ChangeState(new MeleeUnitAttack(controller));
@@ -50,10 +50,7 @@ namespace FullMoon.Entities.Unit.States
             }
         }
 
-        public void FixedExecute()
-        {
-            
-        }
+        public void FixedExecute() { }
 
         public void Exit()
         {

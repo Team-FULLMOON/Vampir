@@ -1,4 +1,3 @@
-using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using FullMoon.FSM;
@@ -9,6 +8,7 @@ namespace FullMoon.Entities.Unit.States
     public class MeleeUnitDead : IState
     {
         private readonly MeleeUnitController controller;
+        private static readonly int DeadHash = Animator.StringToHash("Dead");
 
         public MeleeUnitDead(MeleeUnitController controller)
         {
@@ -17,7 +17,7 @@ namespace FullMoon.Entities.Unit.States
 
         public void Enter()
         {
-            DisableAfterAnimation(Animator.StringToHash("Dead"));
+            DisableAfterAnimation(DeadHash).Forget();
         }
 
         public void Execute() { }
@@ -33,15 +33,11 @@ namespace FullMoon.Entities.Unit.States
                 await UniTask.WaitUntil(() => 
                 {
                     var stateInfo = controller.unitAnimator.GetCurrentAnimatorStateInfo(0);
-                    return stateInfo.shortNameHash.Equals(animationHash) && stateInfo.normalizedTime >= 1.0f;
+                    return stateInfo.shortNameHash == animationHash && stateInfo.normalizedTime >= 1.0f;
                 });
                 await UniTask.Delay(500);
-                ObjectPoolManager.Instance.ReturnObjectToPool(controller.gameObject);
             }
-            else
-            {
-                ObjectPoolManager.Instance.ReturnObjectToPool(controller.gameObject);
-            }
+            ObjectPoolManager.Instance.ReturnObjectToPool(controller.gameObject);
         }
     }
 }

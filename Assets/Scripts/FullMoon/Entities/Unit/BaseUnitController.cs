@@ -7,8 +7,6 @@ using FullMoon.ScriptableObject;
 using FullMoon.UI;
 using FullMoon.Util;
 using Unity.Burst;
-using Random = UnityEngine.Random;
-using StateMachine = FullMoon.FSM.StateMachine;
 
 namespace FullMoon.Entities.Unit
 {
@@ -31,17 +29,17 @@ namespace FullMoon.Entities.Unit
         [Foldout("Base Unit Settings")] 
         public SphereCollider viewRange;
         
-        public readonly StateMachine StateMachine = new();
+        public readonly FSM.StateMachine StateMachine = new();
         
         public Rigidbody Rb { get; private set; }
         public NavMeshAgent Agent { get; set; }
         public UnitFlagController Flag { get; set; }
         public Vector3 LatestDestination { get; set; }
         public int Hp { get; set; }
-        public bool Alive { get; set; }
+        public bool Alive { get; private set; }
 
-        public string UnitType { get; set; }
-        public string UnitClass { get; set; }
+        public string UnitType { get; private set; }
+        public string UnitClass { get; private set; }
         
         public HashSet<BaseUnitController> UnitInsideViewArea { get; set; }
 
@@ -108,12 +106,15 @@ namespace FullMoon.Entities.Unit
             
             Hp = Mathf.Clamp(Hp - amount, 0, System.Int32.MaxValue);
             
-            int attackHash = Animator.StringToHash("Attack");
-            AnimatorStateInfo stateInfo = unitAnimator.GetCurrentAnimatorStateInfo(0);
-
-            if (!stateInfo.shortNameHash.Equals(attackHash) || stateInfo.normalizedTime >= 0.8f)
+            if (unitAnimator != null)
             {
-                SetAnimation(Animator.StringToHash("Hit"));
+                int attackHash = Animator.StringToHash("Attack");
+                AnimatorStateInfo stateInfo = unitAnimator.GetCurrentAnimatorStateInfo(0);
+
+                if (!stateInfo.shortNameHash.Equals(attackHash) || stateInfo.normalizedTime >= 0.8f)
+                {
+                    SetAnimation(Animator.StringToHash("Hit"));
+                }
             }
 
             if (Hp > 0)
