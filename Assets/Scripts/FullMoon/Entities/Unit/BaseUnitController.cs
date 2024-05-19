@@ -109,9 +109,10 @@ namespace FullMoon.Entities.Unit
             if (unitAnimator != null)
             {
                 int attackHash = Animator.StringToHash("Attack");
+                int hitHash = Animator.StringToHash("Hit");
                 AnimatorStateInfo stateInfo = unitAnimator.GetCurrentAnimatorStateInfo(0);
 
-                if (!stateInfo.shortNameHash.Equals(attackHash) || stateInfo.normalizedTime >= 0.8f)
+                if ((!stateInfo.shortNameHash.Equals(attackHash) && !stateInfo.shortNameHash.Equals(hitHash)) || stateInfo.normalizedTime >= 0.9f)
                 {
                     SetAnimation(Animator.StringToHash("Hit"));
                 }
