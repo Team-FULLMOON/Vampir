@@ -1,74 +1,11 @@
 fileFormatVersion: 2
-guid: 36d03d6d713b9eb42b9dc68d1f4d1e80
+guid: 79b166b1c52eaf64dba0709e5032e2d6
 ModelImporter:
   serializedVersion: 22200
-  internalIDToNameTable:
-  - first:
-      1: 100000
-    second: //RootNode
-  - first:
-      1: 100002
-    second: EA03_Prop_Container_Basket_03a_LOD0
-  - first:
-      1: 100004
-    second: EA03_Prop_Container_Basket_03a_LOD1
-  - first:
-      1: 100006
-    second: EA03_Prop_Container_Basket_03a_LOD2
-  - first:
-      4: 400000
-    second: //RootNode
-  - first:
-      4: 400002
-    second: EA03_Prop_Container_Basket_03a_LOD0
-  - first:
-      4: 400004
-    second: EA03_Prop_Container_Basket_03a_LOD1
-  - first:
-      4: 400006
-    second: EA03_Prop_Container_Basket_03a_LOD2
-  - first:
-      21: 2100000
-    second: LPNP_Field_Colorsheet
-  - first:
-      21: 2100002
-    second: EA02_LPNP-Slavika_Colorsheet_v1.png.001
-  - first:
-      23: 2300000
-    second: EA03_Prop_Container_Basket_03a_LOD0
-  - first:
-      23: 2300002
-    second: EA03_Prop_Container_Basket_03a_LOD1
-  - first:
-      23: 2300004
-    second: EA03_Prop_Container_Basket_03a_LOD2
-  - first:
-      33: 3300000
-    second: EA03_Prop_Container_Basket_03a_LOD0
-  - first:
-      33: 3300002
-    second: EA03_Prop_Container_Basket_03a_LOD1
-  - first:
-      33: 3300004
-    second: EA03_Prop_Container_Basket_03a_LOD2
-  - first:
-      43: 4300000
-    second: EA03_Prop_Container_Basket_03a_LOD2
-  - first:
-      43: 4300002
-    second: EA03_Prop_Container_Basket_03a_LOD1
-  - first:
-      43: 4300004
-    second: EA03_Prop_Container_Basket_03a_LOD0
-  - first:
-      205: 20500000
-    second: //RootNode
-  - first:
-      41386430: 2186277476908879412
-    second: ImportLogs
+  internalIDToNameTable: []
   externalObjects: {}
   materials:
-    materialImportMode: 1
+    materialImportMode: 2
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -94,13 +31,39 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
-    isReadable: 1
+    clipAnimations:
+    - serializedVersion: 16
+      name: Move_001
+      takeName: PC@Move_006
+      internalID: 752242242910969156
+      firstFrame: 0
+      lastFrame: 24
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
   meshes:
-    lODScreenPercentages:
-    - 0.25
-    - 0.125
-    - 0.01
+    lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
     addColliders: 0
@@ -111,8 +74,8 @@ ModelImporter:
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
-    nodeNameCollisionStrategy: 0
-    fileIdsGeneration: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
@@ -129,7 +92,7 @@ ModelImporter:
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
-    secondaryUVMarginMethod: 0
+    secondaryUVMarginMethod: 1
     secondaryUVMinLightmapResolution: 40
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
@@ -163,12 +126,12 @@ ModelImporter:
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   avatarSetup: 0
-  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
-  importBlendShapeDeformPercent: 0
-  remapMaterialsIfMaterialImportModeIsNone: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
   userData: 
   assetBundleName: 

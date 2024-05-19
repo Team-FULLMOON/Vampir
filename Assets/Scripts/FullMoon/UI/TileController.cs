@@ -34,8 +34,8 @@ namespace FullMoon.UI
                 gameObject = tile
             });
             Debug.Log("CreateTile");
-
-            // NavMesh 빌드 실행
+            nav.BuildNavMesh();
+            nav2.BuildNavMesh();
         }
 
         // 월드 좌표 -> 타일 좌표
