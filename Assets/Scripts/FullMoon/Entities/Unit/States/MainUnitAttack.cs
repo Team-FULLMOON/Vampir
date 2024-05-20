@@ -11,6 +11,8 @@ namespace FullMoon.Entities.Unit.States
         private readonly MainUnitController controller;
         private BaseUnitController target;
         private float attackDelay;
+        
+        private static readonly int IdleHash = Animator.StringToHash("Idle 2");
 
         public MainUnitAttack(MainUnitController controller)
         {
@@ -26,6 +28,8 @@ namespace FullMoon.Entities.Unit.States
                     .Where(t => !controller.UnitType.Equals(t.UnitType))
                     .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
                     .FirstOrDefault();
+            
+            controller.SetAnimation(IdleHash);
         }
 
         [BurstCompile]
