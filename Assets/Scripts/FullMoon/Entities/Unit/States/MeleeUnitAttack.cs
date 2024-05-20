@@ -31,7 +31,7 @@ namespace FullMoon.Entities.Unit.States
         [BurstCompile]
         public void Execute()
         {
-            if (target == null || !target.Alive)
+            if (target == null || (!target.Alive && target.gameObject.activeInHierarchy == false))
             {
                 controller.StateMachine.ChangeState(new MeleeUnitIdle(controller));
                 return;
