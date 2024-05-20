@@ -126,6 +126,8 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     - _emission: 1
+    - _ramp_add: 0
+    - _ramp_mul: 1
     - _smoothness: 0
     m_Colors:
     - _BaseColor: {r: 0.88354397, g: 0.8935651, b: 0.8962264, a: 1}

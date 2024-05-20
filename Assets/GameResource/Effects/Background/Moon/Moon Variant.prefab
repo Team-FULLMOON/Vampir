@@ -30,6 +30,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4330860745881565272, guid: b75cb8d9cb0664e42be65535da437939,
         type: 3}
+      propertyPath: lengthInSec
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4330860745881565272, guid: b75cb8d9cb0664e42be65535da437939,
+        type: 3}
       propertyPath: RotationModule.enabled
       value: 1
       objectReference: {fileID: 0}
@@ -57,6 +62,11 @@ PrefabInstance:
         type: 3}
       propertyPath: EmissionModule.rateOverTime.scalar
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4330860745881565272, guid: b75cb8d9cb0664e42be65535da437939,
+        type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4330860745881565272, guid: b75cb8d9cb0664e42be65535da437939,
         type: 3}
@@ -91,6 +101,11 @@ PrefabInstance:
     - target: {fileID: 4330860745881565272, guid: b75cb8d9cb0664e42be65535da437939,
         type: 3}
       propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4330860745881565272, guid: b75cb8d9cb0664e42be65535da437939,
+        type: 3}
+      propertyPath: InitialModule.startLifetime.minMaxState
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4330860745881565272, guid: b75cb8d9cb0664e42be65535da437939,
