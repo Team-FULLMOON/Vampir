@@ -20,23 +20,18 @@ namespace FullMoon.Entities.Unit.States
         public void Enter()
         {
             attackDelay = controller.OverridenUnitData.AttackDelay;
+
+            var unitsInView = controller.Flag != null ? controller.Flag.UnitInsideViewArea : controller.UnitInsideViewArea;
+            target = unitsInView
+                    .Where(t => !controller.UnitType.Equals(t.UnitType))
+                    .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
+                    .FirstOrDefault();
         }
 
         [BurstCompile]
         public void Execute()
         {
-            var unitsInView = controller.Flag != null ? controller.Flag.UnitInsideViewArea : controller.UnitInsideViewArea;
-
-            if (controller.UnitType.Equals("Player") ||
-               (controller.UnitType.Equals("Enemy") && (target == null || !target.Alive)))
-            {
-                target = unitsInView
-                    .Where(t => !controller.UnitType.Equals(t.UnitType))
-                    .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
-                    .FirstOrDefault();
-            }
-
-            if (target == null)
+            if (target == null || !target.Alive)
             {
                 controller.StateMachine.ChangeState(new RangedUnitIdle(controller));
                 return;
