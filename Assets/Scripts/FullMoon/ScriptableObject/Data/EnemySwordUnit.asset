@@ -16,7 +16,7 @@ MonoBehaviour:
   unitName: "\uAC80\uD5C8\uC811 (\uC801)"
   unitType: Enemy
   unitClass: Sword
-  maxHp: 250
+  maxHp: 100
   movementSpeed: 5
   missRate: 0
   manaDrop: 7
