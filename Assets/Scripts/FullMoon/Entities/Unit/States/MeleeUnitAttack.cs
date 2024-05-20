@@ -9,6 +9,7 @@ namespace FullMoon.Entities.Unit.States
     public class MeleeUnitAttack : IState
     {
         private readonly MeleeUnitController controller;
+        private BaseUnitController target;
         private float attackDelay;
 
         public MeleeUnitAttack(MeleeUnitController controller)
@@ -21,7 +22,7 @@ namespace FullMoon.Entities.Unit.States
             attackDelay = controller.OverridenUnitData.AttackDelay;
 
             var unitsInView = controller.Flag != null ? controller.Flag.UnitInsideViewArea : controller.UnitInsideViewArea;
-            controller.UnitTarget = unitsInView
+            target = unitsInView
                 .Where(t => controller.UnitType.Equals("Enemy"))
                 .Where(t => !controller.UnitType.Equals(t.UnitType))
                 .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
@@ -34,25 +35,25 @@ namespace FullMoon.Entities.Unit.States
             if (controller.UnitType.Equals("Player"))
             {
                 var unitsInView = controller.Flag != null ? controller.Flag.UnitInsideViewArea : controller.UnitInsideViewArea;
-                controller.UnitTarget = unitsInView
+                target = unitsInView
                     .Where(t => !controller.UnitType.Equals("Enemy"))
                     .Where(t => !controller.UnitType.Equals(t.UnitType))
                     .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
                     .FirstOrDefault();
             }
 
-            if (controller.UnitTarget == null)
+            if (target == null)
             {
                 controller.StateMachine.ChangeState(new MeleeUnitIdle(controller));
                 return;
             }
 
-            Vector3 targetDirection = controller.UnitTarget.transform.position - controller.transform.position;
+            Vector3 targetDirection = target.transform.position - controller.transform.position;
             controller.transform.forward = targetDirection.normalized;
             controller.transform.eulerAngles = new Vector3(0f, controller.transform.eulerAngles.y, controller.transform.eulerAngles.z);
 
             float sqrAttackRadius = controller.OverridenUnitData.AttackRadius * controller.OverridenUnitData.AttackRadius;
-            if ((controller.UnitTarget.transform.position - controller.transform.position).sqrMagnitude > sqrAttackRadius)
+            if ((target.transform.position - controller.transform.position).sqrMagnitude > sqrAttackRadius)
             {
                 controller.StateMachine.ChangeState(new MeleeUnitChase(controller));
                 return;
@@ -70,7 +71,7 @@ namespace FullMoon.Entities.Unit.States
             }
 
             controller.CurrentAttackCoolTime = controller.OverridenUnitData.AttackCoolTime;
-            controller.ExecuteAttack(controller.UnitTarget.transform).Forget();
+            controller.ExecuteAttack(target.transform).Forget();
         }
 
         public void FixedExecute() { }
