@@ -42,6 +42,7 @@ namespace FullMoon.Entities.Unit
         public string UnitClass { get; private set; }
         
         public HashSet<BaseUnitController> UnitInsideViewArea { get; set; }
+        public BaseUnitController UnitTarget { get; set; }
 
         protected virtual void OnEnable()
         {
@@ -53,6 +54,7 @@ namespace FullMoon.Entities.Unit
             Hp = unitData.MaxHp;
             UnitType = unitData.UnitType;
             UnitClass = unitData.UnitClass;
+            UnitTarget = null;
             unitMarker.SetActive(false);
 
             if (viewRange != null && unitData != null)
