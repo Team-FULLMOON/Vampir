@@ -23,26 +23,15 @@ namespace FullMoon.Entities.Unit.States
 
             var unitsInView = controller.Flag != null ? controller.Flag.UnitInsideViewArea : controller.UnitInsideViewArea;
             target = unitsInView
-                .Where(t => controller.UnitType.Equals("Enemy"))
-                .Where(t => !controller.UnitType.Equals(t.UnitType))
-                .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
-                .FirstOrDefault();
+                    .Where(t => !controller.UnitType.Equals(t.UnitType))
+                    .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
+                    .FirstOrDefault();
         }
 
         [BurstCompile]
         public void Execute()
         {
-            if (controller.UnitType.Equals("Player"))
-            {
-                var unitsInView = controller.Flag != null ? controller.Flag.UnitInsideViewArea : controller.UnitInsideViewArea;
-                target = unitsInView
-                    .Where(t => !controller.UnitType.Equals("Enemy"))
-                    .Where(t => !controller.UnitType.Equals(t.UnitType))
-                    .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
-                    .FirstOrDefault();
-            }
-
-            if (target == null)
+            if (target == null || (!target.Alive && target.gameObject.activeInHierarchy == false))
             {
                 controller.StateMachine.ChangeState(new MeleeUnitIdle(controller));
                 return;
