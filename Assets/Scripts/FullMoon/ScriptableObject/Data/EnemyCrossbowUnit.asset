@@ -24,7 +24,8 @@ MonoBehaviour:
   createPrepareTime: 2.5
   summonTime: 3
   unitTransformObject: {fileID: 0}
-  respawnUnitObject: {fileID: 0}
+  respawnUnitObject: {fileID: 4972936984483943875, guid: dc645257328e771418a3bfd9a38a1f90,
+    type: 3}
   attackEnabled: 1
   attackDamage: 20
   attackDelay: 0.5
