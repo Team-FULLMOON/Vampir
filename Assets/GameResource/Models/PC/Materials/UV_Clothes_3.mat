@@ -121,6 +121,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _HDr: 1
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
@@ -136,10 +137,13 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     - _emission: 1
+    - _ramp_add: 0
+    - _ramp_mul: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1.9765669, g: 1.518868, b: 2, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _HDRColor: {r: 0.9042467, g: 1.0773196, b: 1.5336025, a: 0}
     - _Light_dir: {r: 1, g: -1, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _eye_emission: {r: 1, g: 1, b: 1, a: 0}
