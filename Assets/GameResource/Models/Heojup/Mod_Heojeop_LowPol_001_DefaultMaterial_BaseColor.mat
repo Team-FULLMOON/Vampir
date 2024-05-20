@@ -40,8 +40,9 @@ Material:
     m_Ints: []
     m_Floats:
     - _Float: 1.54
-    - _emission: 1.5
+    - _emission: 1
     m_Colors:
     - _Color: {r: 1.5157166, g: 0.66491336, b: 0.74807465, a: 1}
+    - _HDRColor: {r: 1.4980394, g: 0.8832779, b: 0.8832779, a: 0}
     - _Light_dir: {r: -0.16863033, g: -0.91594553, b: -0.36415356, a: 0}
   m_BuildTextureStacks: []
