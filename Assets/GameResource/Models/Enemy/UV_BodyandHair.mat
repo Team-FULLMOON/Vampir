@@ -143,7 +143,7 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 2.0474799, g: 2.0474799, b: 2.0474799, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _HDRColor: {r: 1, g: 1, b: 1, a: 0}
+    - _HDRColor: {r: 0.67250055, g: 0.6650944, b: 1, a: 0}
     - _Light_dir: {r: 1, g: -1, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _eye_emission: {r: 1, g: 1, b: 1, a: 0}
