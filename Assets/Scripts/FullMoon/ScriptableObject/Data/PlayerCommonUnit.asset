@@ -17,7 +17,7 @@ MonoBehaviour:
   unitType: Player
   unitClass: Common
   maxHp: 20
-  movementSpeed: 5
+  movementSpeed: 7
   missRate: 0
   manaDrop: 7
   manaCost: 10
@@ -30,6 +30,6 @@ MonoBehaviour:
   attackDelay: 1
   attackCoolTime: 1
   attackRadius: 10
-  viewRadius: 3
+  viewRadius: 3.5
   stateTransitionRadius: 10
   fogOfWarRadius: 10
