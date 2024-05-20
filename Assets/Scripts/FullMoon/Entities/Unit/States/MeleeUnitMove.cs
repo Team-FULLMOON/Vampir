@@ -32,7 +32,7 @@ namespace FullMoon.Entities.Unit.States
                 return;
             }
             
-            var unitsInView = controller.UnitInsideViewArea;
+            var unitsInView = controller.Flag != null ? controller.Flag.UnitInsideViewArea : controller.UnitInsideViewArea;
             var ownTypeUnits = unitsInView.Where(t => controller.UnitType.Equals(t.UnitType) && t.Agent.isStopped);
             var destination = controller.LatestDestination;
 

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64d263e2c7b32d84a8cc7b5b5a7a2a2f, type: 3}
+  m_Name: PlayerCommonUnit
+  m_EditorClassIdentifier: 
+  unitCode: 000
+  unitName: 
+  unitType: Player
+  unitClass: Common
+  maxHp: 20
+  movementSpeed: 5
+  missRate: 0
+  manaDrop: 7
+  manaCost: 10
+  createPrepareTime: 2.5
+  summonTime: 3
+  unitTransformObject: {fileID: 0}
+  respawnUnitObject: {fileID: 0}
+  attackEnabled: 0
+  attackDamage: 10
+  attackDelay: 1
+  attackCoolTime: 1
+  attackRadius: 10
+  viewRadius: 3
+  stateTransitionRadius: 10
+  fogOfWarRadius: 10

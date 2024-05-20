@@ -1,49 +1,44 @@
+using System;
 using MyBox;
 using System.Linq;
-using Cysharp.Threading.Tasks;
+using FullMoon.Entities.Unit.States;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Rendering.Universal;
-using FullMoon.Interfaces;
-using FullMoon.Entities.Unit.States;
 using FullMoon.ScriptableObject;
 using FullMoon.Util;
 using Unity.Burst;
+using UnityEngine.Rendering.Universal;
 
 namespace FullMoon.Entities.Unit
 {
     [RequireComponent(typeof(NavMeshAgent)), BurstCompile]
     public class CommonUnitController : BaseUnitController
     {
-        [Foldout("Melee Unit Settings")]
+        [Foldout("Common Unit Settings")]
         public DecalProjector decalProjector;
-
-        [Foldout("Melee Unit Settings")]
-        public GameObject attackEffect;
-
-        [Foldout("Melee Unit Settings")]
-        public GameObject attackPointEffect;
-
-        public MeleeUnitData OverridenUnitData { get; private set; }
-
-        public float CurrentAttackCoolTime { get; set; }
         
-        private static readonly int AttackHash = Animator.StringToHash("Attack");
+        [Foldout("Common Unit Settings")]
+        public GameObject moveDustEffect;
+        
+        public CommonUnitData OverridenUnitData { get; private set; }
+        public BaseUnitController MainUnit { get; private set; }
 
         protected override void OnEnable()
         {
             base.OnEnable();
-            OverridenUnitData = unitData as MeleeUnitData;
-            CurrentAttackCoolTime = unitData.AttackCoolTime;
+            OverridenUnitData = unitData as CommonUnitData;
 
             InitializeViewRange();
-
+            
             if (decalProjector != null)
             {
                 InitializeDecalProjector();
             }
-
-            // StateMachine.ChangeState(new MeleeUnitIdle(this));
+            
+            StateMachine.ChangeState(new CommonUnitIdle(this));
+            
+            MainUnit = FindObjectsOfType<BaseUnitController>()
+                .FirstOrDefault(unit => unit.unitData.UnitType.Equals("Player") && unit.unitData.UnitClass.Equals("Main"));
         }
 
         [BurstCompile]
@@ -56,7 +51,7 @@ namespace FullMoon.Entities.Unit
         public override void Die()
         {
             base.Die();
-            // StateMachine.ChangeState(new MeleeUnitDead(this));
+            StateMachine.ChangeState(new CommonUnitDead(this));
         }
 
         public void EnterViewRange(Collider unit)
@@ -74,13 +69,30 @@ namespace FullMoon.Entities.Unit
                 UnitInsideViewArea.Remove(controller);
             }
         }
+        
+        public override void Select()
+        {
+            base.Select();
+            decalProjector?.gameObject.SetActive(true);
+        }
+
+        public override void Deselect()
+        {
+            base.Deselect();
+            decalProjector?.gameObject.SetActive(false);
+        }
 
         public override void MoveToPosition(Vector3 location)
         {
             base.MoveToPosition(location);
-            // StateMachine.ChangeState(new MeleeUnitMove(this));
+            StateMachine.ChangeState(new CommonUnitMove(this));
         }
 
+        private void InitializeDecalProjector()
+        {
+            decalProjector.gameObject.SetActive(false);
+        }
+        
         private void InitializeViewRange()
         {
             if (viewRange != null && unitData != null)
@@ -100,23 +112,5 @@ namespace FullMoon.Entities.Unit
                 }
             }
         }
-
-        private void InitializeDecalProjector()
-        {
-            decalProjector.gameObject.SetActive(false);
-            decalProjector.size = new Vector3(unitData.AttackRadius * 2f, unitData.AttackRadius * 2f, decalProjector.size.z);
-        }
-
-#if UNITY_EDITOR
-        protected override void OnDrawGizmos()
-        {
-            base.OnDrawGizmos();
-
-            if (decalProjector != null)
-            {
-                decalProjector.size = new Vector3(unitData.AttackRadius * 2f, unitData.AttackRadius * 2f, decalProjector.size.z);
-            }
-        }
-#endif
     }
 }

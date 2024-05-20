@@ -58,7 +58,7 @@ namespace FullMoon.Entities.Unit
         public override void Die()
         {
             base.Die();
-            ObjectPoolManager.Instance.ReturnObjectToPool(gameObject);
+            StateMachine.ChangeState(new MainUnitDead(this));
         }
 
         public void EnterViewRange(Collider unit)
@@ -115,6 +115,16 @@ namespace FullMoon.Entities.Unit
         public override void MoveToPosition(Vector3 location)
         {
             base.MoveToPosition(location);
+            
+            // var matchingUnits = FindObjectsOfType<BaseUnitController>()
+            //     .Where(unit => unit.unitData.UnitType == "Player" && unit.unitData.UnitClass == "Common" && 
+            //                    unit.gameObject.activeInHierarchy && unit.Alive);
+            //
+            // foreach (var unit in matchingUnits)
+            // {
+            //     unit.MoveToPosition(location);
+            // }
+            
             StateMachine.ChangeState(new MainUnitMove(this));
         }
 
