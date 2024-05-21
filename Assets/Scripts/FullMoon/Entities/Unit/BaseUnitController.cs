@@ -41,7 +41,16 @@ namespace FullMoon.Entities.Unit
         public string UnitType { get; private set; }
         public string UnitClass { get; private set; }
         
-        public HashSet<BaseUnitController> UnitInsideViewArea { get; set; }
+        public HashSet<BaseUnitController> UnitInsideViewArea { get; private set; }
+        
+        public static readonly int IdleHash = Animator.StringToHash("Idle");
+        public static readonly int IdleHash2 = Animator.StringToHash("Idle 2");
+        public static readonly int AttackHash = Animator.StringToHash("Attack");
+        public static readonly int AttackHash2 = Animator.StringToHash("Attack 2");
+        public static readonly int HitHash = Animator.StringToHash("Hit");
+        public static readonly int ShockHash = Animator.StringToHash("Shock");
+        public static readonly int MoveHash = Animator.StringToHash("Move");
+        public static readonly int DeadHash = Animator.StringToHash("Dead");
 
         protected virtual void OnEnable()
         {
@@ -84,13 +93,32 @@ namespace FullMoon.Entities.Unit
             {
                 return false;
             }
-            
+
             if (unitAnimator.HasState(0, stateID) == false)
             {
                 Debug.LogWarning($"{stateID} 애니메이션이 존재하지 않습니다.");
                 return false;
             }
-            
+
+            AnimatorStateInfo currentStateInfo = unitAnimator.GetCurrentAnimatorStateInfo(0);
+            bool isInTransition = unitAnimator.IsInTransition(0);
+
+            if (isInTransition)
+            {
+                AnimatorStateInfo nextStateInfo = unitAnimator.GetNextAnimatorStateInfo(0);
+                if (nextStateInfo.shortNameHash == stateID && nextStateInfo.loop)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                if (currentStateInfo.shortNameHash == stateID && currentStateInfo.loop)
+                {
+                    return true;
+                }
+            }
+
             unitAnimator.Play(stateID, 0, 0);
             unitAnimator.CrossFade(stateID, transitionDuration);
 
@@ -108,11 +136,9 @@ namespace FullMoon.Entities.Unit
             
             if (unitAnimator != null)
             {
-                int attackHash = Animator.StringToHash("Attack");
-                int hitHash = Animator.StringToHash("Hit");
                 AnimatorStateInfo stateInfo = unitAnimator.GetCurrentAnimatorStateInfo(0);
 
-                if ((!stateInfo.shortNameHash.Equals(attackHash) && !stateInfo.shortNameHash.Equals(hitHash)) || stateInfo.normalizedTime >= 0.9f)
+                if ((!stateInfo.shortNameHash.Equals(AttackHash) && !stateInfo.shortNameHash.Equals(HitHash)) || stateInfo.normalizedTime >= 0.9f)
                 {
                     SetAnimation(Animator.StringToHash("Hit"));
                 }

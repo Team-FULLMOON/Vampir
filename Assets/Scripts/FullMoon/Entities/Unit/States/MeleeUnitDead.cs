@@ -8,7 +8,6 @@ namespace FullMoon.Entities.Unit.States
     public class MeleeUnitDead : IState
     {
         private readonly MeleeUnitController controller;
-        private static readonly int DeadHash = Animator.StringToHash("Dead");
 
         public MeleeUnitDead(MeleeUnitController controller)
         {
@@ -17,7 +16,7 @@ namespace FullMoon.Entities.Unit.States
 
         public void Enter()
         {
-            DisableAfterAnimation(DeadHash).Forget();
+            DisableAfterAnimation(BaseUnitController.DeadHash).Forget();
         }
 
         public void Execute() { }

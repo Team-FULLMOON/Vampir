@@ -27,8 +27,6 @@ namespace FullMoon.Entities.Unit
         public MeleeUnitData OverridenUnitData { get; private set; }
 
         public float CurrentAttackCoolTime { get; set; }
-        
-        private static readonly int AttackHash = Animator.StringToHash("Attack");
 
         protected override void OnEnable()
         {
