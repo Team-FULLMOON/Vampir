@@ -35,6 +35,7 @@ namespace FullMoon.Entities.Unit.States
                 });
                 await UniTask.Delay(500);
             }
+            controller.Agent.enabled = false;
             ObjectPoolManager.Instance.ReturnObjectToPool(controller.gameObject);
         }
     }

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75b50e7b0903365499a01844ff2a622f, type: 3}
+  m_Name: PlayerHammerUnit
+  m_EditorClassIdentifier: 
+  unitCode: 000
+  unitName: 
+  unitType: Player
+  unitClass: Hammer
+  maxHp: 30
+  movementSpeed: 4
+  missRate: 0
+  manaDrop: 7
+  manaCost: 10
+  createPrepareTime: 2.5
+  summonTime: 3
+  unitTransformObject: {fileID: 0}
+  respawnUnitObject: {fileID: 0}
+  attackEnabled: 0
+  attackDamage: 10
+  attackDelay: 1
+  attackCoolTime: 1
+  attackRadius: 10
+  viewRadius: 5
+  stateTransitionRadius: 5
+  fogOfWarRadius: 5
