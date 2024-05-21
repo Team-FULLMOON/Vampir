@@ -158,15 +158,15 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 0
     - __dirty: 0
-    - _color: 1
+    - _color: 0
     - _meatlic: 0
     - _smoothness: 0
     m_Colors:
     - _BaseColor: {r: 0.40527603, g: 0.31181026, b: 0.7264151, a: 1}
-    - _Color: {r: 0.44255075, g: 0.7706402, b: 0.8018868, a: 1}
+    - _Color: {r: 0.08009967, g: 0.633157, b: 0.6792453, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _GroundColor: {r: 0.010346207, g: 0.07075471, b: 0.040550455, a: 1}
-    - _HDRcolor: {r: 0.24117789, g: 0.4504757, b: 2.6910384, a: 0}
+    - _HDRcolor: {r: 0.46266663, g: 0.47024575, b: 1.7207953, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _TopColor: {r: 0.01815593, g: 0.19695005, b: 0.2264151, a: 1}
   m_BuildTextureStacks: []

@@ -109,6 +109,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 1
+    - _HDr: 1
     - _Metallic: 0.063
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -134,6 +135,7 @@ Material:
     - _Color: {r: 2.1185472, g: 0.72949976, b: 1.0451927, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColorUI: {r: 1, g: 1, b: 1, a: 1}
+    - _HDRColor: {r: 1, g: 1, b: 1, a: 0}
     - _Light_dir: {r: -0.16863033, g: -0.91594553, b: -0.36415356, a: 0}
     - _Light_dirextion: {r: 1, g: -1, b: 0, a: 0}
     - _Mixed_Shadows_Color: {r: 0, g: 0, b: 0, a: 0}

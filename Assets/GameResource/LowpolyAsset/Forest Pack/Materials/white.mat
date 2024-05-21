@@ -14,10 +14,9 @@ Material:
   m_ValidKeywords:
   - _ALPHAPREMULTIPLY_ON
   - _ALPHATEST_ON
-  - _EMISSION
   - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords: []
-  m_LightmapFlags: 2
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: 3003
@@ -166,8 +165,8 @@ Material:
     - _meatlic: 0
     - _smoothness: 0
     m_Colors:
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 0.5019608, g: 0.025337765, b: 0, a: 1}
+    - _Color: {r: 0.5019608, g: 0.025337767, b: 0, a: 1}
     - _EmissionColor: {r: 0.2264151, g: 0.2264151, b: 0.2264151, a: 1}
     - _GroundColor: {r: 0.010346207, g: 0.07075471, b: 0.040550455, a: 1}
     - _HDRcolor: {r: 0.24117789, g: 0.4504757, b: 2.6910384, a: 0}
