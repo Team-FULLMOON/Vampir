@@ -9,7 +9,6 @@ namespace FullMoon.Entities.Unit.States
     public class MeleeUnitChase : IState
     {
         private readonly MeleeUnitController controller;
-        private static readonly int MoveHash = Animator.StringToHash("Move");
 
         public MeleeUnitChase(MeleeUnitController controller)
         {
@@ -20,7 +19,7 @@ namespace FullMoon.Entities.Unit.States
         {
             controller.Agent.isStopped = false;
             controller.Agent.speed = controller.OverridenUnitData.MovementSpeed;
-            controller.SetAnimation(MoveHash);
+            controller.SetAnimation(BaseUnitController.MoveHash);
         }
 
         [BurstCompile]

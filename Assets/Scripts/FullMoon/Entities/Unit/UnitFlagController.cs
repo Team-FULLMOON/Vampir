@@ -13,7 +13,7 @@ namespace FullMoon.Entities.Unit
         [SerializeField] private List<BaseUnitController> unitPreset;
         private List<Vector3> localPositionsPreset;
         
-        public HashSet<BaseUnitController> UnitInsideViewArea { get; set; }
+        public HashSet<BaseUnitController> UnitInsideViewArea { get; private set; }
         
         private void OnEnable()
         {

@@ -9,7 +9,6 @@ namespace FullMoon.Entities.Unit.States
     public class MeleeUnitIdle : IState
     {
         private readonly MeleeUnitController controller;
-        private static readonly int IdleHash = Animator.StringToHash("Idle");
 
         public MeleeUnitIdle(MeleeUnitController controller)
         {
@@ -18,7 +17,7 @@ namespace FullMoon.Entities.Unit.States
 
         public void Enter()
         {
-            controller.SetAnimation(IdleHash);
+            controller.SetAnimation(BaseUnitController.IdleHash);
         }
 
         [BurstCompile]

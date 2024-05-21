@@ -22,7 +22,7 @@ namespace FullMoon.ScriptableObject
         private string unitType = "Player";
         public string UnitType => unitType;
         
-        [SerializeField, OverrideLabel("유닛 클래스"), DefinedValues("Main", "Common", "Sword", "Spear", "Crossbow")]
+        [SerializeField, OverrideLabel("유닛 클래스"), DefinedValues("Main", "Common", "Hammer", "Sword", "Spear", "Crossbow")]
         private string unitClass = "Main";
         public string UnitClass => unitClass;
         
@@ -94,8 +94,5 @@ namespace FullMoon.ScriptableObject
         
         [SerializeField, OverrideLabel("상태 전이 반경")] private float stateTransitionRadius = 10f;
         public float StateTransitionRadius => stateTransitionRadius;
-    
-        [SerializeField, OverrideLabel("전장의 안개 반경")] private int fogOfWarRadius = 10;
-        public int FogOfWarRadius => fogOfWarRadius;
     }
 }

@@ -8,6 +8,5 @@ namespace FullMoon.ScriptableObject
     public class CommonUnitData : BaseUnitData
     {
         // [Separator("Common Unit Settings")] 
-        //
     }
 }
