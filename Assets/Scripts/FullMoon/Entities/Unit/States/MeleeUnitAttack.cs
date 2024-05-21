@@ -11,8 +11,6 @@ namespace FullMoon.Entities.Unit.States
         private readonly MeleeUnitController controller;
         private BaseUnitController target;
         private float attackDelay;
-        
-        private static readonly int IdleHash = Animator.StringToHash("Idle");
 
         public MeleeUnitAttack(MeleeUnitController controller)
         {
@@ -29,7 +27,7 @@ namespace FullMoon.Entities.Unit.States
                     .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
                     .FirstOrDefault();
             
-            controller.SetAnimation(IdleHash);
+            controller.SetAnimation(BaseUnitController.IdleHash);
         }
 
         [BurstCompile]

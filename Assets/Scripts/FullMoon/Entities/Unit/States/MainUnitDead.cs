@@ -8,8 +8,6 @@ namespace FullMoon.Entities.Unit.States
     public class MainUnitDead : IState
     {
         private readonly MainUnitController controller;
-        private static readonly int DeadHash = Animator.StringToHash("Dead");
-
         public MainUnitDead(MainUnitController controller)
         {
             this.controller = controller;
@@ -17,7 +15,7 @@ namespace FullMoon.Entities.Unit.States
 
         public void Enter()
         {
-            DisableAfterAnimation(DeadHash).Forget();
+            DisableAfterAnimation(BaseUnitController.DeadHash).Forget();
         }
 
         public void Execute() { }

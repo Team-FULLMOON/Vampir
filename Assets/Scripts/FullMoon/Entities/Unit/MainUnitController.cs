@@ -29,9 +29,6 @@ namespace FullMoon.Entities.Unit
 
         public float CurrentAttackCoolTime { get; set; }
         
-        private static readonly int AttackHash = Animator.StringToHash("Attack");
-        private static readonly int AttackHash2 = Animator.StringToHash("Attack 2");
-        
         protected override void OnEnable()
         {
             base.OnEnable();
