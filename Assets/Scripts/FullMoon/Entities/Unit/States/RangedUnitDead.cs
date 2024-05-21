@@ -27,6 +27,7 @@ namespace FullMoon.Entities.Unit.States
 
         private async UniTask DisableAfterAnimation(int animationHash)
         {
+            controller.Agent.enabled = false;
             if (controller.SetAnimation(animationHash))
             {
                 await UniTask.WaitUntil(() => 
@@ -36,7 +37,6 @@ namespace FullMoon.Entities.Unit.States
                 });
                 await UniTask.Delay(500);
             }
-            controller.Agent.enabled = false;
             ObjectPoolManager.Instance.ReturnObjectToPool(controller.gameObject);
         }
     }
