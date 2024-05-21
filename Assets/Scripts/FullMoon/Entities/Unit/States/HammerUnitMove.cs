@@ -22,7 +22,7 @@ namespace FullMoon.Entities.Unit.States
         {
             controller.Agent.isStopped = false;
             controller.Agent.speed = controller.OverridenUnitData.MovementSpeed;
-            controller.SetAnimation(BaseUnitController.MoveHash);
+            controller.AnimationController.SetAnimation("Move", 0.1f);
         }
         
         [BurstCompile]

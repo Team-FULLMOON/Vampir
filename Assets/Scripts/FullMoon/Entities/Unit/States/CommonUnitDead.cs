@@ -16,7 +16,7 @@ namespace FullMoon.Entities.Unit.States
 
         public void Enter()
         {
-            DisableAfterAnimation(BaseUnitController.DeadHash).Forget();
+            DisableAfterAnimation("Dead").Forget();
         }
 
         public void Execute() { }
@@ -25,11 +25,12 @@ namespace FullMoon.Entities.Unit.States
 
         public void Exit() { }
 
-        private async UniTask DisableAfterAnimation(int animationHash)
+        private async UniTask DisableAfterAnimation(string animationName)
         {
             controller.Agent.enabled = false;
-            if (controller.SetAnimation(animationHash))
+            if (controller.AnimationController.SetAnimation(animationName))
             {
+                int animationHash = Animator.StringToHash(animationName);
                 await UniTask.WaitUntil(() => 
                 {
                     var stateInfo = controller.unitAnimator.GetCurrentAnimatorStateInfo(0);
