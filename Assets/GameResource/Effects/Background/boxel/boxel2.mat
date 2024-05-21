@@ -21,7 +21,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: boxel2
-  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 103f52ef7192c304da9a2b4c22522ec1,
+    type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -30,15 +31,18 @@ Material:
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap:
-    RenderType: Opaque
+  stringTagMap: {}
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 4be4b74b74a346c47b19b8d7cc025cb0, type: 3}
+        m_Texture: {fileID: 2800000, guid: 52ab673c08b1ecb42a17b82c9f78056d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Basemap:
+        m_Texture: {fileID: 2800000, guid: 890829d2eb9239f4da559381792cc492, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -62,7 +66,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 4be4b74b74a346c47b19b8d7cc025cb0, type: 3}
+        m_Texture: {fileID: 2800000, guid: 52ab673c08b1ecb42a17b82c9f78056d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -116,6 +120,7 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Smoothness: 0.14142135
@@ -127,9 +132,13 @@ Material:
     - _UVSec: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
+    - _color: 1
+    - _meatlic: 0
+    - _smoothness: 0
     m_Colors:
-    - _BaseColor: {r: 0.31764707, g: 0.34834367, b: 0.5294118, a: 1}
-    - _Color: {r: 0.31764704, g: 0.34834364, b: 0.5294118, a: 1}
+    - _BaseColor: {r: 0.3532396, g: 0.47342983, b: 0.9245283, a: 1}
+    - _Color: {r: 0.4185208, g: 0.5199513, b: 0.8962264, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _HDRcolor: {r: 1, g: 1, b: 1, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
