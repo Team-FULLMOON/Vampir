@@ -84,7 +84,7 @@ namespace FullMoon.Entities.Unit
 
                 AlignToTarget(targetDirection);
 
-                SetAnimation(AttackHash);
+                AnimationController.SetAnimation("Attack");
 
                 PlayAttackEffects(targetDirection, hitPosition);
 

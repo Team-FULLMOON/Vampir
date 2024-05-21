@@ -15,7 +15,7 @@ TagManager:
   - Water
   - UI
   - 
-  - 
+  - UnitNonSelectable
   - Unit
   - SelectPlayer
   - SelectEnemy

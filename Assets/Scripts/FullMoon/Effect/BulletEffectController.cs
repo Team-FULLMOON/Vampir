@@ -17,6 +17,7 @@ namespace FullMoon.Effect
         private Vector3 lastPosition;
         private int groundLayer;
         private int unitLayer;
+        private int unitNonSelectableLayer;
         private bool isFired;
 
         private void OnEnable()
@@ -24,6 +25,7 @@ namespace FullMoon.Effect
             isFired = false;
             groundLayer = LayerMask.NameToLayer("Ground");
             unitLayer = LayerMask.NameToLayer("Unit");
+            unitNonSelectableLayer = LayerMask.NameToLayer("UnitNonSelectable");
             lastPosition = transform.position;
             CancelInvoke(nameof(DestroyEffect));
             Invoke(nameof(DestroyEffect), 3f);
@@ -94,7 +96,7 @@ namespace FullMoon.Effect
                 return;
             }
 
-            if (otherLayer == unitLayer && target != null && target.gameObject == hit.transform.gameObject)
+            if ((otherLayer == unitLayer || otherLayer == unitNonSelectableLayer) && target != null && target.gameObject == hit.transform.gameObject)
             {
                 var unitController = hit.collider.GetComponent<BaseUnitController>();
                 if (unitController != null && !unitController.UnitType.Equals(shooter.UnitType))

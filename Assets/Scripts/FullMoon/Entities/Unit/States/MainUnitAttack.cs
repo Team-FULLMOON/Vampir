@@ -27,7 +27,7 @@ namespace FullMoon.Entities.Unit.States
                     .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
                     .FirstOrDefault();
             
-            controller.SetAnimation(BaseUnitController.IdleHash2);
+            controller.AnimationController.SetAnimation("Idle 2");
         }
 
         [BurstCompile]

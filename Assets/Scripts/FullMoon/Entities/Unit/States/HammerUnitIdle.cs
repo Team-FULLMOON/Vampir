@@ -17,7 +17,7 @@ namespace FullMoon.Entities.Unit.States
 
         public void Enter()
         {
-            controller.SetAnimation(BaseUnitController.IdleHash);
+            controller.AnimationController.SetAnimation("Idle");
         }
 
         public void Execute() { }

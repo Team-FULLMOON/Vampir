@@ -29,14 +29,15 @@ namespace FullMoon.Entities.Unit.States
         
         private async UniTask Shock(CancellationToken token)
         {
-            if (controller.SetAnimation(BaseUnitController.ShockHash, 0f))
+            if (controller.AnimationController.SetAnimation("Shock", 0f))
             {
+                int shockHash = Animator.StringToHash("Shock");
                 try
                 {
                     await UniTask.WaitUntil(() => 
                     {
                         var stateInfo = controller.unitAnimator.GetCurrentAnimatorStateInfo(0);
-                        return stateInfo.shortNameHash == BaseUnitController.ShockHash && stateInfo.normalizedTime >= 1f;
+                        return stateInfo.shortNameHash == shockHash && stateInfo.normalizedTime >= 1f;
                     }, cancellationToken: token);
                 }
                 catch
@@ -52,7 +53,7 @@ namespace FullMoon.Entities.Unit.States
         [BurstCompile]
         public void Execute()
         {
-            if (controller.Agent.isStopped)
+            if (!controller.Agent.enabled || controller.Agent.isStopped)
             {
                 return;
             }

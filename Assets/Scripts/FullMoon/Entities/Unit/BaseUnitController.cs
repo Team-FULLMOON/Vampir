@@ -30,6 +30,7 @@ namespace FullMoon.Entities.Unit
         public SphereCollider viewRange;
         
         public readonly FSM.StateMachine StateMachine = new();
+        public readonly Animation.AnimationController AnimationController = new();
         
         public Rigidbody Rb { get; private set; }
         public NavMeshAgent Agent { get; set; }
@@ -42,15 +43,6 @@ namespace FullMoon.Entities.Unit
         public string UnitClass { get; private set; }
         
         public HashSet<BaseUnitController> UnitInsideViewArea { get; private set; }
-        
-        public static readonly int IdleHash = Animator.StringToHash("Idle");
-        public static readonly int IdleHash2 = Animator.StringToHash("Idle 2");
-        public static readonly int AttackHash = Animator.StringToHash("Attack");
-        public static readonly int AttackHash2 = Animator.StringToHash("Attack 2");
-        public static readonly int HitHash = Animator.StringToHash("Hit");
-        public static readonly int ShockHash = Animator.StringToHash("Shock");
-        public static readonly int MoveHash = Animator.StringToHash("Move");
-        public static readonly int DeadHash = Animator.StringToHash("Dead");
 
         protected virtual void OnEnable()
         {
@@ -59,6 +51,8 @@ namespace FullMoon.Entities.Unit
             Agent = GetComponent<NavMeshAgent>();
             Agent.enabled = true;
             UnitInsideViewArea = new HashSet<BaseUnitController>();
+            AnimationController.SetAnimator(unitAnimator);
+            
             LatestDestination = transform.position;
             Hp = unitData.MaxHp;
             UnitType = unitData.UnitType;
@@ -87,44 +81,6 @@ namespace FullMoon.Entities.Unit
         {
             StateMachine.FixedExecuteCurrentState();
         }
-        
-        public bool SetAnimation(int stateID, float transitionDuration = 0.3f)
-        {
-            if (unitAnimator is null)
-            {
-                return false;
-            }
-
-            if (unitAnimator.HasState(0, stateID) == false)
-            {
-                Debug.LogWarning($"{stateID} 애니메이션이 존재하지 않습니다.");
-                return false;
-            }
-
-            AnimatorStateInfo currentStateInfo = unitAnimator.GetCurrentAnimatorStateInfo(0);
-            bool isInTransition = unitAnimator.IsInTransition(0);
-
-            if (isInTransition)
-            {
-                AnimatorStateInfo nextStateInfo = unitAnimator.GetNextAnimatorStateInfo(0);
-                if (nextStateInfo.shortNameHash == stateID && nextStateInfo.loop)
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                if (currentStateInfo.shortNameHash == stateID && currentStateInfo.loop)
-                {
-                    return true;
-                }
-            }
-
-            unitAnimator.Play(stateID, 0, 0);
-            unitAnimator.CrossFade(stateID, transitionDuration);
-
-            return true;
-        }
 
         public virtual void ReceiveDamage(int amount, BaseUnitController attacker)
         {
@@ -138,19 +94,16 @@ namespace FullMoon.Entities.Unit
             if (unitAnimator != null)
             {
                 AnimatorStateInfo stateInfo = unitAnimator.GetCurrentAnimatorStateInfo(0);
-
-                if ((!stateInfo.shortNameHash.Equals(AttackHash) && !stateInfo.shortNameHash.Equals(HitHash)) || stateInfo.normalizedTime >= 0.9f)
+                if (stateInfo.loop || stateInfo.normalizedTime >= 0.9f)
                 {
-                    SetAnimation(Animator.StringToHash("Hit"));
+                    AnimationController.PlayAnimationAndContinueLoop("Hit").Forget();
                 }
             }
 
-            if (Hp > 0)
+            if (Hp <= 0)
             {
-                return;
+                Die();
             }
-            
-            Die();
         }
 
         public virtual void Die()

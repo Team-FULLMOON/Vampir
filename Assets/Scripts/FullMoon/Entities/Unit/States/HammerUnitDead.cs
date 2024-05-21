@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using FullMoon.FSM;
 using FullMoon.Util;
+using UnityEngine;
 
 namespace FullMoon.Entities.Unit.States
 {
@@ -15,7 +16,7 @@ namespace FullMoon.Entities.Unit.States
 
         public void Enter()
         {
-            DisableAfterAnimation(BaseUnitController.DeadHash).Forget();
+            DisableAfterAnimation("Dead").Forget();
         }
 
         public void Execute() { }
@@ -24,10 +25,12 @@ namespace FullMoon.Entities.Unit.States
 
         public void Exit() { }
 
-        private async UniTask DisableAfterAnimation(int animationHash)
+        private async UniTask DisableAfterAnimation(string animationName)
         {
-            if (controller.SetAnimation(animationHash))
+            controller.Agent.enabled = false;
+            if (controller.AnimationController.SetAnimation(animationName))
             {
+                int animationHash = Animator.StringToHash(animationName);
                 await UniTask.WaitUntil(() => 
                 {
                     var stateInfo = controller.unitAnimator.GetCurrentAnimatorStateInfo(0);
@@ -35,7 +38,6 @@ namespace FullMoon.Entities.Unit.States
                 });
                 await UniTask.Delay(500);
             }
-            controller.Agent.enabled = false;
             ObjectPoolManager.Instance.ReturnObjectToPool(controller.gameObject);
         }
     }
