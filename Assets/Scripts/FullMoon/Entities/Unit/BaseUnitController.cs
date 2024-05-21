@@ -57,6 +57,7 @@ namespace FullMoon.Entities.Unit
             Alive = true;
             Rb = GetComponent<Rigidbody>();
             Agent = GetComponent<NavMeshAgent>();
+            Agent.enabled = true;
             UnitInsideViewArea = new HashSet<BaseUnitController>();
             LatestDestination = transform.position;
             Hp = unitData.MaxHp;
