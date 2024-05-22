@@ -726,7 +726,7 @@ Transform:
   m_GameObject: {fileID: 3817388134677654357}
   serializedVersion: 2
   m_LocalRotation: {x: 0.3538488, y: 0.6395255, z: -0.4217006, w: 0.5366255}
-  m_LocalPosition: {x: -0.0000371933, y: 0, z: 0.0000104904175}
+  m_LocalPosition: {x: -0.00006771088, y: 0, z: 0.00002002716}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1114,6 +1114,7 @@ Transform:
   - {fileID: 946502404706778275}
   - {fileID: 2409887955505413319}
   - {fileID: 1939600234368564265}
+  - {fileID: 3096621891399046626}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7154164497100328708
@@ -1438,6 +1439,51 @@ MonoBehaviour:
   m_BiasX: 0
   m_BiasY: 0
   m_CenterOnActivate: 1
+--- !u!1 &8627715101869633913
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3096621891399046626}
+  - component: {fileID: 2213712683821644168}
+  m_Layer: 0
+  m_Name: TileController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3096621891399046626
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8627715101869633913}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 261678224792970686}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2213712683821644168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8627715101869633913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a03447cd32c78294391df3af6fb77e4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tile: {fileID: 1029500191801352571, guid: 3ab6c90f9c5c08045ac7917c343ea2bd, type: 3}
 --- !u!1 &8711201054282977222
 GameObject:
   m_ObjectHideFlags: 0

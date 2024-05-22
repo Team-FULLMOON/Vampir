@@ -9,10 +9,10 @@ namespace FullMoon.UI
     public class TileController : ComponentSingleton<TileController>
     {
         [Header("TileMap")]
-        [SerializeField] Tilemap tileMap;
         [SerializeField] GameObject tile;
-        [SerializeField] NavMeshSurface nav;
-        [SerializeField] NavMeshSurface nav2;
+        Tilemap tileMap;
+        private NavMeshSurface nav;
+        private NavMeshSurface nav2;
 
         Rect castleRect;
         private Vector2 castleMiddlePos;
@@ -24,16 +24,20 @@ namespace FullMoon.UI
             castleMiddlePos = new Vector2(-1f, -6f);
             castleSize = new Vector2(8f, 8f);
             castleRect = new Rect(castleMiddlePos, castleSize * 2);
+
+            tileMap = FindObjectOfType<Tilemap>();
+            nav = GameObject.Find("NavMesh@Heojup").GetComponent<NavMeshSurface>();
+            nav2 = GameObject.Find("NavMesh@Enemy").GetComponent<NavMeshSurface>();
         }
 
         public void CreateTile(Vector3 pos)
         {
-            Vector3Int vector = new Vector3Int((int)pos.x, (int)pos.z, 5);
+            Vector3Int vector = new Vector3Int((int)pos.x, (int)pos.z, (int)pos.y);
             tileMap.SetTile(vector, new Tile()
             {
                 gameObject = tile
             });
-            Debug.Log("CreateTile");
+
             nav.BuildNavMesh();
             nav2.BuildNavMesh();
         }
