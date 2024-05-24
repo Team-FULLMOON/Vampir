@@ -30,7 +30,7 @@ namespace FullMoon.Entities.Unit.States
         {
             if (!controller.Agent.pathPending && controller.Agent.remainingDistance <= controller.Agent.stoppingDistance)
             {
-                controller.StateMachine.ChangeState(new HammerUnitIdle(controller));
+                controller.StateMachine.ChangeState(new HammerUnitCraft(controller));
                 return;
             }
             
