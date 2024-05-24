@@ -49,7 +49,7 @@ PlayerSettings:
   m_StereoRenderingPath: 0
   m_ActiveColorSpace: 1
   unsupportedMSAAFallback: 0
-  m_SpriteBatchVertexThreshold: 300
+  m_SpriteBatchVertexThreshold: 8000
   m_MTRendering: 1
   mipStripping: 0
   numberOfMipsStripped: 0
@@ -517,7 +517,9 @@ PlayerSettings:
     m_StaticBatching: 1
     m_DynamicBatching: 1
   m_BuildTargetShaderSettings: []
-  m_BuildTargetGraphicsJobs: []
+  m_BuildTargetGraphicsJobs:
+  - m_BuildTarget: WindowsStandaloneSupport
+    m_GraphicsJobs: 1
   m_BuildTargetGraphicsJobMode: []
   m_BuildTargetGraphicsAPIs:
   - m_BuildTarget: iOSSupport
@@ -526,6 +528,12 @@ PlayerSettings:
   - m_BuildTarget: AndroidPlayer
     m_APIs: 150000000b000000
     m_Automatic: 0
+  - m_BuildTarget: WindowsStandaloneSupport
+    m_APIs: 02000000
+    m_Automatic: 1
+  - m_BuildTarget: MacStandaloneSupport
+    m_APIs: 10000000
+    m_Automatic: 1
   m_BuildTargetVRSettings: []
   m_DefaultShaderChunkSizeInMB: 16
   m_DefaultShaderChunkCount: 0

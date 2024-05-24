@@ -1,7 +1,9 @@
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 using FullMoon.FSM;
 using Unity.Burst;
+using System.IO;
 
 namespace FullMoon.Entities.Unit.States
 {
