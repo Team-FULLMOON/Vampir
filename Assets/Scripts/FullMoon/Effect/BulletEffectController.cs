@@ -99,12 +99,12 @@ namespace FullMoon.Effect
             if ((otherLayer == unitLayer || otherLayer == unitNonSelectableLayer) && target != null && target.gameObject == hit.transform.gameObject)
             {
                 var unitController = hit.collider.GetComponent<BaseUnitController>();
-                if (unitController != null && !unitController.UnitType.Equals(shooter.UnitType))
+                if (unitController != null)
                 {
                     unitController.ReceiveDamage(damage, shooter);
                     ObjectPoolManager.Instance.SpawnObject(hitEffect, hit.point, Quaternion.identity);
-                    ObjectPoolManager.Instance.ReturnObjectToPool(gameObject);
                 }
+                ObjectPoolManager.Instance.ReturnObjectToPool(gameObject);
             }
         }
         
