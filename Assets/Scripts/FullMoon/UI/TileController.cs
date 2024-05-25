@@ -31,7 +31,7 @@ namespace FullMoon.UI
 
         public void CreateTile(Vector3 pos)
         {
-            Vector3Int vector = new Vector3Int((int)pos.x, (int)pos.z, (int)pos.y);
+            Vector3Int vector = new Vector3Int(Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.z), (int)pos.y);
             tileMap.SetTile(vector, new Tile()
             {
                 gameObject = tile
