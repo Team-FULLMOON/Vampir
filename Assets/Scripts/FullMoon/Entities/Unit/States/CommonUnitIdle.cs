@@ -23,7 +23,9 @@ namespace FullMoon.Entities.Unit.States
         [BurstCompile]
         public void Execute()
         {
-            if (controller.MainUnit == null)
+            if (controller.MainUnit == null || 
+                controller.gameObject.activeInHierarchy == false || controller.MainUnit.gameObject.activeInHierarchy == false || 
+                controller.Alive == false || controller.MainUnit.Alive == false)
             {
                 return;
             }

@@ -17,7 +17,7 @@ MonoBehaviour:
   unitType: Enemy
   unitClass: Sword
   maxHp: 100
-  movementSpeed: 5
+  movementSpeed: 2
   missRate: 0
   manaDrop: 7
   manaCost: 10
@@ -33,7 +33,6 @@ MonoBehaviour:
   attackRadius: 1.5
   viewRadius: 8
   stateTransitionRadius: 8
-  fogOfWarRadius: 10
   hitAnimationFrame: 12
   spearPushFrame: 2
   spearPushForce: 10

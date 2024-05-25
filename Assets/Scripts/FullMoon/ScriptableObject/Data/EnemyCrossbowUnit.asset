@@ -17,7 +17,7 @@ MonoBehaviour:
   unitType: Enemy
   unitClass: Crossbow
   maxHp: 45
-  movementSpeed: 3
+  movementSpeed: 2
   missRate: 0
   manaDrop: 7
   manaCost: 10
@@ -33,6 +33,5 @@ MonoBehaviour:
   attackRadius: 6.5
   viewRadius: 8
   stateTransitionRadius: 8
-  fogOfWarRadius: 10
   bulletSpeed: 55
   hitAnimationFrame: 12
