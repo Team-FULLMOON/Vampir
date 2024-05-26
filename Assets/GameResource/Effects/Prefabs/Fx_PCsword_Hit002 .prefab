@@ -10,8 +10,18 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 97626746781887389, guid: 6a67b207302e9fc4da716a40f932a749,
         type: 3}
+      propertyPath: randomSeed
+      value: 1066
+      objectReference: {fileID: 0}
+    - target: {fileID: 97626746781887389, guid: 6a67b207302e9fc4da716a40f932a749,
+        type: 3}
+      propertyPath: autoRandomSeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 97626746781887389, guid: 6a67b207302e9fc4da716a40f932a749,
+        type: 3}
       propertyPath: InitialModule.startRotation.scalar
-      value: -1.6057029
+      value: -1.2217305
       objectReference: {fileID: 0}
     - target: {fileID: 97626746781887389, guid: 6a67b207302e9fc4da716a40f932a749,
         type: 3}
@@ -21,7 +31,17 @@ PrefabInstance:
     - target: {fileID: 97626746781887389, guid: 6a67b207302e9fc4da716a40f932a749,
         type: 3}
       propertyPath: InitialModule.startRotationY.scalar
-      value: -3.3265977
+      value: -3.4906585
+      objectReference: {fileID: 0}
+    - target: {fileID: 2684651157658364334, guid: 6a67b207302e9fc4da716a40f932a749,
+        type: 3}
+      propertyPath: randomSeed
+      value: 1066
+      objectReference: {fileID: 0}
+    - target: {fileID: 2684651157658364334, guid: 6a67b207302e9fc4da716a40f932a749,
+        type: 3}
+      propertyPath: autoRandomSeed
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2684651157658364334, guid: 6a67b207302e9fc4da716a40f932a749,
         type: 3}
@@ -36,7 +56,7 @@ PrefabInstance:
     - target: {fileID: 7093297468483798327, guid: 6a67b207302e9fc4da716a40f932a749,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.05
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7093297468483798327, guid: 6a67b207302e9fc4da716a40f932a749,
         type: 3}

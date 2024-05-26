@@ -16,7 +16,7 @@ PrefabInstance:
     - target: {fileID: 1756831263561545215, guid: 743ccd8790f47e64994beac9e33ecc26,
         type: 3}
       propertyPath: ShapeModule.m_Position.y
-      value: 0.7
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 1756831263561545215, guid: 743ccd8790f47e64994beac9e33ecc26,
         type: 3}
@@ -26,7 +26,7 @@ PrefabInstance:
     - target: {fileID: 1756831263561545215, guid: 743ccd8790f47e64994beac9e33ecc26,
         type: 3}
       propertyPath: InitialModule.startRotationX.scalar
-      value: -1.5707963
+      value: -1.2217305
       objectReference: {fileID: 0}
     - target: {fileID: 1756831263561545215, guid: 743ccd8790f47e64994beac9e33ecc26,
         type: 3}
@@ -86,7 +86,7 @@ PrefabInstance:
     - target: {fileID: 7954398243609802034, guid: 743ccd8790f47e64994beac9e33ecc26,
         type: 3}
       propertyPath: m_Name
-      value: FX_PCsword_attack002 Variant
+      value: FX_PCsword_attack002
       objectReference: {fileID: 0}
     - target: {fileID: 7954398243609802034, guid: 743ccd8790f47e64994beac9e33ecc26,
         type: 3}
@@ -96,12 +96,17 @@ PrefabInstance:
     - target: {fileID: 8826912700423238855, guid: 743ccd8790f47e64994beac9e33ecc26,
         type: 3}
       propertyPath: startDelay.scalar
-      value: 0.11
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8826912700423238855, guid: 743ccd8790f47e64994beac9e33ecc26,
         type: 3}
       propertyPath: ShapeModule.m_Position.y
-      value: 0.7
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8826912700423238855, guid: 743ccd8790f47e64994beac9e33ecc26,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 2.1
       objectReference: {fileID: 0}
     - target: {fileID: 8826912700423238855, guid: 743ccd8790f47e64994beac9e33ecc26,
         type: 3}
@@ -111,7 +116,7 @@ PrefabInstance:
     - target: {fileID: 8826912700423238855, guid: 743ccd8790f47e64994beac9e33ecc26,
         type: 3}
       propertyPath: InitialModule.startRotationX.scalar
-      value: -1.5707963
+      value: -1.2217305
       objectReference: {fileID: 0}
     - target: {fileID: 8826912700423238855, guid: 743ccd8790f47e64994beac9e33ecc26,
         type: 3}
