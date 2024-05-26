@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using FullMoon.Util;
-using Unity.AI.Navigation;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.Tilemaps;
 
 namespace FullMoon.UI
@@ -12,20 +8,10 @@ namespace FullMoon.UI
     {
         [Header("TileMap")]
         [SerializeField] GameObject tile;
-        Tilemap tileMap;
-        private NavMeshSurface nav;
-
-        Rect castleRect;
-        private Vector2 castleMiddlePos;
-        private Vector2 castleSize;
-        private float rectLength = 4;
+        [SerializeField] private Tilemap tileMap;
 
         void Start()
         {
-            castleMiddlePos = new Vector2(-1f, -6f);
-            castleSize = new Vector2(8f, 8f);
-            castleRect = new Rect(castleMiddlePos, castleSize * 2);
-
             tileMap = FindObjectOfType<Tilemap>();
         }
 
