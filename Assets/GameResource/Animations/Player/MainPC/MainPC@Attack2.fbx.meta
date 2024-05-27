@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1a9eedca9e5b5bf4697f3a01a903e21e
+guid: 9e3bad5d1cf272f419f464b22e8adc6c
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,18 +33,18 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Walk_001
-      takeName: EnemySword@Walk_001
-      internalID: 8544680141650330269
+      name: Attack2
+      takeName: Rig_PC_001
+      internalID: 4287110752412318125
       firstFrame: 0
-      lastFrame: 40
+      lastFrame: 30
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0

@@ -33,7 +33,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Run_001
+      name: Run
       takeName: HeojupCommon@Run_002
       internalID: 167295835487900179
       firstFrame: 0

@@ -33,7 +33,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: FightIdle_001
+      name: FightIdle
       takeName: Rig_PC_001
       internalID: 4287110752412318125
       firstFrame: 0

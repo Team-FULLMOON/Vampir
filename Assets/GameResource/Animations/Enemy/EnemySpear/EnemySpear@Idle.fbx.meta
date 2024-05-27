@@ -33,7 +33,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Idle_001
+      name: Idle
       takeName: EnemySpear@Idle_001
       internalID: -5708137013018927405
       firstFrame: 0
