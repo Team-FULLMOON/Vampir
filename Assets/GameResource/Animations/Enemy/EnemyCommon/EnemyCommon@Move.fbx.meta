@@ -33,7 +33,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Walk_001
+      name: Move
       takeName: EnemyCommon@Walk_001
       internalID: 3005826945810791031
       firstFrame: 0

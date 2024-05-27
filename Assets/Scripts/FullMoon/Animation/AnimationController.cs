@@ -1,7 +1,5 @@
-using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using UnityEditor.Animations;
 using UnityEngine;
 
 namespace FullMoon.Animation
@@ -58,20 +56,14 @@ namespace FullMoon.Animation
         {
             latestStateInfo = ("", false);
             
-            AnimatorController controller = unitAnimator.runtimeAnimatorController as AnimatorController;
+            AnimatorClipInfo[] clipInfos = unitAnimator.GetCurrentAnimatorClipInfo(0);
 
-            if (controller != null && controller.layers.Length > 0)
+            foreach (AnimatorClipInfo clipInfo in clipInfos)
             {
-                AnimatorControllerLayer layer = controller.layers[0];
-
-                var state = layer.stateMachine.states.FirstOrDefault(s => s.state.name == stateName);
-                if (state.state != null)
+                if (clipInfo.clip.name == stateName)
                 {
-                    AnimationClip clip = state.state.motion as AnimationClip;
-                    if (clip != null)
-                    {
-                        latestStateInfo = (stateName, clip.isLooping);
-                    }
+                    latestStateInfo = (stateName, clipInfo.clip.isLooping);
+                    break;
                 }
             }
             

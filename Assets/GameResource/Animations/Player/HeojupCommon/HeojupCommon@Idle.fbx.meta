@@ -33,7 +33,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Idle_001
+      name: Idle
       takeName: HeojupCommon@Idle_001
       internalID: -1397802378097579806
       firstFrame: 0

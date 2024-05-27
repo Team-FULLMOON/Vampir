@@ -33,7 +33,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Attack_001
+      name: Attack
       takeName: HeojupSword@Attack_001
       internalID: -5555754249884843412
       firstFrame: 0

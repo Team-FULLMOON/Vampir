@@ -33,7 +33,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Move_001
+      name: Move
       takeName: PC@Move_006
       internalID: 752242242910969156
       firstFrame: 0
