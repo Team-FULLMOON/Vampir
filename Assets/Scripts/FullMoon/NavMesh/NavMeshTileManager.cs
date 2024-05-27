@@ -2,9 +2,7 @@ using MyBox;
 using UnityEngine;
 using Unity.AI.Navigation;
 using UnityEngine.AI;
-#if UNITY_EDITOR
 using UnityEditor;
-#endif
 
 namespace FullMoon.NavMesh
 {

@@ -85,7 +85,7 @@ namespace FullMoon.Entities.Unit
 
                 AlignToTarget(targetDirection);
 
-                AnimationController.SetAnimation(Random.Range(0, 2) == 0 ? "Attack" : "Attack 2");
+                AnimationController.SetAnimation(Random.Range(0, 2) == 0 ? "Attack" : "Attack2");
 
                 PlayAttackEffects(targetDirection, hitPosition);
 
@@ -113,16 +113,6 @@ namespace FullMoon.Entities.Unit
         public override void MoveToPosition(Vector3 location)
         {
             base.MoveToPosition(location);
-            
-            // var matchingUnits = FindObjectsOfType<BaseUnitController>()
-            //     .Where(unit => unit.unitData.UnitType == "Player" && unit.unitData.UnitClass == "Common" && 
-            //                    unit.gameObject.activeInHierarchy && unit.Alive);
-            //
-            // foreach (var unit in matchingUnits)
-            // {
-            //     unit.MoveToPosition(location);
-            // }
-            
             StateMachine.ChangeState(new MainUnitMove(this));
         }
 
