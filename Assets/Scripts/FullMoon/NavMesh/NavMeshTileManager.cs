@@ -19,15 +19,19 @@ namespace FullMoon.NavMesh
 
         private string _currentTileType;
         private NavMeshData _originalNavMeshData;
-        
+
         [ButtonMethod]
         public void ChangeTileType()
         {
             tileType = tileType == "Ground" ? "Water" : "Ground";
             UpdateTileActivation();
+#if UNITY_EDITOR
             BuildAllNavMeshSurfacesInEditor();
+#else
+            BuildAllNavMeshSurfaces();
+#endif
         }
-
+        
         private void Start()
         {
             _currentTileType = tileType;
