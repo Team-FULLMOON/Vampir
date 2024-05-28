@@ -32,6 +32,5 @@ MonoBehaviour:
   attackRadius: 6.5
   viewRadius: 8
   stateTransitionRadius: 8
-  fogOfWarRadius: 10
   bulletSpeed: 55
-  hitAnimationFrame: 12
+  hitAnimationFrame: 2
