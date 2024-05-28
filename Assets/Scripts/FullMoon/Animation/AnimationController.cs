@@ -28,7 +28,7 @@ namespace FullMoon.Animation
 
             if (!unitAnimator.HasState(0, stateHash))
             {
-                Debug.LogWarning($"{stateHash} 애니메이션이 존재하지 않습니다.");
+                Debug.LogWarning($"{stateName} 애니메이션이 존재하지 않습니다.");
                 return false;
             }
 
@@ -56,16 +56,15 @@ namespace FullMoon.Animation
         {
             latestStateInfo = ("", false);
             
-            AnimatorClipInfo[] clipInfos = unitAnimator.GetCurrentAnimatorClipInfo(0);
-
-            foreach (AnimatorClipInfo clipInfo in clipInfos)
+            AnimationClip[] clips = unitAnimator.runtimeAnimatorController.animationClips;
+            foreach (AnimationClip clip in clips)
             {
-                if (clipInfo.clip.name == stateName)
+                if (clip.name == stateName)
                 {
-                    latestStateInfo = (stateName, clipInfo.clip.isLooping);
+                    latestStateInfo = (clip.name, clip.isLooping);
                     break;
                 }
-            }
+            }   
             
             unitAnimator.Play(stateHash, 0, 0);
             unitAnimator.CrossFade(stateHash, transitionDuration);
@@ -84,7 +83,7 @@ namespace FullMoon.Animation
 
             if (!unitAnimator.HasState(0, stateHash))
             {
-                Debug.LogWarning($"{stateHash} 애니메이션이 존재하지 않습니다.");
+                Debug.LogWarning($"{stateName} 애니메이션이 존재하지 않습니다.");
                 return;
             }
             
@@ -100,7 +99,7 @@ namespace FullMoon.Animation
             {
                 await UniTask.Yield(PlayerLoopTiming.Update, token);
             } while (!token.IsCancellationRequested && latestLooping && unitAnimator.IsInTransition(0));
-
+            
             if (latestLooping && latestStateInfo.Item1 == stateName)
             {
                 PlayAnimation(latestStateName, Animator.StringToHash(latestStateName), transitionDuration);
