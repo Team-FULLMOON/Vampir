@@ -33,6 +33,11 @@ MonoBehaviour:
   attackRadius: 2
   viewRadius: 8
   stateTransitionRadius: 8
+  unitAdvance: Sword
+  unitCounter: Crossbow
+  counterDamage: 100
+  counterKnockback: 0
+  counterGuard: 0
   hitAnimationFrame: 12
   spearPushFrame: 2
   spearPushForce: 10

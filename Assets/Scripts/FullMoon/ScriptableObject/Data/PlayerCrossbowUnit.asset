@@ -32,6 +32,10 @@ MonoBehaviour:
   attackRadius: 6.5
   viewRadius: 8
   stateTransitionRadius: 8
-  fogOfWarRadius: 10
+  unitAdvance: Spear
+  unitCounter: Sword
+  counterDamage: 100
+  counterKnockback: 0
+  counterGuard: 0
   bulletSpeed: 55
   hitAnimationFrame: 12
