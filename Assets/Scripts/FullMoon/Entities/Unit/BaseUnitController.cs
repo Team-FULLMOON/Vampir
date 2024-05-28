@@ -7,6 +7,7 @@ using FullMoon.ScriptableObject;
 using FullMoon.UI;
 using FullMoon.Util;
 using Unity.Burst;
+using Unity.VisualScripting;
 
 namespace FullMoon.Entities.Unit
 {
@@ -88,8 +89,24 @@ namespace FullMoon.Entities.Unit
             {
                 return;
             }
-            
-            Hp = Mathf.Clamp(Hp - amount, 0, System.Int32.MaxValue);
+
+            if (attacker.UnitClass == unitData.UnitCounter)
+            {
+                amount = (int)(amount / (unitData.CounterDamage / 100));
+                Hp = Mathf.Clamp(Hp - amount, 0, System.Int32.MaxValue);
+            }
+            else if (attacker.UnitClass == unitData.UnitAdvance)
+            {
+                int rand = Random.Range(0, 100);
+                if (rand < unitData.CounterGuard)
+                {
+                    return;
+                }
+            }
+            else
+            {
+                Hp = Mathf.Clamp(Hp - amount, 0, System.Int32.MaxValue);
+            }
             
             if (unitAnimator != null)
             {
