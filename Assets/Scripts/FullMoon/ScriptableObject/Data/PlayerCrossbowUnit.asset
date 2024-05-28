@@ -38,4 +38,4 @@ MonoBehaviour:
   counterKnockback: 0
   counterGuard: 0
   bulletSpeed: 55
-  hitAnimationFrame: 12
+  hitAnimationFrame: 2
