@@ -94,5 +94,27 @@ namespace FullMoon.ScriptableObject
         
         [SerializeField, OverrideLabel("상태 전이 반경")] private float stateTransitionRadius = 10f;
         public float StateTransitionRadius => stateTransitionRadius;
+
+        [Separator]
+
+        [SerializeField, OverrideLabel("상성 상 유리한 클래스"), DefinedValues("None", "Sword", "Spear", "Crossbow")]
+        private string unitAdvance = "None";
+        public string UnitAdvance => unitAdvance;
+
+        [SerializeField, OverrideLabel("상성 상 불리한 클래스"), DefinedValues("None", "Sword", "Spear", "Crossbow")]
+        private string unitCounter = "None";
+        public string UnitCounter => unitCounter;
+
+        [SerializeField, OverrideLabel("상성에 따른 입는 데미지(%)")]
+        private float counterDamage = 100;
+        public float CounterDamage => counterDamage;
+
+        [SerializeField, OverrideLabel("상성에 따른 넉백(m)")]
+        private float counterKnockback = 0;
+        public float CounterKnockback => counterKnockback;
+
+        [SerializeField, OverrideLabel("상성에 따른 방어 확률(%)")]
+        private float counterGuard = 0;
+        public float CounterGuard => counterGuard;
     }
 }
