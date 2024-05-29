@@ -20,6 +20,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 97626746781887389, guid: 6a67b207302e9fc4da716a40f932a749,
         type: 3}
+      propertyPath: startDelay.scalar
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 97626746781887389, guid: 6a67b207302e9fc4da716a40f932a749,
+        type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 97626746781887389, guid: 6a67b207302e9fc4da716a40f932a749,
+        type: 3}
       propertyPath: InitialModule.startRotation.scalar
       value: -1.2217305
       objectReference: {fileID: 0}
@@ -47,6 +57,11 @@ PrefabInstance:
         type: 3}
       propertyPath: ShapeModule.m_Rotation.y
       value: -60.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2684651157658364334, guid: 6a67b207302e9fc4da716a40f932a749,
+        type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 4793084386696122969, guid: 6a67b207302e9fc4da716a40f932a749,
         type: 3}
