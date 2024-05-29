@@ -20,6 +20,9 @@ namespace FullMoon.UI
         public TextElement UnitLimitText { get; private set; }
         
         public Button RetryButton { get; private set; }
+        
+        public VisualElement PhaseElement { get; private set; }
+        public TextElement PhaseText { get; private set; }
 
         #region Shortcuts
 
@@ -31,7 +34,6 @@ namespace FullMoon.UI
 
         public ReactiveProperty<bool> canMove;
         public ReactiveProperty<bool> canAttack;
-        public bool isMainUnit = false;
 
         #endregion
         
@@ -92,6 +94,10 @@ namespace FullMoon.UI
             });
 
             OffButton();
+            
+            PhaseElement = root.Q<VisualElement>("Phase");
+            PhaseText = root.Q<TextElement>("PhaseText");
+            PhaseElement.SetVisible(false);
         }
 
         public void MainUnitActiveButton()
@@ -117,7 +123,6 @@ namespace FullMoon.UI
             ShortcutAttackMoveButton.SetEnabled(false);
             ShortcutHoldButton.SetEnabled(false);
             ShortcutCancelButton.SetEnabled(false);
-            isMainUnit = false;
         }
 
         public void AddMana(int value)
