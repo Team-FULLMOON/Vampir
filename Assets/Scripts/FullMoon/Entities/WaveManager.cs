@@ -15,6 +15,7 @@ namespace FullMoon.Entities
     {
         public GameObject enemy;
         public int count = 1;
+        public float spawnInterval;
         [DefinedValues("Random", "Left", "Right", "Up", "Down")] public string location = "Random";
     }
 
@@ -100,13 +101,9 @@ namespace FullMoon.Entities
                     Vector3 spawnPosition = GetSpawnPosition(enemyDetail.location);
                     var unit = ObjectPoolManager.Instance.SpawnObject(enemyDetail.enemy, spawnPosition, Quaternion.identity).GetComponent<BaseUnitController>();
                     enemyWaitList.Add(unit);
-                }
-
-                await UniTask.DelayFrame(enemyDetail.count);
-
-                foreach (var unit in enemyWaitList)
-                {
+                    await UniTask.NextFrame();
                     unit.MoveToPosition(transform.position);
+                    await UniTask.Delay(TimeSpan.FromSeconds(enemyDetail.spawnInterval));
                 }
             }
         }
