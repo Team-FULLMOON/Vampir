@@ -66,19 +66,34 @@ namespace FullMoon.Entities
         private async UniTaskVoid SpawnWaveTextAsync(float displayTime)
         {
             MainUIController.Instance.PhaseElement.SetVisible(true);
-            MainUIController.Instance.PhaseText.text = $"Wave {currentLevel}";
+            MainUIController.Instance.PhaseText.text = "BATTLE PHASE";
+            MainUIController.Instance.PhaseDetailText.text = $"WAVE {currentLevel}";
             await UniTask.Delay(TimeSpan.FromSeconds(displayTime));
             MainUIController.Instance.PhaseElement.SetVisible(false);
         }
 
         private async UniTask DisplayCountdown(float interval)
         {
-            float remainingTime = interval;
             MainUIController.Instance.PhaseElement.SetVisible(true);
+            MainUIController.Instance.PhaseText.text = "REST PHASE";
+            MainUIController.Instance.PhaseDetailText.text = $"다음 전투까지 {interval:F1}초";
+            await UniTask.Delay(TimeSpan.FromSeconds(3f));
+            MainUIController.Instance.PhaseElement.SetVisible(false);
+            
+            float remainingTime = interval;
 
             while (remainingTime > 0)
             {
-                MainUIController.Instance.PhaseText.text = $"다음 전투까지 {remainingTime:F1}초";
+                if (remainingTime > 5f)
+                {
+                    await UniTask.DelayFrame(1);
+                    remainingTime -= Time.deltaTime;
+                    continue;
+                }
+                
+                MainUIController.Instance.PhaseElement.SetVisible(true);
+                MainUIController.Instance.PhaseText.text = "REST PHASE";
+                MainUIController.Instance.PhaseDetailText.text = $"다음 전투까지 {remainingTime:F1}초";
                 await UniTask.DelayFrame(1);
                 remainingTime -= Time.deltaTime;
             }

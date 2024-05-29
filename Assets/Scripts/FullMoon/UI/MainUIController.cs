@@ -23,6 +23,7 @@ namespace FullMoon.UI
         
         public VisualElement PhaseElement { get; private set; }
         public TextElement PhaseText { get; private set; }
+        public TextElement PhaseDetailText { get; private set; }
 
         #region Shortcuts
 
@@ -97,6 +98,7 @@ namespace FullMoon.UI
             
             PhaseElement = root.Q<VisualElement>("Phase");
             PhaseText = root.Q<TextElement>("PhaseText");
+            PhaseDetailText = root.Q<TextElement>("PhaseDetailText");
             PhaseElement.SetVisible(false);
         }
 
