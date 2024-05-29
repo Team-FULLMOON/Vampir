@@ -1,5 +1,5 @@
-using MyBox;
 using System.Collections.Generic;
+using MyBox;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -10,6 +10,7 @@ using FullMoon.Entities.Unit.States;
 using FullMoon.ScriptableObject;
 using FullMoon.Util;
 using Unity.Burst;
+using UnityEngine.Serialization;
 
 namespace FullMoon.Entities.Unit
 {
@@ -20,10 +21,10 @@ namespace FullMoon.Entities.Unit
         public DecalProjector decalProjector;
 
         [Foldout("Main Unit Settings")]
-        public GameObject attackEffect;
+        public List<GameObject> attackEffects;
 
         [Foldout("Main Unit Settings")]
-        public GameObject attackPointEffect;
+        public List<GameObject> attackPointEffects;
 
         public MainUnitData OverridenUnitData { get; private set; }
 
@@ -85,9 +86,11 @@ namespace FullMoon.Entities.Unit
 
                 AlignToTarget(targetDirection);
 
-                AnimationController.SetAnimation(Random.Range(0, 2) == 0 ? "Attack" : "Attack2");
+                int effectType = Random.Range(0, 2);
+                
+                AnimationController.SetAnimation(effectType == 0 ? "Attack" : "Attack2");
 
-                PlayAttackEffects(targetDirection, hitPosition);
+                PlayAttackEffects(effectType, targetDirection, hitPosition);
 
                 await UniTask.DelayFrame(OverridenUnitData.HitAnimationFrame);
 
@@ -165,17 +168,17 @@ namespace FullMoon.Entities.Unit
             return targetDirection;
         }
 
-        private void PlayAttackEffects(Vector3 targetDirection, Vector3 hitPosition)
+        private void PlayAttackEffects(int effectType, Vector3 targetDirection, Vector3 hitPosition)
         {
-            if (attackEffect != null)
+            if (attackEffects != null)
             {
-                GameObject attackFX = ObjectPoolManager.Instance.SpawnObject(attackEffect, unitModel.transform.position, Quaternion.identity);
+                GameObject attackFX = ObjectPoolManager.Instance.SpawnObject(attackEffects[effectType], unitModel.transform.position, Quaternion.identity);
                 attackFX.transform.forward = targetDirection.normalized;
             }
 
-            if (attackPointEffect != null)
+            if (attackPointEffects != null)
             {
-                GameObject attackPointFX = ObjectPoolManager.Instance.SpawnObject(attackPointEffect, hitPosition, Quaternion.identity);
+                GameObject attackPointFX = ObjectPoolManager.Instance.SpawnObject(attackPointEffects[effectType], hitPosition, Quaternion.identity);
                 attackPointFX.transform.forward = targetDirection.normalized;
             }
         }
