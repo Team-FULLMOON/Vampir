@@ -5,11 +5,13 @@ using System.Linq;
 using System.Collections.Generic;
 using DG.Tweening;
 using FullMoon.Util;
+using UnityEngine.Rendering.Universal;
 
 namespace FullMoon.Entities.Unit
 {
     public class UnitFlagController : MonoBehaviour
     {
+        [SerializeField] private float viewRangeRadius;
         [SerializeField] private SphereCollider viewRange;
         [SerializeField] private GameObjectDictionary flagModel;
         [SerializeField] private List<BaseUnitController> unitPreset;
@@ -30,6 +32,7 @@ namespace FullMoon.Entities.Unit
                 unit.Flag = this;
             }
             ChangeFlagModelPosition();
+            InitViewRangeRadius();
             Deselect();
         }
 
@@ -166,6 +169,11 @@ namespace FullMoon.Entities.Unit
             if (currentFlagModel == null)
             {
                 currentFlagModel = ObjectPoolManager.Instance.SpawnObject(flagModel.gameObject, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Quaternion.identity).GetComponent<GameObjectDictionary>();
+                var decalProjector = currentFlagModel.GetGameObjectByName("Decal")?.GetComponent<DecalProjector>();
+                if (decalProjector != null)
+                {
+                    decalProjector.size = new Vector3(viewRangeRadius * 2f, viewRangeRadius * 2f, decalProjector.size.z);
+                }
             }
 
             flagMoveTween?.Kill();
@@ -173,5 +181,20 @@ namespace FullMoon.Entities.Unit
             currentFlagModel.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
             flagMoveTween = currentFlagModel.transform.DOMove(transform.position, .3f).SetEase(Ease.OutBounce);
         }
+        
+        private void InitViewRangeRadius()
+        {
+            if (viewRange != null)
+            {
+                viewRange.radius = viewRangeRadius;
+            }
+        }
+        
+#if UNITY_EDITOR
+        protected virtual void OnDrawGizmos()
+        {
+            InitViewRangeRadius();
+        }
+#endif
     }
 }
