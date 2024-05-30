@@ -62,7 +62,6 @@ namespace FullMoon.Util
             await UniTask.Delay(TimeSpan.FromSeconds(time));
 
             pool.ReturnObject(obj);
-
         }
 
         private string NameReplace(GameObject obj)
