@@ -422,7 +422,7 @@ PrefabInstance:
     - target: {fileID: 9031215256870271828, guid: 241038e3c339073489d99db34820ff62,
         type: 3}
       propertyPath: CustomDataModule.vector0_3.maxCurve.m_Curve.Array.data[0].time
-      value: 0.5
+      value: 0.09638557
       objectReference: {fileID: 0}
     - target: {fileID: 9031215256870271828, guid: 241038e3c339073489d99db34820ff62,
         type: 3}
@@ -443,6 +443,11 @@ PrefabInstance:
         type: 3}
       propertyPath: CustomDataModule.vector0_1.maxCurve.m_Curve.Array.data[1].value
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9031215256870271828, guid: 241038e3c339073489d99db34820ff62,
+        type: 3}
+      propertyPath: CustomDataModule.vector0_3.maxCurve.m_Curve.Array.data[0].value
+      value: -0.011976048
       objectReference: {fileID: 0}
     - target: {fileID: 9031215256870271828, guid: 241038e3c339073489d99db34820ff62,
         type: 3}
@@ -1161,7 +1166,7 @@ PrefabInstance:
     - target: {fileID: 9031215256870271828, guid: 241038e3c339073489d99db34820ff62,
         type: 3}
       propertyPath: CustomDataModule.vector0_3.maxCurve.m_Curve.Array.data[0].time
-      value: 0.3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9031215256870271828, guid: 241038e3c339073489d99db34820ff62,
         type: 3}
@@ -1191,7 +1196,7 @@ PrefabInstance:
     - target: {fileID: 9031215256870271828, guid: 241038e3c339073489d99db34820ff62,
         type: 3}
       propertyPath: CustomDataModule.vector0_3.maxCurve.m_Curve.Array.data[0].value
-      value: 0
+      value: 0.04494382
       objectReference: {fileID: 0}
     - target: {fileID: 9031215256870271828, guid: 241038e3c339073489d99db34820ff62,
         type: 3}
@@ -1211,7 +1216,7 @@ PrefabInstance:
     - target: {fileID: 9031215256870271828, guid: 241038e3c339073489d99db34820ff62,
         type: 3}
       propertyPath: CustomDataModule.vector0_3.maxCurve.m_Curve.Array.data[0].inSlope
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9031215256870271828, guid: 241038e3c339073489d99db34820ff62,
         type: 3}
@@ -1246,7 +1251,7 @@ PrefabInstance:
     - target: {fileID: 9031215256870271828, guid: 241038e3c339073489d99db34820ff62,
         type: 3}
       propertyPath: CustomDataModule.vector0_3.maxCurve.m_Curve.Array.data[0].outSlope
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9031215256870271828, guid: 241038e3c339073489d99db34820ff62,
         type: 3}
