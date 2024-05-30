@@ -17,7 +17,7 @@ namespace FullMoon.Entities.Unit.States
         
         public void Enter()
         {
-            controller.Agent.isStopped = false;
+            controller.IsStopped = false;
             controller.Agent.speed = controller.OverridenUnitData.MovementSpeed;
             controller.AnimationController.SetAnimation("Move");
         }
@@ -53,7 +53,7 @@ namespace FullMoon.Entities.Unit.States
 
         public void Exit()
         {
-            controller.Agent.isStopped = true;
+            controller.IsStopped = true;
         }
     }
 }

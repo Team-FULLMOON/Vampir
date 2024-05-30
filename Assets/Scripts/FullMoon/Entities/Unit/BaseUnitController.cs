@@ -43,6 +43,22 @@ namespace FullMoon.Entities.Unit
         public string UnitType { get; private set; }
         public string UnitClass { get; private set; }
         
+        public bool IsStopped
+        {
+            get => Agent == null || !Agent.enabled || !Agent.isOnNavMesh || Agent.isStopped;
+            set
+            {
+                if (Agent != null && Agent.enabled && Agent.isOnNavMesh)
+                {
+                    Agent.isStopped = value;
+                }
+                else
+                {
+                    Debug.LogWarning("Agent is not enabled or not on NavMesh.");
+                }
+            }
+        }
+        
         public HashSet<BaseUnitController> UnitInsideViewArea { get; private set; }
 
         protected virtual void OnEnable()
@@ -72,6 +88,7 @@ namespace FullMoon.Entities.Unit
         [BurstCompile]
         protected virtual void Update()
         {
+            UnitInsideViewArea.RemoveWhere(unit => unit == null || !unit.gameObject.activeInHierarchy || (!unit.Alive && unit is not MainUnitController));
             StateMachine.ExecuteCurrentState();
         }
 

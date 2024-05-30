@@ -18,7 +18,7 @@ namespace FullMoon.Entities.Unit.States
 
         public void Enter()
         {
-            controller.Agent.isStopped = true;
+            controller.IsStopped = true;
             controller.AnimationController.SetAnimation("Craft", 0.1f);
         }
 

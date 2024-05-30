@@ -33,13 +33,6 @@ namespace FullMoon.Entities.Unit
             StateMachine.ChangeState(new HammerUnitIdle(this));
         }
 
-        [BurstCompile]
-        protected override void Update()
-        {
-            UnitInsideViewArea.RemoveWhere(unit => unit == null || !unit.gameObject.activeInHierarchy || !unit.Alive);
-            base.Update();
-        }
-
         public override void Die()
         {
             base.Die();
