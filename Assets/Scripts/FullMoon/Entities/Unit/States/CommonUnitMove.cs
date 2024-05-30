@@ -20,7 +20,7 @@ namespace FullMoon.Entities.Unit.States
         
         public void Enter()
         {
-            controller.Agent.isStopped = true;
+            controller.IsStopped = true;
             controller.Agent.speed = controller.OverridenUnitData.MovementSpeed;
             
             cts = new CancellationTokenSource();
@@ -47,13 +47,13 @@ namespace FullMoon.Entities.Unit.States
                 }
             }
             controller.moveDustEffect.SetActive(true);
-            controller.Agent.isStopped = false;
+            controller.IsStopped = false;
         }
         
         [BurstCompile]
         public void Execute()
         {
-            if (!controller.Agent.enabled || controller.Agent.isStopped)
+            if (!controller.Agent.enabled || controller.IsStopped)
             {
                 return;
             }
@@ -65,7 +65,7 @@ namespace FullMoon.Entities.Unit.States
             }
             
             var unitsInView = controller.UnitInsideViewArea;
-            var ownTypeUnits = unitsInView.Where(t => controller.UnitType.Equals(t.UnitType) && t.Agent.isStopped);
+            var ownTypeUnits = unitsInView.Where(t => controller.UnitType.Equals(t.UnitType) && t.IsStopped);
             var destination = controller.LatestDestination;
             
             BaseUnitController closestUnit = ownTypeUnits.FirstOrDefault(t =>
@@ -87,7 +87,7 @@ namespace FullMoon.Entities.Unit.States
         {
             cts?.Cancel();
             controller.moveDustEffect.SetActive(false);
-            controller.Agent.isStopped = true; 
+            controller.IsStopped = true;
         }
     }
 }

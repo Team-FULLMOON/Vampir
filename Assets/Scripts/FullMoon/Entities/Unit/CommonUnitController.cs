@@ -41,13 +41,6 @@ namespace FullMoon.Entities.Unit
                 .FirstOrDefault(unit => unit.unitData.UnitType.Equals("Player") && unit.unitData.UnitClass.Equals("Main"));
         }
 
-        [BurstCompile]
-        protected override void Update()
-        {
-            UnitInsideViewArea.RemoveWhere(unit => unit == null || !unit.gameObject.activeInHierarchy || !unit.Alive);
-            base.Update();
-        }
-
         public override void Die()
         {
             base.Die();

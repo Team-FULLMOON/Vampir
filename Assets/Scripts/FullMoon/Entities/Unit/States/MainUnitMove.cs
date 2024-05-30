@@ -19,7 +19,7 @@ namespace FullMoon.Entities.Unit.States
         
         public void Enter()
         {
-            controller.Agent.isStopped = false;
+            controller.IsStopped = false;
             controller.Agent.speed = controller.OverridenUnitData.MovementSpeed;
             controller.AnimationController.SetAnimation("Move", 0.1f);
         }
@@ -34,7 +34,7 @@ namespace FullMoon.Entities.Unit.States
             }
             
             var unitsInView = controller.Flag != null ? controller.Flag.UnitInsideViewArea : controller.UnitInsideViewArea;
-            var ownTypeUnits = unitsInView.Where(t => controller.UnitType.Equals(t.UnitType) && t.Agent.isStopped);
+            var ownTypeUnits = unitsInView.Where(t => controller.UnitType.Equals(t.UnitType) && t.IsStopped);
             var destination = controller.LatestDestination;
 
             BaseUnitController closestUnit = ownTypeUnits.FirstOrDefault(t =>
@@ -70,7 +70,7 @@ namespace FullMoon.Entities.Unit.States
 
         public void Exit()
         {
-            controller.Agent.isStopped = true; 
+            controller.IsStopped = true; 
         }
     }
 }

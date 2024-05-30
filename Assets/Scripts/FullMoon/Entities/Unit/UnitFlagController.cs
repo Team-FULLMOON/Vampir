@@ -28,7 +28,7 @@ namespace FullMoon.Entities.Unit
 
         private void Update()
         {
-            UnitInsideViewArea.RemoveWhere(unit => unit is null || !unit.gameObject.activeInHierarchy || !unit.Alive);
+            UnitInsideViewArea.RemoveWhere(unit => unit == null || !unit.gameObject.activeInHierarchy || (!unit.Alive && unit is not MainUnitController));
         }
 
         [ButtonMethod]

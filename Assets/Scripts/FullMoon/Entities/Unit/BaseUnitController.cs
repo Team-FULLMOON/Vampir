@@ -43,22 +43,36 @@ namespace FullMoon.Entities.Unit
         public string UnitType { get; private set; }
         public string UnitClass { get; private set; }
         
+        public bool IsStopped
+        {
+            get => Agent == null || !Agent.enabled || !Agent.isOnNavMesh || Agent.isStopped;
+            set
+            {
+                if (Agent != null && Agent.enabled && Agent.isOnNavMesh)
+                {
+                    Agent.isStopped = value;
+                }
+                else
+                {
+                    Debug.LogWarning("Agent is not enabled or not on NavMesh.");
+                }
+            }
+        }
+        
         public HashSet<BaseUnitController> UnitInsideViewArea { get; private set; }
 
         protected virtual void OnEnable()
         {
-            Alive = true;
             Rb = GetComponent<Rigidbody>();
             Agent = GetComponent<NavMeshAgent>();
-            Agent.enabled = true;
             UnitInsideViewArea = new HashSet<BaseUnitController>();
             AnimationController.SetAnimator(unitAnimator);
             
-            LatestDestination = transform.position;
-            Hp = unitData.MaxHp;
             UnitType = unitData.UnitType;
             UnitClass = unitData.UnitClass;
             unitMarker.SetActive(false);
+            
+            OnAlive();
 
             if (viewRange != null && unitData != null)
             {
@@ -74,6 +88,7 @@ namespace FullMoon.Entities.Unit
         [BurstCompile]
         protected virtual void Update()
         {
+            UnitInsideViewArea.RemoveWhere(unit => unit == null || !unit.gameObject.activeInHierarchy || (!unit.Alive && unit is not MainUnitController));
             StateMachine.ExecuteCurrentState();
         }
 
@@ -81,6 +96,15 @@ namespace FullMoon.Entities.Unit
         protected virtual void FixedUpdate()
         {
             StateMachine.FixedExecuteCurrentState();
+        }
+        
+        public virtual void OnAlive()
+        {
+            Alive = true;
+            Agent.enabled = true;
+            LatestDestination = transform.position;
+            Hp = unitData.MaxHp;
+            UnitInsideViewArea.Clear();
         }
 
         public virtual void ReceiveDamage(int amount, BaseUnitController attacker)
@@ -125,7 +149,9 @@ namespace FullMoon.Entities.Unit
 
         public virtual void Die()
         {
+            Hp = 0;
             Alive = false;
+            Agent.enabled = false;
             
             if (UnitType == "Enemy" && unitData.RespawnUnitObject != null)
             {
