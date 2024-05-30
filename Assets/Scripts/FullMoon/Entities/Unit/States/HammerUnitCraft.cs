@@ -27,7 +27,7 @@ namespace FullMoon.Entities.Unit.States
             craftTimer += Time.deltaTime;
             if (craftTimer >= 3f)
             {
-                TileController.Instance.CreateTile(controller.transform.position);
+                TileController.Instance.CreateTile(controller.transform.position, BuildingType.SpearArmy);
                 controller.StateMachine.ChangeState(new HammerUnitIdle(controller));
             }
         }

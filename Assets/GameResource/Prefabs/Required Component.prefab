@@ -199,8 +199,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1889243612475854807}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.3538488, y: 0.6395255, z: -0.4217006, w: 0.5366255}
-  m_LocalPosition: {x: -11.817696, y: 28, z: 2.0837803}
+  m_LocalRotation: {x: 0.17449273, y: -0.80832607, z: 0.29444838, w: 0.47902125}
+  m_LocalPosition: {x: 19.352484, y: 18.217, z: 65.998886}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -239,9 +239,9 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 65
+  field of view: 45.00001
   orthographic: 0
-  orthographic size: 10
+  orthographic size: 7.000001
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -726,7 +726,7 @@ Transform:
   m_GameObject: {fileID: 3817388134677654357}
   serializedVersion: 2
   m_LocalRotation: {x: 0.3538488, y: 0.6395255, z: -0.4217006, w: 0.5366255}
-  m_LocalPosition: {x: -0.00006771088, y: 0, z: 0.00002002716}
+  m_LocalPosition: {x: -0.000082969666, y: 0, z: 0.000024795532}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1483,7 +1483,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a03447cd32c78294391df3af6fb77e4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tile: {fileID: 1029500191801352571, guid: 3ab6c90f9c5c08045ac7917c343ea2bd, type: 3}
+  lumberPrefab: {fileID: 1029500191801352571, guid: 3ab6c90f9c5c08045ac7917c343ea2bd,
+    type: 3}
+  lumberWidthSize: 1
+  lumberHeightSize: 1
+  swordArmyPrefab: {fileID: 1029500191801352571, guid: fff0197cc9f9a394db7f7d2f3a805b5a,
+    type: 3}
+  swordWidthSize: 1
+  swordHeightSize: 1
+  spearArmyPrefab: {fileID: 1029500191801352571, guid: feb4a7efa9e6226449a9ce2b602ada33,
+    type: 3}
+  spearWidthSize: 1
+  spearHeightSize: 1
+  crossbowArmyPrefab: {fileID: 1029500191801352571, guid: 42dbe3129ef29bc4681611d4301aad38,
+    type: 3}
+  crossbowWidthSize: 1
+  crossbowHeightSize: 1
 --- !u!1 &8711201054282977222
 GameObject:
   m_ObjectHideFlags: 0
