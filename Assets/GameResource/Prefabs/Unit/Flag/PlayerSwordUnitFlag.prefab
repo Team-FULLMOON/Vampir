@@ -54,6 +54,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewRange: {fileID: 4378784783875371655}
+  flagModel: {fileID: 4149212190521673497, guid: 9e832a051078393469c83d0f9667d808,
+    type: 3}
   unitPreset:
   - {fileID: 5464324248981059709}
   - {fileID: 1095518652586510512}

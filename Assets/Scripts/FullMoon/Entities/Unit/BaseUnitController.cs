@@ -25,9 +25,6 @@ namespace FullMoon.Entities.Unit
         public Animator unitAnimator;
         
         [Foldout("Base Unit Settings")] 
-        public GameObject unitMarker;
-        
-        [Foldout("Base Unit Settings")] 
         public SphereCollider viewRange;
         
         public readonly FSM.StateMachine StateMachine = new();
@@ -70,7 +67,6 @@ namespace FullMoon.Entities.Unit
             
             UnitType = unitData.UnitType;
             UnitClass = unitData.UnitClass;
-            unitMarker.SetActive(false);
             
             OnAlive();
 
@@ -178,14 +174,11 @@ namespace FullMoon.Entities.Unit
                     unitModel.layer = LayerMask.NameToLayer("SelectEnemy");
                     break;
             }
-            
-            unitMarker.SetActive(true);
         }
         
         public virtual void Deselect()
         {
             unitModel.layer = LayerMask.NameToLayer("Default");
-            unitMarker.SetActive(false);
         }
 
         public virtual void MoveToPosition(Vector3 location)

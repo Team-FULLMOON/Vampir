@@ -3,6 +3,7 @@ using MyBox;
 using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
+using DG.Tweening;
 using FullMoon.Util;
 
 namespace FullMoon.Entities.Unit
@@ -10,11 +11,15 @@ namespace FullMoon.Entities.Unit
     public class UnitFlagController : MonoBehaviour
     {
         [SerializeField] private SphereCollider viewRange;
+        [SerializeField] private GameObjectDictionary flagModel;
         [SerializeField] private List<BaseUnitController> unitPreset;
         private List<Vector3> localPositionsPreset;
         
         public HashSet<BaseUnitController> UnitInsideViewArea { get; private set; }
-        
+
+        private GameObjectDictionary currentFlagModel;
+        private Tween flagMoveTween;
+
         private void OnEnable()
         {
             UnitInsideViewArea = new HashSet<BaseUnitController>();
@@ -23,6 +28,16 @@ namespace FullMoon.Entities.Unit
             foreach (var unit in unitPreset)
             {
                 unit.Flag = this;
+            }
+            ChangeFlagModelPosition();
+            Deselect();
+        }
+
+        private void OnDestroy()
+        {
+            if (currentFlagModel != null)
+            {
+                ObjectPoolManager.Instance.ReturnObjectToPool(currentFlagModel.gameObject);
             }
         }
 
@@ -46,6 +61,16 @@ namespace FullMoon.Entities.Unit
                 Vector3 worldPosition = transform.TransformPoint(localPositionsPreset[i]);
                 unitPreset[i].transform.position = worldPosition;
             }
+        }
+        
+        public void Select()
+        {
+            currentFlagModel.GetGameObjectByName("Decal")?.SetActive(true);
+        }
+        
+        public void Deselect()
+        {
+            currentFlagModel.GetGameObjectByName("Decal")?.SetActive(false);
         }
         
         public Vector3 GetPresetPosition(BaseUnitController targetObject)
@@ -72,6 +97,7 @@ namespace FullMoon.Entities.Unit
                 Vector3 worldPosition = transform.TransformPoint(localPositionsPreset[i]);
                 unitPreset[i].MoveToPosition(worldPosition);
             }
+            ChangeFlagModelPosition();
         }
         
         private void SaveLocalPositions()
@@ -133,6 +159,19 @@ namespace FullMoon.Entities.Unit
                 return;
             }
             UnitInsideViewArea.Remove(controller);
+        }
+
+        private void ChangeFlagModelPosition()
+        {
+            if (currentFlagModel == null)
+            {
+                currentFlagModel = ObjectPoolManager.Instance.SpawnObject(flagModel.gameObject, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Quaternion.identity).GetComponent<GameObjectDictionary>();
+            }
+
+            flagMoveTween?.Kill();
+
+            currentFlagModel.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+            flagMoveTween = currentFlagModel.transform.DOMove(transform.position, .3f).SetEase(Ease.OutBounce);
         }
     }
 }
