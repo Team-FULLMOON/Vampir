@@ -8,7 +8,7 @@ namespace FullMoon.Entities
     public class KillUnits : MonoBehaviour
     {
         [ButtonMethod]
-        public void KillAllUnit()
+        public void KillAllUnits()
         {
             var units = GameObject.FindGameObjectsWithTag("Player")
                 .Where(unit => unit is not null 
@@ -23,7 +23,7 @@ namespace FullMoon.Entities
         }
         
         [ButtonMethod]
-        public void KillAllEnemy()
+        public void KillAllEnemies()
         {
             var units = GameObject.FindGameObjectsWithTag("Enemy")
                 .Where(unit => unit is not null 

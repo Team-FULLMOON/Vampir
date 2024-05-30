@@ -16,7 +16,7 @@ MonoBehaviour:
   unitName: 
   unitType: Player
   unitClass: Main
-  maxHp: 300
+  maxHp: 10
   movementSpeed: 4
   missRate: 0
   manaDrop: 7
@@ -32,7 +32,11 @@ MonoBehaviour:
   attackRadius: 1.5
   viewRadius: 8
   stateTransitionRadius: 10
-  fogOfWarRadius: 10
+  unitAdvance: None
+  unitCounter: None
+  counterDamage: 100
+  counterKnockback: 0
+  counterGuard: 0
   hitAnimationFrame: 12
   unitControlData: {fileID: 11400000, guid: bc7316a50f904ad489752886c4e22b3a, type: 2}
   respawnRadius: 3

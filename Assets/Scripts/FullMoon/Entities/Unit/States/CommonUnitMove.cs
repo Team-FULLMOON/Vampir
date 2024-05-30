@@ -20,8 +20,11 @@ namespace FullMoon.Entities.Unit.States
         
         public void Enter()
         {
-            controller.Agent.isStopped = true;
-            controller.Agent.speed = controller.OverridenUnitData.MovementSpeed;
+            if (controller.Agent.enabled && controller.Agent.isOnNavMesh)
+            {
+                controller.Agent.isStopped = true;
+                controller.Agent.speed = controller.OverridenUnitData.MovementSpeed;
+            }
             
             cts = new CancellationTokenSource();
             Shock(cts.Token).Forget();
@@ -47,7 +50,10 @@ namespace FullMoon.Entities.Unit.States
                 }
             }
             controller.moveDustEffect.SetActive(true);
-            controller.Agent.isStopped = false;
+            if (controller.Agent.enabled && controller.Agent.isOnNavMesh)
+            {
+                controller.Agent.isStopped = false;
+            }
         }
         
         [BurstCompile]
@@ -87,7 +93,10 @@ namespace FullMoon.Entities.Unit.States
         {
             cts?.Cancel();
             controller.moveDustEffect.SetActive(false);
-            controller.Agent.isStopped = true; 
+            if (controller.Agent.enabled && controller.Agent.isOnNavMesh)
+            {
+                controller.Agent.isStopped = true;
+            }
         }
     }
 }

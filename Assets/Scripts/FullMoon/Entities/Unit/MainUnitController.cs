@@ -10,7 +10,6 @@ using FullMoon.Entities.Unit.States;
 using FullMoon.ScriptableObject;
 using FullMoon.Util;
 using Unity.Burst;
-using UnityEngine.Serialization;
 
 namespace FullMoon.Entities.Unit
 {
@@ -57,7 +56,7 @@ namespace FullMoon.Entities.Unit
         public override void Die()
         {
             base.Die();
-            StateMachine.ChangeState(new MainUnitDead(this));
+            StateMachine.ChangeState(new MainUnitGroggy(this));
         }
 
         public void EnterViewRange(Collider unit)
