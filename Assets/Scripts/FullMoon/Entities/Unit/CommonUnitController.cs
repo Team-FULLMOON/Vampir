@@ -48,13 +48,12 @@ namespace FullMoon.Entities.Unit
                 .FirstOrDefault(unit => unit.unitData.UnitType.Equals("Player") && unit.unitData.UnitClass.Equals("Main"));
         }
 
-        public void CraftBuilding(Vector3 pos, BuildingType type)
+        public void CraftBuilding(Vector3 pos)
         {
             ObjectPoolManager.Instance.ReturnObjectToPool(gameObject);
             HammerUnitController hammerUnit = ObjectPoolManager.Instance.SpawnObject(hammerPrefab, transform.position, transform.rotation)
                                                                         .GetComponent<HammerUnitController>();
                                                                         
-            hammerUnit.buildingType = type;
             hammerUnit.MoveToPosition(pos);
         }
 

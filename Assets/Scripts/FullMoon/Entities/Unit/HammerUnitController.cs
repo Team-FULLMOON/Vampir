@@ -19,9 +19,6 @@ namespace FullMoon.Entities.Unit
         
         public HammerUnitData OverridenUnitData { get; private set; }
 
-        [HideInInspector]
-        public BuildingType buildingType;
-
         protected override void OnEnable()
         {
             base.OnEnable();
@@ -35,6 +32,8 @@ namespace FullMoon.Entities.Unit
             }
             
             StateMachine.ChangeState(new HammerUnitCraft(this));
+
+            ObjectPoolManager.Instance.ReturnObjectToPool(gameObject, 3f);
         }
 
         public override void Die()

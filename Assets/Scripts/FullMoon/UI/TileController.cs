@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Cysharp.Threading.Tasks;
 using FullMoon.Camera;
 using FullMoon.Entities.Building;
 using FullMoon.Util;
@@ -139,6 +140,7 @@ namespace FullMoon.UI
             }
 
             Vector3Int vector = tileMap.WorldToCell(pos);
+
             tile.transform.localScale = new Vector3(tile.transform.localScale.x * width, tile.transform.localScale.y * height, tile.transform.localScale.z);
             tile.GetComponent<BaseBuildingController>().targetPos = pos;
             tileMap.SetTile(vector, new Tile()
