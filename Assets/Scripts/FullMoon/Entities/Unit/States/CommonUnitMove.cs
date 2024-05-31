@@ -87,9 +87,6 @@ namespace FullMoon.Entities.Unit.States
                 Vector3.Distance(controller.transform.position, destination) <= controller.viewRange.radius &&
                 Vector3.Distance(controller.transform.position, t.transform.position) <= 3f);
 
-            if (controller.name.Equals("PlayerCommonUnitPrefab (5)") && closestUnit != null)
-                Debug.Log(closestUnit.name);
-
             if (closestUnit != null)
             {
                 if (controller.isCraft)

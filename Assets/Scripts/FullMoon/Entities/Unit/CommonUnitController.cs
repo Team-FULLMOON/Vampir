@@ -50,10 +50,12 @@ namespace FullMoon.Entities.Unit
 
         public void CraftBuilding(Vector3 pos, BuildingType type)
         {
-            isCraft = true;
-            buildingType = type;
-
-            MoveToPosition(pos);
+            ObjectPoolManager.Instance.ReturnObjectToPool(gameObject);
+            HammerUnitController hammerUnit = ObjectPoolManager.Instance.SpawnObject(hammerPrefab, transform.position, transform.rotation)
+                                                                        .GetComponent<HammerUnitController>();
+                                                                        
+            hammerUnit.buildingType = type;
+            hammerUnit.MoveToPosition(pos);
         }
 
         public override void Die()

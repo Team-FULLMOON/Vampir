@@ -146,33 +146,28 @@ namespace FullMoon.Camera
 
         async UniTaskVoid StartTileTimer(List<CommonUnitController> unitList)
         {
-            while (true)
-            {
-                for (int i = 0; i < unitList.Count; ++i)
+            // while (true)
+            // {
+                // for (int i = 0; i < unitList.Count; ++i)
+                // {
+                //     var unit = unitList[i];
+                //     if (!unit.gameObject.activeInHierarchy)
+                //     {
+                //         unitList.Remove(unit);
+                //     }
+                // }
+
+                await UniTask.Delay(TimeSpan.FromSeconds(3));
+
+                HammerUnitController[] units = FindObjectsByType<HammerUnitController>(FindObjectsSortMode.None);
+                for (int i = 0; i < units.Count(); ++i)
                 {
-                    var unit = unitList[i];
-                    if (!unit.gameObject.activeInHierarchy)
-                    {
-                        unitList.Remove(unit);
-                    }
+                    ObjectPoolManager.Instance.ReturnObjectToPool(units[i].gameObject);
                 }
 
-                if (unitList.Count.Equals(0))
-                {
-                    await UniTask.Delay(TimeSpan.FromSeconds(2));
-
-                    HammerUnitController[] units = FindObjectsByType<HammerUnitController>(FindObjectsSortMode.None);
-                    for (int i = 0; i < units.Count(); ++i)
-                    {
-                        ObjectPoolManager.Instance.ReturnObjectToPool(units[i].gameObject);
-                    }
-
-                    TileController.Instance.CreateTile(hitPoint, buildingType);
-                    return;
-                }
-
-                await UniTask.Delay(500);
-            }
+                TileController.Instance.CreateTile(hitPoint, buildingType);
+                return;
+            // }
         }
         
         public void CreateTileSetting(bool isCraft, BuildingType type)
