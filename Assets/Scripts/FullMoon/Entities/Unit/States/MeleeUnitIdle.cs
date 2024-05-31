@@ -24,7 +24,7 @@ namespace FullMoon.Entities.Unit.States
         public void Execute()
         {
             var unitsInView = controller.Flag != null ? controller.Flag.UnitInsideViewArea : controller.UnitInsideViewArea;
-            int enemyCount = unitsInView.Count(t => !controller.UnitType.Equals(t.UnitType));
+            int enemyCount = unitsInView.Count(t => !controller.UnitType.Equals(t.UnitType) && t.gameObject.activeInHierarchy && t.Alive);
 
             if (enemyCount > 0)
             {

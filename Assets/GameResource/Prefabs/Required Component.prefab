@@ -207,7 +207,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -95, y: 0}
   m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7285314343049535515
@@ -1341,7 +1341,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: " \uD6C8\uB828\uC18C(\uCC3D)\n\uAC74\uC124\uD558\uAE30"
+  m_Text: "\uD6C8\uB828\uC18C(\uCC3D)\n\uAC74\uC124\uD558\uAE30"
 --- !u!1 &3301440360257785043
 GameObject:
   m_ObjectHideFlags: 0
@@ -2020,7 +2020,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -50}
+  m_AnchoredPosition: {x: -778, y: -281}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &9215434190723228577
@@ -2633,7 +2633,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: " \uD6C8\uB828\uC18C(\uAC80)\n\uAC74\uC124\uD558\uAE30"
+  m_Text: "\uD6C8\uB828\uC18C(\uC11D\uAD81)\n\uAC74\uC124\uD558\uAE30"
 --- !u!1 &6517124350545496047
 GameObject:
   m_ObjectHideFlags: 0
@@ -3074,7 +3074,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: " \uD6C8\uB828\uC18C(\uAC80)\n\uAC74\uC124\uD558\uAE30"
+  m_Text: "\uD6C8\uB828\uC18C(\uAC80)\n\uAC74\uC124\uD558\uAE30"
 --- !u!1 &7992116417180475613
 GameObject:
   m_ObjectHideFlags: 0
@@ -3138,11 +3138,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitControlData: {fileID: 11400000, guid: bc7316a50f904ad489752886c4e22b3a, type: 2}
-  canMove:
-    value: 0
-  canAttack:
-    value: 0
-  isMainUnit: 0
 --- !u!1 &8015035892718466246
 GameObject:
   m_ObjectHideFlags: 0

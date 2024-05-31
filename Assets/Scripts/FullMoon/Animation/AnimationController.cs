@@ -9,7 +9,7 @@ namespace FullMoon.Animation
         private Animator unitAnimator;
         private CancellationTokenSource cancellationTokenSource;
 
-        private (string, bool) latestStateInfo;
+        public (string, bool) CurrentStateInfo { get; private set; }
 
         public void SetAnimator(Animator animator)
         {
@@ -32,7 +32,7 @@ namespace FullMoon.Animation
                 return false;
             }
 
-            if (latestStateInfo.Item1 == stateName && latestStateInfo.Item2)
+            if (CurrentStateInfo.Item1 == stateName && CurrentStateInfo.Item2)
             {
                 return true;
             }
@@ -54,14 +54,14 @@ namespace FullMoon.Animation
 
         private void PlayAnimation(string stateName, int stateHash, float transitionDuration = 0.3f)
         {
-            latestStateInfo = ("", false);
+            CurrentStateInfo = ("", false);
             
             AnimationClip[] clips = unitAnimator.runtimeAnimatorController.animationClips;
             foreach (AnimationClip clip in clips)
             {
                 if (clip.name == stateName)
                 {
-                    latestStateInfo = (clip.name, clip.isLooping);
+                    CurrentStateInfo = (clip.name, clip.isLooping);
                     break;
                 }
             }   
@@ -90,8 +90,8 @@ namespace FullMoon.Animation
             cancellationTokenSource = new CancellationTokenSource();
             CancellationToken token = cancellationTokenSource.Token;
 
-            string latestStateName = latestStateInfo.Item1;
-            bool latestLooping = latestStateInfo.Item2;
+            string latestStateName = CurrentStateInfo.Item1;
+            bool latestLooping = CurrentStateInfo.Item2;
 
             PlayAnimation(stateName, stateHash, transitionDuration);
             
@@ -100,7 +100,7 @@ namespace FullMoon.Animation
                 await UniTask.Yield(PlayerLoopTiming.Update, token);
             } while (!token.IsCancellationRequested && latestLooping && unitAnimator.IsInTransition(0));
             
-            if (latestLooping && latestStateInfo.Item1 == stateName)
+            if (latestLooping && CurrentStateInfo.Item1 == stateName)
             {
                 PlayAnimation(latestStateName, Animator.StringToHash(latestStateName), transitionDuration);
             }

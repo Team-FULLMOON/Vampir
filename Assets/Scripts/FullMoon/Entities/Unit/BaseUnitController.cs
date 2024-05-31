@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using MyBox;
+using Unity.Burst;
 using UnityEngine;
 using UnityEngine.AI;
+using FullMoon.Util;
 using FullMoon.Interfaces;
 using FullMoon.ScriptableObject;
-using FullMoon.UI;
-using FullMoon.Util;
-using Unity.Burst;
 
 namespace FullMoon.Entities.Unit
 {
@@ -125,7 +124,7 @@ namespace FullMoon.Entities.Unit
             if (unitAnimator != null)
             {
                 AnimatorStateInfo stateInfo = unitAnimator.GetCurrentAnimatorStateInfo(0);
-                if (stateInfo.loop || stateInfo.normalizedTime >= 0.9f)
+                if (stateInfo.loop || (AnimationController.CurrentStateInfo.Item1 != "Hit" && stateInfo.normalizedTime >= 0.9f))
                 {
                     AnimationController.PlayAnimationAndContinueLoop("Hit").Forget();
                 }

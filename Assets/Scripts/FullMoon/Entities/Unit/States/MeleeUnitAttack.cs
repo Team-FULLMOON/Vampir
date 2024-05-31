@@ -23,9 +23,10 @@ namespace FullMoon.Entities.Unit.States
 
             var unitsInView = controller.Flag != null ? controller.Flag.UnitInsideViewArea : controller.UnitInsideViewArea;
             target = unitsInView
-                    .Where(t => !controller.UnitType.Equals(t.UnitType))
-                    .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
-                    .FirstOrDefault();
+                .Where(t => t.gameObject.activeInHierarchy && t.Alive)
+                .Where(t => !controller.UnitType.Equals(t.UnitType))
+                .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
+                .FirstOrDefault();
             
             controller.AnimationController.SetAnimation("Idle");
         }
