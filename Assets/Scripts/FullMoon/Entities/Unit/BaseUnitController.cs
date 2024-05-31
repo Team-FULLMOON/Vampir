@@ -7,7 +7,6 @@ using FullMoon.ScriptableObject;
 using FullMoon.UI;
 using FullMoon.Util;
 using Unity.Burst;
-using Unity.VisualScripting;
 
 namespace FullMoon.Entities.Unit
 {
@@ -73,11 +72,6 @@ namespace FullMoon.Entities.Unit
             if (viewRange != null && unitData != null)
             {
                 viewRange.radius = unitData.ViewRadius;
-            }
-
-            if (UnitType == "Player")
-            {
-                MainUIController.Instance.AddUnit(1);
             }
         }
 
@@ -155,13 +149,8 @@ namespace FullMoon.Entities.Unit
                 {
                     ObjectPoolManager.Instance.SpawnObject(unitData.RespawnUnitObject, transform.position, Quaternion.identity);
                 }
-                MainUIController.Instance.AddMana(unitData.ManaDrop);
-                return;
             }
-            
-            MainUIController.Instance.AddUnit(-1);
         }
-
 
         public virtual void Select()
         {
@@ -187,11 +176,14 @@ namespace FullMoon.Entities.Unit
             {
                 return;
             }
-            
-            NavMeshPath path = new NavMeshPath();
-            Agent.CalculatePath(location, path);
-            Agent.SetPath(path);
-            LatestDestination = location;
+
+            if (UnityEngine.AI.NavMesh.SamplePosition(location, out var hit, 5.0f, UnityEngine.AI.NavMesh.AllAreas))
+            {
+                NavMeshPath path = new NavMeshPath();
+                Agent.CalculatePath(hit.position, path);
+                Agent.SetPath(path);
+                LatestDestination = location;
+            }
         }
         
 #if UNITY_EDITOR
