@@ -69,7 +69,7 @@ GameObject:
   - component: {fileID: 3965856720986754661}
   - component: {fileID: 8778682842624439187}
   - component: {fileID: 6155768801544020530}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: PlayerHammerUnitPrefab
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -111,7 +111,6 @@ MonoBehaviour:
   unitData: {fileID: 11400000, guid: bb6ca800ae6e2e24ab15ac58e7e624d7, type: 2}
   unitModel: {fileID: 7943435546887350205}
   unitAnimator: {fileID: 4361388230246774262}
-  unitMarker: {fileID: 8318788430314613714}
   viewRange: {fileID: 4703436364935769818}
   decalProjector: {fileID: 7171086200089214031}
   buildingType: 0
@@ -287,7 +286,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 8
+  m_Radius: 3.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8805367796400119918
 MonoBehaviour:

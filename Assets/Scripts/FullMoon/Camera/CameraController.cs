@@ -341,7 +341,6 @@ namespace FullMoon.Camera
                 unit.Deselect();
             }
 
-            MainUIController.Instance.OffButton();
             selectedUnitList.Clear();
         }
 
