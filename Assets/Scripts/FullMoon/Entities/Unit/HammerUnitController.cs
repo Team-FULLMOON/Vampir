@@ -7,6 +7,7 @@ using FullMoon.ScriptableObject;
 using FullMoon.Util;
 using Unity.Burst;
 using UnityEngine.Rendering.Universal;
+using FullMoon.UI;
 
 namespace FullMoon.Entities.Unit
 {
@@ -17,6 +18,9 @@ namespace FullMoon.Entities.Unit
         public DecalProjector decalProjector;
         
         public HammerUnitData OverridenUnitData { get; private set; }
+
+        [HideInInspector]
+        public BuildingType buildingType;
 
         protected override void OnEnable()
         {
@@ -30,7 +34,7 @@ namespace FullMoon.Entities.Unit
                 InitializeDecalProjector();
             }
             
-            StateMachine.ChangeState(new HammerUnitIdle(this));
+            StateMachine.ChangeState(new HammerUnitCraft(this));
         }
 
         [BurstCompile]

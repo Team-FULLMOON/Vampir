@@ -32,4 +32,8 @@ MonoBehaviour:
   attackRadius: 10
   viewRadius: 3.5
   stateTransitionRadius: 10
-  fogOfWarRadius: 10
+  unitAdvance: None
+  unitCounter: None
+  counterDamage: 100
+  counterKnockback: 0
+  counterGuard: 0

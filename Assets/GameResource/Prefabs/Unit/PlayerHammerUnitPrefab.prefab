@@ -86,7 +86,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.9504356, y: 0.5100002, z: -1.9490904}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7311330282682858759}
@@ -114,6 +114,7 @@ MonoBehaviour:
   unitMarker: {fileID: 8318788430314613714}
   viewRange: {fileID: 4703436364935769818}
   decalProjector: {fileID: 7171086200089214031}
+  buildingType: 0
 --- !u!136 &3965856720986754661
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -176,7 +177,7 @@ NavMeshAgent:
   m_Radius: 0.4
   m_Speed: 3.5
   m_Acceleration: 50
-  avoidancePriority: 50
+  avoidancePriority: 52
   m_AngularSpeed: 1000
   m_StoppingDistance: 0.4
   m_AutoTraverseOffMeshLink: 1

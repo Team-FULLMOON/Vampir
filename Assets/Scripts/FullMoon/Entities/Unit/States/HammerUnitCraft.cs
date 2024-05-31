@@ -9,7 +9,6 @@ namespace FullMoon.Entities.Unit.States
     public class HammerUnitCraft : IState
     {
         private readonly HammerUnitController controller;
-        private float craftTimer = 0;
 
         public HammerUnitCraft(HammerUnitController controller)
         {
@@ -24,12 +23,6 @@ namespace FullMoon.Entities.Unit.States
 
         public void Execute() 
         {
-            craftTimer += Time.deltaTime;
-            if (craftTimer >= 3f)
-            {
-                TileController.Instance.CreateTile(controller.transform.position, BuildingType.SpearArmy);
-                controller.StateMachine.ChangeState(new HammerUnitIdle(controller));
-            }
         }
 
         public void FixedExecute() { }

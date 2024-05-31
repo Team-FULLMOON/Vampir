@@ -1,3 +1,6 @@
+using System;
+using System.Collections;
+using FullMoon.Camera;
 using FullMoon.Entities.Building;
 using FullMoon.Util;
 using MyBox;
@@ -62,21 +65,50 @@ namespace FullMoon.UI
         [SerializeField, OverrideLabel("훈련소(석궁) 세로 사이즈")]
         int crossbowHeightSize = 1;
 
+        [Separator]
+
+        [SerializeField, OverrideLabel("건설 UI 버튼")]
+        GameObject buildUIButton;
+
+        [SerializeField, OverrideLabel("건설 UI")]
+        GameObject buildUI;
+
+        [SerializeField, OverrideLabel("건설 UI 취소 버튼")]
+        GameObject cancelBuildUI;
 
         private Tilemap tileMap;
+        private CameraController cameraController;
 
         void Start()
         {
             tileMap = FindObjectOfType<Tilemap>();
+            cameraController = FindObjectOfType<CameraController>();
         }
 
-        public void CreateTile(Vector3 pos, BuildingType buildingType)
+        public void SettingTile(string buildingType)
+        {
+            cameraController.CreateTileSetting(true, (BuildingType)Enum.Parse(typeof(BuildingType), buildingType));
+        }
+
+        public void OffBuildingUI()
+        {
+            buildUIButton.SetActive(true);
+            buildUI.SetActive(false);
+        }
+
+        public void OnBuildingUI()
+        {
+            buildUIButton.SetActive(false);
+            buildUI.SetActive(true);
+        }
+
+        public void CreateTile(Vector3 pos, BuildingType building)
         {
             GameObject tile;
             float width = 1;
             float height = 1;
 
-            switch (buildingType)
+            switch (building)
             {
                 case BuildingType.LumberMill:
                     tile = lumberPrefab;

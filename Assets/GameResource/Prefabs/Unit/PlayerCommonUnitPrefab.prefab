@@ -242,6 +242,10 @@ MonoBehaviour:
   viewRange: {fileID: 2268042740748443340}
   decalProjector: {fileID: 6081375030924233605}
   moveDustEffect: {fileID: 7175960782725117495}
+  isCraft: 0
+  buildingType: 0
+  hammerPrefab: {fileID: 841241648298860686, guid: dea2bd85b534f644f9d85c84a6f54bb0,
+    type: 3}
 --- !u!136 &6372571031042578545
 CapsuleCollider:
   m_ObjectHideFlags: 0

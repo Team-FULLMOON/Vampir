@@ -30,6 +30,10 @@ MonoBehaviour:
   attackDelay: 1
   attackCoolTime: 1
   attackRadius: 10
-  viewRadius: 5
+  viewRadius: 3.5
   stateTransitionRadius: 5
-  fogOfWarRadius: 5
+  unitAdvance: None
+  unitCounter: None
+  counterDamage: 100
+  counterKnockback: 0
+  counterGuard: 0
