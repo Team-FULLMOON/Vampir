@@ -48,7 +48,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21718028340a64f43a1b6f9559121e94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  viewRangeRadius: 3
   viewRange: {fileID: 2272456029875034682}
+  flagModel: {fileID: 4149212190521673497, guid: 9e832a051078393469c83d0f9667d808,
+    type: 3}
   unitPreset:
   - {fileID: 1280742467023253882}
 --- !u!114 &4236947072920440279
@@ -151,6 +154,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3367590856512050416}
     m_Modifications:
+    - target: {fileID: 841194868057539425, guid: 625c37e27f351e346b7f619fb6b66abe,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 841194868057539425, guid: 625c37e27f351e346b7f619fb6b66abe,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4919739190260491979, guid: 625c37e27f351e346b7f619fb6b66abe,
         type: 3}
       propertyPath: m_Materials.Array.data[0]

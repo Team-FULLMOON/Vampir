@@ -50,7 +50,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21718028340a64f43a1b6f9559121e94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  viewRangeRadius: 6
   viewRange: {fileID: 3843125319432314660}
+  flagModel: {fileID: 4149212190521673497, guid: 9e832a051078393469c83d0f9667d808,
+    type: 3}
   unitPreset:
   - {fileID: 5949908593281134551}
   - {fileID: 6699658150395524974}

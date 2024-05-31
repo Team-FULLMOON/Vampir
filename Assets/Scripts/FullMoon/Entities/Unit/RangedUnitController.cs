@@ -46,7 +46,6 @@ namespace FullMoon.Entities.Unit
         protected override void Update()
         {
             ReduceAttackCoolTime();
-            UnitInsideViewArea.RemoveWhere(unit => unit == null || !unit.gameObject.activeInHierarchy || !unit.Alive);
             base.Update();
         }
 
@@ -88,12 +87,22 @@ namespace FullMoon.Entities.Unit
         public override void Select()
         {
             base.Select();
+            if (Flag != null)
+            {
+                Flag.Select();
+                return;
+            }
             decalProjector?.gameObject.SetActive(true);
         }
 
         public override void Deselect()
         {
             base.Deselect();
+            if (Flag != null)
+            {
+                Flag.Deselect();
+                return;
+            }
             decalProjector?.gameObject.SetActive(false);
         }
 

@@ -241,8 +241,12 @@ MonoBehaviour:
   unitMarker: {fileID: 6798072512803417028}
   viewRange: {fileID: 2268042740748443340}
   decalProjector: {fileID: 6081375030924233605}
-  attackEffect: {fileID: 0}
-  attackPointEffect: {fileID: 0}
+  attackEffects:
+  - {fileID: 7954398243609802034, guid: 743ccd8790f47e64994beac9e33ecc26, type: 3}
+  - {fileID: 2430260966516850578, guid: 82686695185b09a4a9f1bb94d8017d15, type: 3}
+  attackPointEffects:
+  - {fileID: 4793084386696122969, guid: 6a67b207302e9fc4da716a40f932a749, type: 3}
+  - {fileID: 4788374799521240607, guid: a57a387f69a61224690b36e0fffac581, type: 3}
 --- !u!136 &6372571031042578545
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -415,7 +419,7 @@ PrefabInstance:
     - target: {fileID: 218434028341802776, guid: 0d665691312219243b2d9c769c8faf2b,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 239898268952278553, guid: 0d665691312219243b2d9c769c8faf2b,
         type: 3}
@@ -520,7 +524,7 @@ PrefabInstance:
     - target: {fileID: 8969961608407241986, guid: 0d665691312219243b2d9c769c8faf2b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 3.5
+      value: 2.2
       objectReference: {fileID: 0}
     - target: {fileID: 8969961608407241986, guid: 0d665691312219243b2d9c769c8faf2b,
         type: 3}

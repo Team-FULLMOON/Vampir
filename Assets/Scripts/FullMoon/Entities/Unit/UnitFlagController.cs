@@ -3,18 +3,25 @@ using MyBox;
 using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
+using DG.Tweening;
 using FullMoon.Util;
+using UnityEngine.Rendering.Universal;
 
 namespace FullMoon.Entities.Unit
 {
     public class UnitFlagController : MonoBehaviour
     {
+        [SerializeField] private float viewRangeRadius;
         [SerializeField] private SphereCollider viewRange;
+        [SerializeField] private GameObjectDictionary flagModel;
         [SerializeField] private List<BaseUnitController> unitPreset;
         private List<Vector3> localPositionsPreset;
         
         public HashSet<BaseUnitController> UnitInsideViewArea { get; private set; }
-        
+
+        private GameObjectDictionary currentFlagModel;
+        private Tween flagMoveTween;
+
         private void OnEnable()
         {
             UnitInsideViewArea = new HashSet<BaseUnitController>();
@@ -24,11 +31,22 @@ namespace FullMoon.Entities.Unit
             {
                 unit.Flag = this;
             }
+            ChangeFlagModelPosition();
+            InitViewRangeRadius();
+            Deselect();
+        }
+
+        private void OnDestroy()
+        {
+            if (currentFlagModel != null)
+            {
+                ObjectPoolManager.Instance.ReturnObjectToPool(currentFlagModel.gameObject);
+            }
         }
 
         private void Update()
         {
-            UnitInsideViewArea.RemoveWhere(unit => unit is null || !unit.gameObject.activeInHierarchy || !unit.Alive);
+            UnitInsideViewArea.RemoveWhere(unit => unit == null || !unit.gameObject.activeInHierarchy || (!unit.Alive && unit is not MainUnitController));
         }
 
         [ButtonMethod]
@@ -46,6 +64,16 @@ namespace FullMoon.Entities.Unit
                 Vector3 worldPosition = transform.TransformPoint(localPositionsPreset[i]);
                 unitPreset[i].transform.position = worldPosition;
             }
+        }
+        
+        public void Select()
+        {
+            currentFlagModel.GetGameObjectByName("Decal")?.SetActive(true);
+        }
+        
+        public void Deselect()
+        {
+            currentFlagModel.GetGameObjectByName("Decal")?.SetActive(false);
         }
         
         public Vector3 GetPresetPosition(BaseUnitController targetObject)
@@ -72,6 +100,7 @@ namespace FullMoon.Entities.Unit
                 Vector3 worldPosition = transform.TransformPoint(localPositionsPreset[i]);
                 unitPreset[i].MoveToPosition(worldPosition);
             }
+            ChangeFlagModelPosition();
         }
         
         private void SaveLocalPositions()
@@ -134,5 +163,38 @@ namespace FullMoon.Entities.Unit
             }
             UnitInsideViewArea.Remove(controller);
         }
+
+        private void ChangeFlagModelPosition()
+        {
+            if (currentFlagModel == null)
+            {
+                currentFlagModel = ObjectPoolManager.Instance.SpawnObject(flagModel.gameObject, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Quaternion.identity).GetComponent<GameObjectDictionary>();
+                var decalProjector = currentFlagModel.GetGameObjectByName("Decal")?.GetComponent<DecalProjector>();
+                if (decalProjector != null)
+                {
+                    decalProjector.size = new Vector3(viewRangeRadius * 2f, viewRangeRadius * 2f, decalProjector.size.z);
+                }
+            }
+
+            flagMoveTween?.Kill();
+
+            currentFlagModel.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+            flagMoveTween = currentFlagModel.transform.DOMove(transform.position, .3f).SetEase(Ease.OutBounce);
+        }
+        
+        private void InitViewRangeRadius()
+        {
+            if (viewRange != null)
+            {
+                viewRange.radius = viewRangeRadius;
+            }
+        }
+        
+#if UNITY_EDITOR
+        protected virtual void OnDrawGizmos()
+        {
+            InitViewRangeRadius();
+        }
+#endif
     }
 }

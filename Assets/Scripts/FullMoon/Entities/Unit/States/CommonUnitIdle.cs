@@ -1,5 +1,3 @@
-using System.Linq;
-using UnityEngine;
 using FullMoon.FSM;
 using Unity.Burst;
 

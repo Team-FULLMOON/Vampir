@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using FullMoon.Entities.Unit;
+using FullMoon.UI;
 using FullMoon.Util;
 using MyBox;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace FullMoon.Entities
     {
         public GameObject enemy;
         public int count = 1;
+        public float spawnInterval;
         [DefinedValues("Random", "Left", "Right", "Up", "Down")] public string location = "Random";
     }
 
@@ -27,8 +29,8 @@ namespace FullMoon.Entities
     public class WaveManager : MonoBehaviour
     {
         [ReadOnly] private int currentLevel;
-        [SerializeField] private float spawnDistance = 10f;
-        [SerializeField] private float spawnInterval = 5f;
+        [SerializeField] private float spawnDistance = 20f;
+        [SerializeField] private float spawnInterval = 15f;
         [SerializeField] private List<Wave> waves;
         
         private readonly List<BaseUnitController> enemyWaitList = new();
@@ -42,11 +44,61 @@ namespace FullMoon.Entities
         {
             while (currentLevel < waves.Max(w => w.level))
             {
+                bool enemyAlive = enemyWaitList.Any(e => e.Alive);
+                
+                if (enemyAlive)
+                {
+                    await UniTask.DelayFrame(1);
+                    continue;
+                }
+                
+                enemyWaitList.Clear();
+                
+                await DisplayCountdown(spawnInterval);
+                
                 currentLevel++;
                 var currentWave = GetRandomWave();
+                SpawnWaveTextAsync(2f).Forget();
                 await SpawnEnemies(currentWave);
-                await UniTask.Delay(TimeSpan.FromSeconds(spawnInterval));
             }
+        }
+        
+        private async UniTaskVoid SpawnWaveTextAsync(float displayTime)
+        {
+            MainUIController.Instance.PhaseElement.SetVisible(true);
+            MainUIController.Instance.PhaseText.text = "BATTLE PHASE";
+            MainUIController.Instance.PhaseDetailText.text = $"WAVE {currentLevel}";
+            await UniTask.Delay(TimeSpan.FromSeconds(displayTime));
+            MainUIController.Instance.PhaseElement.SetVisible(false);
+        }
+
+        private async UniTask DisplayCountdown(float interval)
+        {
+            MainUIController.Instance.PhaseElement.SetVisible(true);
+            MainUIController.Instance.PhaseText.text = "REST PHASE";
+            MainUIController.Instance.PhaseDetailText.text = $"다음 전투까지 {interval:F1}초";
+            await UniTask.Delay(TimeSpan.FromSeconds(3f));
+            MainUIController.Instance.PhaseElement.SetVisible(false);
+            
+            float remainingTime = interval;
+
+            while (remainingTime > 0)
+            {
+                if (remainingTime > 5f)
+                {
+                    await UniTask.DelayFrame(1);
+                    remainingTime -= Time.deltaTime;
+                    continue;
+                }
+                
+                MainUIController.Instance.PhaseElement.SetVisible(true);
+                MainUIController.Instance.PhaseText.text = "REST PHASE";
+                MainUIController.Instance.PhaseDetailText.text = $"다음 전투까지 {remainingTime:F1}초";
+                await UniTask.DelayFrame(1);
+                remainingTime -= Time.deltaTime;
+            }
+
+            MainUIController.Instance.PhaseElement.SetVisible(false);
         }
 
         private Wave GetRandomWave()
@@ -64,16 +116,10 @@ namespace FullMoon.Entities
                     Vector3 spawnPosition = GetSpawnPosition(enemyDetail.location);
                     var unit = ObjectPoolManager.Instance.SpawnObject(enemyDetail.enemy, spawnPosition, Quaternion.identity).GetComponent<BaseUnitController>();
                     enemyWaitList.Add(unit);
-                }
-
-                await UniTask.DelayFrame(enemyDetail.count);
-
-                foreach (var unit in enemyWaitList)
-                {
+                    await UniTask.NextFrame();
                     unit.MoveToPosition(transform.position);
+                    await UniTask.Delay(TimeSpan.FromSeconds(enemyDetail.spawnInterval));
                 }
-            
-                enemyWaitList.Clear();
             }
         }
 

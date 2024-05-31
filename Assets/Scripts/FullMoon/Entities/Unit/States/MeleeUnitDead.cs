@@ -27,7 +27,6 @@ namespace FullMoon.Entities.Unit.States
 
         private async UniTask DisableAfterAnimation(string animationName)
         {
-            controller.Agent.enabled = false;
             if (controller.AnimationController.SetAnimation(animationName))
             {
                 int animationHash = Animator.StringToHash(animationName);
