@@ -171,7 +171,7 @@ namespace FullMoon.Camera
                     return;
                 }
 
-                await UniTask.Delay(1000);
+                await UniTask.Delay(500);
             }
         }
         
@@ -232,6 +232,7 @@ namespace FullMoon.Camera
             {
                 List<CommonUnitController> tempList = new List<CommonUnitController>();
                 List<CommonUnitController> unitList = new List<CommonUnitController>();
+                isCraft = false;
 
                 tempList = FindObjectsByType<CommonUnitController>(FindObjectsSortMode.None).ToList();
                 if (tempList.Count < 6)
@@ -250,7 +251,6 @@ namespace FullMoon.Camera
                 }
 
                 hitPoint = hg.point;
-                isCraft = false;
 
                 StartTileTimer(unitList).Forget();
             }
