@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Unity.Burst;
 using FullMoon.FSM;
+using FullMoon.Util;
 
 namespace FullMoon.Entities.Unit.States
 {
@@ -22,7 +23,7 @@ namespace FullMoon.Entities.Unit.States
         {
             controller.IsStopped = true;
             controller.Agent.speed = controller.OverridenUnitData.MovementSpeed;
-            
+
             cts = new CancellationTokenSource();
             Shock(cts.Token).Forget();
         }
@@ -60,8 +61,19 @@ namespace FullMoon.Entities.Unit.States
             
             if (!controller.Agent.pathPending && controller.Agent.remainingDistance <= controller.Agent.stoppingDistance)
             {
-                controller.StateMachine.ChangeState(new CommonUnitIdle(controller));
-                return;
+                if (controller.isCraft)
+                {
+                    ObjectPoolManager.Instance.ReturnObjectToPool(controller.gameObject);
+                    ObjectPoolManager.Instance.SpawnObject(controller.hammerPrefab, controller.transform.position, controller.transform.rotation)
+                                     .GetComponent<HammerUnitController>().buildingType = controller.buildingType;
+                    controller.isCraft = false;
+                    return;
+                }
+                else
+                {
+                    controller.StateMachine.ChangeState(new CommonUnitIdle(controller));
+                    return;
+                }
             }
             
             var unitsInView = controller.UnitInsideViewArea;
@@ -74,10 +86,24 @@ namespace FullMoon.Entities.Unit.States
                 Mathf.Approximately(destination.z, t.LatestDestination.z) &&
                 Vector3.Distance(controller.transform.position, destination) <= controller.viewRange.radius &&
                 Vector3.Distance(controller.transform.position, t.transform.position) <= 3f);
-            
+
+            if (controller.name.Equals("PlayerCommonUnitPrefab (5)") && closestUnit != null)
+                Debug.Log(closestUnit.name);
+
             if (closestUnit != null)
             {
-                controller.StateMachine.ChangeState(new CommonUnitIdle(controller));
+                if (controller.isCraft)
+                {
+                    ObjectPoolManager.Instance.ReturnObjectToPool(controller.gameObject);
+                    ObjectPoolManager.Instance.SpawnObject(controller.hammerPrefab, controller.transform.position, controller.transform.rotation)
+                                              .GetComponent<HammerUnitController>().buildingType = controller.buildingType;
+                    controller.isCraft = false;
+                    return;
+                }
+                else
+                {
+                    controller.StateMachine.ChangeState(new CommonUnitIdle(controller));
+                }
             }
         }
 

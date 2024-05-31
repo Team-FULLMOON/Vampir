@@ -10,6 +10,10 @@ using UniRx;
 using UniRx.Triggers;
 using System.Linq;
 using UnityEngine.EventSystems;
+using Unity.VisualScripting;
+using Cysharp.Threading.Tasks;
+using System.Threading;
+using FullMoon.Util;
 
 namespace FullMoon.Camera
 {
@@ -44,6 +48,11 @@ namespace FullMoon.Camera
         private bool normalMove;
         private bool attackMove;
         private bool altRotation;
+
+        private bool isCraft = false;
+        private Vector3 hitPoint;
+        private BuildingType buildingType;
+        private CancellationTokenSource cancel = new CancellationTokenSource();
         
         private List<BaseUnitController> selectedUnitList;
         
@@ -134,7 +143,44 @@ namespace FullMoon.Camera
                 targetFov = Mathf.Clamp(targetFov, minFov, maxFov);
             }
         }
+
+        async UniTaskVoid StartTileTimer(List<CommonUnitController> unitList)
+        {
+            while (true)
+            {
+                for (int i = 0; i < unitList.Count; ++i)
+                {
+                    var unit = unitList[i];
+                    if (!unit.gameObject.activeInHierarchy)
+                    {
+                        unitList.Remove(unit);
+                    }
+                }
+
+                if (unitList.Count.Equals(0))
+                {
+                    await UniTask.Delay(TimeSpan.FromSeconds(2));
+
+                    HammerUnitController[] units = FindObjectsByType<HammerUnitController>(FindObjectsSortMode.None);
+                    for (int i = 0; i < units.Count(); ++i)
+                    {
+                        ObjectPoolManager.Instance.ReturnObjectToPool(units[i].gameObject);
+                    }
+
+                    TileController.Instance.CreateTile(hitPoint, buildingType);
+                    return;
+                }
+
+                await UniTask.Delay(1000);
+            }
+        }
         
+        public void CreateTileSetting(bool isCraft, BuildingType type)
+        {
+            this.isCraft = isCraft;
+            buildingType = type;
+        }
+
         #region Mouse
 
         /// <summary>
@@ -180,6 +226,33 @@ namespace FullMoon.Camera
             {
                 altRotation = true;
                 return;
+            }
+
+            if (isCraft && Physics.Raycast(mouseRay, out var hg, Mathf.Infinity, (1 << LayerMask.NameToLayer("Ground"))))
+            {
+                List<CommonUnitController> tempList = new List<CommonUnitController>();
+                List<CommonUnitController> unitList = new List<CommonUnitController>();
+
+                tempList = FindObjectsByType<CommonUnitController>(FindObjectsSortMode.None).ToList();
+                if (tempList.Count < 6)
+                {
+                    return;
+                }
+                
+                for (int i = 0; i < 6; ++i)
+                {
+                    unitList.Add(tempList[i]);
+                }
+
+                foreach (var u in unitList)
+                {
+                    u.GetComponent<CommonUnitController>().CraftBuilding(hg.point, buildingType);
+                }
+
+                hitPoint = hg.point;
+                isCraft = false;
+
+                StartTileTimer(unitList).Forget();
             }
 
             DeselectAll();

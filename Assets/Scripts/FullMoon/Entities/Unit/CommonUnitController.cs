@@ -8,6 +8,7 @@ using FullMoon.ScriptableObject;
 using FullMoon.Util;
 using Unity.Burst;
 using UnityEngine.Rendering.Universal;
+using FullMoon.UI;
 
 namespace FullMoon.Entities.Unit
 {
@@ -22,6 +23,12 @@ namespace FullMoon.Entities.Unit
         
         public CommonUnitData OverridenUnitData { get; private set; }
         public BaseUnitController MainUnit { get; private set; }
+
+        [HideInInspector]
+        public bool isCraft = false;
+        [HideInInspector]
+        public BuildingType buildingType;
+        public GameObject hammerPrefab;
 
         protected override void OnEnable()
         {
@@ -39,6 +46,14 @@ namespace FullMoon.Entities.Unit
             
             MainUnit = FindObjectsOfType<BaseUnitController>()
                 .FirstOrDefault(unit => unit.unitData.UnitType.Equals("Player") && unit.unitData.UnitClass.Equals("Main"));
+        }
+
+        public void CraftBuilding(Vector3 pos, BuildingType type)
+        {
+            isCraft = true;
+            buildingType = type;
+
+            MoveToPosition(pos);
         }
 
         public override void Die()
