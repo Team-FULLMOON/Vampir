@@ -51,7 +51,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1029500191801352571}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -136,3 +136,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingData: {fileID: 11400000, guid: d982ef2afe21edc4b950177d9f29711a, type: 2}
+  buildingFramePrefab: {fileID: 0}
+  targetPos: {x: 0, y: 0, z: 0}

@@ -64,8 +64,7 @@ namespace FullMoon.Entities.Unit.States
                 if (controller.isCraft)
                 {
                     ObjectPoolManager.Instance.ReturnObjectToPool(controller.gameObject);
-                    ObjectPoolManager.Instance.SpawnObject(controller.hammerPrefab, controller.transform.position, controller.transform.rotation)
-                                     .GetComponent<HammerUnitController>().buildingType = controller.buildingType;
+                    ObjectPoolManager.Instance.SpawnObject(controller.hammerPrefab, controller.transform.position, controller.transform.rotation);
                     controller.isCraft = false;
                     return;
                 }
@@ -90,8 +89,7 @@ namespace FullMoon.Entities.Unit.States
                 if (controller.isCraft)
                 {
                     ObjectPoolManager.Instance.ReturnObjectToPool(controller.gameObject);
-                    ObjectPoolManager.Instance.SpawnObject(controller.hammerPrefab, controller.transform.position, controller.transform.rotation)
-                                              .GetComponent<HammerUnitController>().buildingType = controller.buildingType;
+                    ObjectPoolManager.Instance.SpawnObject(controller.hammerPrefab, controller.transform.position, controller.transform.rotation);
                     controller.isCraft = false;
                 }
                 else

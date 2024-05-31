@@ -50,8 +50,8 @@ namespace FullMoon.Camera
         private bool altRotation;
 
         private bool isCraft = false;
-        private Vector3 hitPoint;
-        private BuildingType buildingType;
+        private Queue<Vector3> hitPoint;
+        private Queue<BuildingType> buildingType;
         private CancellationTokenSource cancel = new CancellationTokenSource();
         
         private List<BaseUnitController> selectedUnitList;
@@ -60,6 +60,8 @@ namespace FullMoon.Camera
         {
             mainCamera = UnityEngine.Camera.main;
             selectedUnitList = new List<BaseUnitController>();
+            hitPoint = new Queue<Vector3>();
+            buildingType = new Queue<BuildingType>();
         }
 
         private void Start()
@@ -144,36 +146,22 @@ namespace FullMoon.Camera
             }
         }
 
-        async UniTaskVoid StartTileTimer(List<CommonUnitController> unitList)
+        public void StartTileTimer()
         {
-            // while (true)
-            // {
-                // for (int i = 0; i < unitList.Count; ++i)
-                // {
-                //     var unit = unitList[i];
-                //     if (!unit.gameObject.activeInHierarchy)
-                //     {
-                //         unitList.Remove(unit);
-                //     }
-                // }
-
-                await UniTask.Delay(TimeSpan.FromSeconds(3));
-
-                HammerUnitController[] units = FindObjectsByType<HammerUnitController>(FindObjectsSortMode.None);
-                for (int i = 0; i < units.Count(); ++i)
-                {
-                    ObjectPoolManager.Instance.ReturnObjectToPool(units[i].gameObject);
-                }
-
-                TileController.Instance.CreateTile(hitPoint, buildingType);
-                return;
-            // }
+            if (UnityEngine.AI.NavMesh.SamplePosition(hitPoint.Dequeue(), out var hit, 100.0f, UnityEngine.AI.NavMesh.AllAreas))
+            {
+                TileController.Instance.CreateTile(hit.position, buildingType.Dequeue());
+            }
+            else
+            {
+                Debug.LogError("지을 수 있는 공간이 없습니다.");
+            }
         }
         
         public void CreateTileSetting(bool isCraft, BuildingType type)
         {
             this.isCraft = isCraft;
-            buildingType = type;
+            buildingType.Enqueue(type);
         }
 
         #region Mouse
@@ -242,12 +230,12 @@ namespace FullMoon.Camera
 
                 foreach (var u in unitList)
                 {
-                    u.GetComponent<CommonUnitController>().CraftBuilding(hg.point, buildingType);
+                    u.GetComponent<CommonUnitController>().CraftBuilding(hg.point);
                 }
 
-                hitPoint = hg.point;
+                hitPoint.Enqueue(hg.point);
 
-                StartTileTimer(unitList).Forget();
+                StartTileTimer();
             }
 
             DeselectAll();
