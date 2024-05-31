@@ -29,6 +29,7 @@ namespace FullMoon.Entities.Unit
             SaveLocalPositions();
             foreach (var unit in unitPreset)
             {
+                unit.enabled = true;
                 unit.Flag = this;
             }
             ChangeFlagModelPosition();
@@ -36,17 +37,18 @@ namespace FullMoon.Entities.Unit
             Deselect();
         }
 
-        private void OnDestroy()
-        {
-            if (currentFlagModel != null)
-            {
-                ObjectPoolManager.Instance.ReturnObjectToPool(currentFlagModel.gameObject);
-            }
-        }
-
         private void Update()
         {
             UnitInsideViewArea.RemoveWhere(unit => unit == null || !unit.gameObject.activeInHierarchy || (!unit.Alive && unit is not MainUnitController));
+
+            if (unitPreset.All(unit => unit.Alive is false && unit is not MainUnitController))
+            {
+                if (currentFlagModel != null)
+                {
+                    ObjectPoolManager.Instance.ReturnObjectToPool(currentFlagModel.gameObject);
+                }
+                ObjectPoolManager.Instance.ReturnObjectToPool(gameObject);
+            }
         }
 
         [ButtonMethod]
@@ -191,7 +193,7 @@ namespace FullMoon.Entities.Unit
         }
         
 #if UNITY_EDITOR
-        protected virtual void OnDrawGizmos()
+        protected void OnDrawGizmos()
         {
             InitViewRangeRadius();
         }

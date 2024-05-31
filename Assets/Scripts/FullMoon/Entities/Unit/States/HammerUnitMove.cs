@@ -42,7 +42,7 @@ namespace FullMoon.Entities.Unit.States
                 Mathf.Approximately(destination.x, t.LatestDestination.x) &&
                 Mathf.Approximately(destination.y, t.LatestDestination.y) &&
                 Mathf.Approximately(destination.z, t.LatestDestination.z) &&
-                Vector3.Distance(controller.transform.position, destination) <= controller.viewRange.radius &&
+                Vector3.Distance(controller.transform.position, destination) <= 1f &&
                 Vector3.Distance(controller.transform.position, t.transform.position) <= 2f);
 
             if (closestUnit != null)

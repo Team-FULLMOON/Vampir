@@ -52,6 +52,7 @@ namespace FullMoon.Entities.Unit.States
             if (controller.UnitType is "Player" or "Enemy")
             {
                 closestUnit = unitsInView
+                    .Where(t => t.gameObject.activeInHierarchy && t.Alive)
                     .Where(t => !controller.UnitType.Equals(t.UnitType))
                     .OrderBy(t => (t.transform.position - controller.transform.position).sqrMagnitude)
                     .FirstOrDefault();

@@ -1,8 +1,4 @@
 using FullMoon.FSM;
-using FullMoon.UI;
-using FullMoon.Util;
-using UnityEngine;
-
 
 namespace FullMoon.Entities.Unit.States
 {
@@ -21,9 +17,7 @@ namespace FullMoon.Entities.Unit.States
             controller.AnimationController.SetAnimation("Craft", 0.1f);
         }
 
-        public void Execute() 
-        {
-        }
+        public void Execute() { }
 
         public void FixedExecute() { }
 

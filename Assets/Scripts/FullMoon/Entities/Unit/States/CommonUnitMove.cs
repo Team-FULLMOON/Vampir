@@ -69,11 +69,9 @@ namespace FullMoon.Entities.Unit.States
                     controller.isCraft = false;
                     return;
                 }
-                else
-                {
-                    controller.StateMachine.ChangeState(new CommonUnitIdle(controller));
-                    return;
-                }
+
+                controller.StateMachine.ChangeState(new CommonUnitIdle(controller));
+                return;
             }
             
             var unitsInView = controller.UnitInsideViewArea;
@@ -95,7 +93,6 @@ namespace FullMoon.Entities.Unit.States
                     ObjectPoolManager.Instance.SpawnObject(controller.hammerPrefab, controller.transform.position, controller.transform.rotation)
                                               .GetComponent<HammerUnitController>().buildingType = controller.buildingType;
                     controller.isCraft = false;
-                    return;
                 }
                 else
                 {
