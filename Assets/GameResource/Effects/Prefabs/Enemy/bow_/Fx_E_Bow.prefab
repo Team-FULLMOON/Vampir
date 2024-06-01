@@ -28,6 +28,16 @@ PrefabInstance:
       propertyPath: InitialModule.startColor.maxColor.r
       value: 0.2783019
       objectReference: {fileID: 0}
+    - target: {fileID: 648869078112820162, guid: e0536bfec450158458c0aac3c61d8e84,
+        type: 3}
+      propertyPath: InitialModule.startRotationX.scalar
+      value: -1.5707963
+      objectReference: {fileID: 0}
+    - target: {fileID: 648869078112820162, guid: e0536bfec450158458c0aac3c61d8e84,
+        type: 3}
+      propertyPath: InitialModule.startRotationY.scalar
+      value: -1.5707963
+      objectReference: {fileID: 0}
     - target: {fileID: 6681104543973149661, guid: e0536bfec450158458c0aac3c61d8e84,
         type: 3}
       propertyPath: m_LocalPosition.x
