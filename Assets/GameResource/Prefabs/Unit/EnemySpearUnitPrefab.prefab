@@ -54,7 +54,7 @@ MonoBehaviour:
   m_DecalLayerMask: 4294967295
   m_ScaleMode: 0
   m_Offset: {x: 0, y: 0, z: 2}
-  m_Size: {x: 8, y: 8, z: 5}
+  m_Size: {x: 4, y: 4, z: 5}
   m_FadeFactor: 1
 --- !u!1 &3766662488880838298
 GameObject:
@@ -238,10 +238,10 @@ MonoBehaviour:
   unitData: {fileID: 11400000, guid: 1874964c6f23ced4f9ee992691110837, type: 2}
   unitModel: {fileID: 2139949265760670860}
   unitAnimator: {fileID: 5761120100128846746}
-  unitMarker: {fileID: 6798072512803417028}
   viewRange: {fileID: 2268042740748443340}
   decalProjector: {fileID: 6081375030924233605}
-  attackEffect: {fileID: 0}
+  attackEffect: {fileID: 6997837654356321026, guid: 29e6c4735e07faa49b02b2e0e90ba83b,
+    type: 3}
   attackPointEffect: {fileID: 0}
 --- !u!136 &6372571031042578545
 CapsuleCollider:

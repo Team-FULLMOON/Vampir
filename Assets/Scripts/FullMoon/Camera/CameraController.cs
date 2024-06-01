@@ -5,6 +5,7 @@ using Cinemachine;
 using FullMoon.UI;
 using FullMoon.Input;
 using FullMoon.Entities.Unit;
+using FullMoon.Util;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 
@@ -198,6 +199,8 @@ namespace FullMoon.Camera
 
                     if (tempList.Count < 6)
                     {
+                        isCraft = false;
+                        ToastManager.Instance.ShowToast("자원 유닛이 부족합니다.", "red");
                         return;
                     }
                     
@@ -205,7 +208,7 @@ namespace FullMoon.Camera
 
                     if (tileMap.HasTile(sampleCellPosition))
                     {
-                        Debug.LogError("지을 수 있는 공간이 없습니다. 이미 건물이 존재합니다.");
+                        ToastManager.Instance.ShowToast("지을 수 있는 공간이 없습니다. 이미 건물이 존재합니다.", "red");
                         return;
                     }
                     
@@ -225,7 +228,7 @@ namespace FullMoon.Camera
                 }
                 else
                 {
-                    Debug.LogError("지을 수 있는 공간이 없습니다.");
+                    ToastManager.Instance.ShowToast("지을 수 있는 공간이 없습니다.", "red");
                 }
             }
 

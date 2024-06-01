@@ -38,6 +38,6 @@ MonoBehaviour:
   counterDamage: 100
   counterKnockback: 0
   counterGuard: 100
-  hitAnimationFrame: 12
+  hitAnimationFrame: 38
   spearPushFrame: 2
   spearPushForce: 10

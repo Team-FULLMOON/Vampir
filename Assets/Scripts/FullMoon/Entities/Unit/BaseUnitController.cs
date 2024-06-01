@@ -146,7 +146,9 @@ namespace FullMoon.Entities.Unit
             {
                 for (int i = 0; i < 5; i++)
                 {
-                    ObjectPoolManager.Instance.SpawnObject(unitData.RespawnUnitObject, transform.position, Quaternion.identity);
+                    Vector2 randomPosition = Random.insideUnitCircle * 1f;
+                    Vector3 spawnPosition = new Vector3(transform.position.x + randomPosition.x, transform.position.y, transform.position.z + randomPosition.y);
+                    ObjectPoolManager.Instance.SpawnObject(unitData.RespawnUnitObject, spawnPosition, Quaternion.identity);
                 }
             }
         }
