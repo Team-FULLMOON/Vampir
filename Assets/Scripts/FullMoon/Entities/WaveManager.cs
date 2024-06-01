@@ -67,7 +67,7 @@ namespace FullMoon.Entities
         {
             MainUIController.Instance.BattlePhase.SetVisible(true);
             MainUIController.Instance.RestPhase.SetVisible(false);
-            MainUIController.Instance.BattleDetailText.text = $"WAVE {currentLevel}";
+            MainUIController.Instance.BattleDetailText.text = $"WAVE {currentLevel:00}";
             await UniTask.Delay(TimeSpan.FromSeconds(displayTime));
             MainUIController.Instance.BattlePhase.SetVisible(false);
         }
