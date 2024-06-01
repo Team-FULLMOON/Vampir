@@ -48,6 +48,6 @@ Material:
     - _emission: 1.2
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _HDRColor: {r: 2.4807718, g: 1.3691052, b: 2.28978, a: 0}
+    - _HDRColor: {r: 2.4807718, g: 1.3767633, b: 1.4697161, a: 0}
     - _Light_dir: {r: -0.16863033, g: -0.91594553, b: -0.36415356, a: 0}
   m_BuildTextureStacks: []
