@@ -42,6 +42,7 @@ namespace FullMoon.Entities
 
         private async UniTaskVoid SpawnWaveAsync()
         {
+            await UniTask.NextFrame();
             while (currentLevel < waves.Max(w => w.level))
             {
                 bool enemyAlive = enemyWaitList.Any(e => e.Alive);
@@ -54,6 +55,8 @@ namespace FullMoon.Entities
                 
                 enemyWaitList.Clear();
                 
+                MainUIController.Instance.DayCountText.text = $"{currentLevel + 1}";
+                
                 await DisplayCountdown(spawnInterval);
                 
                 currentLevel++;
@@ -65,20 +68,24 @@ namespace FullMoon.Entities
         
         private async UniTaskVoid SpawnWaveTextAsync(float displayTime)
         {
-            MainUIController.Instance.BattlePhase.SetVisible(true);
-            MainUIController.Instance.RestPhase.SetVisible(false);
+            MainUIController.Instance.BattleIcon.SetVisible(true);
+            MainUIController.Instance.RestIcon.SetVisible(false);
+            MainUIController.Instance.RestPhase.SetVisible(false, 0.3f);
+            MainUIController.Instance.BattlePhase.SetVisible(true, 0.5f);
             MainUIController.Instance.BattleDetailText.text = $"WAVE {currentLevel:00}";
             await UniTask.Delay(TimeSpan.FromSeconds(displayTime));
-            MainUIController.Instance.BattlePhase.SetVisible(false);
+            MainUIController.Instance.BattlePhase.SetVisible(false, 0.5f);
         }
 
         private async UniTask DisplayCountdown(float interval)
         {
-            MainUIController.Instance.BattlePhase.SetVisible(false);
-            MainUIController.Instance.RestPhase.SetVisible(true);
+            MainUIController.Instance.BattleIcon.SetVisible(false);
+            MainUIController.Instance.RestIcon.SetVisible(true);
+            MainUIController.Instance.BattlePhase.SetVisible(false, 0.3f);
+            MainUIController.Instance.RestPhase.SetVisible(true, 0.5f);
             MainUIController.Instance.RestDetailText.text = $"다음 전투까지 {interval:F1}초";
             await UniTask.Delay(TimeSpan.FromSeconds(3f));
-            MainUIController.Instance.RestPhase.SetVisible(false);
+            MainUIController.Instance.RestPhase.SetVisible(false, 0.5f);
             
             float remainingTime = interval;
 
@@ -91,13 +98,13 @@ namespace FullMoon.Entities
                     continue;
                 }
                 
-                MainUIController.Instance.RestPhase.SetVisible(true);
+                MainUIController.Instance.RestPhase.SetVisible(true, 0.5f);
                 MainUIController.Instance.RestDetailText.text = $"다음 전투까지 {remainingTime:F1}초";
                 await UniTask.DelayFrame(1);
                 remainingTime -= Time.deltaTime;
             }
 
-            MainUIController.Instance.RestPhase.SetVisible(false);
+            MainUIController.Instance.RestPhase.SetVisible(false, 0.5f);
         }
 
         private Wave GetRandomWave()

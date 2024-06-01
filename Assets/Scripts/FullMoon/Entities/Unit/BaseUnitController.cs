@@ -7,6 +7,7 @@ using UnityEngine.AI;
 using FullMoon.Util;
 using FullMoon.Interfaces;
 using FullMoon.ScriptableObject;
+using FullMoon.UI;
 using Random = UnityEngine.Random;
 
 namespace FullMoon.Entities.Unit
@@ -70,6 +71,11 @@ namespace FullMoon.Entities.Unit
             {
                 viewRange.radius = unitData.ViewRadius;
             }
+            
+            if (UnitType is "Enemy")
+            {
+                MainUIController.Instance.ChangeEnemyAmount(1);
+            }
         }
 
         [BurstCompile]
@@ -103,27 +109,29 @@ namespace FullMoon.Entities.Unit
 
             if (Enum.TryParse(attacker.UnitClass, out UnitClassFlag attackerClass) == false)
             {
-                Debug.LogError($"Invalid UnitClass string: {attacker.UnitClass}");
-                return;
-            }
-
-            // 비트플래그를 사용한 상성 비교
-            if ((attackerClass & unitData.UnitCounter) is not 0)
-            {
-                amount = (int)(amount / (unitData.CounterDamage / 100f));
+                Debug.LogWarning($"Invalid UnitClass string: {attacker.UnitClass}");
                 Hp = Mathf.Clamp(Hp - amount, 0, int.MaxValue);
-            }
-            else if ((attackerClass & unitData.UnitAdvance) is not 0)
-            {
-                int rand = Random.Range(0, 100);
-                if (rand < unitData.CounterGuard)
-                {
-                    return;
-                }
             }
             else
             {
-                Hp = Mathf.Clamp(Hp - amount, 0, int.MaxValue);
+                // 비트플래그를 사용한 상성 비교
+                if ((attackerClass & unitData.UnitCounter) is not 0)
+                {
+                    amount = (int)(amount / (unitData.CounterDamage / 100f));
+                    Hp = Mathf.Clamp(Hp - amount, 0, int.MaxValue);
+                }
+                else if ((attackerClass & unitData.UnitAdvance) is not 0)
+                {
+                    int rand = Random.Range(0, 100);
+                    if (rand < unitData.CounterGuard)
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    Hp = Mathf.Clamp(Hp - amount, 0, int.MaxValue);
+                }
             }
 
             if (unitAnimator != null)
@@ -148,8 +156,15 @@ namespace FullMoon.Entities.Unit
             Alive = false;
             Agent.enabled = false;
             
-            if (UnitType == "Enemy" && unitData.RespawnUnitObject != null)
+            if (UnitType is "Enemy")
             {
+                MainUIController.Instance.ChangeEnemyAmount(-1);
+                
+                if (unitData.RespawnUnitObject == null)
+                {
+                    return;
+                }
+                
                 for (int i = 0; i < 5; i++)
                 {
                     Vector2 randomPosition = Random.insideUnitCircle * 1f;

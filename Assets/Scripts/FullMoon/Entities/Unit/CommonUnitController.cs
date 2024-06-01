@@ -24,7 +24,6 @@ namespace FullMoon.Entities.Unit
         public BaseUnitController MainUnit { get; private set; }
 
         public bool IsCraft { get; set; }
-        public BuildingType BuildingType  { get; set; }
         
         public GameObject hammerPrefab;
 
@@ -44,20 +43,25 @@ namespace FullMoon.Entities.Unit
             
             MainUnit = FindObjectsOfType<BaseUnitController>()
                 .FirstOrDefault(unit => unit.unitData.UnitType.Equals("Player") && unit.unitData.UnitClass.Equals("Main"));
+            
+            MainUIController.Instance.ChangeCommonAmount(1);
         }
 
         public void CraftBuilding(Vector3 pos)
         {
+            MainUIController.Instance.ChangeCommonAmount(-1);
             ObjectPoolManager.Instance.ReturnObjectToPool(gameObject);
+            
             HammerUnitController hammerUnit = ObjectPoolManager.Instance.SpawnObject(hammerPrefab, transform.position, transform.rotation)
                 .GetComponent<HammerUnitController>();
-                                                                        
+            
             hammerUnit.MoveToPosition(pos);
         }
 
         public override void Die()
         {
             base.Die();
+            MainUIController.Instance.ChangeCommonAmount(-1);
             StateMachine.ChangeState(new CommonUnitDead(this));
         }
 

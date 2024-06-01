@@ -9,7 +9,8 @@ namespace FullMoon.ScriptableObject
         None = 0,
         Sword = 1 << 0, // 1
         Spear = 1 << 1, // 2
-        Crossbow = 1 << 2 // 4
+        Crossbow = 1 << 2, // 4
+        Main = 1 << 2 // 5
     }
     
     [System.Serializable]
