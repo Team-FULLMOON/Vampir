@@ -206,7 +206,7 @@ namespace FullMoon.Camera
 
                     if (tileMap.HasTile(sampleCellPosition))
                     {
-                        ToastManager.Instance.ShowToast("지을 수 있는 공간이 없습니다. 이미 건물이 존재합니다.");
+                        ToastManager.Instance.ShowToast("지을 수 있는 공간이 없습니다. 이미 건물이 존재합니다.", "red");
                         return;
                     }
                     
@@ -226,7 +226,7 @@ namespace FullMoon.Camera
                 }
                 else
                 {
-                    ToastManager.Instance.ShowToast("지을 수 있는 공간이 없습니다.");
+                    ToastManager.Instance.ShowToast("지을 수 있는 공간이 없습니다.", "red");
                 }
             }
 

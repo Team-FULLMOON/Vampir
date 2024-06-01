@@ -14,12 +14,12 @@ namespace FullMoon.Util
 
         private Queue<GameObject> toasts = new();
 
-        public void ShowToast(string message)
+        public void ShowToast(string message, string color = "white")
         {
             GameObject toastInstance = Instantiate(toastPrefab, toastContainer);
             toastInstance.transform.SetSiblingIndex(0);
             TextMeshProUGUI toastText = toastInstance.GetComponent<TextMeshProUGUI>();
-            toastText.text = $"<color=red>{message}</color>";
+            toastText.text = $"<color={color}>{message}</color>";
         
             toasts.Enqueue(toastInstance);
             if (toasts.Count > 5)
