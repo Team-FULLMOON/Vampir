@@ -33,8 +33,8 @@ MonoBehaviour:
   attackRadius: 1.5
   viewRadius: 8
   stateTransitionRadius: 8
-  unitAdvance: None
-  unitCounter: None
+  unitAdvance: 0
+  unitCounter: 0
   counterDamage: 100
   counterKnockback: 0
   counterGuard: 0
