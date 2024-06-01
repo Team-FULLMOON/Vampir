@@ -1,9 +1,10 @@
-using FullMoon.ScriptableObject;
-using FullMoon.Util;
 using MyBox;
+using System;
+using Cysharp.Threading.Tasks;
 using Unity.Burst;
-using Unity.Mathematics;
 using UnityEngine;
+using FullMoon.Util;
+using FullMoon.ScriptableObject;
 
 namespace FullMoon.Entities.Building
 {
@@ -20,27 +21,17 @@ namespace FullMoon.Entities.Building
             base.OnEnable();
             OverridenBuildingData = buildingData as RangedBuildingData;
 
-            SpawnUnit();
+            ShowFrame(3f).Forget();
+            SpawnUnit(3f).Forget();
         }
 
-        public void SpawnUnit()
+        private async UniTaskVoid SpawnUnit(float delay = 0f)
         {
-            ObjectPoolManager.Instance.SpawnObject(spawnUnitObject, targetPos, Quaternion.identity);
-        }
-
-        public override void Die()
-        {
-            base.Die();
-        }
-
-        public override void Select()
-        {
-            base.Select();
-        }
-
-        public override void Deselect()
-        {
-            base.Deselect();
+            await UniTask.Delay(TimeSpan.FromSeconds(delay));
+            if (spawnUnitObject != null)
+            {
+                ObjectPoolManager.Instance.SpawnObject(spawnUnitObject, transform.position, Quaternion.identity);
+            }
         }
     }
 }
