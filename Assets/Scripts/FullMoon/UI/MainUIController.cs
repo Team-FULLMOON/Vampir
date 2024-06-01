@@ -15,9 +15,10 @@ namespace FullMoon.UI
         
         public Button RetryButton { get; private set; }
         
-        public VisualElement PhaseElement { get; private set; }
-        public TextElement PhaseText { get; private set; }
-        public TextElement PhaseDetailText { get; private set; }
+        public VisualElement BattlePhase { get; private set; }
+        public VisualElement RestPhase { get; private set; }
+        public TextElement BattleDetailText { get; private set; }
+        public TextElement RestDetailText { get; private set; }
         
         private void OnEnable()
         {
@@ -26,10 +27,14 @@ namespace FullMoon.UI
             RetryButton = root.Q<Button>("RetryButton");
             RetryButton.RegisterCallback<ClickEvent>(Retry);
             
-            PhaseElement = root.Q<VisualElement>("Phase");
-            PhaseText = root.Q<TextElement>("PhaseText");
-            PhaseDetailText = root.Q<TextElement>("PhaseDetailText");
-            PhaseElement.SetVisible(false);
+            BattlePhase = root.Q<VisualElement>("BattlePhase");
+            RestPhase = root.Q<VisualElement>("RestPhase");
+            
+            BattleDetailText = root.Q<TextElement>("BattleDetailText");
+            RestDetailText = root.Q<TextElement>("RestDetailText");
+            
+            BattlePhase.SetVisible(false);
+            RestPhase.SetVisible(false);
         }
         
         private void Retry(ClickEvent evt)
