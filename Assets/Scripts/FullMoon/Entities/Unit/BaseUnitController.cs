@@ -103,27 +103,29 @@ namespace FullMoon.Entities.Unit
 
             if (Enum.TryParse(attacker.UnitClass, out UnitClassFlag attackerClass) == false)
             {
-                Debug.LogError($"Invalid UnitClass string: {attacker.UnitClass}");
-                return;
-            }
-
-            // 비트플래그를 사용한 상성 비교
-            if ((attackerClass & unitData.UnitCounter) is not 0)
-            {
-                amount = (int)(amount / (unitData.CounterDamage / 100f));
+                Debug.LogWarning($"Invalid UnitClass string: {attacker.UnitClass}");
                 Hp = Mathf.Clamp(Hp - amount, 0, int.MaxValue);
-            }
-            else if ((attackerClass & unitData.UnitAdvance) is not 0)
-            {
-                int rand = Random.Range(0, 100);
-                if (rand < unitData.CounterGuard)
-                {
-                    return;
-                }
             }
             else
             {
-                Hp = Mathf.Clamp(Hp - amount, 0, int.MaxValue);
+                // 비트플래그를 사용한 상성 비교
+                if ((attackerClass & unitData.UnitCounter) is not 0)
+                {
+                    amount = (int)(amount / (unitData.CounterDamage / 100f));
+                    Hp = Mathf.Clamp(Hp - amount, 0, int.MaxValue);
+                }
+                else if ((attackerClass & unitData.UnitAdvance) is not 0)
+                {
+                    int rand = Random.Range(0, 100);
+                    if (rand < unitData.CounterGuard)
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    Hp = Mathf.Clamp(Hp - amount, 0, int.MaxValue);
+                }
             }
 
             if (unitAnimator != null)
