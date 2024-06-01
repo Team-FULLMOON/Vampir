@@ -1,11 +1,11 @@
 using MyBox;
-using FullMoon.Interfaces;
+using System;
+using Unity.Burst;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
+using FullMoon.Interfaces;
 using FullMoon.Entities.Unit;
 using FullMoon.ScriptableObject;
-using Unity.Burst;
-using Cysharp.Threading.Tasks;
-using System;
 
 namespace FullMoon.Entities.Building
 {
@@ -17,10 +17,8 @@ namespace FullMoon.Entities.Building
         public BaseBuildingData buildingData;
 
         [SerializeField, OverrideLabel("Frame")]
-        public GameObject buildingFramePrefab;
+        public GameObject buildingFrame;
 
-        [HideInInspector]
-        public Vector3 targetPos;
         public int Hp { get; set; }
         public bool Alive { get; private set; }
 
@@ -28,8 +26,11 @@ namespace FullMoon.Entities.Building
         {
             Alive = true;
             Hp = buildingData.MaxHp;
-
-            ShowFrame().Forget();
+            
+            if (buildingFrame != null)
+            {
+                buildingFrame.SetActive(false);
+            }
         }
 
         public virtual void ReceiveDamage(int amount, BaseUnitController attacker)
@@ -39,7 +40,7 @@ namespace FullMoon.Entities.Building
                 return;
             }
 
-            Hp = Mathf.Clamp(Hp - amount, 0, System.Int32.MaxValue);
+            Hp = Mathf.Clamp(Hp - amount, 0, Int32.MaxValue);
 
             if (Hp <= 0)
             {
@@ -47,12 +48,13 @@ namespace FullMoon.Entities.Building
             }
         }
 
-        public async UniTaskVoid ShowFrame()
+        protected async UniTaskVoid ShowFrame(float delay = 0f)
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(3f));
-
-            GetComponent<MeshRenderer>().enabled = true;
-            return;
+            await UniTask.Delay(TimeSpan.FromSeconds(delay));
+            if (buildingFrame != null)
+            {
+                buildingFrame.SetActive(true);
+            }
         }
 
         public virtual void Die()
@@ -60,14 +62,8 @@ namespace FullMoon.Entities.Building
             Alive = false;
         }
 
-        public virtual void Select()
-        {
+        public virtual void Select() { }
 
-        }
-
-        public virtual void Deselect()
-        {
-
-        }
+        public virtual void Deselect() { }
     }
 }

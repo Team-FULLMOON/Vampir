@@ -1,5 +1,3 @@
-using FullMoon.Entities.Unit;
-using UnityEngine;
 using Unity.Burst;
 
 namespace FullMoon.Entities.Building
@@ -10,21 +8,7 @@ namespace FullMoon.Entities.Building
         protected override void OnEnable()
         {
             base.OnEnable();
-        }
-
-        public override void Die()
-        {
-            base.Die();
-        }
-
-        public override void Select()
-        {
-            base.Select();
-        }
-
-        public override void Deselect()
-        {
-            base.Deselect();
+            ShowFrame(3f).Forget();
         }
     }
 }

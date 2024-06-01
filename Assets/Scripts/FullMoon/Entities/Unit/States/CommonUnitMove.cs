@@ -61,11 +61,11 @@ namespace FullMoon.Entities.Unit.States
             
             if (!controller.Agent.pathPending && controller.Agent.remainingDistance <= controller.Agent.stoppingDistance)
             {
-                if (controller.isCraft)
+                if (controller.IsCraft)
                 {
                     ObjectPoolManager.Instance.ReturnObjectToPool(controller.gameObject);
                     ObjectPoolManager.Instance.SpawnObject(controller.hammerPrefab, controller.transform.position, controller.transform.rotation);
-                    controller.isCraft = false;
+                    controller.IsCraft = false;
                     return;
                 }
 
@@ -86,11 +86,11 @@ namespace FullMoon.Entities.Unit.States
 
             if (closestUnit != null)
             {
-                if (controller.isCraft)
+                if (controller.IsCraft)
                 {
                     ObjectPoolManager.Instance.ReturnObjectToPool(controller.gameObject);
                     ObjectPoolManager.Instance.SpawnObject(controller.hammerPrefab, controller.transform.position, controller.transform.rotation);
-                    controller.isCraft = false;
+                    controller.IsCraft = false;
                 }
                 else
                 {

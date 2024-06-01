@@ -1,14 +1,13 @@
-using System;
 using MyBox;
 using System.Linq;
-using FullMoon.Entities.Unit.States;
+using Unity.Burst;
 using UnityEngine;
 using UnityEngine.AI;
-using FullMoon.ScriptableObject;
-using FullMoon.Util;
-using Unity.Burst;
 using UnityEngine.Rendering.Universal;
 using FullMoon.UI;
+using FullMoon.Util;
+using FullMoon.ScriptableObject;
+using FullMoon.Entities.Unit.States;
 
 namespace FullMoon.Entities.Unit
 {
@@ -24,10 +23,9 @@ namespace FullMoon.Entities.Unit
         public CommonUnitData OverridenUnitData { get; private set; }
         public BaseUnitController MainUnit { get; private set; }
 
-        [HideInInspector]
-        public bool isCraft = false;
-        [HideInInspector]
-        public BuildingType buildingType;
+        public bool IsCraft { get; set; }
+        public BuildingType BuildingType  { get; set; }
+        
         public GameObject hammerPrefab;
 
         protected override void OnEnable()
@@ -52,7 +50,7 @@ namespace FullMoon.Entities.Unit
         {
             ObjectPoolManager.Instance.ReturnObjectToPool(gameObject);
             HammerUnitController hammerUnit = ObjectPoolManager.Instance.SpawnObject(hammerPrefab, transform.position, transform.rotation)
-                                                                        .GetComponent<HammerUnitController>();
+                .GetComponent<HammerUnitController>();
                                                                         
             hammerUnit.MoveToPosition(pos);
         }

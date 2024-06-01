@@ -1,5 +1,6 @@
 using MyBox;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using FullMoon.Entities.Unit.States;
 using UnityEngine;
 using UnityEngine.AI;
@@ -7,7 +8,6 @@ using FullMoon.ScriptableObject;
 using FullMoon.Util;
 using Unity.Burst;
 using UnityEngine.Rendering.Universal;
-using FullMoon.UI;
 
 namespace FullMoon.Entities.Unit
 {
@@ -33,7 +33,7 @@ namespace FullMoon.Entities.Unit
             
             StateMachine.ChangeState(new HammerUnitCraft(this));
 
-            ObjectPoolManager.Instance.ReturnObjectToPool(gameObject, 3f);
+            ObjectPoolManager.Instance.ReturnObjectToPool(gameObject, 3f).Forget();
         }
 
         public override void Die()

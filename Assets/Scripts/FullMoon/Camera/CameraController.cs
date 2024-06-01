@@ -1,19 +1,11 @@
-using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Cinemachine;
+using FullMoon.UI;
 using FullMoon.Input;
 using FullMoon.Entities.Unit;
-using FullMoon.UI;
-using UniRx;
-using UniRx.Triggers;
-using System.Linq;
 using UnityEngine.EventSystems;
-using Unity.VisualScripting;
-using Cysharp.Threading.Tasks;
-using System.Threading;
-using FullMoon.Util;
 
 namespace FullMoon.Camera
 {
@@ -45,14 +37,11 @@ namespace FullMoon.Camera
         private Vector3 mousePos;
         private Ray mouseRay;
         
-        private bool normalMove;
-        private bool attackMove;
         private bool altRotation;
 
-        private bool isCraft = false;
+        private bool isCraft;
         private Queue<Vector3> hitPoint;
         private Queue<BuildingType> buildingType;
-        private CancellationTokenSource cancel = new CancellationTokenSource();
         
         private List<BaseUnitController> selectedUnitList;
         
@@ -102,7 +91,7 @@ namespace FullMoon.Camera
 
         private Vector2 GetScreenMovementInput()
         {
-            if (UnityEngine.Cursor.lockState != CursorLockMode.Confined)
+            if (Cursor.lockState != CursorLockMode.Confined)
             {
                 return Vector2.zero;
             }
@@ -171,8 +160,6 @@ namespace FullMoon.Camera
         /// </summary>
         private void MouseAction()
         {
-            CheckCursorUnit();
-
             // 마우스 왼쪽 버튼 처리
             if (UnityEngine.InputSystem.Mouse.current.leftButton.wasPressedThisFrame)
             {
@@ -213,11 +200,11 @@ namespace FullMoon.Camera
 
             if (isCraft && Physics.Raycast(mouseRay, out var hg, Mathf.Infinity, (1 << LayerMask.NameToLayer("Ground"))))
             {
-                List<CommonUnitController> tempList = new List<CommonUnitController>();
-                List<CommonUnitController> unitList = new List<CommonUnitController>();
                 isCraft = false;
+                
+                List<CommonUnitController> unitList = new List<CommonUnitController>();
+                List<CommonUnitController> tempList = FindObjectsByType<CommonUnitController>(FindObjectsSortMode.None).ToList();
 
-                tempList = FindObjectsByType<CommonUnitController>(FindObjectsSortMode.None).ToList();
                 if (tempList.Count < 6)
                 {
                     return;
@@ -336,19 +323,6 @@ namespace FullMoon.Camera
             newUnit.Select();
             // 선택한 유닛 정보를 리스트에 저장
             selectedUnitList.Add(newUnit);
-        }
-        
-        private void CheckCursorUnit()
-        {
-            if (attackMove || normalMove)
-            {
-                return;
-            }
-
-            cursor.SetCursorState(
-                Physics.Raycast(mouseRay, out var _, Mathf.Infinity, 1 << LayerMask.NameToLayer("Unit"))
-                    ? CursorType.Unit
-                    : CursorType.Idle);
         }
 
         #endregion Mouse

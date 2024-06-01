@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace FullMoon.Animation
 {
-    public class AnimationController : MonoBehaviour
+    public class AnimationController
     {
         private Animator unitAnimator;
         private CancellationTokenSource cancellationTokenSource;
