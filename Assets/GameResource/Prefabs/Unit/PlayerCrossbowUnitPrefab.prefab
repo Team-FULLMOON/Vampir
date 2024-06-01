@@ -182,7 +182,6 @@ MonoBehaviour:
   unitData: {fileID: 11400000, guid: 94ec904549f7da546a295aafe6d56964, type: 2}
   unitModel: {fileID: 3894948027816488825}
   unitAnimator: {fileID: 8457850503418885170}
-  unitMarker: {fileID: 7576867232460400837}
   viewRange: {fileID: 7512172322329104421}
   decalProjector: {fileID: 7154825539201839683}
   attackEffect: {fileID: 7121363375999854799, guid: e0536bfec450158458c0aac3c61d8e84,
@@ -601,6 +600,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 3dbeda38a6aa7fc4394ee6b8c77a8b48, type: 2}
+    - target: {fileID: -3157472806913729326, guid: f3ae1394cf63aaa4dad6c0326c1608c7,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 051ba09bb8514bf4d960cfd1a5b79e1b, type: 2}
     - target: {fileID: -281968305370896068, guid: f3ae1394cf63aaa4dad6c0326c1608c7,
         type: 3}
       propertyPath: m_Materials.Array.data[0]

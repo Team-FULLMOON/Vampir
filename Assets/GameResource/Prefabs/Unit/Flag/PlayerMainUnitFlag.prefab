@@ -50,7 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   viewRangeRadius: 3
   viewRange: {fileID: 2272456029875034682}
-  flagModel: {fileID: 4149212190521673497, guid: 51507b4d33ec69741932f8e74b08e201,
+  flagModel: {fileID: 4149212190521673497, guid: c689d982a6f6d454388c074a0843e09d,
     type: 3}
   unitPreset:
   - {fileID: 1280742467023253882}
