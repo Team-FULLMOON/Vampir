@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using MyBox;
 using Unity.Burst;
@@ -6,6 +7,7 @@ using UnityEngine.AI;
 using FullMoon.Util;
 using FullMoon.Interfaces;
 using FullMoon.ScriptableObject;
+using Random = UnityEngine.Random;
 
 namespace FullMoon.Entities.Unit
 {
@@ -99,12 +101,19 @@ namespace FullMoon.Entities.Unit
                 return;
             }
 
-            if (attacker.UnitClass == unitData.UnitCounter)
+            if (Enum.TryParse(attacker.UnitClass, out UnitClassFlag attackerClass) == false)
             {
-                amount = (int)(amount / (unitData.CounterDamage / 100));
-                Hp = Mathf.Clamp(Hp - amount, 0, System.Int32.MaxValue);
+                Debug.LogError($"Invalid UnitClass string: {attacker.UnitClass}");
+                return;
             }
-            else if (attacker.UnitClass == unitData.UnitAdvance)
+
+            // 비트플래그를 사용한 상성 비교
+            if ((attackerClass & unitData.UnitCounter) is not 0)
+            {
+                amount = (int)(amount / (unitData.CounterDamage / 100f));
+                Hp = Mathf.Clamp(Hp - amount, 0, int.MaxValue);
+            }
+            else if ((attackerClass & unitData.UnitAdvance) is not 0)
             {
                 int rand = Random.Range(0, 100);
                 if (rand < unitData.CounterGuard)
@@ -114,9 +123,9 @@ namespace FullMoon.Entities.Unit
             }
             else
             {
-                Hp = Mathf.Clamp(Hp - amount, 0, System.Int32.MaxValue);
+                Hp = Mathf.Clamp(Hp - amount, 0, int.MaxValue);
             }
-            
+
             if (unitAnimator != null)
             {
                 AnimatorStateInfo stateInfo = unitAnimator.GetCurrentAnimatorStateInfo(0);
@@ -131,6 +140,7 @@ namespace FullMoon.Entities.Unit
                 Die();
             }
         }
+
 
         public virtual void Die()
         {
