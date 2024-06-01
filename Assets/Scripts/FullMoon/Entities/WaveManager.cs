@@ -55,6 +55,8 @@ namespace FullMoon.Entities
                 
                 enemyWaitList.Clear();
                 
+                MainUIController.Instance.DayCountText.text = $"{currentLevel + 1}";
+                
                 await DisplayCountdown(spawnInterval);
                 
                 currentLevel++;
@@ -66,6 +68,8 @@ namespace FullMoon.Entities
         
         private async UniTaskVoid SpawnWaveTextAsync(float displayTime)
         {
+            MainUIController.Instance.BattleIcon.SetVisible(true);
+            MainUIController.Instance.RestIcon.SetVisible(false);
             MainUIController.Instance.RestPhase.SetVisible(false, 0.3f);
             MainUIController.Instance.BattlePhase.SetVisible(true, 0.5f);
             MainUIController.Instance.BattleDetailText.text = $"WAVE {currentLevel:00}";
@@ -75,6 +79,8 @@ namespace FullMoon.Entities
 
         private async UniTask DisplayCountdown(float interval)
         {
+            MainUIController.Instance.BattleIcon.SetVisible(false);
+            MainUIController.Instance.RestIcon.SetVisible(true);
             MainUIController.Instance.BattlePhase.SetVisible(false, 0.3f);
             MainUIController.Instance.RestPhase.SetVisible(true, 0.5f);
             MainUIController.Instance.RestDetailText.text = $"다음 전투까지 {interval:F1}초";

@@ -7,6 +7,7 @@ using UnityEngine.AI;
 using FullMoon.Util;
 using FullMoon.Interfaces;
 using FullMoon.ScriptableObject;
+using FullMoon.UI;
 using Random = UnityEngine.Random;
 
 namespace FullMoon.Entities.Unit
@@ -69,6 +70,11 @@ namespace FullMoon.Entities.Unit
             if (viewRange != null && unitData != null)
             {
                 viewRange.radius = unitData.ViewRadius;
+            }
+            
+            if (UnitType is "Enemy")
+            {
+                MainUIController.Instance.ChangeEnemyAmount(1);
             }
         }
 
@@ -150,8 +156,15 @@ namespace FullMoon.Entities.Unit
             Alive = false;
             Agent.enabled = false;
             
-            if (UnitType == "Enemy" && unitData.RespawnUnitObject != null)
+            if (UnitType is "Enemy")
             {
+                MainUIController.Instance.ChangeEnemyAmount(-1);
+                
+                if (unitData.RespawnUnitObject == null)
+                {
+                    return;
+                }
+                
                 for (int i = 0; i < 5; i++)
                 {
                     Vector2 randomPosition = Random.insideUnitCircle * 1f;
