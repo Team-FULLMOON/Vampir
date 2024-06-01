@@ -47,10 +47,6 @@ namespace FullMoon.Entities.Unit
                 {
                     Agent.isStopped = value;
                 }
-                else
-                {
-                    Debug.LogWarning("Agent is not enabled or not on NavMesh.");
-                }
             }
         }
         

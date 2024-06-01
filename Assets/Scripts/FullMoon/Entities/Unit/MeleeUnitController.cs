@@ -85,7 +85,7 @@ namespace FullMoon.Entities.Unit
 
                 if (targetController.gameObject.activeInHierarchy && targetController.Alive)
                 {
-                    AnimationController.SetAnimation("Attack");
+                    AnimationController.SetAnimation("Attack", 0.1f);
                     PlayAttackEffects(targetDirection, hitPosition);
                 }
 

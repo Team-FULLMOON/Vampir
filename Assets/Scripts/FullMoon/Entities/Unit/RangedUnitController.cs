@@ -77,7 +77,7 @@ namespace FullMoon.Entities.Unit
 
             AlignToTarget(targetDirection);
 
-            AnimationController.SetAnimation("Attack");
+            AnimationController.SetAnimation("Attack", 0.1f);
 
             await UniTask.DelayFrame(OverridenUnitData.HitAnimationFrame);
 
