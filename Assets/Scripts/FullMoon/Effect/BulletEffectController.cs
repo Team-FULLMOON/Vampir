@@ -87,16 +87,9 @@ namespace FullMoon.Effect
 
         private void HandleCollision(RaycastHit hit)
         {
-            int otherLayer = hit.collider.gameObject.layer;
+            int hitLayer = hit.collider.gameObject.layer;
 
-            if (otherLayer == groundLayer)
-            {
-                ObjectPoolManager.Instance.SpawnObject(hitEffect, hit.point, Quaternion.identity);
-                ObjectPoolManager.Instance.ReturnObjectToPool(gameObject);
-                return;
-            }
-
-            if ((otherLayer == unitLayer || otherLayer == unitNonSelectableLayer) && target != null && target.gameObject == hit.transform.gameObject)
+            if ((hitLayer == unitLayer || hitLayer == unitNonSelectableLayer) && target != null && target.gameObject == hit.transform.gameObject)
             {
                 var unitController = hit.collider.GetComponent<BaseUnitController>();
                 if (unitController != null)
