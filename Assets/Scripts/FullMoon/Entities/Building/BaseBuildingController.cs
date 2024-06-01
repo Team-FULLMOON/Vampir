@@ -1,5 +1,6 @@
 using MyBox;
 using System;
+using System.Collections.Generic;
 using Unity.Burst;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
@@ -16,8 +17,8 @@ namespace FullMoon.Entities.Building
         [Foldout("Base Building Settings"), DisplayInspector] 
         public BaseBuildingData buildingData;
 
-        [SerializeField, OverrideLabel("Frame")]
-        public GameObject buildingFrame;
+        [SerializeField, OverrideLabel("Frame Progress")]
+        private List<GameObject> frameProgress;
 
         public int Hp { get; set; }
         public bool Alive { get; private set; }
@@ -26,10 +27,10 @@ namespace FullMoon.Entities.Building
         {
             Alive = true;
             Hp = buildingData.MaxHp;
-            
-            if (buildingFrame != null)
+
+            foreach (var model in frameProgress)
             {
-                buildingFrame.SetActive(false);
+                model.SetActive(false);
             }
         }
 
@@ -48,12 +49,24 @@ namespace FullMoon.Entities.Building
             }
         }
 
-        protected async UniTaskVoid ShowFrame(float delay = 0f)
+        protected async UniTaskVoid ShowFrame(float totalDelay = 0f)
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(delay));
-            if (buildingFrame != null)
+            int modelCount = frameProgress.Count;
+            if (modelCount == 0)
             {
-                buildingFrame.SetActive(true);
+                return;
+            }
+
+            float delayPerModel = totalDelay / modelCount;
+
+            for (int i = 0; i < modelCount; i++)
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(delayPerModel));
+                if (i > 0)
+                {
+                    frameProgress[i - 1].SetActive(false);
+                }
+                frameProgress[i].SetActive(true);
             }
         }
 

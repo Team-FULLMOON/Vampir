@@ -6,6 +6,7 @@ using FullMoon.UI;
 using FullMoon.Input;
 using FullMoon.Entities.Unit;
 using UnityEngine.EventSystems;
+using UnityEngine.Tilemaps;
 
 namespace FullMoon.Camera
 {
@@ -34,13 +35,14 @@ namespace FullMoon.Camera
         private UnityEngine.Camera mainCamera;
         public float targetFov;
         
+        private Tilemap tileMap;
+        
         private Vector3 mousePos;
         private Ray mouseRay;
         
         private bool altRotation;
 
         private bool isCraft;
-        private Queue<Vector3> hitPoint;
         private Queue<BuildingType> buildingType;
         
         private List<BaseUnitController> selectedUnitList;
@@ -48,8 +50,8 @@ namespace FullMoon.Camera
         private void Awake()
         {
             mainCamera = UnityEngine.Camera.main;
+            tileMap = FindObjectOfType<Tilemap>();
             selectedUnitList = new List<BaseUnitController>();
-            hitPoint = new Queue<Vector3>();
             buildingType = new Queue<BuildingType>();
         }
 
@@ -134,18 +136,6 @@ namespace FullMoon.Camera
                 targetFov = Mathf.Clamp(targetFov, minFov, maxFov);
             }
         }
-
-        public void StartTileTimer()
-        {
-            if (UnityEngine.AI.NavMesh.SamplePosition(hitPoint.Dequeue(), out var hit, 100.0f, UnityEngine.AI.NavMesh.AllAreas))
-            {
-                TileController.Instance.CreateTile(hit.position, buildingType.Dequeue());
-            }
-            else
-            {
-                Debug.LogError("지을 수 있는 공간이 없습니다.");
-            }
-        }
         
         public void CreateTileSetting(bool isCraft, BuildingType type)
         {
@@ -200,29 +190,43 @@ namespace FullMoon.Camera
 
             if (isCraft && Physics.Raycast(mouseRay, out var hg, Mathf.Infinity, (1 << LayerMask.NameToLayer("Ground"))))
             {
-                isCraft = false;
+                if (UnityEngine.AI.NavMesh.SamplePosition(hg.point, out var samplePoint, 1f, (1 << UnityEngine.AI.NavMesh.GetAreaFromName("Walkable"))))
+                {
+                    List<CommonUnitController> unitList = new List<CommonUnitController>();
+                    List<CommonUnitController> tempList = FindObjectsByType<CommonUnitController>(FindObjectsSortMode.None)
+                            .Where(t => t.UnitType is "Player" && t.gameObject.activeInHierarchy && t.Alive).ToList();
+
+                    if (tempList.Count < 6)
+                    {
+                        return;
+                    }
+                    
+                    Vector3Int sampleCellPosition = tileMap.WorldToCell(samplePoint.position);
+
+                    if (tileMap.HasTile(sampleCellPosition))
+                    {
+                        Debug.LogError("지을 수 있는 공간이 없습니다. 이미 건물이 존재합니다.");
+                        return;
+                    }
+                    
+                    isCraft = false;
                 
-                List<CommonUnitController> unitList = new List<CommonUnitController>();
-                List<CommonUnitController> tempList = FindObjectsByType<CommonUnitController>(FindObjectsSortMode.None).ToList();
+                    for (int i = 0; i < 6; ++i)
+                    {
+                        unitList.Add(tempList[i]);
+                    }
 
-                if (tempList.Count < 6)
-                {
-                    return;
+                    foreach (var u in unitList)
+                    {
+                        u.CraftBuilding(hg.point);
+                    }
+                    
+                    TileController.Instance.CreateTile(samplePoint.position, buildingType.Dequeue());
                 }
-                
-                for (int i = 0; i < 6; ++i)
+                else
                 {
-                    unitList.Add(tempList[i]);
+                    Debug.LogError("지을 수 있는 공간이 없습니다.");
                 }
-
-                foreach (var u in unitList)
-                {
-                    u.GetComponent<CommonUnitController>().CraftBuilding(hg.point);
-                }
-
-                hitPoint.Enqueue(hg.point);
-
-                StartTileTimer();
             }
 
             DeselectAll();

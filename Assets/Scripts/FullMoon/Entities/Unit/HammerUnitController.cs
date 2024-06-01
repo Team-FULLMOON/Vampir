@@ -33,7 +33,7 @@ namespace FullMoon.Entities.Unit
             
             StateMachine.ChangeState(new HammerUnitCraft(this));
 
-            ObjectPoolManager.Instance.ReturnObjectToPool(gameObject, 3f).Forget();
+            ObjectPoolManager.Instance.ReturnObjectToPool(gameObject, 5f).Forget();
         }
 
         public override void Die()

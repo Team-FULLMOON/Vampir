@@ -8,7 +8,7 @@ namespace FullMoon.Entities.Building
         protected override void OnEnable()
         {
             base.OnEnable();
-            ShowFrame(3f).Forget();
+            ShowFrame(5f).Forget();
         }
     }
 }
