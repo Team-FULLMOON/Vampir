@@ -44,7 +44,7 @@ namespace FullMoon.Camera
         private bool altRotation;
 
         private bool isCraft;
-        private Queue<BuildingType> buildingType;
+        private BuildingType buildingType;
         
         private List<BaseUnitController> selectedUnitList;
         
@@ -53,7 +53,6 @@ namespace FullMoon.Camera
             mainCamera = UnityEngine.Camera.main;
             tileMap = FindObjectOfType<Tilemap>();
             selectedUnitList = new List<BaseUnitController>();
-            buildingType = new Queue<BuildingType>();
         }
 
         private void Start()
@@ -141,7 +140,7 @@ namespace FullMoon.Camera
         public void CreateTileSetting(bool isCraft, BuildingType type)
         {
             this.isCraft = isCraft;
-            buildingType.Enqueue(type);
+            buildingType = type;
         }
 
         #region Mouse
@@ -224,7 +223,7 @@ namespace FullMoon.Camera
                         u.CraftBuilding(hg.point);
                     }
                     
-                    TileController.Instance.CreateTile(samplePoint.position, buildingType.Dequeue());
+                    TileController.Instance.CreateTile(samplePoint.position, buildingType);
                 }
                 else
                 {
