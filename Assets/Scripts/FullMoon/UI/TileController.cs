@@ -1,12 +1,19 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using FullMoon.Camera;
 using FullMoon.Entities.Building;
+using FullMoon.NavMesh;
 using FullMoon.Util;
 using MyBox;
+using Unity.AI.Navigation;
 using Unity.Entities.UniversalDelegates;
+using Unity.VisualScripting;
+using UnityEditor.AI;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Tilemaps;
 
 namespace FullMoon.UI
@@ -14,6 +21,7 @@ namespace FullMoon.UI
     public enum BuildingType
     {
         None,
+        Ground,         // 타일
         LumberMill,     // 벌목소
         SwordArmy,      // 훈련소(검)
         SpearArmy,      // 훈련소(창)
@@ -23,6 +31,17 @@ namespace FullMoon.UI
     public class TileController : ComponentSingleton<TileController>
     {
         [Separator("TileMap")]
+
+        [SerializeField, OverrideLabel("타일 프리팹")]
+        private GameObject tilePrefab;
+
+        [SerializeField, OverrideLabel("타일 가로 사이즈")]
+        private int tileWidthSize = 1;
+
+        [SerializeField, OverrideLabel("타일 세로 사이즈")]
+        private int tileHeightSize = 1;
+
+        [Separator]
 
         [SerializeField, OverrideLabel("벌목소 프리팹")] 
         private GameObject lumberPrefab;
@@ -77,13 +96,28 @@ namespace FullMoon.UI
         [SerializeField, OverrideLabel("건설 UI 취소 버튼")]
         private GameObject cancelBuildUI;
 
-        private Tilemap tileMap;
+        [Separator]
+
+        public NavMeshSurface playerSurfaces;
+        public NavMeshSurface enemySurfaces;
+        private List<NavMeshBuildSource> playerSources = new List<NavMeshBuildSource>();
+        private List<NavMeshBuildSource> enemySources = new List<NavMeshBuildSource>();
+
+        private Tilemap buildingTileMap;
+        private Tilemap groundTileMap;
+        private Tilemap baseTile;
         private CameraController cameraController;
 
         void Start()
         {
-            tileMap = FindObjectOfType<Tilemap>();
+            buildingTileMap = GameObject.Find("BuildingTile").GetComponent<Tilemap>();
+            groundTileMap = GameObject.Find("GroundTile").GetComponent<Tilemap>();
             cameraController = FindObjectOfType<CameraController>();
+
+            playerSurfaces = GameObject.Find("Player Navmesh Surface").GetComponent<NavMeshSurface>();
+            enemySurfaces = GameObject.Find("Enemy Navmesh Surface").GetComponent<NavMeshSurface>();
+
+            BuildNavMesh();
         }
 
         public void SettingTile(string buildingType)
@@ -111,31 +145,46 @@ namespace FullMoon.UI
 
             switch (building)
             {
+                case BuildingType.Ground:
+                    tile = tilePrefab;
+                    width = tileWidthSize;
+                    height = tileHeightSize;
+
+                    baseTile = groundTileMap;
+                    break;
                 case BuildingType.LumberMill:
                     tile = lumberPrefab;
                     width = lumberWidthSize;
                     height = lumberHeightSize;
+
+                    baseTile = buildingTileMap;
                     break;
                 case BuildingType.SwordArmy:
                     tile = swordArmyPrefab;
                     width = swordWidthSize;
                     height = swordHeightSize;
+
+                    baseTile = buildingTileMap;
                     break;
                 case BuildingType.SpearArmy:
                     tile = spearArmyPrefab;
                     width = spearWidthSize;
                     height = spearHeightSize;
+
+                    baseTile = buildingTileMap;
                     break;
                 case BuildingType.CrossbowArmy:
                     tile = crossbowArmyPrefab;
                     width = crossbowWidthSize;
                     height = crossbowHeightSize;
+
+                    baseTile = buildingTileMap;
                     break;
                 default:
                     return;
             }
 
-            Vector3Int vector = tileMap.WorldToCell(pos);
+            Vector3Int vector = baseTile.WorldToCell(pos);
 
             var localScale = tile.transform.localScale;
             localScale = new Vector3(localScale.x * width, localScale.y * height, localScale.z);
@@ -145,7 +194,28 @@ namespace FullMoon.UI
             var tileInstance = UnityEngine.ScriptableObject.CreateInstance<Tile>();
             tileInstance.gameObject = tile;
             
-            tileMap.SetTile(vector, tileInstance);
+            baseTile.SetTile(vector, tileInstance);
+
+            if (building is BuildingType.Ground)
+            {
+                BuildNavMesh();
+            }
+        }
+
+        private void BuildNavMesh()
+        {
+            NavMeshTag.PlayerCollect(ref playerSources);
+            NavMeshTag.EnemyCollect(ref enemySources);
+            Debug.Log(playerSources.Count());
+            Debug.Log(enemySources.Count());
+
+            Bounds bounds = new Bounds(new Vector3(0, 0, 0), new Vector3(500, 500, 500));
+
+            var playerBuildSettings = playerSurfaces.GetBuildSettings();
+            UnityEngine.AI.NavMeshBuilder.UpdateNavMeshDataAsync(playerSurfaces.navMeshData, playerBuildSettings, playerSources, bounds);
+
+            var enemyBuildSettings = enemySurfaces.GetBuildSettings();
+            UnityEngine.AI.NavMeshBuilder.UpdateNavMeshDataAsync(enemySurfaces.navMeshData, enemyBuildSettings, enemySources, bounds);
         }
     }
 }

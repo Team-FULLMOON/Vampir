@@ -188,7 +188,7 @@ namespace FullMoon.Camera
                 return;
             }
 
-            if (isCraft && Physics.Raycast(mouseRay, out var hg, Mathf.Infinity, (1 << LayerMask.NameToLayer("Ground"))))
+            if (isCraft && Physics.Raycast(mouseRay, out var hg, Mathf.Infinity, (1 << LayerMask.NameToLayer("Ground"))) && buildingType.First() is not BuildingType.Ground)
             {
                 if (UnityEngine.AI.NavMesh.SamplePosition(hg.point, out var samplePoint, 1f, (1 << UnityEngine.AI.NavMesh.GetAreaFromName("Walkable"))))
                 {
@@ -220,13 +220,26 @@ namespace FullMoon.Camera
                     {
                         u.CraftBuilding(hg.point);
                     }
-                    
+
                     TileController.Instance.CreateTile(samplePoint.position, buildingType.Dequeue());
                 }
                 else
                 {
                     Debug.LogError("지을 수 있는 공간이 없습니다.");
                 }
+            }
+            else if (isCraft && Physics.Raycast(mouseRay, out var hitInfo, Mathf.Infinity) && buildingType.First() is BuildingType.Ground)
+            {
+                isCraft = false;
+                Vector3Int sampleCellPosition = tileMap.WorldToCell(hitInfo.point);
+
+                if (tileMap.HasTile(sampleCellPosition))
+                {
+                    Debug.LogError("해당 위치에 이미 땅이 존재합니다.");
+                    return;
+                }
+
+                TileController.Instance.CreateTile(hitInfo.point, buildingType.Dequeue());
             }
 
             DeselectAll();
