@@ -29,7 +29,7 @@ MonoBehaviour:
   attackEnabled: 1
   attackDamage: 10
   attackDelay: 0.2
-  attackCoolTime: 0.8
+  attackCoolTime: 1
   attackRadius: 2
   viewRadius: 8
   stateTransitionRadius: 8
@@ -38,6 +38,6 @@ MonoBehaviour:
   counterDamage: 100
   counterKnockback: 0
   counterGuard: 0
-  hitAnimationFrame: 12
+  hitAnimationFrame: 32
   spearPushFrame: 2
   spearPushForce: 10

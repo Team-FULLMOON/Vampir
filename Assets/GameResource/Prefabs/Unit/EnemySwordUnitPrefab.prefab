@@ -238,10 +238,10 @@ MonoBehaviour:
   unitData: {fileID: 11400000, guid: e233719f0987f1e44a56f08db967b1ef, type: 2}
   unitModel: {fileID: 8759133590420445557}
   unitAnimator: {fileID: 1821371379234506441}
-  unitMarker: {fileID: 6798072512803417028}
   viewRange: {fileID: 2268042740748443340}
   decalProjector: {fileID: 6081375030924233605}
-  attackEffect: {fileID: 0}
+  attackEffect: {fileID: 7385585423656597873, guid: fd316882cf380a341a394bcc128bee75,
+    type: 3}
   attackPointEffect: {fileID: 0}
 --- !u!136 &6372571031042578545
 CapsuleCollider:

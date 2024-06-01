@@ -65,20 +65,20 @@ namespace FullMoon.Entities
         
         private async UniTaskVoid SpawnWaveTextAsync(float displayTime)
         {
-            MainUIController.Instance.PhaseElement.SetVisible(true);
-            MainUIController.Instance.PhaseText.text = "BATTLE PHASE";
-            MainUIController.Instance.PhaseDetailText.text = $"WAVE {currentLevel}";
+            MainUIController.Instance.BattlePhase.SetVisible(true);
+            MainUIController.Instance.RestPhase.SetVisible(false);
+            MainUIController.Instance.BattleDetailText.text = $"WAVE {currentLevel}";
             await UniTask.Delay(TimeSpan.FromSeconds(displayTime));
-            MainUIController.Instance.PhaseElement.SetVisible(false);
+            MainUIController.Instance.BattlePhase.SetVisible(false);
         }
 
         private async UniTask DisplayCountdown(float interval)
         {
-            MainUIController.Instance.PhaseElement.SetVisible(true);
-            MainUIController.Instance.PhaseText.text = "REST PHASE";
-            MainUIController.Instance.PhaseDetailText.text = $"다음 전투까지 {interval:F1}초";
+            MainUIController.Instance.BattlePhase.SetVisible(false);
+            MainUIController.Instance.RestPhase.SetVisible(true);
+            MainUIController.Instance.RestDetailText.text = $"다음 전투까지 {interval:F1}초";
             await UniTask.Delay(TimeSpan.FromSeconds(3f));
-            MainUIController.Instance.PhaseElement.SetVisible(false);
+            MainUIController.Instance.RestPhase.SetVisible(false);
             
             float remainingTime = interval;
 
@@ -91,14 +91,13 @@ namespace FullMoon.Entities
                     continue;
                 }
                 
-                MainUIController.Instance.PhaseElement.SetVisible(true);
-                MainUIController.Instance.PhaseText.text = "REST PHASE";
-                MainUIController.Instance.PhaseDetailText.text = $"다음 전투까지 {remainingTime:F1}초";
+                MainUIController.Instance.RestPhase.SetVisible(true);
+                MainUIController.Instance.RestDetailText.text = $"다음 전투까지 {remainingTime:F1}초";
                 await UniTask.DelayFrame(1);
                 remainingTime -= Time.deltaTime;
             }
 
-            MainUIController.Instance.PhaseElement.SetVisible(false);
+            MainUIController.Instance.RestPhase.SetVisible(false);
         }
 
         private Wave GetRandomWave()
