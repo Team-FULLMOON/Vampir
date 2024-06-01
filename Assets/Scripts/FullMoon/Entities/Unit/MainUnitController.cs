@@ -88,7 +88,7 @@ namespace FullMoon.Entities.Unit
                 
                 if (targetController.gameObject.activeInHierarchy && targetController.Alive)
                 {
-                    AnimationController.SetAnimation(effectType == 0 ? "Attack" : "Attack2");
+                    AnimationController.SetAnimation(effectType == 0 ? "Attack" : "Attack2", 0.1f);
                     PlayAttackEffects(effectType, targetDirection, hitPosition);
                 }
                 

@@ -17,7 +17,7 @@ namespace FullMoon.Entities.Unit.States
 
         public void Enter()
         {
-            controller.AnimationController.SetAnimation("Idle");
+            controller.AnimationController.SetAnimation("FightIdle");
         }
 
         [BurstCompile]

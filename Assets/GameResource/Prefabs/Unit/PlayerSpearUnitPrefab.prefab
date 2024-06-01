@@ -238,7 +238,6 @@ MonoBehaviour:
   unitData: {fileID: 11400000, guid: 2de46812c0c2b5a43a1475ce102c0f04, type: 2}
   unitModel: {fileID: 2590847982422171043}
   unitAnimator: {fileID: 3688118175041954875}
-  unitMarker: {fileID: 6798072512803417028}
   viewRange: {fileID: 2268042740748443340}
   decalProjector: {fileID: 6081375030924233605}
   attackEffect: {fileID: 0}
@@ -457,6 +456,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3423356553822368916, guid: 207604b2d0928714082ab2a0629a4fe6,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 051ba09bb8514bf4d960cfd1a5b79e1b, type: 2}
     - target: {fileID: -1693322200426101985, guid: 207604b2d0928714082ab2a0629a4fe6,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
