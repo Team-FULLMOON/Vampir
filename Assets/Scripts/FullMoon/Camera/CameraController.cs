@@ -199,6 +199,8 @@ namespace FullMoon.Camera
 
                     if (tempList.Count < 6)
                     {
+                        isCraft = false;
+                        ToastManager.Instance.ShowToast("자원 유닛이 부족합니다.", "red");
                         return;
                     }
                     

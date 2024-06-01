@@ -19,6 +19,7 @@ namespace FullMoon.Util
             GameObject toastInstance = Instantiate(toastPrefab, toastContainer);
             toastInstance.transform.SetSiblingIndex(0);
             TextMeshProUGUI toastText = toastInstance.GetComponent<TextMeshProUGUI>();
+            toastText.raycastTarget = false;
             toastText.text = $"<color={color}>{message}</color>";
         
             toasts.Enqueue(toastInstance);
