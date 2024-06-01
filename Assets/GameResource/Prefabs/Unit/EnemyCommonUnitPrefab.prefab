@@ -236,13 +236,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitData: {fileID: 11400000, guid: aff69b0d735d2e843bf07c527461e554, type: 2}
-  unitModel: {fileID: 919132149155446097, guid: f200d14d1d6a52740808ec2688167d32,
-    type: 3}
+  unitModel: {fileID: 5861792555982640025}
   unitAnimator: {fileID: 7621249716453486085}
-  unitMarker: {fileID: 6798072512803417028}
   viewRange: {fileID: 2268042740748443340}
   decalProjector: {fileID: 6081375030924233605}
-  attackEffect: {fileID: 0}
+  attackEffect: {fileID: 3007971898821414841, guid: 99a6dd6e98496964eacfcddbc86953ed,
+    type: 3}
   attackPointEffect: {fileID: 0}
 --- !u!136 &6372571031042578545
 CapsuleCollider:
