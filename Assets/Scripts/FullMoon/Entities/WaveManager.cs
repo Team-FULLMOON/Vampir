@@ -7,6 +7,7 @@ using FullMoon.UI;
 using FullMoon.Util;
 using MyBox;
 using UnityEngine;
+using System.Threading;
 
 namespace FullMoon.Entities
 {
@@ -32,24 +33,35 @@ namespace FullMoon.Entities
         [SerializeField] private float spawnDistance = 20f;
         [SerializeField] private float spawnInterval = 15f;
         [SerializeField] private List<Wave> waves;
+
+        private CancellationTokenSource cancellationTokenSource;
         
         private readonly List<BaseUnitController> enemyWaitList = new();
 
         private void Start()
         {
-            SpawnWaveAsync().Forget();
+            cancellationTokenSource = new CancellationTokenSource();
+            SpawnWaveAsync(cancellationTokenSource.Token).Forget();
         }
 
-        private async UniTaskVoid SpawnWaveAsync()
+        private void OnDestroy()
         {
-            await UniTask.NextFrame();
+            cancellationTokenSource?.Cancel();
+            cancellationTokenSource?.Dispose();
+        }
+
+        private async UniTaskVoid SpawnWaveAsync(CancellationToken cancellationToken)
+        {
+            await UniTask.NextFrame(cancellationToken);
             while (currentLevel < waves.Max(w => w.level))
             {
+                if (cancellationToken.IsCancellationRequested) break;
+
                 bool enemyAlive = enemyWaitList.Any(e => e.Alive);
                 
                 if (enemyAlive)
                 {
-                    await UniTask.DelayFrame(1);
+                    await UniTask.DelayFrame(1, cancellationToken: cancellationToken);
                     continue;
                 }
                 
@@ -57,50 +69,52 @@ namespace FullMoon.Entities
                 
                 MainUIController.Instance.DayCountText.text = $"{currentLevel + 1}";
                 
-                await DisplayCountdown(spawnInterval);
+                await DisplayCountdown(spawnInterval, cancellationToken);
                 
                 currentLevel++;
                 var currentWave = GetRandomWave();
-                SpawnWaveTextAsync(2f).Forget();
-                await SpawnEnemies(currentWave);
+                SpawnWaveTextAsync(2f, cancellationToken).Forget();
+                await SpawnEnemies(currentWave, cancellationToken);
             }
         }
         
-        private async UniTaskVoid SpawnWaveTextAsync(float displayTime)
+        private async UniTaskVoid SpawnWaveTextAsync(float displayTime, CancellationToken cancellationToken)
         {
             MainUIController.Instance.BattleIcon.SetVisible(true);
             MainUIController.Instance.RestIcon.SetVisible(false);
             MainUIController.Instance.RestPhase.SetVisible(false, 0.3f);
             MainUIController.Instance.BattlePhase.SetVisible(true, 0.5f);
             MainUIController.Instance.BattleDetailText.text = $"WAVE {currentLevel:00}";
-            await UniTask.Delay(TimeSpan.FromSeconds(displayTime));
+            await UniTask.Delay(TimeSpan.FromSeconds(displayTime), cancellationToken: cancellationToken);
             MainUIController.Instance.BattlePhase.SetVisible(false, 0.5f);
         }
 
-        private async UniTask DisplayCountdown(float interval)
+        private async UniTask DisplayCountdown(float interval, CancellationToken cancellationToken)
         {
             MainUIController.Instance.BattleIcon.SetVisible(false);
             MainUIController.Instance.RestIcon.SetVisible(true);
             MainUIController.Instance.BattlePhase.SetVisible(false, 0.3f);
             MainUIController.Instance.RestPhase.SetVisible(true, 0.5f);
             MainUIController.Instance.RestDetailText.text = $"다음 전투까지 {interval:F1}초";
-            await UniTask.Delay(TimeSpan.FromSeconds(3f));
+            await UniTask.Delay(TimeSpan.FromSeconds(3f), cancellationToken: cancellationToken);
             MainUIController.Instance.RestPhase.SetVisible(false, 0.5f);
             
             float remainingTime = interval;
 
             while (remainingTime > 0)
             {
+                if (cancellationToken.IsCancellationRequested) break;
+
                 if (remainingTime > 5f)
                 {
-                    await UniTask.DelayFrame(1);
+                    await UniTask.DelayFrame(1, cancellationToken: cancellationToken);
                     remainingTime -= Time.deltaTime;
                     continue;
                 }
                 
                 MainUIController.Instance.RestPhase.SetVisible(true, 0.5f);
                 MainUIController.Instance.RestDetailText.text = $"다음 전투까지 {remainingTime:F1}초";
-                await UniTask.DelayFrame(1);
+                await UniTask.DelayFrame(1, cancellationToken: cancellationToken);
                 remainingTime -= Time.deltaTime;
             }
 
@@ -113,18 +127,20 @@ namespace FullMoon.Entities
             return currentLevelWaves[UnityEngine.Random.Range(0, currentLevelWaves.Count)];
         }
 
-        private async UniTask SpawnEnemies(Wave wave)
+        private async UniTask SpawnEnemies(Wave wave, CancellationToken cancellationToken)
         {
             foreach (var enemyDetail in wave.enemyDetails)
             {
                 for (int i = 0; i < enemyDetail.count; i++)
                 {
+                    if (cancellationToken.IsCancellationRequested) break;
+
                     Vector3 spawnPosition = GetSpawnPosition(enemyDetail.location);
                     var unit = ObjectPoolManager.Instance.SpawnObject(enemyDetail.enemy, spawnPosition, Quaternion.identity).GetComponent<BaseUnitController>();
                     enemyWaitList.Add(unit);
-                    await UniTask.NextFrame();
+                    await UniTask.NextFrame(cancellationToken);
                     unit.MoveToPosition(transform.position);
-                    await UniTask.Delay(TimeSpan.FromSeconds(enemyDetail.spawnInterval));
+                    await UniTask.Delay(TimeSpan.FromSeconds(enemyDetail.spawnInterval), cancellationToken: cancellationToken);
                 }
             }
         }
