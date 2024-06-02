@@ -16,7 +16,7 @@ MonoBehaviour:
   unitName: "\uAC80\uD5C8\uC811"
   unitType: Player
   unitClass: Sword
-  maxHp: 25
+  maxHp: 20
   movementSpeed: 5
   missRate: 0
   manaDrop: 7
@@ -26,17 +26,17 @@ MonoBehaviour:
   unitTransformObject: {fileID: 0}
   respawnUnitObject: {fileID: 0}
   attackEnabled: 1
-  attackDamage: 10
+  attackDamage: 20
   attackDelay: 0.2
-  attackCoolTime: 0.8
+  attackCoolTime: 1
   attackRadius: 1.5
   viewRadius: 8
   stateTransitionRadius: 8
-  unitAdvance: 0
-  unitCounter: 0
-  counterDamage: 100
+  unitAdvance: 4
+  unitCounter: 10
+  counterDamage: 200
   counterKnockback: 0
-  counterGuard: 100
+  counterGuard: 75
   hitAnimationFrame: 12
   spearPushFrame: 2
   spearPushForce: 10

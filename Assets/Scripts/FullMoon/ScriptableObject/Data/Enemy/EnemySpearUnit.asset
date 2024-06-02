@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b088d7d4193e3a469989c0d90dd5873, type: 3}
   m_Name: EnemySpearUnit
   m_EditorClassIdentifier: 
-  unitCode: 101
-  unitName: "\uCC3D\uD5C8\uC811 (\uC801)"
+  unitCode: 203
+  unitName: "\uC790\uACBD\uB2E8-\uCC3D\uBCD1"
   unitType: Enemy
   unitClass: Spear
-  maxHp: 25
+  maxHp: 100
   movementSpeed: 2
   missRate: 0
   manaDrop: 7
@@ -33,9 +33,9 @@ MonoBehaviour:
   attackRadius: 2
   viewRadius: 8
   stateTransitionRadius: 8
-  unitAdvance: 0
-  unitCounter: 0
-  counterDamage: 100
+  unitAdvance: 1
+  unitCounter: 12
+  counterDamage: 200
   counterKnockback: 0
   counterGuard: 0
   hitAnimationFrame: 32
