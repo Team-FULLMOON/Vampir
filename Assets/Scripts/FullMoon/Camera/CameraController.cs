@@ -43,7 +43,7 @@ namespace FullMoon.Camera
         
         private bool altRotation;
 
-        private bool isCraft;
+        private bool canCraft;
         private BuildingType buildingType;
         
         private List<BaseUnitController> selectedUnitList;
@@ -139,7 +139,7 @@ namespace FullMoon.Camera
         
         public void CreateTileSetting(bool isCraft, BuildingType type)
         {
-            this.isCraft = isCraft;
+            this.canCraft = isCraft;
             buildingType = type;
         }
 
@@ -174,6 +174,69 @@ namespace FullMoon.Camera
                 HandleRightClick();
             }
         }
+        
+        private void HandleBuildingTile(RaycastHit hitInfo)
+        {
+            if (!UnityEngine.AI.NavMesh.SamplePosition(hitInfo.point, out var samplePoint, 0.1f, (1 << UnityEngine.AI.NavMesh.GetAreaFromName("Walkable"))))
+            {
+                CancelCrafting("지을 수 있는 공간이 없습니다.", "red");
+                return;
+            }
+
+            var unitList = GetAvailableUnits();
+            if (unitList.Count < 6)
+            {
+                CancelCrafting("자원 유닛이 부족합니다.", "red");
+                return;
+            }
+
+            var sampleCellPosition = tileMap.WorldToCell(samplePoint.position);
+            if (tileMap.HasTile(sampleCellPosition))
+            {
+                CancelCrafting("지을 수 있는 공간이 없습니다. 이미 건물이 존재합니다.", "red");
+                return;
+            }
+
+            CraftBuilding(unitList, hitInfo.point, samplePoint.position);
+        }
+
+        private void HandleGroundTile(RaycastHit hitInfo)
+        {
+            var sampleCellPosition = tileMap.WorldToCell(hitInfo.point);
+            if (tileMap.HasTile(sampleCellPosition) || hitInfo.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
+            {
+                CancelCrafting("해당 위치에 이미 땅이 존재합니다.", "red");
+                return;
+            }
+
+            canCraft = false;
+            TileController.Instance.CreateTile(hitInfo.point, buildingType);
+        }
+
+        private List<CommonUnitController> GetAvailableUnits()
+        {
+            return FindObjectsByType<CommonUnitController>(FindObjectsSortMode.None)
+                .Where(t => t.UnitType is "Player" && t.gameObject.activeInHierarchy && t.Alive)
+                .Take(6)
+                .ToList();
+        }
+
+        private void CraftBuilding(List<CommonUnitController> unitList, Vector3 buildPoint, Vector3 samplePoint)
+        {
+            foreach (var unit in unitList)
+            {
+                unit.CraftBuilding(buildPoint);
+            }
+
+            canCraft = false;
+            TileController.Instance.CreateTile(samplePoint, buildingType);
+        }
+
+        private void CancelCrafting(string message, string color)
+        {
+            canCraft = false;
+            ToastManager.Instance.ShowToast(message, color);
+        }
 
         private void HandleLeftClick()
         {
@@ -188,60 +251,20 @@ namespace FullMoon.Camera
                 return;
             }
 
-            if (isCraft && Physics.Raycast(mouseRay, out var hg, Mathf.Infinity, (1 << LayerMask.NameToLayer("Ground"))) && buildingType is not BuildingType.Ground)
+            if (canCraft)
             {
-                if (UnityEngine.AI.NavMesh.SamplePosition(hg.point, out var samplePoint, 1f, (1 << UnityEngine.AI.NavMesh.GetAreaFromName("Walkable"))))
+                if (Physics.Raycast(mouseRay, out var hitInfo, Mathf.Infinity, (1 << LayerMask.NameToLayer("Ground"))) && buildingType is not BuildingType.Ground)
                 {
-                    List<CommonUnitController> unitList = new List<CommonUnitController>();
-                    List<CommonUnitController> tempList = FindObjectsByType<CommonUnitController>(FindObjectsSortMode.None)
-                            .Where(t => t.UnitType is "Player" && t.gameObject.activeInHierarchy && t.Alive).ToList();
-
-                    if (tempList.Count < 6)
-                    {
-                        isCraft = false;
-                        ToastManager.Instance.ShowToast("자원 유닛이 부족합니다.", "red");
-                        return;
-                    }
-                    
-                    Vector3Int sampleCellPosition = tileMap.WorldToCell(samplePoint.position);
-
-                    if (tileMap.HasTile(sampleCellPosition))
-                    {
-                        ToastManager.Instance.ShowToast("지을 수 있는 공간이 없습니다. 이미 건물이 존재합니다.", "red");
-                        return;
-                    }
-                    
-                    isCraft = false;
-                
-                    for (int i = 0; i < 6; ++i)
-                    {
-                        unitList.Add(tempList[i]);
-                    }
-
-                    foreach (var u in unitList)
-                    {
-                        u.CraftBuilding(hg.point);
-                    }
-                    
-                    TileController.Instance.CreateTile(samplePoint.position, buildingType);
+                    HandleBuildingTile(hitInfo);
+                }
+                else if (Physics.Raycast(mouseRay, out var waterHitInfo, Mathf.Infinity, (1 << LayerMask.NameToLayer("Water")) | (1 << LayerMask.NameToLayer("Ground"))) && buildingType is BuildingType.Ground)
+                {
+                    HandleGroundTile(waterHitInfo);
                 }
                 else
                 {
-                    ToastManager.Instance.ShowToast("지을 수 있는 공간이 없습니다.", "red");
+                    CancelCrafting("생성할 수 없는 위치입니다.", "red");
                 }
-            }
-            else if (isCraft && Physics.Raycast(mouseRay, out var hitInfo, Mathf.Infinity) && buildingType is BuildingType.Ground)
-            {
-                isCraft = false;
-                Vector3Int sampleCellPosition = tileMap.WorldToCell(hitInfo.point);
-
-                if (tileMap.HasTile(sampleCellPosition))
-                {
-                    Debug.LogError("해당 위치에 이미 땅이 존재합니다.");
-                    return;
-                }
-
-                TileController.Instance.CreateTile(hitInfo.point, buildingType);
             }
 
             DeselectAll();
