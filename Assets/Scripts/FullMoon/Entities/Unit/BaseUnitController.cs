@@ -132,6 +132,10 @@ namespace FullMoon.Entities.Unit
                         return;
                     }
                 }
+                else
+                {
+                    Hp = Mathf.Clamp(Hp - amount, 0, int.MaxValue);
+                }
             }
 
             if (unitAnimator != null)
