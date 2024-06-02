@@ -1,6 +1,7 @@
 using MyBox;
 using System;
 using Cysharp.Threading.Tasks;
+using FullMoon.Entities.Unit;
 using Unity.Burst;
 using UnityEngine;
 using FullMoon.Util;
@@ -30,7 +31,8 @@ namespace FullMoon.Entities.Building
             await UniTask.Delay(TimeSpan.FromSeconds(delay));
             if (spawnUnitObject != null)
             {
-                ObjectPoolManager.Instance.SpawnObject(spawnUnitObject, transform.position, Quaternion.identity);
+                var flag = ObjectPoolManager.Instance.SpawnObject(spawnUnitObject, transform.position, Quaternion.identity).GetComponent<UnitFlagController>();
+                flag.BuildingPosition = transform.position;
             }
         }
     }

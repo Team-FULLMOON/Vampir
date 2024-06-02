@@ -4,8 +4,10 @@ using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
 using DG.Tweening;
+using FullMoon.UI;
 using FullMoon.Util;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.Tilemaps;
 
 namespace FullMoon.Entities.Unit
 {
@@ -18,6 +20,7 @@ namespace FullMoon.Entities.Unit
         private List<Vector3> localPositionsPreset;
         
         public HashSet<BaseUnitController> UnitInsideViewArea { get; private set; }
+        public Vector3 BuildingPosition { get; set; }
 
         private GameObjectDictionary currentFlagModel;
         private Tween flagMoveTween;
@@ -46,6 +49,11 @@ namespace FullMoon.Entities.Unit
                 if (currentFlagModel != null)
                 {
                     ObjectPoolManager.Instance.ReturnObjectToPool(currentFlagModel.gameObject);
+                }
+                if (BuildingPosition != Vector3.zero)
+                {
+                    TileController.Instance.DeleteTile(BuildingPosition);
+                    BuildingPosition = Vector3.zero;
                 }
                 ObjectPoolManager.Instance.ReturnObjectToPool(gameObject);
             }

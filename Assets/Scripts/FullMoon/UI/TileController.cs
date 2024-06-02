@@ -102,10 +102,10 @@ namespace FullMoon.UI
         private Tilemap baseTile;
         private CameraController cameraController;
 
-        void Start()
+        private void Start()
         {
-            buildingTileMap = GameObject.Find("BuildingTile").GetComponent<Tilemap>();
-            groundTileMap = GameObject.Find("GroundTile").GetComponent<Tilemap>();
+            buildingTileMap = GetComponent<GameObjectDictionary>().GetComponentByName<Tilemap>("Building");
+            groundTileMap = GetComponent<GameObjectDictionary>().GetComponentByName<Tilemap>("Ground");
             cameraController = FindObjectOfType<CameraController>();
             
             if (playerSurfaces == null)
@@ -201,6 +201,12 @@ namespace FullMoon.UI
             {
                 BuildNavMesh();
             }
+        }
+        
+        public void DeleteTile(Vector3 position)
+        {
+            Vector3Int vector = baseTile.WorldToCell(position);
+            buildingTileMap.SetTile(vector, null);
         }
 
         private void BuildNavMesh()
