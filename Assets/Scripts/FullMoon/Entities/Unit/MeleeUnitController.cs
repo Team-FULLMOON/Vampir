@@ -83,13 +83,15 @@ namespace FullMoon.Entities.Unit
 
                 AlignToTarget(targetDirection);
 
-                AnimationController.SetAnimation("Attack");
-
-                PlayAttackEffects(targetDirection, hitPosition);
+                if (targetController.gameObject.activeInHierarchy && targetController.Alive)
+                {
+                    AnimationController.SetAnimation("Attack", 0.1f);
+                    PlayAttackEffects(targetDirection, hitPosition);
+                }
 
                 await UniTask.DelayFrame(OverridenUnitData.HitAnimationFrame);
 
-                if (OverridenUnitData.UnitClass.Equals("Spear"))
+                if (OverridenUnitData.UnitClass.Equals("Spear") && targetController.gameObject.activeInHierarchy && targetController.Alive)
                 {
                     targetController.Rb.isKinematic = false;
                     targetController.Rb.AddForce(transform.forward * OverridenUnitData.SpearPushForce, ForceMode.Impulse);
@@ -99,7 +101,7 @@ namespace FullMoon.Entities.Unit
                     targetController.Rb.isKinematic = true;
                 }
 
-                if (targetController.gameObject.activeInHierarchy)
+                if (targetController.gameObject.activeInHierarchy && targetController.Alive)
                 {
                     targetController.ReceiveDamage(OverridenUnitData.AttackDamage, this);
                 }
@@ -188,7 +190,7 @@ namespace FullMoon.Entities.Unit
             if (attackEffect != null)
             {
                 GameObject attackFX = ObjectPoolManager.Instance.SpawnObject(attackEffect, unitModel.transform.position, Quaternion.identity);
-                attackFX.transform.forward = targetDirection.normalized;
+                attackFX.transform.eulerAngles = unitModel.transform.eulerAngles;
             }
 
             if (attackPointEffect != null)

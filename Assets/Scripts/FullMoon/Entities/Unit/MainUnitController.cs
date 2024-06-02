@@ -86,13 +86,16 @@ namespace FullMoon.Entities.Unit
 
                 int effectType = Random.Range(0, 2);
                 
-                AnimationController.SetAnimation(effectType == 0 ? "Attack" : "Attack2");
-
-                PlayAttackEffects(effectType, targetDirection, hitPosition);
+                if (targetController.gameObject.activeInHierarchy && targetController.Alive)
+                {
+                    AnimationController.SetAnimation(effectType == 0 ? "Attack" : "Attack2", 0.1f);
+                    PlayAttackEffects(effectType, targetDirection, hitPosition);
+                }
+                
 
                 await UniTask.DelayFrame(OverridenUnitData.HitAnimationFrame);
 
-                if (targetController.gameObject.activeInHierarchy)
+                if (targetController.gameObject.activeInHierarchy && targetController.Alive)
                 {
                     targetController.ReceiveDamage(OverridenUnitData.AttackDamage, this);
                 }

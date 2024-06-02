@@ -1,10 +1,18 @@
-using FullMoon.Entities.Unit;
 using MyBox;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace FullMoon.ScriptableObject
 {
+    [System.Flags]
+    public enum UnitClassFlag
+    {
+        None = 0,
+        Sword = 1 << 0, // 1
+        Spear = 1 << 1, // 2
+        Crossbow = 1 << 2, // 4
+        Main = 1 << 2 // 5
+    }
+    
     [System.Serializable]
     public class BaseUnitData : UnityEngine.ScriptableObject
     {
@@ -96,14 +104,14 @@ namespace FullMoon.ScriptableObject
         public float StateTransitionRadius => stateTransitionRadius;
 
         [Separator]
+        
+        [SerializeField, OverrideLabel("상성 상 유리한 클래스")]
+        private UnitClassFlag unitAdvance = UnitClassFlag.None;
+        public UnitClassFlag UnitAdvance => unitAdvance;
 
-        [SerializeField, OverrideLabel("상성 상 유리한 클래스"), DefinedValues("None", "Sword", "Spear", "Crossbow")]
-        private string unitAdvance = "None";
-        public string UnitAdvance => unitAdvance;
-
-        [SerializeField, OverrideLabel("상성 상 불리한 클래스"), DefinedValues("None", "Sword", "Spear", "Crossbow")]
-        private string unitCounter = "None";
-        public string UnitCounter => unitCounter;
+        [SerializeField, OverrideLabel("상성 상 불리한 클래스")]
+        private UnitClassFlag unitCounter = UnitClassFlag.None;
+        public UnitClassFlag UnitCounter => unitCounter;
 
         [SerializeField, OverrideLabel("상성에 따른 입는 데미지(%)")]
         private float counterDamage = 100;

@@ -40,8 +40,8 @@ namespace FullMoon.Entities.Unit
         private void Update()
         {
             UnitInsideViewArea.RemoveWhere(unit => unit == null || !unit.gameObject.activeInHierarchy || (!unit.Alive && unit is not MainUnitController));
-
-            if (unitPreset.All(unit => unit.Alive is false && unit is not MainUnitController))
+            
+            if (unitPreset.All(unit => unit.Alive is false && unit.gameObject.activeInHierarchy is false && unit is not MainUnitController))
             {
                 if (currentFlagModel != null)
                 {

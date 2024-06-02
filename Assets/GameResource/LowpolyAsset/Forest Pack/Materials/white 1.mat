@@ -134,7 +134,7 @@ Material:
     - _ReceiveShadows: 1
     - _SNOWONOFF: 0
     - _SampleGI: 0
-    - _Smoothness: 0.626
+    - _Smoothness: 0.097
     - _SmoothnessTextureChannel: 0
     - _SnowAmount: 1
     - _SnowCoverage: 0.453
@@ -165,8 +165,8 @@ Material:
     - _meatlic: 0
     - _smoothness: 0
     m_Colors:
-    - _BaseColor: {r: 0.20305268, g: 0.28887495, b: 0.3679245, a: 1}
-    - _Color: {r: 0.20305264, g: 0.28887492, b: 0.36792448, a: 1}
+    - _BaseColor: {r: 0.42052335, g: 0.46709558, b: 0.509434, a: 1}
+    - _Color: {r: 0.42052332, g: 0.46709555, b: 0.509434, a: 1}
     - _EmissionColor: {r: 0.2264151, g: 0.2264151, b: 0.2264151, a: 1}
     - _GroundColor: {r: 0.010346207, g: 0.07075471, b: 0.040550455, a: 1}
     - _HDRcolor: {r: 0.24117789, g: 0.4504757, b: 2.6910384, a: 0}

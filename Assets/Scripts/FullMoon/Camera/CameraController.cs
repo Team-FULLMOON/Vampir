@@ -5,6 +5,7 @@ using Cinemachine;
 using FullMoon.UI;
 using FullMoon.Input;
 using FullMoon.Entities.Unit;
+using FullMoon.Util;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 
@@ -43,7 +44,7 @@ namespace FullMoon.Camera
         private bool altRotation;
 
         private bool isCraft;
-        private Queue<BuildingType> buildingType;
+        private BuildingType buildingType;
         
         private List<BaseUnitController> selectedUnitList;
         
@@ -52,7 +53,6 @@ namespace FullMoon.Camera
             mainCamera = UnityEngine.Camera.main;
             tileMap = FindObjectOfType<Tilemap>();
             selectedUnitList = new List<BaseUnitController>();
-            buildingType = new Queue<BuildingType>();
         }
 
         private void Start()
@@ -140,7 +140,7 @@ namespace FullMoon.Camera
         public void CreateTileSetting(bool isCraft, BuildingType type)
         {
             this.isCraft = isCraft;
-            buildingType.Enqueue(type);
+            buildingType = type;
         }
 
         #region Mouse
@@ -198,6 +198,8 @@ namespace FullMoon.Camera
 
                     if (tempList.Count < 6)
                     {
+                        isCraft = false;
+                        ToastManager.Instance.ShowToast("자원 유닛이 부족합니다.", "red");
                         return;
                     }
                     
@@ -205,7 +207,7 @@ namespace FullMoon.Camera
 
                     if (tileMap.HasTile(sampleCellPosition))
                     {
-                        Debug.LogError("지을 수 있는 공간이 없습니다. 이미 건물이 존재합니다.");
+                        ToastManager.Instance.ShowToast("지을 수 있는 공간이 없습니다. 이미 건물이 존재합니다.", "red");
                         return;
                     }
                     
@@ -220,12 +222,12 @@ namespace FullMoon.Camera
                     {
                         u.CraftBuilding(hg.point);
                     }
-
-                    TileController.Instance.CreateTile(samplePoint.position, buildingType.Dequeue());
+                    
+                    TileController.Instance.CreateTile(samplePoint.position, buildingType);
                 }
                 else
                 {
-                    Debug.LogError("지을 수 있는 공간이 없습니다.");
+                    ToastManager.Instance.ShowToast("지을 수 있는 공간이 없습니다.", "red");
                 }
             }
             else if (isCraft && Physics.Raycast(mouseRay, out var hitInfo, Mathf.Infinity) && buildingType.First() is BuildingType.Ground)

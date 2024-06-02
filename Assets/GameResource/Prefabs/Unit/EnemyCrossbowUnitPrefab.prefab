@@ -182,10 +182,9 @@ MonoBehaviour:
   unitData: {fileID: 11400000, guid: 7bc18d94944cf194fa15e2d76ee80b8e, type: 2}
   unitModel: {fileID: 5981776983551742766}
   unitAnimator: {fileID: 4026226404899077541}
-  unitMarker: {fileID: 7576867232460400837}
   viewRange: {fileID: 7512172322329104421}
   decalProjector: {fileID: 8523160805113277190}
-  attackEffect: {fileID: 7121363375999854799, guid: e0536bfec450158458c0aac3c61d8e84,
+  attackEffect: {fileID: 7121363375999854799, guid: f2c377c9b91dd354292cc3ef382ad346,
     type: 3}
 --- !u!136 &6102024267819438113
 CapsuleCollider:
@@ -415,7 +414,7 @@ PrefabInstance:
     - target: {fileID: 218434028341802776, guid: 0d665691312219243b2d9c769c8faf2b,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2614293188193899902, guid: 0d665691312219243b2d9c769c8faf2b,
         type: 3}
@@ -510,7 +509,7 @@ PrefabInstance:
     - target: {fileID: 8969961608407241986, guid: 0d665691312219243b2d9c769c8faf2b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 2.5
+      value: 2.2
       objectReference: {fileID: 0}
     - target: {fileID: 8969961608407241986, guid: 0d665691312219243b2d9c769c8faf2b,
         type: 3}
