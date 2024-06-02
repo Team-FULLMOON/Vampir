@@ -20,6 +20,7 @@ namespace FullMoon.Camera
         [Header("Movement")]
         [SerializeField] private float moveSpeed = 12f;
         [SerializeField] private float shiftMoveSpeed = 25f;
+        [SerializeField] private float cameraAreaLimit = 20f;
     
         [Header("Zoom")]
         [SerializeField] private float zoomSensitivity = 5f;
@@ -74,6 +75,29 @@ namespace FullMoon.Camera
             MouseAction();
         }
         
+        private Vector3 ClampToRotatedSquare(Vector3 position, Vector3 center, float limit, float angle)
+        {
+            // 각도를 라디안으로 변환
+            float rad = angle * Mathf.Deg2Rad;
+            float cos = Mathf.Cos(rad);
+            float sin = Mathf.Sin(rad);
+
+            // 원점 중심의 회전된 좌표계로 변환
+            Vector3 dir = position - center;
+            float rotatedX = cos * dir.x - sin * dir.z;
+            float rotatedZ = sin * dir.x + cos * dir.z;
+
+            // 회전된 좌표계를 기준으로 클램프
+            rotatedX = Mathf.Clamp(rotatedX, -limit, limit);
+            rotatedZ = Mathf.Clamp(rotatedZ, -limit, limit);
+
+            // 다시 원래 좌표계로 변환
+            position.x = cos * rotatedX + sin * rotatedZ + center.x;
+            position.z = -sin * rotatedX + cos * rotatedZ + center.z;
+
+            return position;
+        }
+        
         private void FixedUpdate()
         {
             Vector3 moveDirection = AdjustMovementToCamera(PlayerInputManager.Instance.move);
@@ -85,7 +109,11 @@ namespace FullMoon.Camera
             }
         
             float movementSpeed = PlayerInputManager.Instance.shift ? shiftMoveSpeed : moveSpeed;
-            transform.position += moveDirection * (movementSpeed * Time.fixedDeltaTime);
+            Vector3 newPosition = transform.position + moveDirection * (movementSpeed * Time.fixedDeltaTime);
+
+            newPosition = ClampToRotatedSquare(newPosition, Vector3.zero, cameraAreaLimit, freeLookCamera.m_XAxis.Value);
+            
+            transform.position = newPosition;
         }
 
         private Vector2 GetScreenMovementInput()
@@ -134,9 +162,9 @@ namespace FullMoon.Camera
             }
         }
         
-        public void CreateTileSetting(bool isCraft, BuildingType type)
+        public void CreateTileSetting(bool canCraft, BuildingType type)
         {
-            this.canCraft = isCraft;
+            this.canCraft = canCraft;
             buildingType = type;
         }
 
@@ -366,5 +394,18 @@ namespace FullMoon.Camera
         }
 
         #endregion Mouse
+        
+#if UNITY_EDITOR
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.green;
+
+            Vector3 center = Vector3.zero;
+            Vector3 size = new Vector3(cameraAreaLimit * 2, 1, cameraAreaLimit * 2);
+        
+            Gizmos.matrix = Matrix4x4.TRS(center, Quaternion.Euler(0, freeLookCamera.m_XAxis.Value, 0), Vector3.one);
+            Gizmos.DrawWireCube(Vector3.zero, size);
+        }
+#endif
     }
 }
