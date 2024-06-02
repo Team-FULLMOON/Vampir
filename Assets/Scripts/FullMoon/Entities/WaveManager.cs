@@ -214,6 +214,8 @@ namespace FullMoon.Entities
             return (transform.position + direction * spawnDistance) + randomSpawnPosition;
         }
 
+
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
@@ -223,5 +225,6 @@ namespace FullMoon.Entities
 
             Gizmos.DrawWireCube(center, size);
         }
+#endif
     }
 }
