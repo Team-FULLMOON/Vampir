@@ -11,8 +11,6 @@ namespace FullMoon.UI
     [DefaultExecutionOrder(-1)]
     public class MainUIController : ComponentSingleton<MainUIController>
     {
-        [SerializeField] private UnitControlData unitControlData;
-        
         public Button RetryButton { get; private set; }
         public Button ExitButton { get; private set; }
 

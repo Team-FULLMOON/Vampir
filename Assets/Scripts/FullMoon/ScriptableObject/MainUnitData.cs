@@ -9,16 +9,12 @@ namespace FullMoon.ScriptableObject
     {
         [Separator("Main Unit Settings")] 
         
-        [SerializeField, OverrideLabel("공격 애니메이션 프레임")] private int hitAnimationFrame = 12;
-        public int HitAnimationFrame => hitAnimationFrame;
-        
-        [SerializeField, OverrideLabel("유닛 컨트롤 데이터")]
-        private UnitControlData unitControlData;
-        public UnitControlData UnitControlData => unitControlData;
+        [SerializeField, OverrideLabel("그로기 시간")] private float groggyTime = 5f;
+        public float GroggyTime => groggyTime;
         
         [Separator]
-    
-        [SerializeField, OverrideLabel("리스폰 범위")] private float respawnRadius = 3f;
-        public float RespawnRadius => respawnRadius;
+        
+        [SerializeField, OverrideLabel("공격 애니메이션 프레임")] private int hitAnimationFrame = 12;
+        public int HitAnimationFrame => hitAnimationFrame;
     }
 }

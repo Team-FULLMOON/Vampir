@@ -28,7 +28,7 @@ namespace FullMoon.Entities.Unit.States
         {
             controller.AnimationController.SetAnimation(animationName);
             
-            await UniTask.Delay(TimeSpan.FromSeconds(5f));
+            await UniTask.Delay(TimeSpan.FromSeconds(controller.OverridenUnitData.GroggyTime));
 
             controller.OnAlive();
             controller.StateMachine.ChangeState(new MainUnitIdle(controller));

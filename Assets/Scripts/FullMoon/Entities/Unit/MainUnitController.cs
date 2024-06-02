@@ -92,7 +92,6 @@ namespace FullMoon.Entities.Unit
                     PlayAttackEffects(effectType, targetDirection, hitPosition);
                 }
                 
-
                 await UniTask.DelayFrame(OverridenUnitData.HitAnimationFrame);
 
                 if (targetController.gameObject.activeInHierarchy && targetController.Alive)
