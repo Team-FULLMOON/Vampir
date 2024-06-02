@@ -46,6 +46,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnDistance: 20
   spawnInterval: 15
+  buildingUnlock:
+  - unlockWave: 3
+    UnlockButton: {fileID: 0}
+  - unlockWave: 5
+    UnlockButton: {fileID: 0}
+  - unlockWave: 7
+    UnlockButton: {fileID: 0}
+  - unlockWave: 1000
+    UnlockButton: {fileID: 0}
   waves:
   - level: 1
     enemyDetails:
