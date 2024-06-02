@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b088d7d4193e3a469989c0d90dd5873, type: 3}
+  m_Name: MeleeEnemyUnit
+  m_EditorClassIdentifier: 
+  unitCode: 101
+  unitName: "\uBA54\uC774\uC2A4 \uC778\uD615"
+  unitType: Enemy
+  unitClass: Sword
+  maxHp: 125
+  movementSpeed: 5
+  missRate: 0
+  manaDrop: 7
+  manaCost: 10
+  createPrepareTime: 2.5
+  summonTime: 0.1
+  unitTransformObject: {fileID: 0}
+  respawnUnitObject: {fileID: 0}
+  attackEnabled: 1
+  attackDamage: 10
+  attackDelay: 0
+  attackCoolTime: 1
+  attackRadius: 2
+  viewRadius: 8
+  stateTransitionRadius: 10
+  fogOfWarRadius: 10
+  hitAnimationFrame: 12
+  spearPushFrame: 2
+  spearPushForce: 10

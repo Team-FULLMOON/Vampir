@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b088d7d4193e3a469989c0d90dd5873, type: 3}
+  m_Name: EnemySpearUnit
+  m_EditorClassIdentifier: 
+  unitCode: 101
+  unitName: "\uCC3D\uD5C8\uC811 (\uC801)"
+  unitType: Enemy
+  unitClass: Spear
+  maxHp: 25
+  movementSpeed: 2
+  missRate: 0
+  manaDrop: 7
+  manaCost: 10
+  createPrepareTime: 2.5
+  summonTime: 3
+  unitTransformObject: {fileID: 0}
+  respawnUnitObject: {fileID: 4972936984483943875, guid: dc645257328e771418a3bfd9a38a1f90,
+    type: 3}
+  attackEnabled: 1
+  attackDamage: 10
+  attackDelay: 0.2
+  attackCoolTime: 1
+  attackRadius: 2
+  viewRadius: 8
+  stateTransitionRadius: 8
+  unitAdvance: 0
+  unitCounter: 0
+  counterDamage: 100
+  counterKnockback: 0
+  counterGuard: 0
+  hitAnimationFrame: 32
+  spearPushFrame: 2
+  spearPushForce: 10
