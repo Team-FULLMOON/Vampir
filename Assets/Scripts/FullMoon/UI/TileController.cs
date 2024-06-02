@@ -1,20 +1,13 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Cysharp.Threading.Tasks;
-using FullMoon.Camera;
-using FullMoon.Entities.Building;
-using FullMoon.NavMesh;
-using FullMoon.Util;
 using MyBox;
-using Unity.AI.Navigation;
-using Unity.Entities.UniversalDelegates;
-using Unity.VisualScripting;
-using UnityEditor.AI;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Unity.AI.Navigation;
 using UnityEngine.Tilemaps;
+using FullMoon.Util;
+using FullMoon.Camera;
+using FullMoon.NavMesh;
 
 namespace FullMoon.UI
 {
@@ -100,8 +93,9 @@ namespace FullMoon.UI
 
         public NavMeshSurface playerSurfaces;
         public NavMeshSurface enemySurfaces;
-        private List<NavMeshBuildSource> playerSources = new List<NavMeshBuildSource>();
-        private List<NavMeshBuildSource> enemySources = new List<NavMeshBuildSource>();
+        
+        private List<NavMeshBuildSource> playerSources = new();
+        private List<NavMeshBuildSource> enemySources = new();
 
         private Tilemap buildingTileMap;
         private Tilemap groundTileMap;
@@ -113,9 +107,16 @@ namespace FullMoon.UI
             buildingTileMap = GameObject.Find("BuildingTile").GetComponent<Tilemap>();
             groundTileMap = GameObject.Find("GroundTile").GetComponent<Tilemap>();
             cameraController = FindObjectOfType<CameraController>();
-
-            playerSurfaces = GameObject.Find("Player Navmesh Surface").GetComponent<NavMeshSurface>();
-            enemySurfaces = GameObject.Find("Enemy Navmesh Surface").GetComponent<NavMeshSurface>();
+            
+            if (playerSurfaces == null)
+            {
+                playerSurfaces = GameObject.Find("Player Navmesh Surface").GetComponent<NavMeshSurface>();
+            }
+            
+            if (enemySurfaces == null)
+            {
+                enemySurfaces = GameObject.Find("Enemy Navmesh Surface").GetComponent<NavMeshSurface>();
+            }
 
             BuildNavMesh();
         }

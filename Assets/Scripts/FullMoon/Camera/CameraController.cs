@@ -30,13 +30,14 @@ namespace FullMoon.Camera
         [Header("Rotation")]
         [SerializeField] private float rotationSensitivity = 3f;
         
+        [Header("Tile Map")]
+        [SerializeField] private GameObjectDictionary tileMap;
+        
         [Header("UI")]
         [SerializeField] private CursorController cursor;
         
         private UnityEngine.Camera mainCamera;
         public float targetFov;
-        
-        private Tilemap tileMap;
         
         private Vector3 mousePos;
         private Ray mouseRay;
@@ -51,7 +52,6 @@ namespace FullMoon.Camera
         private void Awake()
         {
             mainCamera = UnityEngine.Camera.main;
-            tileMap = FindObjectOfType<Tilemap>();
             selectedUnitList = new List<BaseUnitController>();
         }
 
@@ -190,8 +190,8 @@ namespace FullMoon.Camera
                 return;
             }
 
-            var sampleCellPosition = tileMap.WorldToCell(samplePoint.position);
-            if (tileMap.HasTile(sampleCellPosition))
+            var sampleCellPosition = tileMap.GetComponentByName<Tilemap>("Building").WorldToCell(samplePoint.position);
+            if (tileMap.GetComponentByName<Tilemap>("Building").HasTile(sampleCellPosition))
             {
                 CancelCrafting("지을 수 있는 공간이 없습니다. 이미 건물이 존재합니다.", "red");
                 return;
@@ -202,8 +202,8 @@ namespace FullMoon.Camera
 
         private void HandleGroundTile(RaycastHit hitInfo)
         {
-            var sampleCellPosition = tileMap.WorldToCell(hitInfo.point);
-            if (tileMap.HasTile(sampleCellPosition) || hitInfo.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
+            var sampleCellPosition = tileMap.GetComponentByName<Tilemap>("Ground").WorldToCell(hitInfo.point);
+            if (tileMap.GetComponentByName<Tilemap>("Ground").HasTile(sampleCellPosition) || hitInfo.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
             {
                 CancelCrafting("해당 위치에 이미 땅이 존재합니다.", "red");
                 return;
@@ -235,6 +235,7 @@ namespace FullMoon.Camera
         private void CancelCrafting(string message, string color)
         {
             canCraft = false;
+            Debug.LogWarning(message);
             ToastManager.Instance.ShowToast(message, color);
         }
 
