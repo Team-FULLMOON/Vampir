@@ -32,7 +32,7 @@ MonoBehaviour:
   attackRadius: 1.5
   viewRadius: 8
   stateTransitionRadius: 10
-  unitAdvance: 0
+  unitAdvance: -1
   unitCounter: 0
   counterDamage: 100
   counterKnockback: 0

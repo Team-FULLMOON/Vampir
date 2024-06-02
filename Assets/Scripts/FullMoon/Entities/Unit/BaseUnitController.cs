@@ -123,14 +123,14 @@ namespace FullMoon.Entities.Unit
                 else if ((attackerClass & unitData.UnitAdvance) is not 0)
                 {
                     int rand = Random.Range(0, 100);
-                    if (rand < unitData.CounterGuard)
+                    if (rand > unitData.CounterGuard)
+                    {
+                        Hp = Mathf.Clamp(Hp - amount, 0, int.MaxValue);
+                    }
+                    else
                     {
                         return;
                     }
-                }
-                else
-                {
-                    Hp = Mathf.Clamp(Hp - amount, 0, int.MaxValue);
                 }
             }
 
