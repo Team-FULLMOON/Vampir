@@ -27,17 +27,26 @@ namespace FullMoon.Entities.Unit.States
 
         private async UniTask DisableAfterAnimation(string animationName)
         {
-            if (controller.AnimationController.SetAnimation(animationName))
+            try
             {
-                int animationHash = Animator.StringToHash(animationName);
-                await UniTask.WaitUntil(() => 
+                if (controller.AnimationController.SetAnimation(animationName))
                 {
-                    var stateInfo = controller.unitAnimator.GetCurrentAnimatorStateInfo(0);
-                    return stateInfo.shortNameHash == animationHash && stateInfo.normalizedTime >= 1.0f;
-                });
-                await UniTask.Delay(500);
+                    await UniTask.WaitUntil(() => 
+                    {
+                        var stateInfo = controller.unitAnimator.GetCurrentAnimatorStateInfo(0);
+                        if (controller.AnimationController.CurrentStateInfo.Item1 != animationName)
+                        {
+                            controller.AnimationController.SetAnimation(animationName);
+                        }
+                        return (controller.AnimationController.CurrentStateInfo.Item1 == animationName && stateInfo.normalizedTime >= 1.0f) || stateInfo.loop;
+                    });
+                    await UniTask.Delay(500);
+                }
             }
-            ObjectPoolManager.Instance.ReturnObjectToPool(controller.gameObject);
+            finally
+            {
+                ObjectPoolManager.Instance.ReturnObjectToPool(controller.gameObject);
+            }
         }
     }
 }
