@@ -21,8 +21,8 @@ namespace FullMoon.Entities.Building
             base.OnEnable();
             OverridenBuildingData = buildingData as RangedBuildingData;
 
-            ShowFrame(5f).Forget();
-            SpawnUnit(5f).Forget();
+            ShowFrame(buildingData.BuildTime).Forget();
+            SpawnUnit(buildingData.BuildTime).Forget();
         }
 
         private async UniTaskVoid SpawnUnit(float delay = 0f)

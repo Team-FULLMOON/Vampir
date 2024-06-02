@@ -17,6 +17,11 @@ namespace FullMoon.ScriptableObject
         [SerializeField, OverrideLabel("건물 타입"), DefinedValues("LumberMill", "SwordArmy", "SpearArmy", "CrossbowArmy")] 
         private string buildingType = "";
         public string BuildingType => buildingType;
+        
+        [Separator]
+        
+        [SerializeField, OverrideLabel("건물 생성 시간")] private float buildTime = 5f;
+        public float BuildTime => buildTime;
 
         [Separator]
 
