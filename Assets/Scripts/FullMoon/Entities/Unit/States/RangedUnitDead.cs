@@ -38,9 +38,9 @@ namespace FullMoon.Entities.Unit.States
                         {
                             controller.AnimationController.SetAnimation(animationName);
                         }
-                        return (controller.AnimationController.CurrentStateInfo.Item1 == animationName && stateInfo.normalizedTime >= 1.0f) || stateInfo.loop;
+                        return (controller.AnimationController.CurrentStateInfo.Item1 == animationName && stateInfo.normalizedTime >= 1.0f);
                     });
-                    await UniTask.Delay(500);
+                    await UniTask.Delay(1000);
                 }
             }
             finally

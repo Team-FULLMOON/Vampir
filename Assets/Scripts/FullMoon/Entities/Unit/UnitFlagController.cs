@@ -3,6 +3,7 @@ using MyBox;
 using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using FullMoon.UI;
 using FullMoon.Util;
@@ -32,23 +33,25 @@ namespace FullMoon.Entities.Unit
             SaveLocalPositions();
             foreach (var unit in unitPreset)
             {
-                unit.enabled = true;
                 unit.Flag = this;
+                unit.gameObject.SetActive(true);
             }
             ChangeFlagModelPosition();
             InitViewRangeRadius();
             Deselect();
         }
 
-        private void Update()
+        private async void Update()
         {
             UnitInsideViewArea.RemoveWhere(unit => unit == null || !unit.gameObject.activeInHierarchy || (!unit.Alive && unit is not MainUnitController));
             
             if (unitPreset.All(unit => unit.Alive is false && unit.gameObject.activeInHierarchy is false && unit is not MainUnitController))
             {
+                await UniTask.Delay(500);
                 if (currentFlagModel != null)
                 {
                     ObjectPoolManager.Instance.ReturnObjectToPool(currentFlagModel.gameObject);
+                    currentFlagModel = null;
                 }
                 if (BuildingPosition != Vector3.zero)
                 {
