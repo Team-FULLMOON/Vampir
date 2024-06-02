@@ -19,13 +19,9 @@ MonoBehaviour:
   maxHp: 25
   movementSpeed: 2
   missRate: 0
-  manaDrop: 7
-  manaCost: 10
-  createPrepareTime: 2.5
-  summonTime: 3
-  unitTransformObject: {fileID: 0}
   respawnUnitObject: {fileID: 4972936984483943875, guid: dc645257328e771418a3bfd9a38a1f90,
     type: 3}
+  unitDrop: 1
   attackEnabled: 1
   attackDamage: 10
   attackDelay: 0.2
@@ -36,7 +32,7 @@ MonoBehaviour:
   unitAdvance: 0
   unitCounter: -1
   counterDamage: 200
-  counterKnockback: 0
+  counterKnockBack: 0
   counterGuard: 0
   hitAnimationFrame: 52
   spearPushFrame: 2
