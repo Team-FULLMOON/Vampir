@@ -206,8 +206,6 @@ namespace FullMoon.UI
         {
             NavMeshTag.PlayerCollect(ref playerSources);
             NavMeshTag.EnemyCollect(ref enemySources);
-            Debug.Log(playerSources.Count());
-            Debug.Log(enemySources.Count());
 
             Bounds bounds = new Bounds(new Vector3(0, 0, 0), new Vector3(500, 500, 500));
 

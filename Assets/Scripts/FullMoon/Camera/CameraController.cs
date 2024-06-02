@@ -188,7 +188,7 @@ namespace FullMoon.Camera
                 return;
             }
 
-            if (isCraft && Physics.Raycast(mouseRay, out var hg, Mathf.Infinity, (1 << LayerMask.NameToLayer("Ground"))) && buildingType.First() is not BuildingType.Ground)
+            if (isCraft && Physics.Raycast(mouseRay, out var hg, Mathf.Infinity, (1 << LayerMask.NameToLayer("Ground"))) && buildingType is not BuildingType.Ground)
             {
                 if (UnityEngine.AI.NavMesh.SamplePosition(hg.point, out var samplePoint, 1f, (1 << UnityEngine.AI.NavMesh.GetAreaFromName("Walkable"))))
                 {
@@ -230,7 +230,7 @@ namespace FullMoon.Camera
                     ToastManager.Instance.ShowToast("지을 수 있는 공간이 없습니다.", "red");
                 }
             }
-            else if (isCraft && Physics.Raycast(mouseRay, out var hitInfo, Mathf.Infinity) && buildingType.First() is BuildingType.Ground)
+            else if (isCraft && Physics.Raycast(mouseRay, out var hitInfo, Mathf.Infinity) && buildingType is BuildingType.Ground)
             {
                 isCraft = false;
                 Vector3Int sampleCellPosition = tileMap.WorldToCell(hitInfo.point);
@@ -241,7 +241,7 @@ namespace FullMoon.Camera
                     return;
                 }
 
-                TileController.Instance.CreateTile(hitInfo.point, buildingType.Dequeue());
+                TileController.Instance.CreateTile(hitInfo.point, buildingType);
             }
 
             DeselectAll();
