@@ -139,9 +139,10 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _Thickness: 0.1
+    - _Thickness: 0.01
     - _WorkflowMode: 1
     - _ZWrite: 1
+    - _fade_distance: 0
     - _outline_thickness: 0.584
     - _player: 1
     - _selection: 1
@@ -153,5 +154,5 @@ Material:
     - _Player_color: {r: 0, g: 1, b: 0.9696943, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _Vector2: {r: 0, g: 0, b: 0, a: 0}
-    - _color: {r: 0, g: 2, b: 1.9393886, a: 0}
+    - _color: {r: 0, g: 0.94070315, b: 1, a: 0}
   m_BuildTextureStacks: []
