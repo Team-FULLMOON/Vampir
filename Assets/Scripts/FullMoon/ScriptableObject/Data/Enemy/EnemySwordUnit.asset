@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b088d7d4193e3a469989c0d90dd5873, type: 3}
   m_Name: EnemySwordUnit
   m_EditorClassIdentifier: 
-  unitCode: 101
-  unitName: "\uAC80\uD5C8\uC811 (\uC801)"
+  unitCode: 202
+  unitName: "\uC790\uACBD\uB2E8-\uBCF4\uBCD1"
   unitType: Enemy
   unitClass: Sword
   maxHp: 100
@@ -29,15 +29,15 @@ MonoBehaviour:
   attackEnabled: 1
   attackDamage: 10
   attackDelay: 0.2
-  attackCoolTime: 0.8
+  attackCoolTime: 1
   attackRadius: 1.5
   viewRadius: 8
   stateTransitionRadius: 8
-  unitAdvance: 0
-  unitCounter: 0
-  counterDamage: 100
+  unitAdvance: 4
+  unitCounter: 10
+  counterDamage: 200
   counterKnockback: 0
-  counterGuard: 100
+  counterGuard: 75
   hitAnimationFrame: 38
   spearPushFrame: 2
   spearPushForce: 10

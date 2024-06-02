@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0da91f06fca8f9a46a3fe3533154bd91, type: 3}
   m_Name: EnemyCrossbowUnit
   m_EditorClassIdentifier: 
-  unitCode: 102
-  unitName: "\uC11D\uAD81\uD5C8\uC811 (\uC801)"
+  unitCode: 204
+  unitName: "\uC790\uACBD\uB2E8-\uAD81\uBCD1"
   unitType: Enemy
   unitClass: Crossbow
-  maxHp: 45
+  maxHp: 80
   movementSpeed: 2
   missRate: 0
   manaDrop: 7
@@ -27,15 +27,15 @@ MonoBehaviour:
   respawnUnitObject: {fileID: 4972936984483943875, guid: dc645257328e771418a3bfd9a38a1f90,
     type: 3}
   attackEnabled: 1
-  attackDamage: 20
+  attackDamage: 10
   attackDelay: 0.5
-  attackCoolTime: 2.5
-  attackRadius: 6.5
+  attackCoolTime: 1
+  attackRadius: 5
   viewRadius: 8
   stateTransitionRadius: 8
-  unitAdvance: 0
-  unitCounter: 0
-  counterDamage: 100
+  unitAdvance: 2
+  unitCounter: 9
+  counterDamage: 200
   counterKnockback: 0
   counterGuard: 0
   bulletSpeed: 55

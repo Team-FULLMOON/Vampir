@@ -16,7 +16,7 @@ MonoBehaviour:
   unitName: "\uC11D\uAD81\uD5C8\uC811"
   unitType: Player
   unitClass: Crossbow
-  maxHp: 45
+  maxHp: 20
   movementSpeed: 3
   missRate: 0
   manaDrop: 7
@@ -28,13 +28,13 @@ MonoBehaviour:
   attackEnabled: 1
   attackDamage: 20
   attackDelay: 0.5
-  attackCoolTime: 2.5
-  attackRadius: 6.5
+  attackCoolTime: 1
+  attackRadius: 5
   viewRadius: 8
   stateTransitionRadius: 8
-  unitAdvance: 0
-  unitCounter: 0
-  counterDamage: 100
+  unitAdvance: 2
+  unitCounter: 9
+  counterDamage: 200
   counterKnockback: 0
   counterGuard: 0
   bulletSpeed: 55
