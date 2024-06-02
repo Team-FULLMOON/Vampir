@@ -25,7 +25,7 @@ MonoBehaviour:
   attackEnabled: 1
   attackDamage: 10
   attackDelay: 0.5
-  attackCoolTime: 1
+  attackCoolTime: 2
   attackRadius: 5
   viewRadius: 8
   stateTransitionRadius: 8
