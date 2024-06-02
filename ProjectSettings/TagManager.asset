@@ -20,7 +20,7 @@ TagManager:
   - SelectPlayer
   - SelectEnemy
   - Ground
-  - 
+  - outline
   - 
   - UIObject
   - 
