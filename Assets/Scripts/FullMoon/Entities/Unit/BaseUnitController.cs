@@ -117,7 +117,7 @@ namespace FullMoon.Entities.Unit
                 // 비트플래그를 사용한 상성 비교
                 if ((attackerClass & unitData.UnitCounter) is not 0)
                 {
-                    amount = (int)(amount / (unitData.CounterDamage / 100f));
+                    amount = (int)(amount * (unitData.CounterDamage / 100f));
                     Hp = Mathf.Clamp(Hp - amount, 0, int.MaxValue);
                 }
                 else if ((attackerClass & unitData.UnitAdvance) is not 0)

@@ -113,7 +113,7 @@ namespace FullMoon.ScriptableObject
         private UnitClassFlag unitCounter = UnitClassFlag.None;
         public UnitClassFlag UnitCounter => unitCounter;
 
-        [SerializeField, OverrideLabel("상성에 따른 입는 데미지(%)")]
+        [SerializeField, OverrideLabel("카운터에게 입는 데미지(%)")]
         private float counterDamage = 100;
         public float CounterDamage => counterDamage;
 
