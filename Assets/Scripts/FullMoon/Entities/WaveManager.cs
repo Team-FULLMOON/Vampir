@@ -1,13 +1,15 @@
+using MyBox;
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using FullMoon.Entities.Unit;
+using UnityEngine;
+using UnityEngine.UI;
 using FullMoon.UI;
 using FullMoon.Util;
-using MyBox;
-using UnityEngine;
-using System.Threading;
+using FullMoon.Entities.Unit;
+using UnityEngine.Serialization;
 
 namespace FullMoon.Entities
 {
@@ -27,11 +29,19 @@ namespace FullMoon.Entities
         public List<EnemyDetail> enemyDetails;
     }
     
+    [Serializable]
+    public class ButtonUnlock
+    {
+        public int unlockWave = 1;
+        public Button unlockButton;
+    }
+    
     public class WaveManager : MonoBehaviour
     {
         [ReadOnly] private int currentLevel;
         [SerializeField] private float spawnDistance = 20f;
         [SerializeField] private float spawnInterval = 15f;
+        [SerializeField] private List<ButtonUnlock> buildingUnlock;
         [SerializeField] private List<Wave> waves;
 
         private CancellationTokenSource cancellationTokenSource;
@@ -41,6 +51,7 @@ namespace FullMoon.Entities
         private void Start()
         {
             cancellationTokenSource = new CancellationTokenSource();
+            buildingUnlock.ForEach(b => b.unlockButton.interactable = false);
             SpawnWaveAsync(cancellationTokenSource.Token).Forget();
         }
 
@@ -55,7 +66,10 @@ namespace FullMoon.Entities
             await UniTask.NextFrame(cancellationToken);
             while (currentLevel < waves.Max(w => w.level))
             {
-                if (cancellationToken.IsCancellationRequested) break;
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    break;
+                }
 
                 bool enemyAlive = enemyWaitList.Any(e => e.Alive);
                 
@@ -68,6 +82,9 @@ namespace FullMoon.Entities
                 enemyWaitList.Clear();
                 
                 MainUIController.Instance.DayCountText.text = $"{currentLevel + 1}";
+                
+                buildingUnlock.Where(b => currentLevel + 1 >= b.unlockWave)
+                    .ForEach(b => b.unlockButton.interactable = true);
                 
                 await DisplayCountdown(spawnInterval, cancellationToken);
                 

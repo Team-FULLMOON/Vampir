@@ -122,7 +122,7 @@ namespace FullMoon.Entities.Unit
                 }
                 else if ((attackerClass & unitData.UnitAdvance) is not 0)
                 {
-                    int rand = Random.Range(0, 100);
+                    float rand = Random.Range(0f, 100f);
                     if (rand > unitData.CounterGuard)
                     {
                         Hp = Mathf.Clamp(Hp - amount, 0, int.MaxValue);
@@ -169,7 +169,7 @@ namespace FullMoon.Entities.Unit
                     return;
                 }
                 
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < unitData.UnitDrop; i++)
                 {
                     Vector2 randomPosition = Random.insideUnitCircle * 1f;
                     Vector3 spawnPosition = new Vector3(transform.position.x + randomPosition.x, transform.position.y, transform.position.z + randomPosition.y);
