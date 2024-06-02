@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 31388649963703528}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.31621462, y: -0.35957026, z: 0.1309804, w: 0.86807936}
+  m_LocalRotation: {x: 0.31621462, y: -0.35957024, z: 0.13098039, w: 0.8680793}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -161,7 +161,7 @@ MonoBehaviour:
   zoom: {x: 0, y: 0}
   rotation: 0
   cancel: 0
-  cursorLockType: 0
+  cursorLockType: 2
 --- !u!1 &1109105708101980466
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,7 +283,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2213712683821644168}
+      - m_Target: {fileID: 1736809552249546428}
         m_TargetAssemblyTypeName: FullMoon.UI.TileController, Assembly-CSharp
         m_MethodName: OnBuildingUI
         m_Mode: 1
@@ -517,7 +517,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1889243612475854807}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.31621462, y: -0.35957026, z: 0.1309804, w: 0.86807936}
+  m_LocalRotation: {x: 0.31621462, y: -0.35957024, z: 0.13098039, w: 0.8680793}
   m_LocalPosition: {x: 17.677671, y: 21, z: -17.677668}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1089,7 +1089,6 @@ MonoBehaviour:
   rotationSensitivity: 5
   tileMap: {fileID: 7190302438271463696}
   cursor: {fileID: 2179864655310582506}
-  targetFov: 0
 --- !u!1 &2558575844570174616
 GameObject:
   m_ObjectHideFlags: 0
@@ -1171,7 +1170,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2634768523580393475}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.31621465, y: -0.35957026, z: 0.13098042, w: 0.8680793}
+  m_LocalRotation: {x: 0.31621465, y: -0.35957024, z: 0.13098039, w: 0.8680793}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1534,7 +1533,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2213712683821644168}
+      - m_Target: {fileID: 1736809552249546428}
         m_TargetAssemblyTypeName: FullMoon.UI.TileController, Assembly-CSharp
         m_MethodName: SettingTile
         m_Mode: 5
@@ -1667,7 +1666,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2213712683821644168}
+      - m_Target: {fileID: 1736809552249546428}
         m_TargetAssemblyTypeName: FullMoon.UI.TileController, Assembly-CSharp
         m_MethodName: SettingTile
         m_Mode: 5
@@ -1800,7 +1799,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2213712683821644168}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: FullMoon.UI.TileController, Assembly-CSharp
         m_MethodName: OffBuildingUI
         m_Mode: 1
@@ -2001,7 +2000,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3817388134677654357}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.31621462, y: -0.35957024, z: 0.13098039, w: 0.8680793}
+  m_LocalRotation: {x: 0.31621465, y: -0.35957026, z: 0.13098042, w: 0.8680793}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2145,7 +2144,7 @@ GameObject:
   - component: {fileID: 1939600234368564265}
   - component: {fileID: 2179864655310582506}
   m_Layer: 0
-  m_Name: CursorController
+  m_Name: Cursor Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2178,7 +2177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87291a3892c3fcc40b0f3311af407627, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enable: 0
+  enable: 1
   cursorType: 0
   textures:
   - {fileID: 2800000, guid: ff8ee024686a956408b8f799c4acfc11, type: 3}
@@ -2615,7 +2614,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2213712683821644168}
+      - m_Target: {fileID: 1736809552249546428}
         m_TargetAssemblyTypeName: FullMoon.UI.TileController, Assembly-CSharp
         m_MethodName: SettingTile
         m_Mode: 5
@@ -2748,7 +2747,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2213712683821644168}
+      - m_Target: {fileID: 1736809552249546428}
         m_TargetAssemblyTypeName: FullMoon.UI.TileController, Assembly-CSharp
         m_MethodName: SettingTile
         m_Mode: 5
@@ -2960,7 +2959,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2213712683821644168}
+      - m_Target: {fileID: 1736809552249546428}
         m_TargetAssemblyTypeName: FullMoon.UI.TileController, Assembly-CSharp
         m_MethodName: SettingTile
         m_Mode: 5
@@ -3068,11 +3067,10 @@ Transform:
   - {fileID: 3450615881860291595}
   - {fileID: 3617632683737112003}
   - {fileID: 7134362385400558964}
+  - {fileID: 5310352945335419238}
+  - {fileID: 1939600234368564265}
   - {fileID: 946502404706778275}
   - {fileID: 2409887955505413319}
-  - {fileID: 1939600234368564265}
-  - {fileID: 5310352945335419238}
-  - {fileID: 3096621891399046626}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7154164497100328708
@@ -3471,75 +3469,6 @@ MonoBehaviour:
   m_BiasX: 0
   m_BiasY: 0
   m_CenterOnActivate: 1
---- !u!1 &8627715101869633913
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3096621891399046626}
-  - component: {fileID: 2213712683821644168}
-  m_Layer: 0
-  m_Name: TileController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3096621891399046626
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8627715101869633913}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 261678224792970686}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2213712683821644168
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8627715101869633913}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a03447cd32c78294391df3af6fb77e4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tilePrefab: {fileID: 7753059937955748541, guid: 36717d19952c00946986688ab3e48b21,
-    type: 3}
-  tileWidthSize: 1
-  tileHeightSize: 1
-  lumberPrefab: {fileID: 1029500191801352571, guid: 3ab6c90f9c5c08045ac7917c343ea2bd,
-    type: 3}
-  lumberWidthSize: 1
-  lumberHeightSize: 1
-  swordArmyPrefab: {fileID: 1029500191801352571, guid: fff0197cc9f9a394db7f7d2f3a805b5a,
-    type: 3}
-  swordWidthSize: 1
-  swordHeightSize: 1
-  spearArmyPrefab: {fileID: 1029500191801352571, guid: feb4a7efa9e6226449a9ce2b602ada33,
-    type: 3}
-  spearWidthSize: 1
-  spearHeightSize: 1
-  crossbowArmyPrefab: {fileID: 1029500191801352571, guid: 42dbe3129ef29bc4681611d4301aad38,
-    type: 3}
-  crossbowWidthSize: 1
-  crossbowHeightSize: 1
-  buildUIButton: {fileID: 1109105708101980466}
-  buildUI: {fileID: 2716513061444280067}
-  cancelBuildUI: {fileID: 3372695177438821261}
-  playerSurfaces: {fileID: 0}
-  enemySurfaces: {fileID: 0}
 --- !u!1 &8711201054282977222
 GameObject:
   m_ObjectHideFlags: 0
@@ -4046,13 +3975,40 @@ PrefabInstance:
     - target: {fileID: 3151652701298268135, guid: 4e0280fb1dccbc6429401ea554e8800d,
         type: 3}
       propertyPath: m_Name
-      value: Grid
+      value: Tile Controller
       objectReference: {fileID: 0}
+    - target: {fileID: 8491553997518848086, guid: 4e0280fb1dccbc6429401ea554e8800d,
+        type: 3}
+      propertyPath: buildUI
+      value: 
+      objectReference: {fileID: 2716513061444280067}
+    - target: {fileID: 8491553997518848086, guid: 4e0280fb1dccbc6429401ea554e8800d,
+        type: 3}
+      propertyPath: buildUIButton
+      value: 
+      objectReference: {fileID: 1109105708101980466}
+    - target: {fileID: 8491553997518848086, guid: 4e0280fb1dccbc6429401ea554e8800d,
+        type: 3}
+      propertyPath: cancelBuildUI
+      value: 
+      objectReference: {fileID: 3372695177438821261}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e0280fb1dccbc6429401ea554e8800d, type: 3}
+--- !u!114 &1736809552249546428 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8491553997518848086, guid: 4e0280fb1dccbc6429401ea554e8800d,
+    type: 3}
+  m_PrefabInstance: {fileID: 7909002965690492650}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a03447cd32c78294391df3af6fb77e4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &5310352945335419238 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2625675090684340108, guid: 4e0280fb1dccbc6429401ea554e8800d,

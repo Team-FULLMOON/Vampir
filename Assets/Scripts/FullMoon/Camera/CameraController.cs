@@ -37,7 +37,7 @@ namespace FullMoon.Camera
         [SerializeField] private CursorController cursor;
         
         private UnityEngine.Camera mainCamera;
-        public float targetFov;
+        private float targetFov;
         
         private Vector3 mousePos;
         private Ray mouseRay;
@@ -81,10 +81,7 @@ namespace FullMoon.Camera
             if (moveDirection == Vector3.zero && enableCursorMovement)
             {
                 moveDirection = AdjustMovementToCamera(GetScreenMovementInput());
-                if (moveDirection != Vector3.zero)
-                {
-                    cursor.SetCursorState(CursorType.Camera);
-                }
+                cursor.SetCursorState(moveDirection != Vector3.zero ? CursorType.Camera : CursorType.Idle);
             }
         
             float movementSpeed = PlayerInputManager.Instance.shift ? shiftMoveSpeed : moveSpeed;
@@ -93,7 +90,7 @@ namespace FullMoon.Camera
 
         private Vector2 GetScreenMovementInput()
         {
-            if (Cursor.lockState != CursorLockMode.Confined)
+            if (!Application.isFocused || Cursor.lockState != CursorLockMode.Confined)
             {
                 return Vector2.zero;
             }
@@ -106,7 +103,7 @@ namespace FullMoon.Camera
             normalizedPosition.Normalize();
 
             // 화면 가장자리에 있는지 확인
-            if (Mathf.Abs(normalizedX) > 0.95f || Mathf.Abs(normalizedY) > 0.95f)
+            if (Mathf.Abs(normalizedX) > 0.98f || Mathf.Abs(normalizedY) > 0.98f)
             {
                 return normalizedPosition;
             }
@@ -309,7 +306,7 @@ namespace FullMoon.Camera
                 if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
                 {
                     MoveSelectedUnits(hit.point);
-                    cursor.SetMoveAniTarget(hit.point);
+                    // cursor.SetMoveAniTarget(hit.point);
                 }
             }
         }

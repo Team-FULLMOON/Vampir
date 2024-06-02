@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 2625675090684340108}
   - component: {fileID: 3422629108998783661}
   - component: {fileID: 1012036354969016314}
+  - component: {fileID: 8491553997518848086}
   m_Layer: 0
-  m_Name: Grid
+  m_Name: Tile Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,6 +65,43 @@ MonoBehaviour:
     gameObject: {fileID: 5274416841268004865}
   - name: Ground
     gameObject: {fileID: 7839158338001412486}
+--- !u!114 &8491553997518848086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3151652701298268135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a03447cd32c78294391df3af6fb77e4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilePrefab: {fileID: 7753059937955748541, guid: 36717d19952c00946986688ab3e48b21,
+    type: 3}
+  tileWidthSize: 1
+  tileHeightSize: 1
+  lumberPrefab: {fileID: 1029500191801352571, guid: 3ab6c90f9c5c08045ac7917c343ea2bd,
+    type: 3}
+  lumberWidthSize: 1
+  lumberHeightSize: 1
+  swordArmyPrefab: {fileID: 1029500191801352571, guid: fff0197cc9f9a394db7f7d2f3a805b5a,
+    type: 3}
+  swordWidthSize: 1
+  swordHeightSize: 1
+  spearArmyPrefab: {fileID: 1029500191801352571, guid: feb4a7efa9e6226449a9ce2b602ada33,
+    type: 3}
+  spearWidthSize: 1
+  spearHeightSize: 1
+  crossbowArmyPrefab: {fileID: 1029500191801352571, guid: 42dbe3129ef29bc4681611d4301aad38,
+    type: 3}
+  crossbowWidthSize: 1
+  crossbowHeightSize: 1
+  buildUIButton: {fileID: 0}
+  buildUI: {fileID: 0}
+  cancelBuildUI: {fileID: 0}
+  playerSurfaces: {fileID: 0}
+  enemySurfaces: {fileID: 0}
 --- !u!1 &5274416841268004865
 GameObject:
   m_ObjectHideFlags: 0
