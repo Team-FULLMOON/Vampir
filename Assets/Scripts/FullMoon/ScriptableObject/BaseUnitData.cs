@@ -49,30 +49,14 @@ namespace FullMoon.ScriptableObject
         
         [Space(5)]
         
-        [SerializeField, ConditionalField(nameof(unitType), false, "Enemy"), OverrideLabel("처치 시 마나 획득량")] 
-        private int manaDrop = 7;
-        public int ManaDrop => manaDrop;
-        
-        [SerializeField, ConditionalField(nameof(unitType), false, "Enemy"), OverrideLabel("생성 시 마나 필요량")] 
-        private int manaCost = 10;
-        public int ManaCost => manaCost;
-        
-        [SerializeField, ConditionalField(nameof(unitType), false, "Enemy"), OverrideLabel("생성 준비 시간")] 
-        private float createPrepareTime = 2.5f;
-        public float CreatePrepareTime => createPrepareTime;
-        
-        [SerializeField, ConditionalField(nameof(unitType), false, "Enemy"), OverrideLabel("인형 소환 시간")] 
-        private float summonTime = 3f;
-        public float SummonTime => summonTime;
-        
-        [SerializeField, ConditionalField(nameof(unitType), false, "Enemy"), OverrideLabel("유닛 변환 오브젝트")] 
-        private GameObject unitTransformObject;
-        public GameObject UnitTransformObject => unitTransformObject;
-        
         [SerializeField, ConditionalField(nameof(unitType), false, "Enemy"), OverrideLabel("유닛 리스폰 오브젝트")] 
         private GameObject respawnUnitObject;
         public GameObject RespawnUnitObject => respawnUnitObject;
     
+        [SerializeField, ConditionalField(nameof(unitType), false, "Enemy"), OverrideLabel("자원 유닛 획득량")] 
+        private int unitDrop = 5;
+        public int UnitDrop => unitDrop;
+        
         [Separator]
     
         [SerializeField, OverrideLabel("공격 가능 여부")] private bool attackEnabled = true;
@@ -118,8 +102,8 @@ namespace FullMoon.ScriptableObject
         public float CounterDamage => counterDamage;
 
         [SerializeField, OverrideLabel("상성에 따른 넉백(m)")]
-        private float counterKnockback = 0;
-        public float CounterKnockback => counterKnockback;
+        private float counterKnockBack = 0;
+        public float CounterKnockBack => counterKnockBack;
 
         [SerializeField, OverrideLabel("상성에 따른 방어 확률(%)")]
         private float counterGuard = 0;
