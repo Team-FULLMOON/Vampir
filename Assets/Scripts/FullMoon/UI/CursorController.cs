@@ -55,7 +55,7 @@ namespace FullMoon.UI
 
         private void UpdateCursorState()
         {
-            if (!Application.isPlaying || enable == false)
+            if (!Application.isPlaying || !Application.isFocused || enable == false)
             {
                 return;
             }
