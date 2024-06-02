@@ -16,15 +16,11 @@ MonoBehaviour:
   unitName: 
   unitType: Player
   unitClass: Hammer
-  maxHp: 30
+  maxHp: 1
   movementSpeed: 4
   missRate: 0
-  manaDrop: 7
-  manaCost: 10
-  createPrepareTime: 2.5
-  summonTime: 3
-  unitTransformObject: {fileID: 0}
   respawnUnitObject: {fileID: 0}
+  unitDrop: 5
   attackEnabled: 0
   attackDamage: 10
   attackDelay: 1
@@ -35,5 +31,5 @@ MonoBehaviour:
   unitAdvance: 0
   unitCounter: 0
   counterDamage: 100
-  counterKnockback: 0
+  counterKnockBack: 0
   counterGuard: 0

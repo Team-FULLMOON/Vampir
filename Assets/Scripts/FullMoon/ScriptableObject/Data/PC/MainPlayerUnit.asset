@@ -16,15 +16,11 @@ MonoBehaviour:
   unitName: 
   unitType: Player
   unitClass: Main
-  maxHp: 100
+  maxHp: 160
   movementSpeed: 4
   missRate: 0
-  manaDrop: 7
-  manaCost: 10
-  createPrepareTime: 2.5
-  summonTime: 3
-  unitTransformObject: {fileID: 0}
   respawnUnitObject: {fileID: 0}
+  unitDrop: 5
   attackEnabled: 1
   attackDamage: 10
   attackDelay: 0
@@ -35,8 +31,7 @@ MonoBehaviour:
   unitAdvance: -1
   unitCounter: 0
   counterDamage: 100
-  counterKnockback: 0
+  counterKnockBack: 0
   counterGuard: 0
+  groggyTime: 5
   hitAnimationFrame: 25
-  unitControlData: {fileID: 11400000, guid: bc7316a50f904ad489752886c4e22b3a, type: 2}
-  respawnRadius: 3
