@@ -107,7 +107,7 @@ namespace FullMoon.Effect
                 Collider[] colliders = Physics.OverlapSphere(hit.transform.position, explosionRadius);
                 var unitControllers = colliders
                     .Select(unitCollider => unitCollider.GetComponent<BaseUnitController>())
-                    .Where(unitController => unitController != null);
+                    .Where(unitController => unitController != null && unitController.UnitType != shooter.UnitType);
 
                 foreach (var unitController in unitControllers)
                 {
