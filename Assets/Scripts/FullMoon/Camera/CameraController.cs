@@ -8,6 +8,8 @@ using FullMoon.Entities.Unit;
 using FullMoon.Util;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
+using System.Linq.Expressions;
 
 namespace FullMoon.Camera
 {
@@ -36,6 +38,7 @@ namespace FullMoon.Camera
         
         [Header("UI")]
         [SerializeField] private CursorController cursor;
+        private Button[] buttons;
         
         private UnityEngine.Camera mainCamera;
         private float targetFov;
@@ -61,6 +64,8 @@ namespace FullMoon.Camera
             targetFov = freeLookCamera.m_Lens.OrthographicSize;
         
             PlayerInputManager.Instance.ZoomEvent.AddEvent(ZoomEvent);
+
+            buttons = FindObjectsByType<Button>(FindObjectsSortMode.None);
         }
 
         private void Update()
@@ -73,6 +78,7 @@ namespace FullMoon.Camera
             mouseRay = mainCamera.ScreenPointToRay(mousePos);
             
             MouseAction();
+            OnCancelAction();
         }
         
         private Vector3 ClampToRotatedSquare(Vector3 position, Vector3 center, float limit, float angle)
@@ -394,6 +400,25 @@ namespace FullMoon.Camera
         }
 
         #endregion Mouse
+
+        #region Button
+
+        private void OnCancelAction()
+        {
+            if (PlayerInputManager.Instance.cancel)
+            {
+                canCraft = false;
+                buildingType = BuildingType.None;
+
+                foreach (var btn in buttons)
+                {
+                    btn.interactable = false;
+                    btn.interactable = true;
+                }
+            }
+        }
+
+        #endregion Button
         
 #if UNITY_EDITOR
         private void OnDrawGizmos()
