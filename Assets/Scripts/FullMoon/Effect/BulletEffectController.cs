@@ -8,7 +8,8 @@ namespace FullMoon.Effect
     {
         [SerializeField] private GameObject firingEffect;
         [SerializeField] private GameObject hitEffect;
-        
+        [SerializeField] private float detectionRadius = 0.1f;
+
         private BaseUnitController target;
         private BaseUnitController shooter;
         private float speed;
@@ -38,7 +39,7 @@ namespace FullMoon.Effect
                 return;
             }
 
-            if (target != null && target.gameObject.activeInHierarchy)
+            if (target != null && target.gameObject.activeInHierarchy && target.Alive)
             {
                 Vector3 targetDirection = (GetTargetCenter() - transform.position).normalized;
                 transform.forward = targetDirection;
@@ -49,9 +50,20 @@ namespace FullMoon.Effect
             Vector3 direction = currentPosition - lastPosition;
             float distance = direction.magnitude;
 
-            if (distance > 0 && Physics.Raycast(lastPosition, direction.normalized, out var hit, distance + step))
+            if (distance >= 0)
             {
-                HandleCollision(hit);
+                Collider[] hits = Physics.OverlapSphere(lastPosition, detectionRadius);
+                foreach (var hit in hits)
+                {
+                    if (hit.gameObject.layer == unitLayer || hit.gameObject.layer == unitNonSelectableLayer)
+                    {
+                        if (target != null && hit.gameObject == target.gameObject)
+                        {
+                            HandleCollision(hit);
+                            break;
+                        }
+                    }
+                }
             }
 
             lastPosition = currentPosition;
@@ -84,18 +96,13 @@ namespace FullMoon.Effect
             isFired = true;
         }
 
-        private void HandleCollision(RaycastHit hit)
+        private void HandleCollision(Collider hit)
         {
-            int hitLayer = hit.collider.gameObject.layer;
-
-            if ((hitLayer == unitLayer || hitLayer == unitNonSelectableLayer) && target != null && target.gameObject == hit.transform.gameObject)
+            var unitController = hit.GetComponent<BaseUnitController>();
+            if (unitController != null)
             {
-                var unitController = hit.collider.GetComponent<BaseUnitController>();
-                if (unitController != null)
-                {
-                    unitController.ReceiveDamage(damage, shooter);
-                    ObjectPoolManager.Instance.SpawnObject(hitEffect, hit.point, Quaternion.identity);
-                }
+                unitController.ReceiveDamage(damage, shooter);
+                ObjectPoolManager.Instance.SpawnObject(hitEffect, hit.transform.position, Quaternion.identity);
                 ObjectPoolManager.Instance.ReturnObjectToPool(gameObject);
             }
         }
@@ -111,6 +118,15 @@ namespace FullMoon.Effect
             if (gameObject.activeInHierarchy)
             {
                 ObjectPoolManager.Instance.ReturnObjectToPool(gameObject);
+            }
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (isFired)
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawWireSphere(transform.position, detectionRadius);
             }
         }
     }
