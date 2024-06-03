@@ -150,11 +150,19 @@ namespace FullMoon.Entities
                 
                 enemyWaitList.Clear();
                 
-                MainUIController.Instance.DayCountText.text = $"{currentLevel + 1}";
-                
                 CraftingButton.SetActive(true);
-
+                
                 UpdateCraftingButton();
+                
+                if (currentLevel == 10)
+                {
+                    MainUIController.Instance.VictoryPhase.SetVisible(true, 1f);
+                    await UniTask.Delay(TimeSpan.FromSeconds(3f), cancellationToken: cancellationToken);
+                    MainUIController.Instance.VictoryPhase.SetVisible(false, 1f);
+                    await UniTask.Delay(TimeSpan.FromSeconds(1f), cancellationToken: cancellationToken);
+                }
+                
+                MainUIController.Instance.DayCountText.text = $"{currentLevel + 1}";
                 
                 await DisplayCountdown(spawnInterval, cancellationToken);
                 
@@ -216,6 +224,9 @@ namespace FullMoon.Entities
 
         private async UniTask SpawnEnemies(Wave wave, CancellationToken cancellationToken)
         {
+            int enemyCount = wave.enemyDetails.Sum(e => e.count);
+            MainUIController.Instance.ChangeEnemyAmount(enemyCount);
+            
             foreach (var enemyDetail in wave.enemyDetails)
             {
                 for (int i = 0; i < enemyDetail.count; i++)
