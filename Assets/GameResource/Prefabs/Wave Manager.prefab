@@ -46,178 +46,319 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnDistance: 20
   spawnInterval: 15
+  CraftingButton: {fileID: 0}
   buildingUnlock:
-  - unlockWave: 3
-    UnlockButton: {fileID: 0}
-  - unlockWave: 5
-    UnlockButton: {fileID: 0}
-  - unlockWave: 7
-    UnlockButton: {fileID: 0}
-  - unlockWave: 1000
-    UnlockButton: {fileID: 0}
+  - buttonName: "\uD0C0\uC77C"
+    changeButtonText: 0
+    enableText: 
+    disableText: 
+    selectedColor: {r: 0.98039216, g: 0.87058824, b: 0.4493592, a: 1}
+    unselectedColor: {r: 1, g: 1, b: 1, a: 1}
+    buildingType: 1
+    unlockWave: 0
+    unlockButton: {fileID: 0}
+  - buttonName: "\uD6C8\uB828\uC18C(\uAC80)"
+    changeButtonText: 1
+    enableText: "\uAC74\uC124\uD558\uAE30"
+    disableText: "\uBBF8\uD574\uAE08"
+    selectedColor: {r: 0.98039216, g: 0.87058824, b: 0.4509804, a: 1}
+    unselectedColor: {r: 1, g: 1, b: 1, a: 1}
+    buildingType: 3
+    unlockWave: 3
+    unlockButton: {fileID: 0}
+  - buttonName: "\uD6C8\uB828\uC18C(\uC11D\uAD81)"
+    changeButtonText: 1
+    enableText: "\uAC74\uC124\uD558\uAE30"
+    disableText: "\uBBF8\uD574\uAE08"
+    selectedColor: {r: 0.98039216, g: 0.87058824, b: 0.4509804, a: 1}
+    unselectedColor: {r: 1, g: 1, b: 1, a: 1}
+    buildingType: 5
+    unlockWave: 5
+    unlockButton: {fileID: 0}
+  - buttonName: "\uD6C8\uB828\uC18C(\uCC3D)"
+    changeButtonText: 1
+    enableText: "\uAC74\uC124\uD558\uAE30"
+    disableText: "\uBBF8\uD574\uAE08"
+    selectedColor: {r: 0.98039216, g: 0.87058824, b: 0.4509804, a: 1}
+    unselectedColor: {r: 1, g: 1, b: 1, a: 1}
+    buildingType: 4
+    unlockWave: 7
+    unlockButton: {fileID: 0}
+  - buttonName: "\uBC8C\uBAA9\uC18C"
+    changeButtonText: 1
+    enableText: "\uAC74\uC124\uD558\uAE30"
+    disableText: "\uBBF8\uD574\uAE08"
+    selectedColor: {r: 0.98039216, g: 0.87058824, b: 0.4509804, a: 1}
+    unselectedColor: {r: 1, g: 1, b: 1, a: 1}
+    buildingType: 2
+    unlockWave: 1000
+    unlockButton: {fileID: 0}
   waves:
   - level: 1
     enemyDetails:
     - enemy: {fileID: 4972936984483943875, guid: 707760c570fc36a4991cd64295590082,
         type: 3}
-      count: 1
-      spawnInterval: 1
-      location: Right
+      count: 3
+      spawnInterval: 0
+      location: 
+  - level: 2
+    enemyDetails:
     - enemy: {fileID: 4972936984483943875, guid: 707760c570fc36a4991cd64295590082,
         type: 3}
+      count: 3
+      spawnInterval: 0
+      location: Right
+    - enemy: {fileID: 4080469667919466714, guid: a874611b7f0f6cd44b9b32e9bdd1a6eb,
+        type: 3}
       count: 1
-      spawnInterval: 1
+      spawnInterval: 3
       location: Left
   - level: 2
     enemyDetails:
-    - enemy: {fileID: 4972936984483943875, guid: bd173a807b2eebf448bc7c7eda6f1ca0,
-        type: 3}
-      count: 2
-      spawnInterval: 0
-      location: Right
     - enemy: {fileID: 4972936984483943875, guid: 707760c570fc36a4991cd64295590082,
         type: 3}
-      count: 1
-      spawnInterval: 0
-      location: Left
-  - level: 2
-    enemyDetails:
-    - enemy: {fileID: 4080469667919466714, guid: a874611b7f0f6cd44b9b32e9bdd1a6eb,
-        type: 3}
-      count: 2
+      count: 3
       spawnInterval: 0
       location: Up
-    - enemy: {fileID: 4972936984483943875, guid: 707760c570fc36a4991cd64295590082,
+    - enemy: {fileID: 4080469667919466714, guid: a874611b7f0f6cd44b9b32e9bdd1a6eb,
         type: 3}
       count: 1
-      spawnInterval: 0
+      spawnInterval: 3
       location: Down
-  - level: 2
-    enemyDetails:
-    - enemy: {fileID: 4972936984483943875, guid: 2e436bdbd1610214aba961c2241be6f3,
-        type: 3}
-      count: 2
-      spawnInterval: 0
-      location: Right
-    - enemy: {fileID: 4972936984483943875, guid: 707760c570fc36a4991cd64295590082,
-        type: 3}
-      count: 1
-      spawnInterval: 0
-      location: Left
   - level: 3
     enemyDetails:
-    - enemy: {fileID: 4972936984483943875, guid: bd173a807b2eebf448bc7c7eda6f1ca0,
-        type: 3}
-      count: 1
-      spawnInterval: 0
-      location: Left
-    - enemy: {fileID: 4972936984483943875, guid: bd173a807b2eebf448bc7c7eda6f1ca0,
-        type: 3}
-      count: 2
-      spawnInterval: 0
-      location: Up
     - enemy: {fileID: 4972936984483943875, guid: 707760c570fc36a4991cd64295590082,
         type: 3}
-      count: 1
-      spawnInterval: 0
-      location: Right
-  - level: 3
-    enemyDetails:
-    - enemy: {fileID: 4972936984483943875, guid: 2e436bdbd1610214aba961c2241be6f3,
-        type: 3}
-      count: 1
-      spawnInterval: 0
-      location: Right
-    - enemy: {fileID: 4972936984483943875, guid: 2e436bdbd1610214aba961c2241be6f3,
-        type: 3}
       count: 2
       spawnInterval: 0
-      location: Down
-    - enemy: {fileID: 4972936984483943875, guid: 707760c570fc36a4991cd64295590082,
-        type: 3}
-      count: 1
-      spawnInterval: 0
-      location: Up
-  - level: 3
-    enemyDetails:
-    - enemy: {fileID: 4080469667919466714, guid: a874611b7f0f6cd44b9b32e9bdd1a6eb,
-        type: 3}
-      count: 2
-      spawnInterval: 0
-      location: Up
+      location: Random
     - enemy: {fileID: 4080469667919466714, guid: a874611b7f0f6cd44b9b32e9bdd1a6eb,
         type: 3}
       count: 1
-      spawnInterval: 0
-      location: Right
-    - enemy: {fileID: 4972936984483943875, guid: 707760c570fc36a4991cd64295590082,
-        type: 3}
-      count: 1
-      spawnInterval: 0
-      location: Up
-  - level: 4
-    enemyDetails:
-    - enemy: {fileID: 4972936984483943875, guid: bd173a807b2eebf448bc7c7eda6f1ca0,
-        type: 3}
-      count: 2
-      spawnInterval: 0
-      location: Right
-    - enemy: {fileID: 4972936984483943875, guid: bd173a807b2eebf448bc7c7eda6f1ca0,
-        type: 3}
-      count: 1
-      spawnInterval: 0
-      location: Left
+      spawnInterval: 3
+      location: Random
     - enemy: {fileID: 4080469667919466714, guid: a874611b7f0f6cd44b9b32e9bdd1a6eb,
         type: 3}
-      count: 1
-      spawnInterval: 0
-      location: Up
-    - enemy: {fileID: 4972936984483943875, guid: 707760c570fc36a4991cd64295590082,
-        type: 3}
-      count: 1
-      spawnInterval: 0
-      location: Down
-  - level: 4
-    enemyDetails:
-    - enemy: {fileID: 4972936984483943875, guid: 2e436bdbd1610214aba961c2241be6f3,
-        type: 3}
       count: 2
-      spawnInterval: 0
-      location: Right
-    - enemy: {fileID: 4972936984483943875, guid: 2e436bdbd1610214aba961c2241be6f3,
-        type: 3}
-      count: 1
-      spawnInterval: 0
-      location: Down
-    - enemy: {fileID: 4972936984483943875, guid: bd173a807b2eebf448bc7c7eda6f1ca0,
-        type: 3}
-      count: 1
-      spawnInterval: 0
-      location: Down
-    - enemy: {fileID: 4972936984483943875, guid: 707760c570fc36a4991cd64295590082,
-        type: 3}
-      count: 1
-      spawnInterval: 0
-      location: Right
+      spawnInterval: 5
+      location: Random
   - level: 4
     enemyDetails:
     - enemy: {fileID: 4080469667919466714, guid: a874611b7f0f6cd44b9b32e9bdd1a6eb,
         type: 3}
-      count: 1
+      count: 2
       spawnInterval: 0
-      location: Down
+      location: Random
+    - enemy: {fileID: 4080469667919466714, guid: a874611b7f0f6cd44b9b32e9bdd1a6eb,
+        type: 3}
+      count: 2
+      spawnInterval: 3
+      location: Random
+    - enemy: {fileID: 4972936984483943875, guid: 2e436bdbd1610214aba961c2241be6f3,
+        type: 3}
+      count: 2
+      spawnInterval: 5
+      location: Random
+  - level: 4
+    enemyDetails:
     - enemy: {fileID: 4080469667919466714, guid: a874611b7f0f6cd44b9b32e9bdd1a6eb,
         type: 3}
       count: 2
       spawnInterval: 0
-      location: Up
+      location: Random
+    - enemy: {fileID: 4080469667919466714, guid: a874611b7f0f6cd44b9b32e9bdd1a6eb,
+        type: 3}
+      count: 2
+      spawnInterval: 3
+      location: Random
     - enemy: {fileID: 4972936984483943875, guid: 2e436bdbd1610214aba961c2241be6f3,
         type: 3}
-      count: 1
+      count: 2
+      spawnInterval: 5
+      location: Random
+  - level: 5
+    enemyDetails:
+    - enemy: {fileID: 4080469667919466714, guid: a874611b7f0f6cd44b9b32e9bdd1a6eb,
+        type: 3}
+      count: 3
       spawnInterval: 0
       location: Right
-    - enemy: {fileID: 4972936984483943875, guid: 707760c570fc36a4991cd64295590082,
+    - enemy: {fileID: 4972936984483943875, guid: 2e436bdbd1610214aba961c2241be6f3,
+        type: 3}
+      count: 4
+      spawnInterval: 3
+      location: Left
+  - level: 5
+    enemyDetails:
+    - enemy: {fileID: 4080469667919466714, guid: a874611b7f0f6cd44b9b32e9bdd1a6eb,
+        type: 3}
+      count: 2
+      spawnInterval: 0
+      location: Right
+    - enemy: {fileID: 4972936984483943875, guid: 2e436bdbd1610214aba961c2241be6f3,
+        type: 3}
+      count: 4
+      spawnInterval: 3
+      location: Left
+    - enemy: {fileID: 4080469667919466714, guid: a874611b7f0f6cd44b9b32e9bdd1a6eb,
         type: 3}
       count: 1
+      spawnInterval: 6
+      location: Left
+  - level: 6
+    enemyDetails:
+    - enemy: {fileID: 4972936984483943875, guid: bd173a807b2eebf448bc7c7eda6f1ca0,
+        type: 3}
+      count: 2
       spawnInterval: 0
+      location: Up
+    - enemy: {fileID: 4080469667919466714, guid: a874611b7f0f6cd44b9b32e9bdd1a6eb,
+        type: 3}
+      count: 3
+      spawnInterval: 3
       location: Down
+    - enemy: {fileID: 4972936984483943875, guid: 2e436bdbd1610214aba961c2241be6f3,
+        type: 3}
+      count: 4
+      spawnInterval: 2
+      location: Down
+    - enemy: {fileID: 4080469667919466714, guid: a874611b7f0f6cd44b9b32e9bdd1a6eb,
+        type: 3}
+      count: 2
+      spawnInterval: 5
+      location: Up
+  - level: 6
+    enemyDetails:
+    - enemy: {fileID: 4972936984483943875, guid: bd173a807b2eebf448bc7c7eda6f1ca0,
+        type: 3}
+      count: 2
+      spawnInterval: 0
+      location: Right
+    - enemy: {fileID: 4080469667919466714, guid: a874611b7f0f6cd44b9b32e9bdd1a6eb,
+        type: 3}
+      count: 3
+      spawnInterval: 3
+      location: Right
+    - enemy: {fileID: 4972936984483943875, guid: 2e436bdbd1610214aba961c2241be6f3,
+        type: 3}
+      count: 4
+      spawnInterval: 2
+      location: Left
+    - enemy: {fileID: 4080469667919466714, guid: a874611b7f0f6cd44b9b32e9bdd1a6eb,
+        type: 3}
+      count: 2
+      spawnInterval: 5
+      location: Left
+  - level: 7
+    enemyDetails:
+    - enemy: {fileID: 4972936984483943875, guid: bd173a807b2eebf448bc7c7eda6f1ca0,
+        type: 3}
+      count: 4
+      spawnInterval: 0
+      location: Left
+    - enemy: {fileID: 4972936984483943875, guid: 2e436bdbd1610214aba961c2241be6f3,
+        type: 3}
+      count: 3
+      spawnInterval: 3
+      location: Left
+    - enemy: {fileID: 4080469667919466714, guid: a874611b7f0f6cd44b9b32e9bdd1a6eb,
+        type: 3}
+      count: 3
+      spawnInterval: 5
+      location: Left
+  - level: 8
+    enemyDetails:
+    - enemy: {fileID: 4972936984483943875, guid: bd173a807b2eebf448bc7c7eda6f1ca0,
+        type: 3}
+      count: 2
+      spawnInterval: 0
+      location: Random
+    - enemy: {fileID: 4972936984483943875, guid: 2e436bdbd1610214aba961c2241be6f3,
+        type: 3}
+      count: 2
+      spawnInterval: 3
+      location: Random
+    - enemy: {fileID: 4080469667919466714, guid: a874611b7f0f6cd44b9b32e9bdd1a6eb,
+        type: 3}
+      count: 2
+      spawnInterval: 6
+      location: Random
+    - enemy: {fileID: 4972936984483943875, guid: bd173a807b2eebf448bc7c7eda6f1ca0,
+        type: 3}
+      count: 2
+      spawnInterval: 0
+      location: Random
+    - enemy: {fileID: 4972936984483943875, guid: 2e436bdbd1610214aba961c2241be6f3,
+        type: 3}
+      count: 2
+      spawnInterval: 3
+      location: Random
+    - enemy: {fileID: 4080469667919466714, guid: a874611b7f0f6cd44b9b32e9bdd1a6eb,
+        type: 3}
+      count: 2
+      spawnInterval: 6
+      location: Random
+  - level: 9
+    enemyDetails:
+    - enemy: {fileID: 4972936984483943875, guid: bd173a807b2eebf448bc7c7eda6f1ca0,
+        type: 3}
+      count: 4
+      spawnInterval: 0
+      location: Random
+    - enemy: {fileID: 4972936984483943875, guid: 2e436bdbd1610214aba961c2241be6f3,
+        type: 3}
+      count: 4
+      spawnInterval: 3
+      location: Random
+    - enemy: {fileID: 4080469667919466714, guid: a874611b7f0f6cd44b9b32e9bdd1a6eb,
+        type: 3}
+      count: 4
+      spawnInterval: 6
+      location: Random
+    - enemy: {fileID: 4972936984483943875, guid: bd173a807b2eebf448bc7c7eda6f1ca0,
+        type: 3}
+      count: 4
+      spawnInterval: 0
+      location: Random
+    - enemy: {fileID: 4972936984483943875, guid: 2e436bdbd1610214aba961c2241be6f3,
+        type: 3}
+      count: 4
+      spawnInterval: 3
+      location: Random
+    - enemy: {fileID: 4080469667919466714, guid: a874611b7f0f6cd44b9b32e9bdd1a6eb,
+        type: 3}
+      count: 4
+      spawnInterval: 6
+      location: Random
+  - level: 9
+    enemyDetails:
+    - enemy: {fileID: 4972936984483943875, guid: bd173a807b2eebf448bc7c7eda6f1ca0,
+        type: 3}
+      count: 6
+      spawnInterval: 0
+      location: Random
+    - enemy: {fileID: 4972936984483943875, guid: 2e436bdbd1610214aba961c2241be6f3,
+        type: 3}
+      count: 6
+      spawnInterval: 3
+      location: Random
+    - enemy: {fileID: 4080469667919466714, guid: a874611b7f0f6cd44b9b32e9bdd1a6eb,
+        type: 3}
+      count: 6
+      spawnInterval: 6
+      location: Random
+    - enemy: {fileID: 4972936984483943875, guid: bd173a807b2eebf448bc7c7eda6f1ca0,
+        type: 3}
+      count: 5
+      spawnInterval: 0
+      location: Random
+    - enemy: {fileID: 4972936984483943875, guid: 2e436bdbd1610214aba961c2241be6f3,
+        type: 3}
+      count: 5
+      spawnInterval: 3
+      location: Random
+    - enemy: {fileID: 4080469667919466714, guid: a874611b7f0f6cd44b9b32e9bdd1a6eb,
+        type: 3}
+      count: 5
+      spawnInterval: 6
+      location: Random

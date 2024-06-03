@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using FullMoon.Camera;
 using UnityEngine;
 using UnityEngine.UI;
 using FullMoon.UI;
@@ -32,6 +33,21 @@ namespace FullMoon.Entities
     public class ButtonUnlock
     {
         public string buttonName;
+        
+        [Separator]
+        
+        public bool changeButtonText;
+        [ConditionalField(nameof(changeButtonText))] public string enableText;
+        [ConditionalField(nameof(changeButtonText))] public string disableText;
+
+        [Separator]
+        
+        public Color selectedColor = Color.green;
+        public Color unselectedColor = Color.white;
+        
+        [Separator]
+        
+        public BuildingType buildingType;
         public int unlockWave = 1;
         public Button unlockButton;
     }
@@ -54,11 +70,15 @@ namespace FullMoon.Entities
         private CancellationTokenSource cancellationTokenSource;
         
         private readonly List<BaseUnitController> enemyWaitList = new();
+        
+        private CameraController cameraController;
 
         private void Start()
         {
             cancellationTokenSource = new CancellationTokenSource();
-            buildingUnlock.ForEach(b => b.unlockButton.interactable = false);
+            cameraController = FindObjectOfType<CameraController>();
+            DisableAllUnlockButton();
+            buildingUnlock.ForEach(b =>  b.unlockButton.onClick.AddListener(() => OnCraftingButtonClicked(b)));
             SpawnWaveAsync(cancellationTokenSource.Token).Forget();
         }
 
@@ -66,6 +86,48 @@ namespace FullMoon.Entities
         {
             cancellationTokenSource?.Cancel();
             cancellationTokenSource?.Dispose();
+        }
+        
+        public void DisableAllUnlockButton()
+        {
+            cameraController.CreateTileSetting(false, BuildingType.None);
+            foreach (var button in buildingUnlock)
+            {
+                button.unlockButton.GetComponent<Image>().color = button.unselectedColor;
+            }
+        }
+        
+        private void OnCraftingButtonClicked(ButtonUnlock buttonUnlock)
+        {
+            DisableAllUnlockButton();
+            if (buttonUnlock.unlockWave > currentLevel + 1)
+            {
+                ToastManager.Instance.ShowToast($"{buttonUnlock.buttonName} 건설은 웨이브 <size=54>{buttonUnlock.unlockWave}</size>에서 해제됩니다", "#8B0000");
+                return;
+            }
+            buttonUnlock.unlockButton.GetComponent<Image>().color = buttonUnlock.selectedColor;
+            cameraController.CreateTileSetting(true, buttonUnlock.buildingType);
+        }
+        
+        private void UpdateCraftingButton()
+        {
+            foreach (var button in buildingUnlock)
+            {
+                if (button.unlockWave <= currentLevel + 1)
+                {
+                    if (button.changeButtonText)
+                    {
+                        button.unlockButton.GetComponentInChildren<Text>().text = $"{button.buttonName}\n{button.enableText}";
+                    }
+                }
+                else
+                {
+                    if (button.changeButtonText)
+                    {
+                        button.unlockButton.GetComponentInChildren<Text>().text = $"{button.buttonName}\n<color=\"red\">{button.disableText}</color>";
+                    }
+                }
+            }
         }
 
         private async UniTaskVoid SpawnWaveAsync(CancellationToken cancellationToken)
@@ -91,9 +153,8 @@ namespace FullMoon.Entities
                 MainUIController.Instance.DayCountText.text = $"{currentLevel + 1}";
                 
                 CraftingButton.SetActive(true);
-                
-                buildingUnlock.Where(b => currentLevel + 1 >= b.unlockWave)
-                    .ForEach(b => b.unlockButton.interactable = true);
+
+                UpdateCraftingButton();
                 
                 await DisplayCountdown(spawnInterval, cancellationToken);
                 

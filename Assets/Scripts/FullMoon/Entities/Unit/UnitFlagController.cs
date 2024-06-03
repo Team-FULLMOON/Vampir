@@ -8,7 +8,6 @@ using DG.Tweening;
 using FullMoon.UI;
 using FullMoon.Util;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.Tilemaps;
 
 namespace FullMoon.Entities.Unit
 {
@@ -30,7 +29,6 @@ namespace FullMoon.Entities.Unit
         {
             UnitInsideViewArea = new HashSet<BaseUnitController>();
             InitViewRange();
-            SaveLocalPositions();
             foreach (var unit in unitPreset)
             {
                 unit.Flag = this;
@@ -39,6 +37,11 @@ namespace FullMoon.Entities.Unit
             ChangeFlagModelPosition();
             InitViewRangeRadius();
             Deselect();
+        }
+
+        private void Start()
+        {
+            SaveLocalPositions();
         }
 
         private async void Update()

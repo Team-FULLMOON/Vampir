@@ -1,12 +1,10 @@
 using MyBox;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Unity.AI.Navigation;
 using UnityEngine.Tilemaps;
 using FullMoon.Util;
-using FullMoon.Camera;
 using FullMoon.NavMesh;
 
 namespace FullMoon.UI
@@ -100,13 +98,11 @@ namespace FullMoon.UI
         private Tilemap buildingTileMap;
         private Tilemap groundTileMap;
         private Tilemap baseTile;
-        private CameraController cameraController;
 
         private void Start()
         {
             buildingTileMap = GetComponent<GameObjectDictionary>().GetComponentByName<Tilemap>("Building");
             groundTileMap = GetComponent<GameObjectDictionary>().GetComponentByName<Tilemap>("Ground");
-            cameraController = FindObjectOfType<CameraController>();
             
             if (playerSurfaces == null)
             {
@@ -119,11 +115,6 @@ namespace FullMoon.UI
             }
 
             BuildNavMesh();
-        }
-
-        public void SettingTile(string buildingType)
-        {
-            cameraController.CreateTileSetting(true, (BuildingType)Enum.Parse(typeof(BuildingType), buildingType));
         }
 
         public void OffBuildingUI()
