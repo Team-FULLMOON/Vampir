@@ -1,3 +1,5 @@
+using MyBox;
+using System.Linq;
 using UnityEngine;
 using FullMoon.Util;
 using FullMoon.Entities.Unit;
@@ -9,6 +11,12 @@ namespace FullMoon.Effect
         [SerializeField] private GameObject firingEffect;
         [SerializeField] private GameObject hitEffect;
         [SerializeField] private float detectionRadius = 0.1f;
+        
+        [Separator]
+        
+        [SerializeField] private bool isExplosive;
+        [SerializeField, ConditionalField(nameof(isExplosive))]
+        private float explosionRadius = 0.1f;
 
         private BaseUnitController target;
         private BaseUnitController shooter;
@@ -53,16 +61,12 @@ namespace FullMoon.Effect
             if (distance >= 0)
             {
                 Collider[] hits = Physics.OverlapSphere(lastPosition, detectionRadius);
-                foreach (var hit in hits)
+                var targetHit = hits
+                    .FirstOrDefault(hit => (hit.gameObject.layer == unitLayer || hit.gameObject.layer == unitNonSelectableLayer) && 
+                                           target != null && hit.gameObject == target.gameObject);
+                if (targetHit != null)
                 {
-                    if (hit.gameObject.layer == unitLayer || hit.gameObject.layer == unitNonSelectableLayer)
-                    {
-                        if (target != null && hit.gameObject == target.gameObject)
-                        {
-                            HandleCollision(hit);
-                            break;
-                        }
-                    }
+                    HandleCollision(targetHit);
                 }
             }
 
@@ -98,13 +102,29 @@ namespace FullMoon.Effect
 
         private void HandleCollision(Collider hit)
         {
-            var unitController = hit.GetComponent<BaseUnitController>();
-            if (unitController != null)
+            if (isExplosive)
             {
-                unitController.ReceiveDamage(damage, shooter);
-                ObjectPoolManager.Instance.SpawnObject(hitEffect, hit.transform.position, Quaternion.identity);
-                ObjectPoolManager.Instance.ReturnObjectToPool(gameObject);
+                Collider[] colliders = Physics.OverlapSphere(hit.transform.position, explosionRadius);
+                var unitControllers = colliders
+                    .Select(unitCollider => unitCollider.GetComponent<BaseUnitController>())
+                    .Where(unitController => unitController != null);
+
+                foreach (var unitController in unitControllers)
+                {
+                    unitController.ReceiveDamage(damage, shooter);
+                }
             }
+            else
+            {
+                var unitController = hit.GetComponent<BaseUnitController>();
+                if (unitController != null)
+                {
+                    unitController.ReceiveDamage(damage, shooter);
+                }
+            }
+
+            ObjectPoolManager.Instance.SpawnObject(hitEffect, hit.transform.position, Quaternion.identity);
+            ObjectPoolManager.Instance.ReturnObjectToPool(gameObject);
         }
         
         private Vector3 GetTargetCenter()
@@ -127,6 +147,12 @@ namespace FullMoon.Effect
             {
                 Gizmos.color = Color.red;
                 Gizmos.DrawWireSphere(transform.position, detectionRadius);
+            }
+            
+            if (isExplosive)
+            {
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawWireSphere(transform.position, explosionRadius);
             }
         }
     }

@@ -51,6 +51,8 @@ MonoBehaviour:
   hitEffect: {fileID: 5058517046348200998, guid: e9725a28450ecdf458518bd2830cdc49,
     type: 3}
   detectionRadius: 0.3
+  isExplosive: 0
+  explosionRadius: 0.1
 --- !u!198 &648869078112820162
 ParticleSystem:
   m_ObjectHideFlags: 0
