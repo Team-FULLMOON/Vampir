@@ -13,7 +13,7 @@ namespace FullMoon.Util
             {
                 Destroy(gameObject);
             }
-#else
+#elif !UNITY_EDITOR
             Destroy(gameObject);
 #endif
         }
