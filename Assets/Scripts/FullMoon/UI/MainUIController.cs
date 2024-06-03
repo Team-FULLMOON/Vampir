@@ -1,10 +1,7 @@
-using UniRx;
-using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 using FullMoon.Util;
-using FullMoon.ScriptableObject;
 
 namespace FullMoon.UI
 {
@@ -18,6 +15,7 @@ namespace FullMoon.UI
         
         public VisualElement BattlePhase { get; private set; }
         public VisualElement RestPhase { get; private set; }
+        public VisualElement VictoryPhase { get; private set; }
         public TextElement BattleDetailText { get; private set; }
         public TextElement RestDetailText { get; private set; }
 
@@ -52,10 +50,12 @@ namespace FullMoon.UI
             
             BattlePhase = root.Q<VisualElement>("BattlePhase");
             RestPhase = root.Q<VisualElement>("RestPhase");
+            VictoryPhase = root.Q<VisualElement>("VictoryPhase");
             BattleDetailText = root.Q<TextElement>("BattleDetailText");
             RestDetailText = root.Q<TextElement>("RestDetailText");
             BattlePhase.SetVisible(false);
             RestPhase.SetVisible(false);
+            VictoryPhase.SetVisible(false);
             
             BattleIcon = root.Q<VisualElement>("BattleIcon");
             RestIcon = root.Q<VisualElement>("RestIcon");

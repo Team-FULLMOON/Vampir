@@ -29,6 +29,10 @@ namespace FullMoon.Entities.Unit
         {
             UnitInsideViewArea = new HashSet<BaseUnitController>();
             InitViewRange();
+            if (localPositionsPreset.Count == unitPreset.Count)
+            {
+                InitUnitPositions();
+            }
             foreach (var unit in unitPreset)
             {
                 unit.Flag = this;

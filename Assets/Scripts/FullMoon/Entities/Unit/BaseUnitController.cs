@@ -71,11 +71,6 @@ namespace FullMoon.Entities.Unit
             {
                 viewRange.radius = unitData.ViewRadius;
             }
-            
-            if (UnitType is "Enemy")
-            {
-                MainUIController.Instance.ChangeEnemyAmount(1);
-            }
         }
 
         [BurstCompile]
