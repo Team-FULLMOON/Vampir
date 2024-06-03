@@ -407,15 +407,11 @@ namespace FullMoon.Camera
         {
             OnCancelAction();
 
-            foreach (var item in buttonUnlock)
+            foreach (var button in buttonUnlock)
             {
-                if (item.unlockButton.interactable)
+                if (button.unlockButton.interactable)
                 {
-                    string[] splitText;
-                    string text = item.unlockButton.GetComponentInChildren<Text>().text;
-                    splitText = text.Split('\n');
-                    text = splitText[0] + "\n건설하기";
-                    item.unlockButton.GetComponentInChildren<Text>().text = text;
+                    button.unlockButton.GetComponentInChildren<Text>().text = button.buttonName + "\n건설하기";
                 }
             }
         }

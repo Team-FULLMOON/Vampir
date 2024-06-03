@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 31388649963703528}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.31621465, y: -0.35957026, z: 0.13098042, w: 0.8680793}
+  m_LocalRotation: {x: 0.31621465, y: -0.35957024, z: 0.1309804, w: 0.86807925}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -517,7 +517,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1889243612475854807}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.31621465, y: -0.35957026, z: 0.13098042, w: 0.8680793}
+  m_LocalRotation: {x: 0.31621465, y: -0.35957024, z: 0.1309804, w: 0.86807925}
   m_LocalPosition: {x: 17.677671, y: 21, z: -17.677668}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1090,13 +1090,17 @@ MonoBehaviour:
   tileMap: {fileID: 7190302438271463696}
   cursor: {fileID: 2179864655310582506}
   buttonUnlock:
-  - unlockWave: 3
+  - buttonName: "\uD6C8\uB828\uC18C(\uAC80)"
+    unlockWave: 3
     unlockButton: {fileID: 8626194797738568443}
-  - unlockWave: 5
+  - buttonName: "\uD6C8\uB828\uC18C(\uC11D\uAD81)"
+    unlockWave: 5
     unlockButton: {fileID: 1357463500999437206}
-  - unlockWave: 7
+  - buttonName: "\uD6C8\uB828\uC18C(\uCC3D)"
+    unlockWave: 7
     unlockButton: {fileID: 2794806935109179828}
-  - unlockWave: 0
+  - buttonName: "\uBC8C\uBAA9\uC18C"
+    unlockWave: 0
     unlockButton: {fileID: 1802210224315489988}
   tileButton: {fileID: 2460607015459222925}
 --- !u!1 &2634768523580393475
@@ -1954,7 +1958,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3817388134677654357}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.31621465, y: -0.35957026, z: 0.13098042, w: 0.8680793}
+  m_LocalRotation: {x: 0.31621465, y: -0.35957024, z: 0.13098039, w: 0.8680793}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

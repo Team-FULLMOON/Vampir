@@ -31,6 +31,7 @@ namespace FullMoon.Entities
     [Serializable]
     public class ButtonUnlock
     {
+        public string buttonName;
         public int unlockWave = 1;
         public Button unlockButton;
     }
