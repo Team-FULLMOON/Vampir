@@ -208,21 +208,21 @@ namespace FullMoon.Camera
         {
             if (!UnityEngine.AI.NavMesh.SamplePosition(hitInfo.point, out var samplePoint, 0.1f, (1 << UnityEngine.AI.NavMesh.GetAreaFromName("Walkable"))))
             {
-                CancelCrafting("지을 수 있는 공간이 없습니다.", "#8B0000");
+                CancelCrafting("지을 수 있는 공간이 없습니다.");
                 return;
             }
 
             var unitList = GetAvailableUnits();
             if (unitList.Count < 6)
             {
-                CancelCrafting("자원 유닛이 부족합니다.", "#8B0000");
+                CancelCrafting("자원 유닛이 부족합니다.");
                 return;
             }
 
             var sampleCellPosition = tileMap.GetComponentByName<Tilemap>("Building").WorldToCell(samplePoint.position);
             if (tileMap.GetComponentByName<Tilemap>("Building").HasTile(sampleCellPosition))
             {
-                CancelCrafting("지을 수 있는 공간이 없습니다. 이미 건물이 존재합니다.", "#8B0000");
+                CancelCrafting("지을 수 있는 공간이 없습니다.");
                 return;
             }
 
@@ -234,7 +234,7 @@ namespace FullMoon.Camera
             var sampleCellPosition = tileMap.GetComponentByName<Tilemap>("Ground").WorldToCell(hitInfo.point);
             if (tileMap.GetComponentByName<Tilemap>("Ground").HasTile(sampleCellPosition) || hitInfo.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
             {
-                CancelCrafting("해당 위치에 이미 땅이 존재합니다.", "#8B0000");
+                CancelCrafting("해당 위치에 이미 땅이 존재합니다.");
                 return;
             }
             
@@ -263,7 +263,7 @@ namespace FullMoon.Camera
             OnCancelAction();
         }
 
-        private void CancelCrafting(string message, string color)
+        private void CancelCrafting(string message, string color = "#FF7C7F")
         {
             OnCancelAction();
             ToastManager.Instance.ShowToast(message, color);
@@ -294,7 +294,7 @@ namespace FullMoon.Camera
                 }
                 else
                 {
-                    CancelCrafting("생성할 수 없는 위치입니다.", "#8B0000");
+                    CancelCrafting("생성할 수 없는 위치입니다.");
                 }
             }
 

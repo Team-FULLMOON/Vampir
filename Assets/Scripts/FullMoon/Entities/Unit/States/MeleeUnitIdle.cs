@@ -38,7 +38,13 @@ namespace FullMoon.Entities.Unit.States
                 if (Vector3.Distance(controller.transform.position, targetPosition) > controller.Agent.stoppingDistance * 3f)
                 {
                     controller.MoveToPosition(targetPosition);
+                    return;
                 }
+            }
+            
+            if (controller.UnitType.Equals("Enemy"))
+            {
+                controller.MoveToPosition(Vector3.zero);
             }
         }
 

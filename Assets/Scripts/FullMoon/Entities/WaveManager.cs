@@ -102,7 +102,7 @@ namespace FullMoon.Entities
             DisableAllUnlockButton();
             if (buttonUnlock.unlockWave > currentLevel + 1)
             {
-                ToastManager.Instance.ShowToast($"{buttonUnlock.buttonName} 건설은 웨이브 <size=54>{buttonUnlock.unlockWave}</size>에서 해제됩니다", "#8B0000");
+                ToastManager.Instance.ShowToast($"{buttonUnlock.buttonName} 건설은 웨이브 <size=54>{buttonUnlock.unlockWave}</size>에서 해제됩니다", "#FF7C7F");
                 return;
             }
             buttonUnlock.unlockButton.GetComponent<Image>().color = buttonUnlock.selectedColor;
@@ -159,6 +159,7 @@ namespace FullMoon.Entities
                 await DisplayCountdown(spawnInterval, cancellationToken);
                 
                 CraftingButton.SetActive(false);
+                DisableAllUnlockButton();
                 
                 currentLevel++;
                 var currentWave = GetRandomWave();

@@ -67,16 +67,16 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uD14C\uC2A4\uD2B8"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8a722698222232441b310af4a6d4747a, type: 2}
-  m_sharedMaterial: {fileID: 8909293301252456809, guid: 8a722698222232441b310af4a6d4747a,
+  m_fontAsset: {fileID: 11400000, guid: 88661689fe87a1d4086e282e39575db0, type: 2}
+  m_sharedMaterial: {fileID: -8074438690354758756, guid: 88661689fe87a1d4086e282e39575db0,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4286545151
+  m_fontColor: {r: 1, g: 0.48584908, b: 0.4968198, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
