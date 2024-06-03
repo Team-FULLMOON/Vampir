@@ -1089,6 +1089,16 @@ MonoBehaviour:
   rotationSensitivity: 5
   tileMap: {fileID: 7190302438271463696}
   cursor: {fileID: 2179864655310582506}
+  buttonUnlock:
+  - unlockWave: 3
+    unlockButton: {fileID: 8626194797738568443}
+  - unlockWave: 5
+    unlockButton: {fileID: 1357463500999437206}
+  - unlockWave: 7
+    unlockButton: {fileID: 2794806935109179828}
+  - unlockWave: 0
+    unlockButton: {fileID: 1802210224315489988}
+  tileButton: {fileID: 2460607015459222925}
 --- !u!1 &2634768523580393475
 GameObject:
   m_ObjectHideFlags: 3
@@ -1355,7 +1365,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uD6C8\uB828\uC18C(\uCC3D)\n\uAC74\uC124\uD558\uAE30"
+  m_Text: "\uD6C8\uB828\uC18C(\uCC3D)\n\uD574\uAE08 \uC6E8\uC774\uBE0C\n7"
 --- !u!1 &3121096140401778181
 GameObject:
   m_ObjectHideFlags: 0
@@ -1944,7 +1954,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3817388134677654357}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.31621465, y: -0.35957024, z: 0.13098039, w: 0.8680793}
+  m_LocalRotation: {x: 0.31621465, y: -0.35957026, z: 0.13098042, w: 0.8680793}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2076,7 +2086,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uBC8C\uBAA9\uC18C\n\uAC74\uC124\uD558\uAE30"
+  m_Text: "\uBC8C\uBAA9\uC18C\n\uD574\uAE08 \uC6E8\uC774\uBE0C \n-"
 --- !u!1 &4101425670844971465
 GameObject:
   m_ObjectHideFlags: 0
@@ -2817,7 +2827,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uD6C8\uB828\uC18C(\uC11D\uAD81)\n\uAC74\uC124\uD558\uAE30"
+  m_Text: "\uD6C8\uB828\uC18C(\uC11D\uAD81)\n\uD574\uAE08 \uC6E8\uC774\uBE0C\n5"
 --- !u!1 &6517124350545496047
 GameObject:
   m_ObjectHideFlags: 0
@@ -3259,7 +3269,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uD6C8\uB828\uC18C(\uAC80)\n\uAC74\uC124\uD558\uAE30"
+  m_Text: "\uD6C8\uB828\uC18C(\uAC80)\n\uD574\uAE08 \uC6E8\uC774\uBE0C\n3"
 --- !u!1 &7992116417180475613
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ using Cinemachine;
 using FullMoon.UI;
 using FullMoon.Input;
 using FullMoon.Entities.Unit;
+using FullMoon.Entities;
 using FullMoon.Util;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
@@ -38,7 +39,8 @@ namespace FullMoon.Camera
         
         [Header("UI")]
         [SerializeField] private CursorController cursor;
-        private Button[] buttons;
+        [SerializeField] private List<ButtonUnlock> buttonUnlock;
+        [SerializeField] private Button tileButton;
         
         private UnityEngine.Camera mainCamera;
         private float targetFov;
@@ -64,8 +66,6 @@ namespace FullMoon.Camera
             targetFov = freeLookCamera.m_Lens.OrthographicSize;
         
             PlayerInputManager.Instance.ZoomEvent.AddEvent(ZoomEvent);
-
-            buttons = FindObjectsByType<Button>(FindObjectsSortMode.None);
         }
 
         private void Update()
@@ -78,7 +78,7 @@ namespace FullMoon.Camera
             mouseRay = mainCamera.ScreenPointToRay(mousePos);
             
             MouseAction();
-            OnCancelAction();
+            ButtonAction();
         }
         
         private Vector3 ClampToRotatedSquare(Vector3 position, Vector3 center, float limit, float angle)
@@ -403,6 +403,23 @@ namespace FullMoon.Camera
 
         #region Button
 
+        private void ButtonAction()
+        {
+            OnCancelAction();
+
+            foreach (var item in buttonUnlock)
+            {
+                if (item.unlockButton.interactable)
+                {
+                    string[] splitText;
+                    string text = item.unlockButton.GetComponentInChildren<Text>().text;
+                    splitText = text.Split('\n');
+                    text = splitText[0] + "\n건설하기";
+                    item.unlockButton.GetComponentInChildren<Text>().text = text;
+                }
+            }
+        }
+
         private void OnCancelAction()
         {
             if (PlayerInputManager.Instance.cancel)
@@ -410,11 +427,15 @@ namespace FullMoon.Camera
                 canCraft = false;
                 buildingType = BuildingType.None;
 
-                foreach (var btn in buttons)
-                {
-                    btn.interactable = false;
-                    btn.interactable = true;
-                }
+                tileButton.interactable = false;
+                tileButton.interactable = true;
+                buttonUnlock.Where(btn => btn.unlockButton.interactable)
+                            .ToList()
+                            .ForEach(btn =>
+                            {
+                                btn.unlockButton.interactable = false;
+                                btn.unlockButton.interactable = true;
+                            });
             }
         }
 
