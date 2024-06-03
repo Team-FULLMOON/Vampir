@@ -2,15 +2,13 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using FullMoon.Entities;
+using UnityEngine.Tilemaps;
+using UnityEngine.EventSystems;
 using FullMoon.UI;
 using FullMoon.Input;
 using FullMoon.Entities.Unit;
-using FullMoon.Entities;
 using FullMoon.Util;
-using UnityEngine.EventSystems;
-using UnityEngine.Tilemaps;
-using UnityEngine.UI;
-using System.Linq.Expressions;
 
 namespace FullMoon.Camera
 {
@@ -39,8 +37,6 @@ namespace FullMoon.Camera
         
         [Header("UI")]
         [SerializeField] private CursorController cursor;
-        [SerializeField] private List<ButtonUnlock> buttonUnlock;
-        [SerializeField] private Button tileButton;
         
         private UnityEngine.Camera mainCamera;
         private float targetFov;
@@ -54,6 +50,8 @@ namespace FullMoon.Camera
         private BuildingType buildingType;
         
         private List<BaseUnitController> selectedUnitList;
+
+        private WaveManager waveManager;
         
         private void Awake()
         {
@@ -64,7 +62,7 @@ namespace FullMoon.Camera
         private void Start()
         {
             targetFov = freeLookCamera.m_Lens.OrthographicSize;
-        
+            waveManager = FindObjectOfType<WaveManager>();
             PlayerInputManager.Instance.ZoomEvent.AddEvent(ZoomEvent);
         }
 
@@ -210,21 +208,21 @@ namespace FullMoon.Camera
         {
             if (!UnityEngine.AI.NavMesh.SamplePosition(hitInfo.point, out var samplePoint, 0.1f, (1 << UnityEngine.AI.NavMesh.GetAreaFromName("Walkable"))))
             {
-                CancelCrafting("지을 수 있는 공간이 없습니다.", "red");
+                CancelCrafting("지을 수 있는 공간이 없습니다.", "#8B0000");
                 return;
             }
 
             var unitList = GetAvailableUnits();
             if (unitList.Count < 6)
             {
-                CancelCrafting("자원 유닛이 부족합니다.", "red");
+                CancelCrafting("자원 유닛이 부족합니다.", "#8B0000");
                 return;
             }
 
             var sampleCellPosition = tileMap.GetComponentByName<Tilemap>("Building").WorldToCell(samplePoint.position);
             if (tileMap.GetComponentByName<Tilemap>("Building").HasTile(sampleCellPosition))
             {
-                CancelCrafting("지을 수 있는 공간이 없습니다. 이미 건물이 존재합니다.", "red");
+                CancelCrafting("지을 수 있는 공간이 없습니다. 이미 건물이 존재합니다.", "#8B0000");
                 return;
             }
 
@@ -236,12 +234,13 @@ namespace FullMoon.Camera
             var sampleCellPosition = tileMap.GetComponentByName<Tilemap>("Ground").WorldToCell(hitInfo.point);
             if (tileMap.GetComponentByName<Tilemap>("Ground").HasTile(sampleCellPosition) || hitInfo.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
             {
-                CancelCrafting("해당 위치에 이미 땅이 존재합니다.", "red");
+                CancelCrafting("해당 위치에 이미 땅이 존재합니다.", "#8B0000");
                 return;
             }
-
-            canCraft = false;
+            
             TileController.Instance.CreateTile(hitInfo.point, buildingType);
+            
+            OnCancelAction();
         }
 
         private List<CommonUnitController> GetAvailableUnits()
@@ -258,15 +257,15 @@ namespace FullMoon.Camera
             {
                 unit.CraftBuilding(buildPoint);
             }
-
-            canCraft = false;
+            
             TileController.Instance.CreateTile(samplePoint, buildingType);
+            
+            OnCancelAction();
         }
 
         private void CancelCrafting(string message, string color)
         {
-            canCraft = false;
-            Debug.LogWarning(message);
+            OnCancelAction();
             ToastManager.Instance.ShowToast(message, color);
         }
 
@@ -295,7 +294,7 @@ namespace FullMoon.Camera
                 }
                 else
                 {
-                    CancelCrafting("생성할 수 없는 위치입니다.", "red");
+                    CancelCrafting("생성할 수 없는 위치입니다.", "#8B0000");
                 }
             }
 
@@ -405,33 +404,17 @@ namespace FullMoon.Camera
 
         private void ButtonAction()
         {
-            OnCancelAction();
-
-            buttonUnlock.Where(button => button.unlockButton.interactable)
-                        .ToList()
-                        .ForEach(button =>
-                        {
-                            button.unlockButton.GetComponentInChildren<Text>().text = button.buttonName + "\n건설하기";
-                        });
+            if (PlayerInputManager.Instance.cancel)
+            {
+                OnCancelAction();
+            }
         }
 
         private void OnCancelAction()
         {
-            if (PlayerInputManager.Instance.cancel)
-            {
-                canCraft = false;
-                buildingType = BuildingType.None;
-
-                tileButton.interactable = false;
-                tileButton.interactable = true;
-                buttonUnlock.Where(btn => btn.unlockButton.interactable)
-                            .ToList()
-                            .ForEach(btn =>
-                            {
-                                btn.unlockButton.interactable = false;
-                                btn.unlockButton.interactable = true;
-                            });
-            }
+            canCraft = false;
+            buildingType = BuildingType.None;
+            waveManager.DisableAllUnlockButton();
         }
 
         #endregion Button
