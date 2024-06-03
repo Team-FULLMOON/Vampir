@@ -17,7 +17,7 @@ namespace FullMoon.Entities.Unit
         [SerializeField] private SphereCollider viewRange;
         [SerializeField] private GameObjectDictionary flagModel;
         [SerializeField] private List<BaseUnitController> unitPreset;
-        private List<Vector3> localPositionsPreset;
+        private List<Vector3> localPositionsPreset = new();
         
         public HashSet<BaseUnitController> UnitInsideViewArea { get; private set; }
         public Vector3 BuildingPosition { get; set; }
@@ -31,6 +31,7 @@ namespace FullMoon.Entities.Unit
             InitViewRange();
             if (localPositionsPreset.Count == unitPreset.Count)
             {
+                Debug.Log($"{localPositionsPreset.Count} {unitPreset.Count}");
                 InitUnitPositions();
             }
             foreach (var unit in unitPreset)

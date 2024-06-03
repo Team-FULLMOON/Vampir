@@ -238,8 +238,8 @@ namespace FullMoon.Entities
                     enemyWaitList.Add(unit);
                     await UniTask.NextFrame(cancellationToken);
                     unit.MoveToPosition(transform.position);
-                    await UniTask.Delay(TimeSpan.FromSeconds(enemyDetail.spawnInterval), cancellationToken: cancellationToken);
                 }
+                await UniTask.Delay(TimeSpan.FromSeconds(enemyDetail.spawnInterval), cancellationToken: cancellationToken);
             }
         }
 
